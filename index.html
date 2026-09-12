@@ -186,6 +186,7 @@ tr.hoverable:hover{background:#F5EEE0;}
 .chart-panel h3{font-family:var(--serif);font-size:16px;color:var(--qing);margin-bottom:4px;}
 .chart-panel .cap{font-size:12.5px;color:var(--ink-2);margin-bottom:10px;}
 .chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;}
+.network-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 0 4px}.network-tools label{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}.network-tools select{font:inherit;color:var(--qing);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 28px 7px 10px;min-width:170px}.network-tools button{border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:8px;padding:7px 11px;font-size:12px}.network-tools button:hover{border-color:var(--cha);color:var(--cha)}.network-stats{margin-left:auto;font-size:12px;color:var(--celadon)}.network-focus-note{margin-top:8px;border-left:3px solid var(--jin);background:var(--paper-2);padding:9px 12px;color:var(--ink-2);font-size:12.5px}.method-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}.method-item{padding:12px;background:var(--paper-2);border-radius:9px}.method-item strong{display:block;color:var(--qing);font-family:var(--serif);font-size:14px;margin-bottom:3px}.method-item span{font-size:12px;color:var(--ink-2)}
 
 /* ===== 药食同源 / 非遗卡片 ===== */
 .thumb-card{display:flex;flex-direction:column;gap:8px;}
@@ -403,7 +404,7 @@ footer a{color:#E8C87E;}
       <div class="eyebrow">Formula Network</div>
       <h1 class="title">方剂配伍网络</h1>
       <p class="page-intro">方剂与药材构成二部图：点一个方剂，看它的组成与君臣佐使；点一味药，看它进入哪些方剂。可拖拽探索。</p>
-      <div class="chart-panel"><h3>方剂—药材 关系网络</h3><div class="cap">青色节点=方剂，金色节点=药材；连接线的粗细表示配伍权重</div><div class="chart-box" id="formulaGraph"></div></div>
+      <div class="chart-panel"><h3>方剂—药材 关系网络</h3><div class="cap">青色节点=方剂，金色节点=药材；连接线的粗细表示配伍权重。选择一首方剂可聚焦其配伍邻域。</div><div class="network-tools"><label for="formulaFocus">聚焦方剂<select id="formulaFocus"><option value="">全部方剂</option></select></label><button id="resetGraph" type="button">显示全网</button><span class="network-stats" id="networkStats"></span></div><div class="network-focus-note" id="networkFocusNote">提示：点击网络节点可快速查看方剂详情，点击药材节点可进入知识卡。</div><div class="chart-box" id="formulaGraph"></div></div>
       <div class="section-h">代表方剂组成</div>
       <div class="chart-grid" id="formulaCards"></div>
     </section>
@@ -447,6 +448,8 @@ footer a{color:#E8C87E;}
       <div class="card card-pad">
         <p class="muted" style="font-size:13.5px;">本应用为数据可视化与文化科普项目，以公开权威数据为底座（第四次全国中药资源普查、〈本草纲目〉、〈中国药典〉2020、国家卫健委药食同源目录等），将中医药文化组织为可漫游的知识图谱。首页星云中的背景星尘为全量资源分布的氛围示意，不代表具体点位；精品层 63 味代表药材与全部方剂、典籍、证候数据均来自公开经典文献，可追溯。</p>
       </div>
+      <div class="section-h">来源与方法</div>
+      <div class="method-grid"><div class="method-item"><strong>知识图谱思路</strong><span>参考开源 TCM 图谱项目，将“证—方—药—来源”组织成可追溯关系。</span></div><div class="method-item"><strong>数据分层</strong><span>代表性药材用于浏览器交互，全量统计用于宏观叙事，避免图表拥挤。</span></div><div class="method-item"><strong>阅读边界</strong><span>内容用于文化科普与学习，不替代诊疗、处方或个体化用药建议。</span></div></div>
     </section>
   </main>
 
@@ -645,6 +648,7 @@ const store = {
   selectedHerb: null,      // 当前选中药材
   selectedFormula: null,
   filters: { qi:'', wei:'', cat:'' },
+  _formulaFocus: '',
   listeners: []
 };
 function notify(){ store.listeners.forEach(fn=>{ try{fn();}catch(e){} }); }
@@ -1063,12 +1067,14 @@ function renderQiwei(){
 function renderFormula(){
   if(typeof echarts === 'undefined'){ return; }
   const q = parseHash().params;
+  const focusId = store._formulaFocus || q.f || '';
+  const visibleFormulas = focusId ? FORMULAS.filter(f=>f.id===focusId) : FORMULAS;
   // 力导向二部图
-  const herbNodes = FORMULAS.flatMap(f=>f.herbs.map(x=>x[0])).filter((v,i,a)=>a.indexOf(v)===i);
-  const nodes = FORMULAS.map(f=>({id:'f_'+f.id, name:f.name, category:0, symbolSize:22, itemStyle:{color:'#2F4A61'}}))
+  const herbNodes = visibleFormulas.flatMap(f=>f.herbs.map(x=>x[0])).filter((v,i,a)=>a.indexOf(v)===i);
+  const nodes = visibleFormulas.map(f=>({id:'f_'+f.id, name:f.name, category:0, symbolSize:24, itemStyle:{color:'#2F4A61'}}))
     .concat(herbNodes.map(hid=>({id:'h_'+hid, name:herbName(hid), category:1, symbolSize:14, itemStyle:{color:'#C8A24A'}})));
   const links = [];
-  FORMULAS.forEach(f=>f.herbs.forEach(x=>{ if(x[0]) links.push({source:'f_'+f.id, target:'h_'+x[0], value:1}); }));
+  visibleFormulas.forEach(f=>f.herbs.forEach(x=>{ if(x[0]) links.push({source:'f_'+f.id, target:'h_'+x[0], value:1}); }));
   const catMap = {};
   herbNodes.forEach(hid=>{ const h=byId(hid); catMap[hid] = h?h.cat:'其他'; });
   const gChart = chartManager.register('formulaGraph', echarts.init(document.getElementById('formulaGraph')), document.getElementById('formulaGraph'));
@@ -1089,9 +1095,13 @@ function renderFormula(){
       emphasis:{focus:'adjacency', lineStyle:{width:3,color:'#B23A2E'}}
     }]
   });
+  const focusSelect=$('#formulaFocus'); if(focusSelect){focusSelect.innerHTML='<option value="">全部方剂</option>'+FORMULAS.map(f=>`<option value="${f.id}">${esc(f.name)}</option>`).join('');focusSelect.value=focusId;}
+  const stat=$('#networkStats'); if(stat) stat.textContent=`${visibleFormulas.length} 首方剂 · ${herbNodes.length} 味药材 · ${links.length} 条关系`;
+  const note=$('#networkFocusNote'); if(note) note.textContent=focusId?`当前聚焦：${formulaById(focusId)?.name||''}。网络仅显示与其直接相连的药材，点击“显示全网”恢复。`:'提示：点击网络节点可快速查看方剂详情，点击药材节点可进入知识卡。';
+  gChart.on('click', params=>{if(!params.data||!params.data.id)return;const id=params.data.id;if(id.startsWith('f_')){store._formulaFocus=id.slice(2);renderFormula();}else if(id.startsWith('h_')){location.hash='#/herb?id='+id.slice(2);}});
   // 跨页联动：来自药材详情的"相关方剂"点击，高亮该方剂节点
   if(q.f){
-    const fi = FORMULAS.findIndex(x=>x.id===q.f);
+      const fi = visibleFormulas.findIndex(x=>x.id===focusId);
     if(fi>=0){
       setTimeout(()=>{ try{ gChart.dispatchAction({type:'focusNodeAdjacency', seriesIndex:0, dataIndex:fi}); }catch(e){} }, 150);
     }
@@ -1262,6 +1272,12 @@ searchInput.addEventListener('keydown', e=>{
 });
 document.getElementById('hamburger').addEventListener('click', ()=>{
   document.getElementById('mainNav').classList.toggle('open');
+});
+document.addEventListener('change', e=>{
+  if(e.target.id==='formulaFocus'){ store._formulaFocus=e.target.value; if(parseHash().route==='formula') renderFormula(); else location.hash='#/formula'; }
+});
+document.addEventListener('click', e=>{
+  if(e.target.id==='resetGraph'){ store._formulaFocus=''; if(parseHash().route==='formula' && !parseHash().params.f) renderFormula(); else location.hash='#/formula'; }
 });
 const themeToggle=document.getElementById('themeToggle');
 if(localStorage.getItem('herbal_theme')==='night') document.body.classList.add('night');

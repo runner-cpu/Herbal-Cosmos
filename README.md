@@ -33,6 +33,12 @@
 
 ## 核心特性
 
+### 开源参考与借鉴边界
+- 参考 GitHub `cheny6/KGAT-RAG-Traditional-Chinese-Medicine-Knowledge-Graph-Retrieval-Augmented-Generation-System` 的领域实体关系组织方式，强化“证—方—药”链路的可读性；本项目不复制其模型或数据。
+- 参考 GitHub `jjasminum02-debug/tcm-formula-knowledge-graph` 的 provenance（来源追溯）思路，为知识卡和网络增加来源徽标、来源与方法说明。
+- 参考 GitHub `viviiviiikikiikiii/OptiSyn` 的可解释关系网络方向，为配伍网络增加方剂聚焦、关系统计与邻域提示。
+- 以上项目仅作为交互与信息架构参考；本项目仍保持零构建、浏览器离线可运行、公开数据来源可追溯的约束。
+
 ### 1. 3D 星云首页（Canvas 粒子引擎）
 - 自研 Canvas 3D 投影引擎，**63 味代表药材**化作可点击的星点悬浮于星空，药食同源与高频药材以印章级亮星呈现。
 - **交互**：拖拽旋转、滚轮缩放（缩放到达边界自动放行页面滚动）、点击星点直达药材详情、悬停显示药名。
