@@ -437,6 +437,8 @@ body.night .card,body.night .chart-panel,body.night .table-wrap,body.night .prop
       <p class="page-intro">四气（寒热温凉平）与五味（酸苦甘辛咸）是中药药性的骨架，归经则标定作用部位。两个视角读同一套药性数据。</p>
       <div class="chart-grid">
         <div class="chart-panel"><h3>四气 × 五味 矩阵</h3><div class="cap">颜色越深，属该"气-味"组合的代表药材越多</div><div class="chart-box" id="qiweiMatrixChart"></div></div>
+        <div class="chart-panel"><h3>四气分布玫瑰</h3><div class="cap">九种药性（寒热温凉平）在代表药材中的占比</div><div class="chart-box" id="qiRoseChart"></div></div>
+        <div class="chart-panel"><h3>五味分布条形</h3><div class="cap">酸苦甘辛咸各收录多少味药材</div><div class="chart-box" id="weiBarChart"></div></div>
         <div class="chart-panel"><h3>归经分布总览</h3><div class="cap">代表药材归经的累计次数</div><div class="chart-box" id="meridianBarChart"></div></div>
       </div>
       <div class="viz-inspector" id="qiweiInspector"><div><span>点击图表继续探索</span><h2>从分布回到每一味药</h2></div><p>点击热力矩阵中的气味组合，或点击归经柱形，即可查看对应药材并跳转知识卡。</p></div>
@@ -586,27 +588,56 @@ const HERBS = [
   {id:'shengma', name:'升麻', pinyin:'shengma', latin:'Cimicifuga foetida', qi:'微寒', wei:'辛', meridian:['肺','脾','胃','大肠'], cat:'解表药', eff:'发表透疹，清热解毒，升举阳气', food:false, source:'cp2020', note:'补中益气汤之佐药，与柴胡共升清阳。'}
 ];
 
-// 本地植物图像系统：用少量高质量图谱覆盖全部代表药材，避免远程图片失效；每味药材都拥有可解释的图像组。
-const HERB_IMAGE_GROUPS = {
-  roots:'output/imagegen/herbs/ginseng.png',
-  flowers:'output/imagegen/concepts/home-explorer-concept.png',
-  leaves:'output/imagegen/herbal-cosmos-hero.png',
-  fruits:'output/imagegen/herbal-cosmos-hero.png',
-  aromatics:'output/imagegen/concepts/knowledge-graph-concept.png',
-  roots2:'output/imagegen/herbal-cosmos-hero.png'
+// 本草图像系统：每味药材对应一张独立的真实药材/原植物照片（开源渠道检索、图床代理直链），按 id 精确映射，不再多味共用同一张图。
+const HERB_IMAGES = {
+  gouqi:'https://aka.doubaocdn.com/s/qLpiTCSk9s', renshen:'https://aka.doubaocdn.com/s/JavAwNSI9i',
+  danggui:'https://aka.doubaocdn.com/s/sxTRYOSEz4', huangqi:'https://aka.doubaocdn.com/s/MsF77dbkl4',
+  gancao:'https://aka.doubaocdn.com/s/Dasiwc3GnA', fuling:'https://aka.doubaocdn.com/s/H3LwOCjoyi',
+  jinyinhua:'https://aka.doubaocdn.com/s/ufR9B8gp5s', juhua:'https://aka.doubaocdn.com/s/1U2wRI8P0q',
+  dazao:'https://aka.doubaocdn.com/s/DKBNsNUEb6', shengjiang:'https://aka.doubaocdn.com/s/4bvipaAHeo',
+  baizhu:'https://aka.doubaocdn.com/s/kmVDrcFdIs', shanyao:'https://aka.doubaocdn.com/s/9qeyFpePxG',
+  shudi:'https://aka.doubaocdn.com/s/haNocLoeUY', dangshen:'https://aka.doubaocdn.com/s/sO0iT279Mx',
+  lingzhi:'https://aka.doubaocdn.com/s/U5WYom2XyG', baishao:'https://aka.doubaocdn.com/s/FIWpHLHDdM',
+  maidong:'https://aka.doubaocdn.com/s/XbvuKXXWl5', mahuang:'https://aka.doubaocdn.com/s/8mvqabekfW',
+  guizhi:'https://aka.doubaocdn.com/s/rDFhiRySRE', bohe:'https://aka.doubaocdn.com/s/v9CNYX4VVs',
+  chaihu:'https://aka.doubaocdn.com/s/AKnh4cvRbn', gegen:'https://aka.doubaocdn.com/s/TyO7ZD65Sz',
+  lianqiao:'https://aka.doubaocdn.com/s/1By2433bGQ', huanglian:'https://aka.doubaocdn.com/s/ycFQnH48XN',
+  huangqin:'https://aka.doubaocdn.com/s/NJlpoTutEK', zhizi:'https://aka.doubaocdn.com/s/lyvh6ZXajK',
+  shigao:'https://aka.doubaocdn.com/s/wddwNRAfNU', yiyiren:'https://aka.doubaocdn.com/s/v842Jx3MFu',
+  chenpi:'https://aka.doubaocdn.com/s/xwgBl4KJ6t', banxia:'https://aka.doubaocdn.com/s/TC3BJZ8IZD',
+  jiegeng:'https://aka.doubaocdn.com/s/m7J4bYO7F5', danshen:'https://aka.doubaocdn.com/s/YcAMa6ggRi',
+  chuanxiong:'https://aka.doubaocdn.com/s/eqdKempJev', honghua:'https://aka.doubaocdn.com/s/xY6jxCT0uZ',
+  fuzi:'https://aka.doubaocdn.com/s/yKF4G56kb8', rougui:'https://aka.doubaocdn.com/s/PkQFqC5A6z',
+  ganjiang:'https://aka.doubaocdn.com/s/tqhHyVyVXM', shanzha:'https://aka.doubaocdn.com/s/UsOfTa7Tes',
+  lianzi:'https://aka.doubaocdn.com/s/HaL3VzP34h', baihe:'https://aka.doubaocdn.com/s/eDm925O8Z7',
+  longyanrou:'https://aka.doubaocdn.com/s/1PMrdEGqI2', hetaoren:'https://aka.doubaocdn.com/s/4p2sWD4UwF',
+  fengmi:'https://aka.doubaocdn.com/s/rwUKBu2l6w', xingren:'https://aka.doubaocdn.com/s/UOKWGUTRIe',
+  fangfeng:'https://aka.doubaocdn.com/s/CipDEhTnyV', zhimu:'https://aka.doubaocdn.com/s/hlLQaPxNDx',
+  suanzaoren:'https://aka.doubaocdn.com/s/eOtlVQ3rzc', taoren:'https://aka.doubaocdn.com/s/oiieJJbUPy',
+  shanzhuyu:'https://aka.doubaocdn.com/s/KEp9IlWQOU', zexie:'https://aka.doubaocdn.com/s/UarbkNHBit',
+  mudanpi:'https://aka.doubaocdn.com/s/Uj5mTRzzLp', zhuru:'https://aka.doubaocdn.com/s/6IWy7Qa8wk',
+  zhishi:'https://aka.doubaocdn.com/s/SjTEmV9EPW', xixin:'https://aka.doubaocdn.com/s/D7ClVMZwU9',
+  wuweizi:'https://aka.doubaocdn.com/s/JQJkP9LgYP', yuanzhi:'https://aka.doubaocdn.com/s/m8ATeJai2z',
+  muxiang:'https://aka.doubaocdn.com/s/Niwf3GJCxH', baibiandou:'https://aka.doubaocdn.com/s/HBBukg1neI',
+  sharen:'https://aka.doubaocdn.com/s/dJDcgLbKRd', jingmi:'https://aka.doubaocdn.com/s/s7joiFaKRB',
+  shengdihuang:'https://aka.doubaocdn.com/s/csl7jd6i96', niuxi:'https://aka.doubaocdn.com/s/BsKsddAyDk',
+  zhiqiao:'https://aka.doubaocdn.com/s/y5VmYaIufV', shengma:'https://aka.doubaocdn.com/s/CFi6cu5ZIX'
 };
-const HERB_IMAGE_ALT = {
-  roots:'根类本草的植物图谱', flowers:'花类本草的植物图谱', leaves:'叶类本草的植物图谱', fruits:'果实与种子类本草的植物图谱', aromatics:'芳香与调味类本草的植物图谱'
+// 非物质文化遗产图像：按非遗名称精确对应真实场景照。
+const HERITAGE_IMAGES = {
+  '针灸':'https://aka.doubaocdn.com/s/ulzfuNgrps',
+  '中药炮制技艺':'https://aka.doubaocdn.com/s/zW3Ls4ZaWK',
+  '藏医药浴法':'https://aka.doubaocdn.com/s/xdLRoRYbPC',
+  '中医诊法':'https://aka.doubaocdn.com/s/4mvNflbc4d',
+  '中医养生':'https://aka.doubaocdn.com/s/tUQHXVCUJN',
+  '同仁堂中医药文化':'https://aka.doubaocdn.com/s/dOcb2Clcov'
 };
-function herbImageGroup(h){
-  if(h.food && ['gouqi','dazao','shanyao','gancao','wuweizi','taoren'].includes(h.id)) return 'fruits';
-  if(['jinyinhua','juhua','lianqiao','bohe','baihe','maidong'].includes(h.id)) return 'flowers';
-  if(['mahuang','chaihu','huangqin','fangfeng','薄荷'].includes(h.id)) return 'leaves';
-  if(['chenpi','guizhi','ganjiang','sharen','muxiang','xixin'].includes(h.id)) return 'aromatics';
-  if(['renshen','danggui','baizhu','shudi','shengdihuang','fuling','zexie','mudanpi','shanyao'].includes(h.id)) return 'roots';
-  return 'roots2';
+// 图片加载失败时的内联 SVG 占位（叶脉 + 药名首字），彻底避免裂图图标与本地路径依赖。
+function herbPlaceholder(label){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='#E8EDE8'/><path d='M200 60 C170 120 170 180 200 240 M200 120 C180 140 160 150 140 150 M200 160 C220 180 240 190 260 190' stroke='#719E87' stroke-width='3' fill='none' stroke-linecap='round'/><text x='200' y='158' font-size='54' fill='#103F34' text-anchor='middle' font-family='serif'>${label||'药'}</text></svg>`;
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
 }
-HERBS.forEach(h=>{ h.imageGroup=herbImageGroup(h); h.image=HERB_IMAGE_GROUPS[h.imageGroup]; h.imageAlt=HERB_IMAGE_ALT[h.imageGroup]||'本草植物图谱'; });
+HERBS.forEach(h=>{ h.image=HERB_IMAGES[h.id]||herbPlaceholder(h.name.slice(0,1)); h.imageAlt=h.name+' · 药材原图（开源渠道）'; });
 
 const FORMULAS = [
   {id:'liuweidihuang', name:'六味地黄丸', from:'《小儿药证直诀》', zheng:'肝肾阴虚证', eff:'滋补肝肾', herbs:[['shudi','24g','君'],['shanzhuyu','12g','臣'],['shanyao','12g','臣'],['zexie','9g','佐'],['mudanpi','9g','佐'],['fuling','9g','佐']]},
@@ -1230,6 +1261,34 @@ function renderQiwei(){
     yAxis:{type:'value', minInterval:1, axisLabel:{color:p.muted,fontSize:11}, splitLine:{lineStyle:{color:p.line}}},
     series:[{type:'bar', data:counts.map(c=>c.value), barWidth:'55%', itemStyle:{color:p.celadon,borderRadius:[5,5,0,0]}, label:{show:true, position:'top', color:p.text,fontSize:11}}]
   });
+  // 四气分布玫瑰图
+  const qiOrder=['大寒','寒','微寒','凉','平','微温','温','热','大热'];
+  const qiCount=qiOrder.map(q=>({name:q, value:HERBS.filter(h=>h.qi===q).length})).filter(d=>d.value>0);
+  const rose=chartManager.register('qiRose', echarts.init(document.getElementById('qiRoseChart')), document.getElementById('qiRoseChart'));
+  rose.setOption({
+    backgroundColor:'transparent',
+    tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}},
+    series:[{type:'pie', roseType:'radius', radius:['18%','72%'], center:['50%','54%'],
+      data:qiCount, label:{color:p.text,fontSize:10.5,formatter:'{b}\n{c}味',fontFamily:'Noto Sans SC'},
+      itemStyle:{borderColor:p.card,borderWidth:1.5},
+      color:[p.qing,p.celadon,p.cha||'#A96032',p.jin,p.cinnabar,'#4A806C','#8D7651','#B84B3E','#5C4A2E']}]
+  });
+  rose.on('click', params=>{ const q=params.name; const list=HERBS.filter(h=>h.qi===q); showInspector(q+'性', q+'性的代表药材', list); });
+
+  // 五味分布条形
+  const weiOrder=['酸','苦','甘','辛','咸'];
+  const weiData=weiOrder.map(w=>({name:w+'味', value:HERBS.filter(h=>h.wei===w).length}));
+  const wb=chartManager.register('weiBar', echarts.init(document.getElementById('weiBarChart')), document.getElementById('weiBarChart'));
+  wb.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis', confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}},
+    grid:{left:40,right:16,top:14,bottom:34},
+    xAxis:{type:'category', data:weiData.map(d=>d.name), axisLabel:{color:p.muted,fontSize:11}, axisLine:{lineStyle:{color:p.line}}},
+    yAxis:{type:'value', minInterval:1, axisLabel:{color:p.muted,fontSize:11}, splitLine:{lineStyle:{color:p.line}}},
+    series:[{type:'bar', data:weiData.map(d=>d.value), barWidth:'52%', itemStyle:{color:p.jin,borderRadius:[5,5,0,0]}, label:{show:true,position:'top',color:p.text,fontSize:11}}]
+  });
+  wb.on('click', params=>{ const w=weiOrder[params.dataIndex]; const list=HERBS.filter(h=>h.wei===w); showInspector(w+'味', w+'味的代表药材', list); });
+
   const inspector=$('#qiweiInspector');
   const showInspector=(title,desc,items)=>{
     if(!inspector) return;
@@ -1327,45 +1386,52 @@ function renderFormula(){
 function renderZheng(){
   if(typeof echarts === 'undefined'){ return; }
   const p=chartPalette();
-  // 证→方→药 桑基
-  const links = [];
-  ZHENGS.forEach(z=>{
-    z.formulas.forEach(fid=>{
-      links.push({source:z.name, target:'方·'+formulaById(fid).name, value:1});
-      formulaById(fid).herbs.forEach(x=>{ if(x[0]) links.push({source:'方·'+formulaById(fid).name, target:'药·'+herbName(x[0]), value:1}); });
-    });
+  if(!store.selectedZheng) store.selectedZheng = ZHENGS[0].id;
+  const cur = ZHENGS.find(z=>z.id===store.selectedZheng) || ZHENGS[0];
+
+  // 只渲染"当前证候 → 其方剂 → 核心药物"，避免全量堆叠导致杂乱
+  const links=[];
+  const fNames=[], hNames=[];
+  cur.formulas.forEach(fid=>{
+    const fm = formulaById(fid); if(!fm) return;
+    links.push({source:cur.name, target:'方·'+fm.name, value:fm.herbs.length});
+    fNames.push('方·'+fm.name);
+    fm.herbs.forEach(x=>{ if(x[0]){ links.push({source:'方·'+fm.name, target:'药·'+herbName(x[0]), value:1}); hNames.push('药·'+herbName(x[0])); } });
   });
-  const zhengNodes = ZHENGS.map(z=>z.name);
-  const formulaNodes = [...new Set(ZHENGS.flatMap(z=>z.formulas.map(f=>'方·'+formulaById(f).name)))];
-  const herbNodes = [...new Set(links.map(l=>l.target).filter(t=>t.startsWith('药·')))];
-  const nodes = zhengNodes.map(n=>({name:n})).concat(formulaNodes.map(n=>({name:n}))).concat(herbNodes.map(n=>({name:n})));
+  const nodes=[{name:cur.name}].concat(fNames.map(n=>({name:n}))).concat([...new Set(hNames)].map(n=>({name:n})));
   const sChart = chartManager.register('zhengSankey', echarts.init(document.getElementById('zhengSankey')), document.getElementById('zhengSankey'));
   sChart.setOption({
     backgroundColor:'transparent',
     tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}},
     series:[{
       type:'sankey', data:nodes, links,
-      left:40, right:120, top:16, bottom:16,
-      nodeWidth:10, nodeGap:12,
-      lineStyle:{color:'source', opacity:.35, curveness:.55},
-      label:{color:p.text,fontSize:11,fontFamily:'Noto Serif SC'},
+      left:30, right:110, top:20, bottom:20,
+      nodeWidth:12, nodeGap:18,
+      lineStyle:{color:'source', opacity:.45, curveness:.5},
+      label:{color:p.text,fontSize:12,fontFamily:'Noto Serif SC'},
       itemStyle:{borderWidth:0, color:params=>{
-        const n = params.data.name||'';
+        const n=params.data.name||'';
         if(n.startsWith('方')) return p.celadon;
         if(n.startsWith('药')) return p.jin;
-        return p.cha;
+        return p.cinnabar;
       }}
     }]
   });
+  // 点击药节点 → 进入知识卡
+  sChart.on('click', params=>{ const nm=(params.data&&params.data.name)||''; if(nm.startsWith('药·')){ const herb=HERBS.find(h=>h.name===nm.slice(2)); if(herb) location.hash='#/herb?id='+herb.id; } });
 
-  // 证候卡片
+  // 证候卡片：可点击切换，当前证候高亮
   $('#zhengCards').innerHTML = ZHENGS.map(z=>`
-    <div class="card card-pad">
-      <h3 style="font-family:var(--serif);color:var(--qing);font-size:15px;">${esc(z.name)}</h3>
+    <div class="card card-pad" data-zheng="${esc(z.id)}" style="cursor:pointer;${z.id===cur.id?'border-color:var(--cinnabar);box-shadow:0 0 0 1px var(--cinnabar);':''}">
+      <h3 style="font-family:var(--serif);color:var(--qing);font-size:15px;">${esc(z.name)}${z.id===cur.id?' <span class="badge cinnabar">当前</span>':''}</h3>
       <div class="muted" style="font-size:12px;">${esc(z.desc)}</div>
       <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;">${z.formulas.map(f=>`<span class="badge celadon">${esc(formulaById(f).name)}</span>`).join('')}</div>
     </div>`).join('');
 }
+document.addEventListener('click', e=>{
+  const card=e.target.closest('[data-zheng]');
+  if(card){ store.selectedZheng=card.dataset.zheng; renderZheng(); }
+});
 
 function renderClassics(){
   if(typeof echarts === 'undefined'){ return; }
@@ -1411,7 +1477,7 @@ document.addEventListener('click', e=>{
 function renderCulture(){
   $('#heritageGrid').innerHTML = HERITAGE.map(h=>`
     <div class="card card-pad thumb-card">
-      <div class="image-frame culture-image"><img src="output/imagegen/concepts/knowledge-graph-concept.png" alt="${esc(h.name)} 文化图像" loading="lazy"></div>
+      <div class="image-frame culture-image"><img src="${HERITAGE_IMAGES[h.name]||herbPlaceholder('遗')}" alt="${esc(h.name)} 非遗场景图" loading="lazy" onerror="this.onerror=null;this.src=herbPlaceholder('遗')"></div>
       <div class="hd"><span class="stamp"><span class="a">${esc(h.name.slice(0,2))}</span><span class="b">非遗</span></span>
         <div><h3>${esc(h.name)}</h3><div class="muted" style="font-size:11.5px;">${esc(h.type)}</div></div></div>
       <p>${esc(h.note)}</p>
@@ -1527,7 +1593,7 @@ document.addEventListener('error', e=>{
   const img=e.target;
   if(!(img instanceof HTMLImageElement) || img.dataset.fallbackApplied) return;
   img.dataset.fallbackApplied='1';
-  img.src='output/imagegen/herbs/ginseng.png';
+  img.src=herbPlaceholder((img.alt||'药').slice(0,1));
   img.alt=(img.alt||'本草植物图谱')+'（备用图像）';
 }, true);
 
