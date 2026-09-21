@@ -1,0 +1,1507 @@
+{
+  "generatedAt": "2026-09-21T06:48:19.534Z",
+  "policy": "运行时只使用本地图片。开放图库同步因网络不可达未写入不确定来源；AI 图像和既有素材均显式标注，避免冒充实拍或开放许可。",
+  "assets": [
+    {
+      "kind": "herb",
+      "id": "gouqi",
+      "name": "枸杞子",
+      "file": "images/herbs/gouqi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "renshen",
+      "name": "人参",
+      "file": "images/herbs/renshen.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "huangqi",
+      "name": "黄芪",
+      "file": "images/herbs/huangqi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "danggui",
+      "name": "当归",
+      "file": "images/herbs/danggui.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "baizhu",
+      "name": "白术",
+      "file": "images/herbs/baizhu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shanyao",
+      "name": "山药",
+      "file": "images/herbs/shanyao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "gancao",
+      "name": "甘草",
+      "file": "images/herbs/gancao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shudi",
+      "name": "熟地黄",
+      "file": "images/herbs/shudi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "dangshen",
+      "name": "党参",
+      "file": "images/herbs/dangshen.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "dazao",
+      "name": "大枣",
+      "file": "images/herbs/dazao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "lingzhi",
+      "name": "灵芝",
+      "file": "images/herbs/lingzhi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "baishao",
+      "name": "白芍",
+      "file": "images/herbs/baishao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "maidong",
+      "name": "麦冬",
+      "file": "images/herbs/maidong.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "mahuang",
+      "name": "麻黄",
+      "file": "images/herbs/mahuang.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "guizhi",
+      "name": "桂枝",
+      "file": "images/herbs/guizhi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shengjiang",
+      "name": "生姜",
+      "file": "images/herbs/shengjiang.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "juhua",
+      "name": "菊花",
+      "file": "images/herbs/juhua.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "bohe",
+      "name": "薄荷",
+      "file": "images/herbs/bohe.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "chaihu",
+      "name": "柴胡",
+      "file": "images/herbs/chaihu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "gegen",
+      "name": "葛根",
+      "file": "images/herbs/gegen.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "jinyinhua",
+      "name": "金银花",
+      "file": "images/herbs/jinyinhua.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "lianqiao",
+      "name": "连翘",
+      "file": "images/herbs/lianqiao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "huanglian",
+      "name": "黄连",
+      "file": "images/herbs/huanglian.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "huangqin",
+      "name": "黄芩",
+      "file": "images/herbs/huangqin.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "zhizi",
+      "name": "栀子",
+      "file": "images/herbs/zhizi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shigao",
+      "name": "石膏",
+      "file": "images/herbs/shigao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "fuling",
+      "name": "茯苓",
+      "file": "images/herbs/fuling.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "yiyiren",
+      "name": "薏苡仁",
+      "file": "images/herbs/yiyiren.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "chenpi",
+      "name": "陈皮",
+      "file": "images/herbs/chenpi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "banxia",
+      "name": "半夏",
+      "file": "images/herbs/banxia.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "jiegeng",
+      "name": "桔梗",
+      "file": "images/herbs/jiegeng.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "danshen",
+      "name": "丹参",
+      "file": "images/herbs/danshen.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "chuanxiong",
+      "name": "川芎",
+      "file": "images/herbs/chuanxiong.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "honghua",
+      "name": "红花",
+      "file": "images/herbs/honghua.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "fuzi",
+      "name": "附子",
+      "file": "images/herbs/fuzi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "rougui",
+      "name": "肉桂",
+      "file": "images/herbs/rougui.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "ganjiang",
+      "name": "干姜",
+      "file": "images/herbs/ganjiang.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shanzha",
+      "name": "山楂",
+      "file": "images/herbs/shanzha.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "lianzi",
+      "name": "莲子",
+      "file": "images/herbs/lianzi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "baihe",
+      "name": "百合",
+      "file": "images/herbs/baihe.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "longyanrou",
+      "name": "龙眼肉",
+      "file": "images/herbs/longyanrou.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "hetaoren",
+      "name": "核桃仁",
+      "file": "images/herbs/hetaoren.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "fengmi",
+      "name": "蜂蜜",
+      "file": "images/herbs/fengmi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "xingren",
+      "name": "苦杏仁",
+      "file": "images/herbs/xingren.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "fangfeng",
+      "name": "防风",
+      "file": "images/herbs/fangfeng.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "zhimu",
+      "name": "知母",
+      "file": "images/herbs/zhimu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "suanzaoren",
+      "name": "酸枣仁",
+      "file": "images/herbs/suanzaoren.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "taoren",
+      "name": "桃仁",
+      "file": "images/herbs/taoren.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shanzhuyu",
+      "name": "山茱萸",
+      "file": "images/herbs/shanzhuyu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "zexie",
+      "name": "泽泻",
+      "file": "images/herbs/zexie.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "mudanpi",
+      "name": "牡丹皮",
+      "file": "images/herbs/mudanpi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "zhuru",
+      "name": "竹茹",
+      "file": "images/herbs/zhuru.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "zhishi",
+      "name": "枳实",
+      "file": "images/herbs/zhishi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "xixin",
+      "name": "细辛",
+      "file": "images/herbs/xixin.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "wuweizi",
+      "name": "五味子",
+      "file": "images/herbs/wuweizi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "yuanzhi",
+      "name": "远志",
+      "file": "images/herbs/yuanzhi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "muxiang",
+      "name": "木香",
+      "file": "images/herbs/muxiang.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "baibiandou",
+      "name": "白扁豆",
+      "file": "images/herbs/baibiandou.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "sharen",
+      "name": "砂仁",
+      "file": "images/herbs/sharen.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "jingmi",
+      "name": "粳米",
+      "file": "images/herbs/jingmi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shengdihuang",
+      "name": "生地黄",
+      "file": "images/herbs/shengdihuang.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "niuxi",
+      "name": "牛膝",
+      "file": "images/herbs/niuxi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "zhiqiao",
+      "name": "枳壳",
+      "file": "images/herbs/zhiqiao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shengma",
+      "name": "升麻",
+      "file": "images/herbs/shengma.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "huangbai",
+      "name": "黄柏",
+      "file": "images/herbs/huangbai.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "zicao",
+      "name": "紫草",
+      "file": "images/herbs/zicao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "qinghao",
+      "name": "青蒿",
+      "file": "images/herbs/qinghao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "xuanshen",
+      "name": "玄参",
+      "file": "images/herbs/xuanshen.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "chishao",
+      "name": "赤芍",
+      "file": "images/herbs/chishao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "pugongying",
+      "name": "蒲公英",
+      "file": "images/herbs/pugongying.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "yuxingcao",
+      "name": "鱼腥草",
+      "file": "images/herbs/yuxingcao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "dahuang",
+      "name": "大黄",
+      "file": "images/herbs/dahuang.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "mangxiao",
+      "name": "芒硝",
+      "file": "images/herbs/mangxiao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "huomaren",
+      "name": "火麻仁",
+      "file": "images/herbs/huomaren.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "duhuo",
+      "name": "独活",
+      "file": "images/herbs/duhuo.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "qinjiao",
+      "name": "秦艽",
+      "file": "images/herbs/qinjiao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "sangjisheng",
+      "name": "桑寄生",
+      "file": "images/herbs/sangjisheng.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "huoxiang",
+      "name": "广藿香",
+      "file": "images/herbs/huoxiang.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "cangzhu",
+      "name": "苍术",
+      "file": "images/herbs/cangzhu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "houpo",
+      "name": "厚朴",
+      "file": "images/herbs/houpo.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "cheqianzi",
+      "name": "车前子",
+      "file": "images/herbs/cheqianzi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "yinchen",
+      "name": "茵陈",
+      "file": "images/herbs/yinchen.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "zhuling",
+      "name": "猪苓",
+      "file": "images/herbs/zhuling.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "wuzhuyu",
+      "name": "吴茱萸",
+      "file": "images/herbs/wuzhuyu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "xiangfu",
+      "name": "香附",
+      "file": "images/herbs/xiangfu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "maiya",
+      "name": "麦芽",
+      "file": "images/herbs/maiya.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "jineijin",
+      "name": "鸡内金",
+      "file": "images/herbs/jineijin.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "sanqi",
+      "name": "三七",
+      "file": "images/herbs/sanqi.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "aiye",
+      "name": "艾叶",
+      "file": "images/herbs/aiye.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "yimucao",
+      "name": "益母草",
+      "file": "images/herbs/yimucao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "yanhusuo",
+      "name": "延胡索",
+      "file": "images/herbs/yanhusuo.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "yujin",
+      "name": "郁金",
+      "file": "images/herbs/yujin.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "tiannanxing",
+      "name": "天南星",
+      "file": "images/herbs/tiannanxing.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "gualou",
+      "name": "瓜蒌",
+      "file": "images/herbs/gualou.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "beimu",
+      "name": "川贝母",
+      "file": "images/herbs/beimu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "baiziren",
+      "name": "柏子仁",
+      "file": "images/herbs/baiziren.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "heshouwu",
+      "name": "何首乌",
+      "file": "images/herbs/heshouwu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "ejiao",
+      "name": "阿胶",
+      "file": "images/herbs/ejiao.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "shihu",
+      "name": "石斛",
+      "file": "images/herbs/shihu.jpg",
+      "sourceType": "本地既有素材",
+      "source": "项目历史资产",
+      "license": "REVIEW-REQUIRED",
+      "note": "保留并去重；缺少原始许可元数据，后续可用开放图库来源替换。"
+    },
+    {
+      "kind": "herb",
+      "id": "banlangen",
+      "name": "板蓝根",
+      "file": "images/herbs/banlangen.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "sangye",
+      "name": "桑叶",
+      "file": "images/herbs/sangye.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "niubangzi",
+      "name": "牛蒡子",
+      "file": "images/herbs/niubangzi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "jingjie",
+      "name": "荆芥",
+      "file": "images/herbs/jingjie.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "zisunye",
+      "name": "紫苏叶",
+      "file": "images/herbs/zisunye.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "baizhi",
+      "name": "白芷",
+      "file": "images/herbs/baizhi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "xinyi",
+      "name": "辛夷",
+      "file": "images/herbs/xinyi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "xiakucao",
+      "name": "夏枯草",
+      "file": "images/herbs/xiakucao.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "juemingzi",
+      "name": "决明子",
+      "file": "images/herbs/juemingzi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "lugen",
+      "name": "芦根",
+      "file": "images/herbs/lugen.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "tianhuafen",
+      "name": "天花粉",
+      "file": "images/herbs/tianhuafen.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "kushen",
+      "name": "苦参",
+      "file": "images/herbs/kushen.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "longdan",
+      "name": "龙胆",
+      "file": "images/herbs/longdan.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "jinqiancao",
+      "name": "金钱草",
+      "file": "images/herbs/jinqiancao.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "haijinsha",
+      "name": "海金沙",
+      "file": "images/herbs/haijinsha.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "peilan",
+      "name": "佩兰",
+      "file": "images/herbs/peilan.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "caoguo",
+      "name": "草果",
+      "file": "images/herbs/caoguo.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "laifuzi",
+      "name": "莱菔子",
+      "file": "images/herbs/laifuzi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "qingpi",
+      "name": "青皮",
+      "file": "images/herbs/qingpi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "jianghuang",
+      "name": "姜黄",
+      "file": "images/herbs/jianghuang.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "ruxiang",
+      "name": "乳香",
+      "file": "images/herbs/ruxiang.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "moyao",
+      "name": "没药",
+      "file": "images/herbs/moyao.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "baiji",
+      "name": "白及",
+      "file": "images/herbs/baiji.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "banzhilian",
+      "name": "半枝莲",
+      "file": "images/herbs/banzhilian.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "baihuasheshecao",
+      "name": "白花蛇舌草",
+      "file": "images/herbs/baihuasheshecao.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "tufuling",
+      "name": "土茯苓",
+      "file": "images/herbs/tufuling.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "daqingye",
+      "name": "大青叶",
+      "file": "images/herbs/daqingye.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "machixian",
+      "name": "马齿苋",
+      "file": "images/herbs/machixian.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "puhuang",
+      "name": "蒲黄",
+      "file": "images/herbs/puhuang.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "huaihua",
+      "name": "槐花",
+      "file": "images/herbs/huaihua.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "xianhecao",
+      "name": "仙鹤草",
+      "file": "images/herbs/xianhecao.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "wangbuliuxing",
+      "name": "王不留行",
+      "file": "images/herbs/wangbuliuxing.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "chuanxinlian",
+      "name": "穿心莲",
+      "file": "images/herbs/chuanxinlian.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "wujiaipi",
+      "name": "五加皮",
+      "file": "images/herbs/wujiaipi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "duzhong",
+      "name": "杜仲",
+      "file": "images/herbs/duzhong.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "xuduan",
+      "name": "续断",
+      "file": "images/herbs/xuduan.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "tusizi",
+      "name": "菟丝子",
+      "file": "images/herbs/tusizi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "yinyanghuo",
+      "name": "淫羊藿",
+      "file": "images/herbs/yinyanghuo.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "nvzhenzi",
+      "name": "女贞子",
+      "file": "images/herbs/nvzhenzi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "mohanlian",
+      "name": "墨旱莲",
+      "file": "images/herbs/mohanlian.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "yuzhu",
+      "name": "玉竹",
+      "file": "images/herbs/yuzhu.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "huangjing",
+      "name": "黄精",
+      "file": "images/herbs/huangjing.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "shashen",
+      "name": "南沙参",
+      "file": "images/herbs/shashen.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "xiangru",
+      "name": "香薷",
+      "file": "images/herbs/xiangru.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "herb",
+      "id": "zelan",
+      "name": "泽兰",
+      "file": "images/herbs/zelan.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "根据物种/药用部位提示生成并裁切自植物学图谱；不是专业鉴定照片。"
+    },
+    {
+      "kind": "heritage",
+      "id": "zhenjiu",
+      "name": "针灸",
+      "file": "images/heritage/zhenjiu.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "文化场景概念插画，不代表历史影像记录。"
+    },
+    {
+      "kind": "heritage",
+      "id": "paozhi",
+      "name": "中药炮制技艺",
+      "file": "images/heritage/paozhi.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "文化场景概念插画，不代表历史影像记录。"
+    },
+    {
+      "kind": "heritage",
+      "id": "yuyu",
+      "name": "藏医药浴法",
+      "file": "images/heritage/yuyu.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "文化场景概念插画，不代表历史影像记录。"
+    },
+    {
+      "kind": "heritage",
+      "id": "zhenfa",
+      "name": "中医诊法",
+      "file": "images/heritage/zhenfa.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "文化场景概念插画，不代表历史影像记录。"
+    },
+    {
+      "kind": "heritage",
+      "id": "yangsheng",
+      "name": "中医养生",
+      "file": "images/heritage/yangsheng.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "文化场景概念插画，不代表历史影像记录。"
+    },
+    {
+      "kind": "heritage",
+      "id": "tongrentang",
+      "name": "同仁堂中医药文化",
+      "file": "images/heritage/tongrentang.jpg",
+      "sourceType": "AI 科普插画",
+      "source": "本项目生成",
+      "license": "PROJECT-EDUCATIONAL",
+      "note": "文化场景概念插画，不代表历史影像记录。"
+    }
+  ],
+  "missing": []
+}

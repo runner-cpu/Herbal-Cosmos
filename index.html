@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>本草宇宙 · HERBAL COSMOS</title>
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js" integrity="sha384-pPi0zxBAoDu6+JXW/C68UZLvBUUtU+7zonhif43rqj7pxsGyqyqzcian2Rj37Rss" crossorigin="anonymous"></script>
+<script src="assets/vendor/echarts.min.js"></script>
 <style>
 /* ============ 设计系统 ============ */
 :root{
@@ -258,6 +258,15 @@ nav{justify-content:center;overflow:visible}nav>a,nav summary{padding:8px 10px;b
 .atlas-toolbar{display:flex;align-items:center;gap:12px;margin:14px 0}.atlas-toolbar>span{font-size:12px;color:var(--ink-2)}.compare-tray{flex:1;min-height:38px;display:flex;align-items:center;gap:7px;padding:5px 10px;background:var(--paper-2);border-radius:4px;color:var(--ink-2);font-size:12px}.compare-tag{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);padding:3px 7px;border-radius:3px;color:var(--qing)}.atlas-toolbar button{border:0;background:var(--qing);color:#fff;border-radius:4px;padding:9px 13px}.atlas-toolbar button:disabled{opacity:.42;cursor:not-allowed}.compare-btn{border:1px solid var(--line);background:#fff;color:var(--qing);border-radius:4px;padding:5px 8px;font-size:12px}.compare-btn.on{background:var(--celadon);color:#fff;border-color:var(--celadon)}
 th{background:var(--paper-2)}td{border-color:var(--line)}tr.hoverable:hover{background:#EEF4F0}.herb-mobile-grid{display:none}.compare-panel{margin-top:28px;padding:24px 0;border-top:1px solid var(--line)}.compare-disclaimer{font-size:12px;color:var(--ink-2);margin-top:-8px}.compare-panel .chart-box{min-height:400px}
 .chart-panel{background:#fff;padding:20px}.chart-panel h3{font-size:18px}.chart-box{min-height:340px}.viz-inspector{display:grid;grid-template-columns:.7fr 1.3fr;gap:28px;align-items:start;margin-top:16px;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.viz-inspector>div>span{font-size:11px;color:var(--celadon);letter-spacing:1px}.viz-inspector>p{font-size:13px;color:var(--ink-2)}.inspector-herbs{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.inspector-herbs a{background:#fff;border:1px solid var(--line);padding:6px 9px;border-radius:4px;color:var(--qing);font-size:12px}
+.analysis-toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:8px 0 16px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.analysis-metrics{display:flex;gap:24px;align-items:center}.analysis-metric{display:grid;gap:2px}.analysis-metric strong{font-family:var(--serif);font-size:24px;color:var(--qing);line-height:1}.analysis-metric span{font-size:11px;color:var(--ink-2)}
+.analysis-controls{display:flex;gap:10px;align-items:center}.analysis-controls label{font-size:12px;color:var(--ink-2)}.analysis-controls select{margin-left:8px;min-width:150px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 30px 8px 10px;border-radius:4px}
+.analysis-dashboard{display:grid;grid-template-columns:1.3fr .7fr;gap:14px}.analysis-dashboard .chart-panel{min-width:0}.analysis-primary{grid-row:span 2}.analysis-wide{grid-column:1/-1}.analysis-dashboard .compact-chart{min-height:250px}.analysis-dashboard .wide-chart{min-height:390px}
+.viz-inspector.has-selection{background:linear-gradient(90deg,rgba(126,167,145,.08),transparent);padding-left:18px;padding-right:18px}.inspector-herbs a{display:inline-flex;align-items:center;gap:7px}.inspector-herbs img{width:30px;height:30px;object-fit:cover;border-radius:50%;border:1px solid var(--line)}
+.focus-workspace{display:grid;grid-template-columns:240px minmax(0,1fr) 300px;border:1px solid var(--line);background:#fff;min-height:590px}.syndrome-index{border-right:1px solid var(--line);padding:16px}.syndrome-search{width:100%;border:1px solid var(--line);background:var(--paper);padding:9px 10px;border-radius:4px;margin:8px 0 10px}.syndrome-list{display:grid;gap:3px;max-height:500px;overflow:auto}.syndrome-list button{border:0;background:transparent;text-align:left;padding:9px 10px;border-radius:4px;color:var(--ink);cursor:pointer}.syndrome-list button small{display:block;color:var(--ink-2);margin-top:2px}.syndrome-list button:hover,.syndrome-list button.active{background:var(--paper-2);color:var(--qing)}
+.syndrome-flow{padding:18px;min-width:0}.syndrome-flow-head{display:flex;justify-content:space-between;gap:16px;align-items:start;border-bottom:1px solid var(--line);padding-bottom:12px}.syndrome-flow-head h2{font-family:var(--serif);font-size:21px;color:var(--qing)}.syndrome-flow-head p{font-size:12px;color:var(--ink-2);margin-top:4px}.syndrome-flow-head .badge{white-space:nowrap}.syndrome-flow .chart-box{height:430px;min-height:430px}
+.syndrome-evidence{border-left:1px solid var(--line);padding:18px}.syndrome-evidence>span,.workspace-label{font-size:10px;letter-spacing:1px;color:var(--celadon);text-transform:uppercase}.syndrome-evidence h2{font-family:var(--serif);font-size:22px;color:var(--qing);margin:6px 0}.syndrome-evidence p{font-size:13px;color:var(--ink-2);line-height:1.75}.evidence-formula{padding:12px 0;border-top:1px solid var(--line)}.evidence-formula:first-of-type{margin-top:12px}.evidence-formula strong{display:block;color:var(--qing);font-family:var(--serif)}.evidence-herbs{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.evidence-herbs a{font-size:11px;color:var(--qing);background:var(--paper-2);padding:4px 6px;border-radius:3px}.source-link{font-size:12px;color:var(--qing-3);text-decoration:underline;text-underline-offset:3px}
+.heritage-ledger{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:8px 0 18px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--ink-2)}
 .graph-workspace{display:grid;grid-template-columns:220px minmax(0,1fr) 270px;min-height:650px;background:#fff;border:1px solid var(--line)}.graph-index,.graph-inspector{padding:20px}.graph-index{border-right:1px solid var(--line)}.graph-inspector{border-left:1px solid var(--line)}.graph-index label{display:grid;gap:6px;margin:14px 0;font-size:12px;color:var(--ink-2)}.graph-index select{width:100%;border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px;border-radius:4px}.network-stats{margin:10px 0 14px;color:var(--celadon);font-size:11px}.formula-index-list{display:grid;gap:2px;max-height:500px;overflow:auto}.formula-index-list button{display:flex;justify-content:space-between;align-items:center;text-align:left;border:0;background:transparent;padding:8px;border-radius:4px;color:var(--ink);font-size:12px}.formula-index-list button:hover,.formula-index-list button.active{background:var(--paper-2);color:var(--qing)}.formula-index-list small{color:var(--ink-2)}.graph-canvas{min-width:0}.graph-heading{display:flex;justify-content:space-between;align-items:start;padding:18px 20px 0}.graph-heading h3{font-family:var(--serif);color:var(--qing);font-size:18px}.graph-heading p{font-size:12px;color:var(--ink-2)}.graph-heading button{border:1px solid var(--line);background:#fff;color:var(--qing);padding:7px 10px;border-radius:4px}.graph-canvas .chart-box{height:585px}.graph-inspector h2{font-size:23px;margin-top:8px}.graph-inspector p{font-size:12.5px;color:var(--ink-2)}.inspector-source{margin:14px 0;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px}.composition-list{display:grid;gap:7px;margin-top:14px}.composition-row{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;font-size:12px}.composition-row b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--paper-2);color:var(--cha);font-size:11px}.composition-row span{color:var(--qing)}.composition-row small{color:var(--ink-2)}.formula-directory{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.formula-directory .formula-card{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;padding:16px}.formula-directory .formula-card:hover{background:var(--paper-2)}
 .formula-directory .formula-card{width:100%;text-align:left;font:inherit;color:var(--ink);cursor:pointer}.formula-directory .formula-card h3{margin:0}.formula-directory .formula-card p{color:var(--ink)}
 .learn-shell{grid-template-columns:1.3fr .7fr}.quiz-card{padding:28px}.quiz-option{border-radius:4px;background:#fff}.learn-list .card{border-radius:0;border-width:0 0 1px;background:transparent}.saved-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
@@ -300,6 +309,9 @@ body.night{--paper:#101814;--paper-2:#18251E;--card:#152019;--ink:#EFF5F0;--ink-
 .insight-strip{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0 8px}.insight-cell{background:var(--card);padding:16px}.insight-cell strong{display:block;font-family:var(--serif);font-size:22px;color:var(--qing)}.insight-cell span{font-size:11px;color:var(--ink-2)}.insight-cell:first-child{background:linear-gradient(135deg,var(--qing),var(--qing-2));color:#F3EDDF}.insight-cell:first-child strong,.insight-cell:first-child span{color:#F3EDDF}.data-note{font-size:11px;color:var(--ink-2);margin:8px 0 18px;padding-left:10px;border-left:2px solid var(--jin)}
 body.night .brand-mark{filter:drop-shadow(0 4px 14px rgba(208,162,76,.2))}body.night .evidence-rail,body.night .insight-cell,body.night .food-image,body.night .culture-image{background:var(--card)}body.night .image-frame{background:var(--paper-2)}body.night .quiz-option{background:var(--card);border-color:var(--line)}body.night .brand .t{color:#EFF5F0}body.night .insight-cell:first-child{background:linear-gradient(135deg,#173A30,#245B49)}
 body.night .card,body.night .chart-panel,body.night .table-wrap,body.night .prop,body.night .herb-mobile-card,body.night .quiz-card,body.night .saved-empty{background:var(--card);color:var(--ink)}body.night th{background:var(--paper-2);color:var(--ink)}body.night td{border-color:var(--line)}body.night .prop .v,body.night .chart-panel h3,body.night .detail-title h1,body.night .section-h,body.night .path-intro h2,body.night .section-heading-row h2{color:var(--qing)}body.night .quiz-option.correct{background:#214633;color:#d8f0df}body.night .quiz-option.wrong{background:#4a2926;color:#ffd9d3}
+body.night .analysis-controls select,body.night .focus-workspace,body.night .syndrome-search{background:var(--card);color:var(--ink)}body.night .focus-workspace{border-color:var(--line)}
+@media (max-width:960px){.analysis-dashboard{grid-template-columns:1fr}.analysis-primary{grid-row:auto}.analysis-wide{grid-column:auto}.focus-workspace{grid-template-columns:1fr}.syndrome-index{border-right:0;border-bottom:1px solid var(--line)}.syndrome-list{display:flex;max-height:none;overflow-x:auto}.syndrome-list button{min-width:150px}.syndrome-evidence{border-left:0;border-top:1px solid var(--line)}}
+@media (max-width:640px){.analysis-toolbar{align-items:flex-start;flex-direction:column}.analysis-metrics{width:100%;justify-content:space-between;gap:10px}.analysis-metric strong{font-size:20px}.analysis-controls{width:100%}.analysis-controls label{display:grid;grid-template-columns:auto 1fr;align-items:center;width:100%}.analysis-controls select{width:100%;min-width:0}.analysis-dashboard .chart-box{min-height:300px}.analysis-dashboard .wide-chart{min-height:360px}.syndrome-flow{padding:14px}.syndrome-flow .chart-box{height:370px;min-height:370px}.heritage-ledger{align-items:flex-start;flex-direction:column}}
 @media (max-width:768px){.theme-toggle{display:inline-flex;font-size:0;padding:6px 8px}.theme-toggle .theme-icon{font-size:15px}.language-toggle{display:inline-flex;padding:6px 8px}.brand-mark{width:34px;height:34px}.detail-visual{grid-template-columns:1fr;gap:12px}.detail-visual .image-frame{min-height:210px}.featured-herb .image-frame{height:112px}.food-image{height:138px}.insight-strip{grid-template-columns:1fr 1fr}.insight-cell:first-child{grid-column:1/-1}.hero::before{display:none}}
 </style>
 </head>
@@ -360,7 +372,7 @@ body.night .card,body.night .chart-panel,body.night .table-wrap,body.night .prop
       </div>
 
       <div class="hero-bottom">
-        <div class="insight-strip" aria-label="数据摘要"><div class="insight-cell"><strong>18,817</strong><span>中药资源星辰</span></div><div class="insight-cell"><strong>99</strong><span>药典常用药</span></div><div class="insight-cell"><strong>20</strong><span>关系网络方剂</span></div><div class="insight-cell"><strong>5</strong><span>学习路径步骤</span></div></div>
+        <div class="insight-strip" aria-label="数据摘要"><div class="insight-cell"><strong>18,817</strong><span>中药资源星辰</span></div><div class="insight-cell"><strong>144</strong><span>可交互本草样本</span></div><div class="insight-cell"><strong>20</strong><span>关系网络方剂</span></div><div class="insight-cell"><strong>5</strong><span>学习路径步骤</span></div></div>
         <p class="data-note" data-i18n="data.note">图表展示代表性数据集中的关系与分布，不表示药效强弱或临床推荐。</p>
         <div class="learning-path">
           <div class="path-intro"><span>LEARNING JOURNEY</span><h2 data-i18n="home.journey">从一味药，走进本草世界</h2><p data-i18n="home.journeyDesc">五步完成认识、理解、关联与复习。进度仅保存在本机。</p><button onclick="location.hash='#/learn'" data-i18n="home.start">开始今日学习</button></div>
@@ -434,12 +446,14 @@ body.night .card,body.night .chart-panel,body.night .table-wrap,body.night .prop
     <section class="page" data-route="qiwei">
       <div class="eyebrow">Qi · Wei · Meridian</div>
       <h1 class="title">性味归经图谱</h1>
-      <p class="page-intro">四气（寒热温凉平）与五味（酸苦甘辛咸）是中药药性的骨架，归经则标定作用部位。两个视角读同一套药性数据。</p>
-      <div class="chart-grid">
-        <div class="chart-panel"><h3>四气 × 五味 矩阵</h3><div class="cap">颜色越深，属该"气-味"组合的代表药材越多</div><div class="chart-box" id="qiweiMatrixChart"></div></div>
-        <div class="chart-panel"><h3>四气分布玫瑰</h3><div class="cap">九种药性（寒热温凉平）在代表药材中的占比</div><div class="chart-box" id="qiRoseChart"></div></div>
-        <div class="chart-panel"><h3>五味分布条形</h3><div class="cap">酸苦甘辛咸各收录多少味药材</div><div class="chart-box" id="weiBarChart"></div></div>
-        <div class="chart-panel"><h3>归经分布总览</h3><div class="cap">代表药材归经的累计次数</div><div class="chart-box" id="meridianBarChart"></div></div>
+      <p class="page-intro">把同一组代表药材拆成五个互相联动的读法：组合、归经、寒热、五味与共现关系。所有数字都来自当前可交互样本，不代表药效强弱或临床推荐。</p>
+      <div class="analysis-toolbar"><div class="analysis-metrics"><div class="analysis-metric"><strong id="qiweiSampleCount">144</strong><span>当前样本</span></div><div class="analysis-metric"><strong id="qiweiCategoryCount">—</strong><span>功效类别</span></div><div class="analysis-metric"><strong id="qiweiMeridianCount">—</strong><span>归经标签</span></div></div><div class="analysis-controls"><label for="qiweiCatFilter">筛选类别<select id="qiweiCatFilter"><option value="">全部类别</option></select></label></div></div>
+      <div class="analysis-dashboard">
+        <div class="chart-panel analysis-primary"><h3>四气 × 五味矩阵</h3><div class="cap">颜色与数字表示当前筛选下的药材数，点击单元格查看证据。</div><div class="chart-box wide-chart" id="qiweiMatrixChart"></div></div>
+        <div class="chart-panel"><h3>归经分布排行</h3><div class="cap">按归经标签累计计数，点击一项反查本草。</div><div class="chart-box compact-chart" id="meridianBarChart"></div></div>
+        <div class="chart-panel"><h3>四气占比</h3><div class="cap">从寒到热的当前样本分布。</div><div class="chart-box compact-chart" id="qiRoseChart"></div></div>
+        <div class="chart-panel"><h3>五味分布</h3><div class="cap">复合五味会分别计入对应味型。</div><div class="chart-box compact-chart" id="weiBarChart"></div></div>
+        <div class="chart-panel analysis-wide"><h3>药材共现关系</h3><div class="cap">从同一归经中抽取高频药材对，帮助发现属性相近的本草群。</div><div class="chart-box wide-chart" id="qiweiFlowChart"></div></div>
       </div>
       <div class="viz-inspector" id="qiweiInspector"><div><span>点击图表继续探索</span><h2>从分布回到每一味药</h2></div><p>点击热力矩阵中的气味组合，或点击归经柱形，即可查看对应药材并跳转知识卡。</p></div>
     </section>
@@ -458,10 +472,8 @@ body.night .card,body.night .chart-panel,body.night .table-wrap,body.night .prop
     <section class="page" data-route="zheng">
       <div class="eyebrow">Pattern · Formula · Herb</div>
       <h1 class="title">病证 · 方剂 · 药材</h1>
-      <p class="page-intro">中医辨证论治的思维链：从证候出发，选方、遣药。点击任一节点可查看详情。</p>
-      <div class="chart-panel"><h3>证 → 方 → 药 关系流</h3><div class="cap">选择证候可展开其对应方剂与核心药物（桑基图，方向自左向右）</div><div class="chart-box" id="zhengSankey" style="min-height:420px;"></div></div>
-      <div class="section-h">常见证候一览</div>
-      <div class="grid g4" id="zhengCards"></div>
+      <p class="page-intro">从一个证候开始，逐级查看推荐方剂与核心药物。默认只展开当前证候的 2–3 首方剂和每方 5 味核心药，避免把所有关系压在一张图上。</p>
+      <div class="focus-workspace"><aside class="syndrome-index"><div class="workspace-label">证候索引 · 18</div><input class="syndrome-search" id="syndromeSearch" type="search" placeholder="搜索证候"><div class="syndrome-list" id="zhengIndex"></div></aside><section class="syndrome-flow"><div class="syndrome-flow-head"><div><h2 id="zhengFocusTitle">选择一个证候</h2><p id="zhengFocusDesc">从左侧选择证候，查看证—方—药的最短阅读路径。</p></div><span class="badge celadon" id="zhengFocusCount">—</span></div><div class="chart-box" id="zhengSankey"></div></section><aside class="syndrome-evidence" id="zhengEvidence"><span>证据检查器</span><h2>从证候开始</h2><p>选中证候后，这里会展示出处、方剂数量与核心药材。点击药材名称可进入本草知识卡。</p></aside></div>
     </section>
 
     <!-- ============ 典籍时光 ============ -->
@@ -494,6 +506,7 @@ body.night .card,body.night .chart-panel,body.night .table-wrap,body.night .prop
         <p class="muted" style="font-size:13.5px;">本应用为数据可视化与文化科普项目，以公开权威数据为底座（第四次全国中药资源普查、〈本草纲目〉、〈中国药典〉2020、国家卫健委药食同源目录等），将中医药文化组织为可漫游的知识图谱。首页星尘为全量资源分布的氛围示意，不代表具体点位；精品层代表药材与全部方剂、典籍、证候数据均来自公开经典文献，可追溯。</p>
       </div>
       <div class="section-h">来源与方法</div>
+      <div class="heritage-ledger"><span>本页面图片优先采用 Openverse 聚合的 Wikimedia Commons、iNaturalist、Flickr CC 等开放许可资源，逐图保存作者、来源与许可。</span><a class="source-link" href="IMAGE_SOURCES.md" target="_blank" rel="noreferrer">查看图片来源清单 →</a></div>
       <div class="method-grid"><div class="method-item"><strong>知识图谱思路</strong><span>参考开源 TCM 图谱项目，将“证—方—药—来源”组织成可追溯关系。</span></div><div class="method-item"><strong>数据分层</strong><span>代表性药材用于浏览器交互，全量统计用于宏观叙事，避免图表拥挤。</span></div><div class="method-item"><strong>阅读边界</strong><span>内容用于文化科普与学习，不替代诊疗、处方或个体化用药建议。</span></div></div>
     </section>
   </main>
@@ -620,7 +633,52 @@ const HERBS = [
   {id:'baiziren', name:'柏子仁', pinyin:'baiziren', latin:'Platycladus orientalis', qi:'平', wei:'甘', meridian:['心','肾','大肠'], cat:'安神药', eff:'养心安神，润肠通便，止汗', food:false, source:'cp2020', note:'柏子养心丸主药。'},
   {id:'heshouwu', name:'何首乌', pinyin:'heshouwu', latin:'Fallopia multiflora', qi:'微温', wei:'苦甘', meridian:['肝','心','肾'], cat:'补虚药', eff:'解毒消痈，润肠通便；制首乌补肝肾、益精血', food:false, source:'cp2020', note:'生熟异治，制用为补益。'},
   {id:'ejiao', name:'阿胶', pinyin:'ejiao', latin:'Asini Corii Colla', qi:'平', wei:'甘', meridian:['肺','肝','肾'], cat:'补虚药', eff:'补血滋阴，润燥止血', food:false, source:'cp2020', note:'驴皮熬制，补血要药，烊化冲服。'},
-  {id:'shihu', name:'石斛', pinyin:'shihu', latin:'Dendrobium nobile', qi:'微寒', wei:'甘', meridian:['胃','肾'], cat:'补虚药', eff:'益胃生津，滋阴清热', food:false, source:'cp2020', note:'铁皮石斛为道地，滋阴清热。'}
+  {id:'shihu', name:'石斛', pinyin:'shihu', latin:'Dendrobium nobile', qi:'微寒', wei:'甘', meridian:['胃','肾'], cat:'补虚药', eff:'益胃生津，滋阴清热', food:false, source:'cp2020', note:'铁皮石斛为道地，滋阴清热。'},
+  {id:'banlangen', name:'板蓝根', pinyin:'banlangen', latin:'Isatis indigotica', qi:'寒', wei:'苦', meridian:['心','胃'], cat:'清热药', eff:'清热解毒，凉血利咽', food:false, source:'cp2020', note:'十字花科植物菘蓝的干燥根。'},
+  {id:'sangye', name:'桑叶', pinyin:'sangye', latin:'Morus alba', qi:'寒', wei:'甘苦', meridian:['肺','肝'], cat:'解表药', eff:'疏散风热，清肺润燥，清肝明目', food:false, source:'cp2020', note:'桑科植物桑的干燥叶，宜霜后采收。'},
+  {id:'niubangzi', name:'牛蒡子', pinyin:'niubangzi', latin:'Arctium lappa', qi:'寒', wei:'辛苦', meridian:['肺','胃'], cat:'解表药', eff:'疏散风热，宣肺透疹，解毒利咽', food:false, source:'cp2020', note:'牛蒡的干燥成熟果实。'},
+  {id:'jingjie', name:'荆芥', pinyin:'jingjie', latin:'Schizonepeta tenuifolia', qi:'微温', wei:'辛', meridian:['肺','肝'], cat:'解表药', eff:'解表散风，透疹，消疮', food:false, source:'cp2020', note:'穗入药称荆芥穗，炒炭后偏于止血。'},
+  {id:'zisunye', name:'紫苏叶', pinyin:'zisunye', latin:'Perilla frutescens', qi:'温', wei:'辛', meridian:['肺','脾'], cat:'解表药', eff:'解表散寒，行气和胃', food:true, source:'cp2020', note:'药食同源，叶、梗、子功用各有侧重。'},
+  {id:'baizhi', name:'白芷', pinyin:'baizhi', latin:'Angelica dahurica', qi:'温', wei:'辛', meridian:['肺','胃','大肠'], cat:'解表药', eff:'解表散寒，祛风止痛，宣通鼻窍，燥湿止带', food:false, source:'cp2020', note:'伞形科植物白芷或杭白芷的根。'},
+  {id:'xinyi', name:'辛夷', pinyin:'xinyi', latin:'Magnolia biondii', qi:'温', wei:'辛', meridian:['肺','胃'], cat:'解表药', eff:'散风寒，通鼻窍', food:false, source:'cp2020', note:'木兰科植物望春花等的干燥花蕾。'},
+  {id:'xiakucao', name:'夏枯草', pinyin:'xiakucao', latin:'Prunella vulgaris', qi:'寒', wei:'辛苦', meridian:['肝','胆'], cat:'清热药', eff:'清肝泻火，明目，散结消肿', food:false, source:'cp2020', note:'唇形科植物夏枯草的干燥果穗。'},
+  {id:'juemingzi', name:'决明子', pinyin:'juemingzi', latin:'Senna tora', qi:'微寒', wei:'甘苦咸', meridian:['肝','大肠'], cat:'清热药', eff:'清热明目，润肠通便', food:true, source:'cp2020', note:'药食同源，豆科植物决明或小决明的成熟种子。'},
+  {id:'lugen', name:'芦根', pinyin:'lugen', latin:'Phragmites australis', qi:'寒', wei:'甘', meridian:['肺','胃'], cat:'清热药', eff:'清热泻火，生津止渴，除烦止呕，利尿', food:false, source:'cp2020', note:'芦苇的新鲜或干燥根茎。'},
+  {id:'tianhuafen', name:'天花粉', pinyin:'tianhuafen', latin:'Trichosanthes kirilowii', qi:'微寒', wei:'甘苦', meridian:['肺','胃'], cat:'清热药', eff:'清热泻火，生津止渴，消肿排脓', food:false, source:'cp2020', note:'栝楼的干燥根，与瓜蒌取自同一植物的不同部位。'},
+  {id:'kushen', name:'苦参', pinyin:'kushen', latin:'Sophora flavescens', qi:'寒', wei:'苦', meridian:['心','肝','胃','大肠','膀胱'], cat:'清热药', eff:'清热燥湿，杀虫，利尿', food:false, source:'cp2020', note:'豆科植物苦参的干燥根。'},
+  {id:'longdan', name:'龙胆', pinyin:'longdan', latin:'Gentiana scabra', qi:'寒', wei:'苦', meridian:['肝','胆'], cat:'清热药', eff:'清热燥湿，泻肝胆火', food:false, source:'cp2020', note:'龙胆科植物龙胆等的根和根茎。'},
+  {id:'jinqiancao', name:'金钱草', pinyin:'jinqiancao', latin:'Lysimachia christinae', qi:'微寒', wei:'甘咸', meridian:['肝','胆','肾','膀胱'], cat:'利水渗湿药', eff:'利湿退黄，利尿通淋，解毒消肿', food:false, source:'cp2020', note:'报春花科植物过路黄的干燥全草。'},
+  {id:'haijinsha', name:'海金沙', pinyin:'haijinsha', latin:'Lygodium japonicum', qi:'寒', wei:'甘咸', meridian:['膀胱','小肠'], cat:'利水渗湿药', eff:'清利湿热，通淋止痛', food:false, source:'cp2020', note:'海金沙科植物海金沙的成熟孢子。'},
+  {id:'peilan', name:'佩兰', pinyin:'peilan', latin:'Eupatorium fortunei', qi:'平', wei:'辛', meridian:['脾','胃','肺'], cat:'化湿药', eff:'芳香化湿，醒脾开胃，发表解暑', food:false, source:'cp2020', note:'菊科植物佩兰的干燥地上部分。'},
+  {id:'caoguo', name:'草果', pinyin:'caoguo', latin:'Lanxangia tsao-ko', qi:'温', wei:'辛', meridian:['脾','胃'], cat:'化湿药', eff:'燥湿温中，截疟除痰', food:true, source:'cp2020', note:'药食两用香料，来源为草果的干燥成熟果实。'},
+  {id:'laifuzi', name:'莱菔子', pinyin:'laifuzi', latin:'Raphanus sativus', qi:'平', wei:'辛甘', meridian:['肺','脾','胃'], cat:'消食药', eff:'消食除胀，降气化痰', food:false, source:'cp2020', note:'萝卜的干燥成熟种子。'},
+  {id:'qingpi', name:'青皮', pinyin:'qingpi', latin:'Citrus reticulata', qi:'温', wei:'苦辛', meridian:['肝','胆','胃'], cat:'理气药', eff:'疏肝破气，消积化滞', food:false, source:'cp2020', note:'橘及其栽培变种的幼果或未成熟果皮。'},
+  {id:'jianghuang', name:'姜黄', pinyin:'jianghuang', latin:'Curcuma longa', qi:'温', wei:'辛苦', meridian:['脾','肝'], cat:'活血化瘀药', eff:'破血行气，通经止痛', food:false, source:'cp2020', note:'姜科植物姜黄的干燥根茎。'},
+  {id:'ruxiang', name:'乳香', pinyin:'ruxiang', latin:'Boswellia sacra', qi:'温', wei:'辛苦', meridian:['心','肝','脾'], cat:'活血化瘀药', eff:'活血定痛，消肿生肌', food:false, source:'cp2020', note:'乳香树属植物渗出的油胶树脂。'},
+  {id:'moyao', name:'没药', pinyin:'moyao', latin:'Commiphora myrrha', qi:'平', wei:'辛苦', meridian:['心','肝','脾'], cat:'活血化瘀药', eff:'散瘀定痛，消肿生肌', food:false, source:'cp2020', note:'地丁树或哈地丁树渗出的油胶树脂。'},
+  {id:'baiji', name:'白及', pinyin:'baiji', latin:'Bletilla striata', qi:'微寒', wei:'苦甘涩', meridian:['肺','肝','胃'], cat:'止血药', eff:'收敛止血，消肿生肌', food:false, source:'cp2020', note:'兰科植物白及的干燥块茎。'},
+  {id:'banzhilian', name:'半枝莲', pinyin:'banzhilian', latin:'Scutellaria barbata', qi:'寒', wei:'辛苦', meridian:['肺','肝','肾'], cat:'清热药', eff:'清热解毒，化瘀利尿', food:false, source:'cp2020', note:'唇形科植物半枝莲的干燥全草。'},
+  {id:'baihuasheshecao', name:'白花蛇舌草', pinyin:'baihuasheshecao', latin:'Hedyotis diffusa', qi:'寒', wei:'微苦甘', meridian:['胃','大肠','小肠'], cat:'清热药', eff:'清热解毒，利湿通淋', food:false, source:'cp2020', note:'茜草科植物白花蛇舌草的全草。'},
+  {id:'tufuling', name:'土茯苓', pinyin:'tufuling', latin:'Smilax glabra', qi:'平', wei:'甘淡', meridian:['肝','胃'], cat:'清热药', eff:'解毒，除湿，通利关节', food:false, source:'cp2020', note:'菝葜科植物光叶菝葜的干燥根茎。'},
+  {id:'daqingye', name:'大青叶', pinyin:'daqingye', latin:'Isatis indigotica', qi:'寒', wei:'苦', meridian:['心','胃'], cat:'清热药', eff:'清热解毒，凉血消斑', food:false, source:'cp2020', note:'菘蓝的干燥叶，与板蓝根同源异部位。'},
+  {id:'machixian', name:'马齿苋', pinyin:'machixian', latin:'Portulaca oleracea', qi:'寒', wei:'酸', meridian:['肝','大肠'], cat:'清热药', eff:'清热解毒，凉血止血，止痢', food:true, source:'cp2020', note:'药食同源，马齿苋科植物马齿苋的地上部分。'},
+  {id:'puhuang', name:'蒲黄', pinyin:'puhuang', latin:'Typha angustifolia', qi:'平', wei:'甘', meridian:['肝','心包'], cat:'止血药', eff:'止血，化瘀，通淋', food:false, source:'cp2020', note:'香蒲科植物水烛香蒲等的花粉。'},
+  {id:'huaihua', name:'槐花', pinyin:'huaihua', latin:'Styphnolobium japonicum', qi:'微寒', wei:'苦', meridian:['肝','大肠'], cat:'止血药', eff:'凉血止血，清肝泻火', food:false, source:'cp2020', note:'豆科植物槐的花及花蕾。'},
+  {id:'xianhecao', name:'仙鹤草', pinyin:'xianhecao', latin:'Agrimonia pilosa', qi:'平', wei:'苦涩', meridian:['心','肝'], cat:'止血药', eff:'收敛止血，截疟，止痢，解毒，补虚', food:false, source:'cp2020', note:'蔷薇科植物龙芽草的干燥地上部分。'},
+  {id:'wangbuliuxing', name:'王不留行', pinyin:'wangbuliuxing', latin:'Vaccaria hispanica', qi:'平', wei:'苦', meridian:['肝','胃'], cat:'活血化瘀药', eff:'活血通经，下乳消肿，利尿通淋', food:false, source:'cp2020', note:'石竹科植物麦蓝菜的成熟种子。'},
+  {id:'chuanxinlian', name:'穿心莲', pinyin:'chuanxinlian', latin:'Andrographis paniculata', qi:'寒', wei:'苦', meridian:['心','肺','大肠','膀胱'], cat:'清热药', eff:'清热解毒，凉血，消肿', food:false, source:'cp2020', note:'爵床科植物穿心莲的地上部分。'},
+  {id:'wujiaipi', name:'五加皮', pinyin:'wujiaipi', latin:'Eleutherococcus nodiflorus', qi:'温', wei:'辛苦', meridian:['肝','肾'], cat:'祛风湿药', eff:'祛风除湿，补益肝肾，强筋壮骨，利水消肿', food:false, source:'cp2020', note:'五加科植物细柱五加的根皮。'},
+  {id:'duzhong', name:'杜仲', pinyin:'duzhong', latin:'Eucommia ulmoides', qi:'温', wei:'甘', meridian:['肝','肾'], cat:'补虚药', eff:'补肝肾，强筋骨，安胎', food:false, source:'cp2020', note:'杜仲科植物杜仲的干燥树皮。'},
+  {id:'xuduan', name:'续断', pinyin:'xuduan', latin:'Dipsacus asper', qi:'微温', wei:'苦辛', meridian:['肝','肾'], cat:'补虚药', eff:'补肝肾，强筋骨，续折伤，止崩漏', food:false, source:'cp2020', note:'川续断科植物川续断的根。'},
+  {id:'tusizi', name:'菟丝子', pinyin:'tusizi', latin:'Cuscuta chinensis', qi:'温', wei:'辛甘', meridian:['肝','肾','脾'], cat:'补虚药', eff:'补益肝肾，固精缩尿，安胎，明目，止泻', food:false, source:'cp2020', note:'旋花科植物菟丝子的成熟种子。'},
+  {id:'yinyanghuo', name:'淫羊藿', pinyin:'yinyanghuo', latin:'Epimedium brevicornu', qi:'温', wei:'辛甘', meridian:['肝','肾'], cat:'补虚药', eff:'补肾阳，强筋骨，祛风湿', food:false, source:'cp2020', note:'小檗科淫羊藿属多种植物的干燥叶。'},
+  {id:'nvzhenzi', name:'女贞子', pinyin:'nvzhenzi', latin:'Ligustrum lucidum', qi:'凉', wei:'甘苦', meridian:['肝','肾'], cat:'补虚药', eff:'滋补肝肾，明目乌发', food:false, source:'cp2020', note:'木犀科植物女贞的成熟果实。'},
+  {id:'mohanlian', name:'墨旱莲', pinyin:'mohanlian', latin:'Eclipta prostrata', qi:'寒', wei:'甘酸', meridian:['肝','肾'], cat:'补虚药', eff:'滋补肝肾，凉血止血', food:false, source:'cp2020', note:'菊科植物鳢肠的干燥地上部分。'},
+  {id:'yuzhu', name:'玉竹', pinyin:'yuzhu', latin:'Polygonatum odoratum', qi:'微寒', wei:'甘', meridian:['肺','胃'], cat:'补虚药', eff:'养阴润燥，生津止渴', food:true, source:'cp2020', note:'药食同源，百合科植物玉竹的根茎。'},
+  {id:'huangjing', name:'黄精', pinyin:'huangjing', latin:'Polygonatum sibiricum', qi:'平', wei:'甘', meridian:['脾','肺','肾'], cat:'补虚药', eff:'补气养阴，健脾，润肺，益肾', food:true, source:'cp2020', note:'药食同源，蒸制后应用。'},
+  {id:'shashen', name:'南沙参', pinyin:'nanshashen', latin:'Adenophora stricta', qi:'微寒', wei:'甘', meridian:['肺','胃'], cat:'补虚药', eff:'养阴清肺，益胃生津，化痰，益气', food:false, source:'cp2020', note:'桔梗科植物轮叶沙参或沙参的根。'},
+  {id:'xiangru', name:'香薷', pinyin:'xiangru', latin:'Mosla chinensis', qi:'微温', wei:'辛', meridian:['肺','胃'], cat:'解表药', eff:'发汗解表，化湿和中，利水消肿', food:false, source:'cp2020', note:'唇形科植物石香薷的干燥地上部分。'},
+  {id:'zelan', name:'泽兰', pinyin:'zelan', latin:'Lycopus lucidus', qi:'微温', wei:'苦辛', meridian:['肝','脾'], cat:'活血化瘀药', eff:'活血调经，祛瘀消痈，利水消肿', food:false, source:'cp2020', note:'唇形科植物毛叶地瓜儿苗的地上部分。'}
 ];
 
 // 本草图像系统：每味药材对应一张独立的真实药材/原植物照片（开源渠道检索、图床代理直链），按 id 精确映射，不再多味共用同一张图。
@@ -707,7 +765,7 @@ function herbPlaceholder(label){
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='#E8EDE8'/><path d='M200 60 C170 120 170 180 200 240 M200 120 C180 140 160 150 140 150 M200 160 C220 180 240 190 260 190' stroke='#719E87' stroke-width='3' fill='none' stroke-linecap='round'/><text x='200' y='158' font-size='54' fill='#103F34' text-anchor='middle' font-family='serif'>${label||'药'}</text></svg>`;
   return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
 }
-HERBS.forEach(h=>{ h.image=HERB_IMAGES[h.id]||herbPlaceholder(h.name.slice(0,1)); h.imageAlt=h.name+' · 药材原图（开源渠道）'; });
+HERBS.forEach(h=>{ h.image=HERB_IMAGES[h.id]||`images/herbs/${h.id}.jpg`; h.imageAlt=h.name+' · 本草科普图像（请以专业鉴定为准）'; });
 
 const FORMULAS = [
   {id:'liuweidihuang', name:'六味地黄丸', from:'《小儿药证直诀》', zheng:'肝肾阴虚证', eff:'滋补肝肾', herbs:[['shudi','24g','君'],['shanzhuyu','12g','臣'],['shanyao','12g','臣'],['zexie','9g','佐'],['mudanpi','9g','佐'],['fuling','9g','佐']]},
@@ -1296,13 +1354,20 @@ function renderHerb(id){
 function renderQiwei(){
   if(typeof echarts === 'undefined'){ return; }
   const p=chartPalette();
-  // 四气×五味矩阵热力
+  const categorySelect=$('#qiweiCatFilter');
+  const categories=[...new Set(HERBS.map(h=>h.cat))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+  if(categorySelect){ categorySelect.innerHTML='<option value="">全部类别</option>'+categories.map(cat=>`<option value="${esc(cat)}">${esc(cat)}</option>`).join(''); categorySelect.value=store._qiweiCat||''; if(categorySelect.dataset.bound!=='1'){ categorySelect.addEventListener('change',()=>{ store._qiweiCat=categorySelect.value; renderQiwei(); }); categorySelect.dataset.bound='1'; } }
+  const active=store._qiweiCat||'';
+  const herbs=active?HERBS.filter(h=>h.cat===active):HERBS;
+  const catCount=$('#qiweiCategoryCount'); if(catCount) catCount.textContent=new Set(herbs.map(h=>h.cat)).size;
+  const sampleCount=$('#qiweiSampleCount'); if(sampleCount) sampleCount.textContent=herbs.length;
+  const meridianCount=$('#qiweiMeridianCount'); if(meridianCount) meridianCount.textContent=new Set(herbs.flatMap(h=>h.meridian)).size;
   const qis=['大寒','寒','微寒','凉','平','微温','温','热','大热'];
   const weis=['酸','苦','甘','辛','咸'];
   const qiPos={}, weiPos={};
   qis.forEach((q,i)=>qiPos[q]=i); weis.forEach((w,i)=>weiPos[w]=i);
   const mat = [];
-  HERBS.forEach(h=>{
+  herbs.forEach(h=>{
     const q=qiPos[h.qi], w=weiPos[h.wei];
     if(q==null||w==null) return;
     const cell = mat.find(m=>m[0]===q&&m[1]===w);
@@ -1315,25 +1380,23 @@ function renderQiwei(){
     grid:{left:54,right:16,top:14,bottom:40},
     xAxis:{type:'category', data:weis, name:'五味', nameLocation:'middle', nameGap:26, nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11}},
     yAxis:{type:'category', data:qis, name:'四气', nameLocation:'middle', nameGap:38, nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11}},
-    visualMap:{min:0,max:6,calculable:false,orient:'horizontal',left:'center',bottom:0,textStyle:{color:p.muted,fontSize:10},inRange:{color:['#E8F0EB',p.jin,p.cha||'#A96032']}},
+    visualMap:{min:0,max:Math.max(5,...mat.map(m=>m[2])),calculable:false,orient:'horizontal',left:'center',bottom:0,textStyle:{color:p.muted,fontSize:10},inRange:{color:['#E8F0EB',p.jin,p.cha||'#A96032']}},
     series:[{type:'heatmap', data:mat, itemStyle:{borderColor:p.card,borderWidth:2}, label:{show:true, formatter:item=>item.value[2]||'', color:p.text,fontSize:11}}]
   });
 
-  // 归经分布
   const meridians = ['心','肝','脾','肺','肾','胃','胆','膀胱','大肠','小肠','三焦','心包'];
-  const counts = meridians.map(m=>({name:m+'经', value:HERBS.filter(h=>h.meridian.includes(m)).length}));
+  const counts = meridians.map(m=>({name:m+'经', value:herbs.filter(h=>h.meridian.includes(m)).length})).filter(c=>c.value>0).sort((a,b)=>b.value-a.value);
   const bChart = chartManager.register('meridianBar', echarts.init(document.getElementById('meridianBarChart')), document.getElementById('meridianBarChart'));
   bChart.setOption({
     backgroundColor:'transparent',
     tooltip:{trigger:'axis', confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}},
-    grid:{left:46,right:16,top:10,bottom:40},
-    xAxis:{type:'category', data:counts.map(c=>c.name), axisLabel:{color:p.muted,fontSize:10.5,rotate:40}, axisLine:{lineStyle:{color:p.line}}},
-    yAxis:{type:'value', minInterval:1, axisLabel:{color:p.muted,fontSize:11}, splitLine:{lineStyle:{color:p.line}}},
-    series:[{type:'bar', data:counts.map(c=>c.value), barWidth:'55%', itemStyle:{color:p.celadon,borderRadius:[5,5,0,0]}, label:{show:true, position:'top', color:p.text,fontSize:11}}]
+    grid:{left:58,right:18,top:12,bottom:20},
+    xAxis:{type:'value', minInterval:1, axisLabel:{color:p.muted,fontSize:11}, splitLine:{lineStyle:{color:p.line}}},
+    yAxis:{type:'category', data:counts.map(c=>c.name), axisLabel:{color:p.muted,fontSize:11}, axisLine:{lineStyle:{color:p.line}}},
+    series:[{type:'bar', data:counts.map(c=>c.value), barWidth:'56%', itemStyle:{color:p.celadon,borderRadius:[0,5,5,0]}, label:{show:true, position:'right', color:p.text,fontSize:11}}]
   });
-  // 四气分布玫瑰图
   const qiOrder=['大寒','寒','微寒','凉','平','微温','温','热','大热'];
-  const qiCount=qiOrder.map(q=>({name:q, value:HERBS.filter(h=>h.qi===q).length})).filter(d=>d.value>0);
+  const qiCount=qiOrder.map(q=>({name:q, value:herbs.filter(h=>h.qi===q).length})).filter(d=>d.value>0);
   const rose=chartManager.register('qiRose', echarts.init(document.getElementById('qiRoseChart')), document.getElementById('qiRoseChart'));
   rose.setOption({
     backgroundColor:'transparent',
@@ -1343,11 +1406,9 @@ function renderQiwei(){
       itemStyle:{borderColor:p.card,borderWidth:1.5},
       color:[p.qing,p.celadon,p.cha||'#A96032',p.jin,p.cinnabar,'#4A806C','#8D7651','#B84B3E','#5C4A2E']}]
   });
-  rose.on('click', params=>{ const q=params.name; const list=HERBS.filter(h=>h.qi===q); showInspector(q+'性', q+'性的代表药材', list); });
-
-  // 五味分布条形
+  rose.on('click', params=>{ const q=params.name; const list=herbs.filter(h=>h.qi===q); showInspector(q+'性', q+'性的代表药材', list); });
   const weiOrder=['酸','苦','甘','辛','咸'];
-  const weiData=weiOrder.map(w=>({name:w+'味', value:HERBS.filter(h=>h.wei===w).length}));
+  const weiData=weiOrder.map(w=>({name:w+'味', value:herbs.filter(h=>h.wei.includes(w)).length}));
   const wb=chartManager.register('weiBar', echarts.init(document.getElementById('weiBarChart')), document.getElementById('weiBarChart'));
   wb.setOption({
     backgroundColor:'transparent',
@@ -1357,24 +1418,38 @@ function renderQiwei(){
     yAxis:{type:'value', minInterval:1, axisLabel:{color:p.muted,fontSize:11}, splitLine:{lineStyle:{color:p.line}}},
     series:[{type:'bar', data:weiData.map(d=>d.value), barWidth:'52%', itemStyle:{color:p.jin,borderRadius:[5,5,0,0]}, label:{show:true,position:'top',color:p.text,fontSize:11}}]
   });
-  wb.on('click', params=>{ const w=weiOrder[params.dataIndex]; const list=HERBS.filter(h=>h.wei===w); showInspector(w+'味', w+'味的代表药材', list); });
+  wb.on('click', params=>{ const w=weiOrder[params.dataIndex]; const list=herbs.filter(h=>h.wei.includes(w)); showInspector(w+'味', w+'味的代表药材', list); });
+
+  const pairs=new Map();
+  herbs.forEach(h=>h.meridian.forEach(mer=>{
+    herbs.filter(other=>other!==h&&other.meridian.includes(mer)).forEach(other=>{
+      const key=[h.id,other.id].sort().join('|'); pairs.set(key,(pairs.get(key)||0)+1);
+    });
+  }));
+  const topPairs=[...pairs.entries()].sort((a,b)=>b[1]-a[1]).slice(0,18);
+  const flowNodes=[...new Set(topPairs.flatMap(([key])=>key.split('|')))].map(id=>({id,name:herbName(id),symbolSize:Math.min(30,12+(pairs.get(topPairs.find(([key])=>key.includes(id))?.[0])||1)*2),itemStyle:{color:p.celadon}}));
+  const flowLinks=topPairs.map(([key,value])=>{const [source,target]=key.split('|');return {source,target,value,lineStyle:{width:Math.min(6,1+value/2),opacity:.38}};});
+  const flow=chartManager.register('qiweiFlow', echarts.init(document.getElementById('qiweiFlowChart')), document.getElementById('qiweiFlowChart'));
+  flow.setOption({backgroundColor:'transparent',tooltip:{confine:true,backgroundColor:p.card,textStyle:{color:p.text,fontSize:12},formatter:item=>item.dataType==='edge'?`${item.data.source} · ${item.data.target}<br/>共同归经 ${item.data.value} 个`:item.data.name},series:[{type:'graph',layout:'force',roam:true,draggable:true,data:flowNodes,links:flowLinks,force:{repulsion:180,edgeLength:[50,110],gravity:.12},label:{show:true,color:p.text,fontSize:11},lineStyle:{color:p.celadon,curveness:.16}}]});
 
   const inspector=$('#qiweiInspector');
   const showInspector=(title,desc,items)=>{
     if(!inspector) return;
-    inspector.innerHTML=`<div><span>INSPECTOR · ${esc(title)}</span><h2>${esc(desc)}</h2></div><div><p>当前组合共 ${items.length} 味代表药材，点击药材名称可进入知识卡。</p><div class="inspector-herbs">${items.length?items.map(h=>`<a href="#/herb?id=${h.id}">${esc(h.name)} <small>${esc(h.qi)}·${esc(h.wei)}</small></a>`).join(''):'<span class="muted">暂无匹配药材</span>'}</div></div>`;
+    inspector.classList.add('has-selection');
+    inspector.innerHTML=`<div><span>INSPECTOR · ${esc(title)}</span><h2>${esc(desc)}</h2></div><div><p>当前组合共 ${items.length} 味代表药材，点击药材名称可进入知识卡。</p><div class="inspector-herbs">${items.length?items.slice(0,28).map(h=>`<a href="#/herb?id=${h.id}"><img src="${h.image}" alt=""><span>${esc(h.name)} <small>${esc(h.qi)}·${esc(h.wei)}</small></span></a>`).join(''):'<span class="muted">暂无匹配药材</span>'}</div></div>`;
   };
   mChart.on('click', params=>{
     if(!params.value || params.value.length<3) return;
     const q=params.value[0], w=params.value[1];
-    showInspector(`${qis[q]} · ${weis[w]}`,`${qis[q]} · ${weis[w]} 的药材`,HERBS.filter(h=>h.qi===qis[q]&&h.wei===weis[w]));
+    showInspector(`${qis[q]} · ${weis[w]}`,`${qis[q]} · ${weis[w]} 的药材`,herbs.filter(h=>h.qi===qis[q]&&h.wei.includes(weis[w])));
   });
   bChart.on('click', params=>{
     const idx=typeof params.dataIndex==='number'?params.dataIndex:-1;
     if(idx<0) return;
-    const mer=meridians[idx];
-    showInspector(`${mer}归经`,`归入${mer}经的药材`,HERBS.filter(h=>h.meridian.includes(mer)));
+    const mer=counts[idx]?.name.replace('经','');
+    if(mer) showInspector(`${mer}归经`,`归入${mer}经的药材`,herbs.filter(h=>h.meridian.includes(mer)));
   });
+  flow.on('click', params=>{if(params.dataType==='node'){const herb=byName(params.data.name);if(herb)showInspector(herb.name,`${herb.name} · ${herb.qi} · ${herb.wei}`,[herb]);}});
 }
 
 function renderFormula(){
@@ -1458,50 +1533,47 @@ function renderZheng(){
   const p=chartPalette();
   if(!store.selectedZheng) store.selectedZheng = ZHENGS[0].id;
   const cur = ZHENGS.find(z=>z.id===store.selectedZheng) || ZHENGS[0];
-
-  // 只渲染"当前证候 → 其方剂 → 核心药物"，避免全量堆叠导致杂乱
+  const selectedFormulas=cur.formulas.map(formulaById).filter(Boolean);
+  const coreIds=[];
+  selectedFormulas.forEach(f=>f.herbs.slice(0,5).forEach(x=>{if(x[0]&&!coreIds.includes(x[0])) coreIds.push(x[0]);}));
   const links=[];
-  const fNames=[], hNames=[];
-  cur.formulas.forEach(fid=>{
-    const fm = formulaById(fid); if(!fm) return;
-    links.push({source:cur.name, target:'方·'+fm.name, value:fm.herbs.length});
-    fNames.push('方·'+fm.name);
-    fm.herbs.forEach(x=>{ if(x[0]){ links.push({source:'方·'+fm.name, target:'药·'+herbName(x[0]), value:1}); hNames.push('药·'+herbName(x[0])); } });
+  selectedFormulas.forEach((fm,fi)=>{
+    links.push({source:'pattern',target:'formula-'+fi,value:1});
+    fm.herbs.slice(0,5).forEach(x=>{if(x[0]&&coreIds.includes(x[0]))links.push({source:'formula-'+fi,target:'herb-'+x[0],value:1});});
   });
-  const nodes=[{name:cur.name}].concat(fNames.map(n=>({name:n}))).concat([...new Set(hNames)].map(n=>({name:n})));
-  const sChart = chartManager.register('zhengSankey', echarts.init(document.getElementById('zhengSankey')), document.getElementById('zhengSankey'));
+  const nodes=[{id:'pattern',name:cur.name,x:90,y:215,fixed:true,symbolSize:34,itemStyle:{color:p.cinnabar}},...selectedFormulas.map((f,i)=>({id:'formula-'+i,name:f.name,x:280,y:80+i*150,fixed:true,symbolSize:26,itemStyle:{color:p.celadon}})),...coreIds.map((id,i)=>({id:'herb-'+id,name:herbName(id),x:500,y:36+i*58,fixed:true,symbolSize:16,itemStyle:{color:p.jin}}))];
+  const zhengEl=document.getElementById('zhengSankey');
+  if(!zhengEl) return;
+  chartManager.dispose('zhengSankey');
+  zhengEl.innerHTML='';
+  zhengEl.removeAttribute('_echarts_instance_');
+  const sChart = chartManager.register('zhengSankey', echarts.init(zhengEl), zhengEl);
   sChart.setOption({
     backgroundColor:'transparent',
     tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}},
     series:[{
-      type:'sankey', data:nodes, links,
-      left:30, right:110, top:20, bottom:20,
-      nodeWidth:12, nodeGap:18,
-      lineStyle:{color:'source', opacity:.45, curveness:.5},
-      label:{color:p.text,fontSize:12,fontFamily:'Noto Serif SC'},
-      itemStyle:{borderWidth:0, color:params=>{
-        const n=params.data.name||'';
-        if(n.startsWith('方')) return p.celadon;
-        if(n.startsWith('药')) return p.jin;
-        return p.cinnabar;
-      }}
+      type:'graph',layout:'none',roam:true,coordinateSystem:null,data:nodes,links,
+      lineStyle:{color:p.celadon,opacity:.48,width:2,curveness:.12},
+      label:{color:p.text,fontSize:12,fontFamily:'Noto Serif SC',position:'right',formatter:item=>item.data.name},
+      emphasis:{focus:'adjacency',lineStyle:{width:4,color:p.cinnabar}}
     }]
   });
-  // 点击药节点 → 进入知识卡
-  sChart.on('click', params=>{ const nm=(params.data&&params.data.name)||''; if(nm.startsWith('药·')){ const herb=HERBS.find(h=>h.name===nm.slice(2)); if(herb) location.hash='#/herb?id='+herb.id; } });
-
-  // 证候卡片：可点击切换，当前证候高亮
-  $('#zhengCards').innerHTML = ZHENGS.map(z=>`
-    <div class="card card-pad" data-zheng="${esc(z.id)}" style="cursor:pointer;${z.id===cur.id?'border-color:var(--cinnabar);box-shadow:0 0 0 1px var(--cinnabar);':''}">
-      <h3 style="font-family:var(--serif);color:var(--qing);font-size:15px;">${esc(z.name)}${z.id===cur.id?' <span class="badge cinnabar">当前</span>':''}</h3>
-      <div class="muted" style="font-size:12px;">${esc(z.desc)}</div>
-      <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;">${z.formulas.map(f=>`<span class="badge celadon">${esc(formulaById(f).name)}</span>`).join('')}</div>
-    </div>`).join('');
+  sChart.on('click', params=>{ const id=params.data&&params.data.id||''; if(id.startsWith('herb-')) location.hash='#/herb?id='+id.slice(5); });
+  const title=$('#zhengFocusTitle'); if(title) title.textContent=cur.name;
+  const desc=$('#zhengFocusDesc'); if(desc) desc.textContent=`${cur.desc} · 当前展示 ${selectedFormulas.length} 首方剂与 ${coreIds.length} 味核心药材`;
+  const count=$('#zhengFocusCount'); if(count) count.textContent=`${selectedFormulas.length} 方 · ${coreIds.length} 味药`;
+  const evidence=$('#zhengEvidence');
+  if(evidence) evidence.innerHTML=`<span>证据检查器 · 当前证候</span><h2>${esc(cur.name)}</h2><p>${esc(cur.desc)}</p>${selectedFormulas.map(f=>`<div class="evidence-formula"><strong>${esc(f.name)}</strong><div class="muted" style="font-size:11px;margin-top:4px;">${esc(f.from)} · ${esc(f.eff)}</div><div class="evidence-herbs">${f.herbs.slice(0,5).map(x=>`<a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a>`).join('')}</div></div>`).join('')}`;
+  const index=$('#zhengIndex');
+  const query=($('#syndromeSearch')?.value||'').trim();
+  const filtered=ZHENGS.filter(z=>!query||z.name.includes(query)||z.desc.includes(query));
+  if(index) index.innerHTML=filtered.map(z=>`<button type="button" class="${z.id===cur.id?'active':''}" data-zheng="${esc(z.id)}"><b>${esc(z.name)}</b><small>${esc(z.desc)}</small></button>`).join('')||'<span class="muted">没有匹配证候</span>';
 }
 document.addEventListener('click', e=>{
   const card=e.target.closest('[data-zheng]');
   if(card){ store.selectedZheng=card.dataset.zheng; renderZheng(); }
 });
+document.addEventListener('input', e=>{if(e.target.id==='syndromeSearch'&&parseHash().route==='zheng')renderZheng();});
 
 function renderClassics(){
   if(typeof echarts === 'undefined'){ return; }
@@ -1637,6 +1709,7 @@ document.getElementById('hamburger').addEventListener('click', ()=>{
 });
 document.addEventListener('change', e=>{
   if(e.target.id==='formulaFocus'){ store._formulaFocus=e.target.value; if(parseHash().route==='formula') renderFormula(); else location.hash='#/formula'; }
+  if(e.target.id==='qiweiCatFilter'){ store._qiweiCat=e.target.value; if(parseHash().route==='qiwei') renderQiwei(); }
 });
 document.addEventListener('click', e=>{
   if(e.target.id==='resetGraph'){ store._formulaFocus=''; if(parseHash().route==='formula' && !parseHash().params.f) renderFormula(); else location.hash='#/formula'; }
