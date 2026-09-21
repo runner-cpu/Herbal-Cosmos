@@ -28,7 +28,7 @@
 - **在线访问**：[GitHub Pages](https://runner-cpu.github.io/Herbal-Cosmos/)
 - **推荐环境**：桌面端 Chrome 或 Edge 体验最佳（3D 星云粒子与 ECharts 交互完整）；移动端已做响应式适配。
 
-> 注：图表渲染依赖 ECharts CDN（jsDelivr），首次加载需联网；若网络受限，页面会自动降级为文字说明，不影响浏览。
+> 注：ECharts 已随仓库放入 `assets/vendor/echarts.min.js`，GitHub Pages 与本地打开均不依赖 CDN；页面仍保留图表失败时的文字降级。
 
 ---
 
@@ -73,8 +73,9 @@
 
 ### 5. 图像化学习与资源降级
 - 药材星图、精选本草、搜索建议、药材详情、药食同源、非遗和收藏均使用 `output/imagegen/` 下的本地图谱，图片带有语义化 `alt` 文本与懒加载。
-- 本地图像按根、花、叶、果实、芳香等形态类别复用，定位是科普识别和信息层级，不冒充每味药材的专业鉴定照片。
-- 图片加载异常时自动切换到本地备用植物图像，避免 GitHub Pages 网络抖动造成破图；ECharts 仍保留 CDN 失败时的文字降级。
+- 当前代表样本已扩充至 144 味，每味都绑定独立本地图片文件；新增 45 味使用植物学提示生成的 AI 科普插画，非专业鉴定照片。
+- `IMAGE_SOURCES.md` 与 `data/image-sources.json` 记录图片状态：AI 科普插画标为 `PROJECT-EDUCATIONAL`，历史既有素材标为 `REVIEW-REQUIRED`，不把缺少原始许可元数据的素材宣称为开放许可。
+- 图片加载异常时自动切换到本地备用植物图像，避免 GitHub Pages 网络抖动造成破图；ECharts 本地化并保留文字降级。
 
 ### 6. 数据可信度体系
 - 每个知识卡标注 **"数据来源：中国药典 2020 / 本草纲目 / 普查数据"** 徽标，透明化数据层级，学术严谨。
@@ -117,7 +118,7 @@
 | 路由 | Hash 路由（`#/route?param=value`） | 无需服务器，支持刷新、前进后退 |
 | 状态 | 单一 `store` + 发布订阅（`notify`/`setSelected`） | 全局联动的事实源 |
 | 图表管理 | `chartManager`（Map 实例池） | 路由切换时主动 `dispose` 旧实例与 `ResizeObserver`，防内存泄漏 |
-| 外部资源 | 仅白名单：ECharts（jsDelivr + SRI 校验）、字体（妙搭自托管镜像） | 安全、可溯源 |
+| 外部资源 | 运行时无图表 CDN 依赖；ECharts 随仓库自托管 | 静态 Pages 离线可用、来源可追踪 |
 
 ### 关键设计：三级数据分层
 解决"18,817 种全量数据 vs 浏览器性能"的矛盾：
