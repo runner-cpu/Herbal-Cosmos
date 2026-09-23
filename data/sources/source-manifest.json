@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "2026-09-23",
+  "hashAlgorithm": "SHA-256",
+  "policy": {
+    "pharmacopoeiaScope": "《中国药典》2020 年版一部的 2,711 是中药标准总数，不是 2,711 味可检索药名。",
+    "authorityAdmission": "规范名必须有药典页码、公开表格行，或可复核的第二来源交叉记录；缺少该证据的候选只能留在 raw-candidates.json。",
+    "hashPolicy": "只记录实际取得字节的 SHA-256；无法取得时使用 null 并说明原因，绝不推测。"
+  },
+  "sources": [
+    {
+      "id": "cp2020-nmpa-notice",
+      "title": "国家药监局关于颁布2020年版《中华人民共和国药典》的公告（2020年第78号）",
+      "kind": "official-notice",
+      "publicUrl": "https://www.nmpa.gov.cn/xxgk/ggtg/ypggtg/ypqtggtg/20200702151301219.html",
+      "retrievedAt": "2026-09-23",
+      "retrievalStatus": "blocked",
+      "retrievalNote": "The public endpoint returned HTTP 412 Precondition Failed to a non-interactive request; no source bytes were admitted.",
+      "sha256": null,
+      "licenseOrUse": "Public regulatory notice; retain the URL and verify access before reuse."
+    },
+    {
+      "id": "cp2020-systematic-analysis",
+      "title": "2020年版药典收录的中药材与中药制剂的系统分析",
+      "kind": "academic-statistical-analysis",
+      "publicUrl": "https://www.tcmjc.com/doi/pdf/C843CFA557884A4D8C44DB44B2E961D3",
+      "retrievedAt": "2026-09-23",
+      "retrievalStatus": "verified",
+      "sha256": "FED950E612D495AE7BB4A9DB4E7B279A3F7A633686618CA7E61E82991A608C6F",
+      "byteLength": 1895839,
+      "licenseOrUse": "Publicly accessible academic PDF; retained here as a statistical cross-check, not as per-name authority."
+    },
+    {
+      "id": "cacm-prescription-name-draft",
+      "title": "中华中医药学会中药饮片处方用名标准公示稿",
+      "kind": "professional-society-public-draft",
+      "publicUrl": null,
+      "retrievedAt": "2026-09-23",
+      "retrievalStatus": "unavailable",
+      "retrievalNote": "The previously identified public PDF URL returned HTTP 404. A replacement public document URL and bytes must be independently verified before this source can support an authority entry.",
+      "sha256": null,
+      "licenseOrUse": "Do not reuse or treat as authority until a live public copy and its terms are recorded."
+    },
+    {
+      "id": "legacy-herb-catalog",
+      "title": "Existing project herb candidate corpus",
+      "kind": "legacy-candidate-input",
+      "repositoryPath": "data/herb-catalog.js",
+      "retrievedAt": "2026-09-23",
+      "retrievalStatus": "verified",
+      "sha256": "E7E9E9018B7F2BA4F728E0D5D5456696953809D6DF277CDE933C889A25EB697F",
+      "byteLength": 637119,
+      "licenseOrUse": "Project input only. It is not a pharmacopoeia source and can only supply raw candidates for review."
+    }
+  ]
+}
