@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { buildAuthority } from '../assets/js/lib/catalog-rules.mjs';
-import { buildCatalog } from '../scripts/build-herb-catalog.mjs';
+import { buildCatalog, buildFromSources } from '../scripts/build-herb-catalog.mjs';
 
 const authority = buildAuthority({
   canonicalNames: ['皂角刺', '川芎'],
@@ -31,4 +35,33 @@ test('相同输入的构建结果字节级稳定', () => {
   const a = buildCatalog({ candidates: ['川芎', '皂角刺'], authority });
   const b = buildCatalog({ candidates: ['皂角刺', '川芎'], authority });
   assert.deepEqual(a, b);
+});
+
+test('缩小 approved 后清理 stale chunks 且产物哈希稳定', () => {
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-build-'));
+  try {
+    fs.mkdirSync(path.join(temp, 'data'), { recursive: true });
+    fs.cpSync('data/sources', path.join(temp, 'data/sources'), { recursive: true });
+    const pharmaFile = path.join(temp, 'data/sources/pharmacopoeia-2020-materials.json');
+    const pharma = JSON.parse(fs.readFileSync(pharmaFile, 'utf8'));
+    const names = Array.from({ length: 121 }, (_, i) => '测试' + String(i).padStart(3, '0'));
+    pharma.canonicalNames = names;
+    pharma.entries = names.map(name => ({ canonicalName: name, sourceRefs: ['test'] }));
+    fs.writeFileSync(pharmaFile, JSON.stringify(pharma));
+    fs.writeFileSync(path.join(temp, 'data/sources/raw-candidates.json'), JSON.stringify({ candidates: [] }));
+    buildFromSources(temp);
+    assert.equal(fs.existsSync(path.join(temp, 'data/catalog/chunk-c01.js')), true);
+    pharma.canonicalNames = names.slice(0, 2);
+    pharma.entries = pharma.entries.slice(0, 2);
+    fs.writeFileSync(pharmaFile, JSON.stringify(pharma));
+    buildFromSources(temp);
+    assert.equal(fs.existsSync(path.join(temp, 'data/catalog/chunk-c01.js')), false);
+    const file = path.join(temp, 'data/catalog/chunk-c00.js');
+    const firstHash = createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+    buildFromSources(temp);
+    const secondHash = createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+    assert.equal(firstHash, secondHash);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
 });

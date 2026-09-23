@@ -34,3 +34,7 @@ Two unchanged builds produced identical hashes:
 - Review IDs are deterministic hashes of raw names; approved IDs are deterministic hashes of canonical names.
 - Source revisions are read from source-manifest.json; no current timestamp is emitted.
 - Concern: existing UI still loads data/herb-catalog.js as a single static script; chunk lazy-loading integration is intentionally outside Task 2.
+
+## Boundary fix
+
+The writer now removes only existing files matching data/catalog/chunk-cNN.js before writing current chunks. A regression test first creates two chunks, shrinks to one, asserts chunk-c01.js is gone, and rebuilds twice to confirm the remaining chunk hash is stable. Full suite result: 7 passed, 0 failed.

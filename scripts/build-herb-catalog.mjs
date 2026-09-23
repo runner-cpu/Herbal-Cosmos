@@ -53,6 +53,9 @@ function writeArtifacts(result, sourceRevision, authorityHash, base = root) {
   const chunks = []; for (let i = 0; i < approved.length; i += 120) chunks.push(approved.slice(i, i + 120));
   const chunkIds = chunks.map((_, i) => 'c' + String(i).padStart(2, '0')); const banner = '/* Generated deterministically from data/sources. */\n';
   fs.writeFileSync(path.join(dataDir, 'herb-catalog.js'), banner + 'window.HERB_CATALOG = ' + JSON.stringify(approved, null, 2) + ';\n', 'utf8');
+  for (const file of fs.readdirSync(catalogDir)) {
+    if (/^chunk-c\d{2}\.js$/.test(file)) fs.rmSync(path.join(catalogDir, file));
+  }
   for (let i = 0; i < chunks.length; i++) { const id = chunkIds[i]; const body = 'window.__HERB_CATALOG_CHUNKS__ = window.__HERB_CATALOG_CHUNKS__ || {};\n' + 'window.__HERB_CATALOG_CHUNKS__[' + JSON.stringify(id) + '] = ' + JSON.stringify(chunks[i]) + ';\n'; fs.writeFileSync(path.join(catalogDir, 'chunk-' + id + '.js'), banner + body, 'utf8'); }
   const manifest = { approvedCount: approved.length, reviewCount: result.review.length, chunks: chunkIds, sourceRevision, authorityHash };
   fs.writeFileSync(path.join(catalogDir, 'manifest.js'), banner + 'window.HERB_CATALOG_MANIFEST = ' + JSON.stringify(manifest, null, 2) + ';\n', 'utf8');
