@@ -1,0 +1,145 @@
+{
+  "sourceRevision": "2026-09-23",
+  "review": [
+    {
+      "id": "review-3f24a5106dea",
+      "name": "出现面色苍白",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "not-in-authority",
+        "symptom-word"
+      ],
+      "sourceLocation": "data/herb-catalog.js:1678"
+    },
+    {
+      "id": "review-31ac51c4d0aa",
+      "name": "川棟子",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "missing-authority-evidence",
+        "not-in-authority",
+        "unverified-character-variant"
+      ],
+      "sourceLocation": "data/herb-catalog.js:1762"
+    },
+    {
+      "id": "review-8b91133c03e8",
+      "name": "川萼",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "missing-authority-evidence",
+        "not-in-authority",
+        "unverified-character-variant"
+      ],
+      "sourceLocation": "data/herb-catalog.js:1776"
+    },
+    {
+      "id": "review-aaf964fd6d1c",
+      "name": "沙参",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "missing-authority-evidence",
+        "not-in-authority"
+      ],
+      "sourceLocation": "data/herb-catalog.js:10694"
+    },
+    {
+      "id": "review-1ba9cdecb68c",
+      "name": "泽泻",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "missing-authority-evidence",
+        "not-in-authority"
+      ],
+      "sourceLocation": "data/herb-catalog.js:15076"
+    },
+    {
+      "id": "review-4f3167e29e63",
+      "name": "泽泻沙参",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "not-in-authority",
+        "unseparated-compound"
+      ],
+      "sourceLocation": "data/herb-catalog.js:15083"
+    },
+    {
+      "id": "review-6e0c1e44923c",
+      "name": "皂角刺",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "missing-authority-evidence",
+        "not-in-authority"
+      ],
+      "sourceLocation": "data/herb-catalog.js:14999"
+    },
+    {
+      "id": "review-15d03128b6d4",
+      "name": "皂角刺等脓肿破溃",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "contains-deng",
+        "not-in-authority",
+        "symptom-word"
+      ],
+      "sourceLocation": "data/herb-catalog.js:15006"
+    },
+    {
+      "id": "review-e571d9c38f94",
+      "name": "皂角剌",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "missing-authority-evidence",
+        "not-in-authority",
+        "unverified-character-variant"
+      ],
+      "sourceLocation": "data/herb-catalog.js:15013"
+    },
+    {
+      "id": "review-15c97d680b1f",
+      "name": "皂角针",
+      "aliases": [],
+      "sourceRefs": [
+        "legacy-herb-catalog"
+      ],
+      "reviewReasons": [
+        "missing-authority-evidence",
+        "not-in-authority",
+        "unverified-alias"
+      ],
+      "sourceLocation": "data/herb-catalog.js:15020"
+    }
+  ],
+  "stats": {
+    "candidateCount": 12,
+    "approvedCount": 2,
+    "reviewCount": 10
+  }
+}
