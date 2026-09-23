@@ -2,9 +2,7 @@
   "schemaVersion": 1,
   "sourceRevision": "2026-09-23",
   "candidates": [
-    { "raw": "川楝子", "sourceRefs": ["legacy-herb-catalog"], "sourceLocation": "data/herb-catalog.js:1895", "reviewReasons": ["missing-authority-evidence"] },
     { "raw": "川棟子", "sourceRefs": ["legacy-herb-catalog"], "sourceLocation": "data/herb-catalog.js:1762", "reviewReasons": ["missing-authority-evidence", "unverified-character-variant"] },
-    { "raw": "川芎", "sourceRefs": ["legacy-herb-catalog"], "sourceLocation": "data/herb-catalog.js:2021", "reviewReasons": ["missing-authority-evidence"] },
     { "raw": "川萼", "sourceRefs": ["legacy-herb-catalog"], "sourceLocation": "data/herb-catalog.js:1776", "reviewReasons": ["missing-authority-evidence", "unverified-character-variant"] },
     { "raw": "皂角刺", "sourceRefs": ["legacy-herb-catalog"], "sourceLocation": "data/herb-catalog.js:14999", "reviewReasons": ["missing-authority-evidence"] },
     { "raw": "皂角剌", "sourceRefs": ["legacy-herb-catalog"], "sourceLocation": "data/herb-catalog.js:15013", "reviewReasons": ["missing-authority-evidence", "unverified-character-variant"] },

@@ -1,14 +1,45 @@
 {
   "schemaVersion": 1,
   "sourceRevision": "2026-09-23",
-  "sourceRefs": ["cp2020-nmpa-notice", "cp2020-systematic-analysis"],
+  "sourceRefs": ["cp2020-nmpa-notice", "cp2020-systematic-analysis", "cacm-prescription-name-standard-2021"],
   "scope": "Verifiable medicinal-material and decoction-piece names only; not the 2,711 Volume I standards total.",
   "admissionRequirements": [
     "A pharmacopoeia page reference",
     "A row in a public table",
     "A second, independently verifiable source cross-record"
   ],
-  "canonicalNames": [],
-  "entries": [],
-  "note": "No name is admitted until evidence meeting the admission requirements is committed. This intentionally does not assert a complete 616/617-name list."
+  "canonicalNames": ["川楝子", "川芎"],
+  "entries": [
+    {
+      "canonicalName": "川楝子",
+      "sourceRefs": ["cacm-prescription-name-standard-2021"],
+      "evidence": {
+        "type": "public-table-row",
+        "table": "表 A.1 常用中药饮片处方用名",
+        "row": 98,
+        "columns": {
+          "中药饮片正名": "川楝子",
+          "中药饮片处方用名": "炒川楝子",
+          "标准来源": "《中华人民共和国药典》(2020年版)"
+        },
+        "byteSource": "retrieval mirror; see cacm-prescription-name-standard-2021"
+      }
+    },
+    {
+      "canonicalName": "川芎",
+      "sourceRefs": ["cacm-prescription-name-standard-2021"],
+      "evidence": {
+        "type": "public-table-row",
+        "table": "表 A.1 常用中药饮片处方用名",
+        "row": 103,
+        "columns": {
+          "中药饮片正名": "川芎",
+          "中药饮片处方用名": "川芎",
+          "标准来源": "《中华人民共和国药典》(2020年版)"
+        },
+        "byteSource": "retrieval mirror; see cacm-prescription-name-standard-2021"
+      }
+    }
+  ],
+  "note": "The two committed entries have usable Table A.1 row evidence. This intentionally does not assert a complete 616/617-name list."
 }

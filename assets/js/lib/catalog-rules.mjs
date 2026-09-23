@@ -27,9 +27,10 @@ export function classifyCandidate(raw, authority) {
   if (normalized.includes('等')) reasons.push('contains-deng');
   if (normalized.length > 8) reasons.push('too-long');
 
+  const aliasTarget = authority.aliases.get(normalized);
   const canonicalName = authority.canonicalNames.has(normalized)
     ? normalized
-    : authority.aliases.get(normalized) || '';
+    : authority.canonicalNames.has(aliasTarget) ? aliasTarget : '';
 
   if (!canonicalName) reasons.push('not-in-authority');
 

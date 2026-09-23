@@ -23,3 +23,15 @@ test('只拆明确分隔符，不猜分无分隔复合名', () => {
   assert.deepEqual(splitCandidate('泽泻、沙参'), ['泽泻', '沙参']);
   assert.equal(classifyCandidate('泽泻沙参', authority).status, 'review');
 });
+
+test('别名目标未获准时保留原名并进入 review', () => {
+  const incompleteAuthority = buildAuthority({
+    canonicalNames: ['川楝子'],
+    aliases: { 皂角针: '皂角刺' },
+    variants: {}
+  });
+
+  assert.deepEqual(classifyCandidate('皂角针', incompleteAuthority), {
+    canonicalName: '皂角针', aliases: [], status: 'review', reviewReasons: ['not-in-authority']
+  });
+});

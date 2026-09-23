@@ -12,11 +12,16 @@
       "id": "cp2020-nmpa-notice",
       "title": "国家药监局关于颁布2020年版《中华人民共和国药典》的公告（2020年第78号）",
       "kind": "official-notice",
-      "publicUrl": "https://www.nmpa.gov.cn/xxgk/ggtg/ypggtg/ypqtggtg/20200702151301219.html",
+      "officialUrl": "https://www.nmpa.gov.cn/xxgk/ggtg/ypggtg/ypqtggtg/20200702151301219.html",
       "retrievedAt": "2026-09-23",
-      "retrievalStatus": "blocked",
-      "retrievalNote": "The public endpoint returned HTTP 412 Precondition Failed to a non-interactive request; no source bytes were admitted.",
-      "sha256": null,
+      "retrievalStatus": "verified-retrieval-mirror",
+      "officialRetrievalNote": "The official endpoint returned HTTP 412 Precondition Failed to a non-interactive request; no official bytes were admitted.",
+      "retrievalMirror": {
+        "url": "https://waizi.org.cn/doc/87646.html",
+        "sha256": "DAA200E5550830B7A54291B142959E5A1FCC6BBF14102A7DCFE5A547F34C684E",
+        "byteLength": 20000,
+        "relationship": "Retrieval mirror of the official notice; these are mirror bytes, not official NMPA bytes."
+      },
       "licenseOrUse": "Public regulatory notice; retain the URL and verify access before reuse."
     },
     {
@@ -31,15 +36,22 @@
       "licenseOrUse": "Publicly accessible academic PDF; retained here as a statistical cross-check, not as per-name authority."
     },
     {
-      "id": "cacm-prescription-name-draft",
-      "title": "中华中医药学会中药饮片处方用名标准公示稿",
-      "kind": "professional-society-public-draft",
-      "publicUrl": null,
+      "id": "cacm-prescription-name-standard-2021",
+      "title": "T/CACM 1361—2021 中药饮片处方用名规范",
+      "kind": "professional-society-standard",
+      "officialPublisherUrl": "https://www.cacm.org.cn/",
+      "officialLandingPageUrl": "https://www.cacm.org.cn/2021/06/02/13330/",
+      "officialDocumentUrl": "https://www.cacm.org.cn/wp-content/uploads/2021/06/1%E4%B8%AD%E8%8D%AF%E9%A5%AE%E7%89%87%E5%A4%84%E6%96%B9%E7%94%A8%E5%90%8D%E6%A0%87%E5%87%86-%E5%85%AC%E7%A4%BA%E7%A8%BF.pdf",
       "retrievedAt": "2026-09-23",
-      "retrievalStatus": "unavailable",
-      "retrievalNote": "The previously identified public PDF URL returned HTTP 404. A replacement public document URL and bytes must be independently verified before this source can support an authority entry.",
-      "sha256": null,
-      "licenseOrUse": "Do not reuse or treat as authority until a live public copy and its terms are recorded."
+      "retrievalStatus": "verified-retrieval-mirror",
+      "officialDocumentNote": "The official landing page and original document URL are recorded separately from the retrieved mirror bytes.",
+      "retrievalMirror": {
+        "url": "https://max.book118.com/try_down/106130043223010152.pdf",
+        "sha256": "F49E0BE9CD23D8FC6CE8D83ECD28F897A0901B8233C28CADD5F766C0F3771C41",
+        "byteLength": 919602,
+        "relationship": "Retrieval mirror containing a trial-download excerpt of T/CACM 1361—2021; these are mirror bytes, not official CACM bytes."
+      },
+      "licenseOrUse": "Use only as explicit row-level mirror evidence; do not describe the mirror file as official CACM bytes."
     },
     {
       "id": "legacy-herb-catalog",
