@@ -101,12 +101,25 @@
         <div class="section-heading-row home-featured-heading"><div><span>FEATURED HERB CABINET</span><h2 data-i18n="home.discover">精选本草图鉴</h2></div><a href="#/herbs" data-i18n="home.viewAll">查看全部代表药材 →</a></div>
         <div class="grid g4" id="homeFeatured"></div>
 
+        <section class="home-food" id="homeFood" aria-labelledby="homeFoodTitle">
+          <div class="section-heading-row"><div><span>FOOD &amp; MEDICINE</span><h2 id="homeFoodTitle">食养同源</h2></div><a href="#/food">查看全部 106 种 →</a></div>
+          <p class="home-section-note">把药食同源放回日常场景：横滑查看性味与用法；索引层仅名称可检索，药性字段以精品卡为准。</p>
+          <div class="home-food-strip" id="homeFoodStrip"></div>
+          <div class="food-matrix" id="homeFoodMatrix" aria-label="性味与用法矩阵"></div>
+        </section>
+
         <section class="home-classics" id="home-classics" aria-labelledby="homeClassicsTitle">
           <div class="section-heading-row"><div><span>CLASSICS THROUGH TIME</span><h2 id="homeClassicsTitle">典籍时光</h2></div><span class="muted home-section-note">历史节点与收药规模合并到首页，减少跳转</span></div>
           <div class="home-classics-grid">
             <div class="chart-panel home-classics-chart"><h3>典籍收药规模演进</h3><div class="cap">柱高表示各典籍收载药物数量，数字为文献统计口径。</div><div class="chart-box" id="homeClassicBarChart"></div></div>
             <div class="classic-timeline compact" id="homeClassicTimeline"></div>
           </div>
+        </section>
+
+        <section class="home-culture" id="homeCulture" aria-labelledby="homeCultureTitle">
+          <div class="section-heading-row"><div><span>CULTURE &amp; HERITAGE</span><h2 id="homeCultureTitle">文化非遗</h2></div><button type="button" id="homeCultureExpand">查看全部</button></div>
+          <p class="home-section-note">从诊法、炮制到地方记忆，精选三张卡片先看见本草背后的技艺。</p>
+          <div class="home-culture-grid" id="homeCultureGrid"></div>
         </section>
 
         <section class="home-source-band" aria-labelledby="homeSourceTitle">
@@ -191,6 +204,7 @@
         <div class="chart-panel analysis-wide"><h3>药材共现关系</h3><div class="cap">从同一归经中抽取高频药材对，帮助发现属性相近的本草群。</div><div class="chart-box wide-chart" id="qiweiFlowChart"></div></div>
       </div>
       <div class="viz-inspector" id="qiweiInspector"><div><span>点击图表继续探索</span><h2>从分布回到每一味药</h2></div><p>点击热力矩阵中的气味组合，或点击归经柱形，即可查看对应药材并跳转知识卡。</p></div>
+      <section class="insight-chart-panel meridian-insight"><div class="section-heading-row"><div><span>BRIDGE VIEW</span><h2>归经 → 功效流向</h2></div><span class="home-section-note">把十二经与当前精品卡功效分类连成一条可追溯的流。</span></div><div class="chart-box" id="meridianEffectChart"></div></section>
     </section>
 
     <!-- ============ 配伍网络 ============ -->
@@ -199,6 +213,7 @@
       <h1 class="title">方剂配伍网络</h1>
       <p class="page-intro">方剂与药材构成二部图：点一个方剂，看它的组成与君臣佐使；点一味药，看它进入哪些方剂。可拖拽探索。</p>
       <div class="graph-workspace"><aside class="graph-index"><div class="workspace-label">方剂索引</div><label for="formulaFocus">检索方剂<select id="formulaFocus"><option value="">全部方剂</option></select></label><div class="network-stats" id="networkStats"></div><div class="formula-index-list" id="formulaIndex"></div></aside><section class="graph-canvas"><div class="graph-heading"><div><h3>方剂—药材关系图</h3><p id="networkFocusNote">点击节点聚焦邻域，拖动节点调整布局。</p></div><button id="resetGraph" type="button">显示全网</button></div><div class="chart-box" id="formulaGraph"></div></section><aside class="graph-inspector" id="formulaInspector"><span>关系检查器</span><h2>选择一首方剂</h2><p>从左侧索引或网络节点选择，查看出处、主治与君臣佐使组成。</p></aside></div>
+      <section class="insight-grid formula-insights" aria-labelledby="formulaInsightsTitle"><div class="section-heading-row"><div><span>FORMULA EVIDENCE</span><h2 id="formulaInsightsTitle">配伍洞察</h2></div><span class="home-section-note">基于当前 21 首代表方剂；同一方内重复药材只计一次。</span></div><div class="insight-chart-panel"><h3>高频配伍排行</h3><div class="chart-box" id="formulaFrequencyChart"></div></div><div class="insight-chart-panel"><h3>君臣佐使角色分布</h3><div class="chart-box" id="formulaRolesChart"></div></div></section>
       <div class="section-heading-row formula-directory-heading"><div><span>FORMULA DIRECTORY</span><h2>代表方剂目录</h2></div></div>
       <div class="formula-directory" id="formulaCards"></div>
     </section>
@@ -218,6 +233,7 @@
       <p class="page-intro">国家卫健委历次公布的"既是食品又是中药材"物质目录（动态更新）。既是厨房食材，也是本草星辰——按用途筛选看看。</p>
       <div class="filter-bar" id="foodFilters"></div>
       <div class="grid g4" id="foodGrid"></div>
+      <section class="insight-chart-panel food-insight"><div class="section-heading-row"><div><span>FOOD EVIDENCE</span><h2>性味 × 用法矩阵</h2></div><span class="home-section-note">按药食同源样本的标签聚合，不替代个体化使用建议。</span></div><div class="chart-box" id="foodUsageChart"></div></section>
     </section>
 
     <!-- ============ 文化 / 非遗 ============ -->
@@ -263,5 +279,7 @@
 <script type="module" src="assets/js/components/saved-drawer.js"></script>
 <script src="assets/js/core/runtime.js"></script>
 <script type="module" src="assets/js/components/theme.js"></script>
+<script type="module" src="assets/js/pages/home.js"></script>
+<script type="module" src="assets/js/charts/insights.js"></script>
 </body>
 </html>

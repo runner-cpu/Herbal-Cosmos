@@ -336,7 +336,7 @@ const SOURCE_MAP = {
 };
 
 // Component modules consume an explicit read-only bridge; the canonical data remains here.
-if (typeof window !== 'undefined') window.HERBS = HERBS;
+if (typeof window !== 'undefined') Object.assign(window, { HERBS, FORMULAS, CLASSICS, ZHENGS, FOODS, HERITAGE, HERITAGE_IMAGES, SOURCE_MAP });
 
 /* ============================================================
    状态中枢（单一事实源 + 订阅）

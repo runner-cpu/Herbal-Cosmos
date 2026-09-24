@@ -12,7 +12,9 @@ const REQUIRED_ASSETS = [
   'assets/js/components/search.js',
   'assets/js/components/saved-drawer.js',
   'assets/js/core/runtime.js',
-  'assets/js/components/theme.js'
+  'assets/js/components/theme.js',
+  'assets/js/pages/home.js',
+  'assets/js/charts/insights.js'
 ];
 const DEFINITION_NAMES = ['store', 'chartManager', 'routes'];
 

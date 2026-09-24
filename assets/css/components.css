@@ -56,6 +56,62 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
 .saved-drawer-item button { border:1px solid var(--line); background:transparent; color:var(--ink-2); border-radius:4px; padding:4px 7px; font-size:11px; }
 .saved-drawer-empty { padding:30px 0; color:var(--ink-2); text-align:center; }
 
+.home-food,.home-culture { margin-top:42px; padding-top:28px; border-top:1px solid var(--line); }
+.home-food-strip { display:flex; gap:10px; overflow-x:auto; padding:8px 0 14px; scrollbar-width:thin; }
+.home-food-card { min-width:174px; padding:0 0 12px; display:grid; gap:6px; border:1px solid var(--line); background:var(--card); position:relative; overflow:hidden; }
+.home-food-card:hover { border-color:var(--jin); transform:translateY(-2px); }
+.home-food-image { height:100px; background:var(--paper-2); overflow:hidden; }
+.home-food-image img { width:100%; height:100%; object-fit:cover; }
+.home-food-card .herb-stamp { position:absolute; top:78px; right:9px; width:34px; height:34px; border-width:1px; background:var(--card); }
+.home-food-card .herb-stamp-seal { font-size:11px; }
+.home-food-card .herb-stamp-meta { font-size:6px; margin-top:2px; }
+.home-food-card strong,.home-food-card span { padding:0 10px; }
+.home-food-card strong { color:var(--qing); font:600 16px var(--serif); }
+.home-food-card span { color:var(--ink-2); font-size:11px; line-height:1.45; }
+.home-section-note { color:var(--ink-2); font-size:12px; margin:8px 0 12px; }
+.food-matrix { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:6px; margin-top:5px; }
+.food-matrix-label { grid-column:1/-1; color:var(--celadon); font-size:10px; letter-spacing:1.5px; }
+.food-matrix-cell { min-height:62px; padding:9px 10px; display:grid; grid-template-columns:1fr auto; gap:2px 8px; border-left:3px solid color-mix(in srgb,var(--cinnabar) calc(var(--heat,0) * 100%),var(--celadon)); background:color-mix(in srgb,var(--jin) calc(var(--heat,0) * 14%),var(--paper-2)); }
+.food-matrix-cell b { color:var(--qing); font:600 13px var(--serif); }
+.food-matrix-cell span { color:var(--ink-2); font-size:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.food-matrix-cell em { grid-row:1/3; grid-column:2; align-self:center; color:var(--cinnabar); font:700 18px var(--serif); font-style:normal; }
+.home-culture-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.home-culture-card { display:grid; grid-template-columns:110px 1fr; min-height:142px; border:1px solid var(--line); background:var(--card); }
+.home-culture-image { min-height:100%; background:var(--paper-2); overflow:hidden; }
+.home-culture-image img { width:100%; height:100%; object-fit:cover; }
+.home-culture-copy { padding:13px; }
+.home-culture-copy>span { color:var(--celadon); font-size:10px; }
+.home-culture-copy h3 { margin:5px 0; color:var(--qing); font:600 16px var(--serif); }
+.home-culture-copy p { color:var(--ink-2); font-size:11px; line-height:1.6; }
+#homeCultureExpand { border:1px solid var(--qing); background:transparent; color:var(--qing); padding:6px 10px; font-size:12px; }
+.classic-timeline .cl-item { cursor:pointer; }
+.classic-timeline .cl-item:focus-visible,.classic-timeline .cl-item:hover { outline:2px solid var(--jin); outline-offset:-2px; }
+.classic-detail { width:min(480px,calc(100vw - 32px)); border:1px solid var(--line); background:var(--card); color:var(--ink); padding:26px; box-shadow:var(--shadow); }
+.classic-detail::backdrop { background:rgba(10,20,16,.55); }
+.classic-detail>span { color:var(--celadon); font-size:10px; letter-spacing:2px; }
+.classic-detail h2 { margin:7px 0; color:var(--qing); font:600 25px var(--serif); }
+.classic-detail-era { color:var(--ink-2); font-size:12px; }
+.classic-detail-stats { margin:18px 0; padding:12px; background:var(--paper-2); display:flex; align-items:baseline; gap:8px; }
+.classic-detail-stats b { color:var(--cinnabar); font:700 30px var(--serif); }
+.classic-detail-stats span,.classic-detail>p:last-child { color:var(--ink-2); font-size:13px; line-height:1.8; }
+.classic-detail-close { position:absolute; top:10px; right:12px; border:0; background:transparent; color:var(--ink-2); font-size:24px; }
+.insight-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:38px; }
+.insight-grid>.section-heading-row { grid-column:1/-1; margin-top:0; }
+.insight-chart-panel { margin-top:34px; padding:18px; border:1px solid var(--line); background:var(--card); }
+.insight-grid .insight-chart-panel { margin-top:0; }
+.insight-chart-panel h3 { color:var(--qing); font:600 17px var(--serif); }
+.insight-chart-panel .chart-box { min-height:360px; }
+.meridian-insight .chart-box { min-height:500px; }
+.food-insight .chart-box { min-height:420px; }
+
+@media (max-width:768px) {
+  .home-culture-grid { grid-template-columns:1fr; }
+  .home-culture-card { grid-template-columns:92px 1fr; }
+  .food-matrix { grid-template-columns:repeat(2,1fr); }
+  .insight-grid { grid-template-columns:1fr; }
+  .insight-grid>.section-heading-row { grid-column:1; }
+}
+
 @media (prefers-reduced-motion:reduce) {
   .saved-drawer { transition:none; }
 }

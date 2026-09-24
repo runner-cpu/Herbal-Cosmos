@@ -5,6 +5,7 @@ import { contextLinks, viewedIds } from '../assets/js/components/context-bar.js'
 import { serializeFavorites } from '../assets/js/components/saved-drawer.js';
 import { filterApproved } from '../assets/js/components/search.js';
 import { stampText } from '../assets/js/components/stamp.js';
+import { foodMatrixData, cultureSelection } from '../assets/js/pages/home.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -51,4 +52,13 @@ test('shell references component modules and removes saved route from navigation
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   for (const asset of ['assets/css/components.css', 'assets/js/components/theme.js', 'assets/js/components/context-bar.js', 'assets/js/components/saved-drawer.js']) assert.ok(html.includes(asset));
   assert.equal(html.includes('<a href="#/saved" data-route-link="saved"'), false);
+});
+
+test('home food matrix aggregates flavor and use dimensions', () => {
+  assert.deepEqual(foodMatrixData([{ flavor: '甘平', tag: '滋补' }, { flavor: '甘平', tag: '滋补' }, { flavor: '辛温', tag: '散寒' }]), [
+    { flavor: '甘平', use: '滋补', count: 2 },
+    { flavor: '辛温', use: '散寒', count: 1 }
+  ]);
+  assert.equal(cultureSelection([1, 2, 3, 4]).length, 3);
+  assert.equal(cultureSelection([1, 2, 3, 4], true).length, 4);
 });
