@@ -77,6 +77,9 @@ const chartManager = {
   },
   clear() { Array.from(this._instances.keys()).forEach(id=>this.dispose(id)); }
 };
+window.__HERBAL_DEBUG__ = window.__HERBAL_DEBUG__ || {};
+window.__HERBAL_DEBUG__.chartCounts = () => chartManager._instances.size;
+window.__HERBAL_DEBUG__.observerCounts = () => chartManager._observers.size;
 
 /* ECharts 全局守卫：CDN 加载失败时给图表区降级文案，页面主体不受影响 */
 if(typeof echarts === 'undefined'){
@@ -171,6 +174,12 @@ function render(){
   if(route==='home' && params.focus==='classics') setTimeout(()=>document.getElementById('home-classics')?.scrollIntoView({behavior:'smooth',block:'start'}),80);
 }
   window.render = render;
+  window.addEventListener('herbal:catalog-manifest', event => {
+    const count=event.detail?.approvedCount ?? HERB_CATALOG.length;
+    document.querySelectorAll('#catalogAtlasCount,#catalogVisibleCount').forEach(el=>el.textContent=count.toLocaleString('zh-CN'));
+    document.querySelectorAll('.module-atlas span').forEach(el=>el.textContent=count.toLocaleString('zh-CN')+' 条名称索引与 '+HERBS.length+' 味精品知识卡');
+    if(parseHash().route==='home' || parseHash().route==='herbs') render();
+  });
   window.addEventListener('hashchange', render);
 
 /* ============================================================
@@ -186,6 +195,9 @@ function render(){
   let dragging = false, lastX = 0, lastY = 0;
   let hoverId = null;
   let running = true;
+  let motion = window.HerbalCosmos?.animate !== false;
+  let colorMode = document.documentElement.dataset.cosmosColor || 'uniform';
+  let focusedId = null;
 
   function resize(){
     DPR = Math.min(window.devicePixelRatio||1, 2);
@@ -203,7 +215,7 @@ function render(){
       return {
         id:h.id, name:h.name, herb:h,
         x:r*Math.sin(phi)*Math.cos(theta), y:r*Math.cos(phi), z:r*Math.sin(phi)*Math.sin(theta),
-        size: isFav(h.id) ? 6.2 : 4.6, color: h.food ? '#E8C87E' : '#D8C9A8'
+        size: isFav(h.id) ? 6.2 : 4.6, color: colorMode==='effect' ? (window.HerbalCosmos?.colorForEffect?.(h.cat)||'#D8C9A8') : (h.food ? '#E8C87E' : '#D8C9A8')
       };
     });
     // 背景星尘（全量资源分布的氛围示意）
@@ -234,14 +246,15 @@ function render(){
   function frame(){
     if(!running) return;
     ctx.clearRect(0,0,W,H);
-    rotY += (targetRotY - rotY)*0.06;
+    if(motion) rotY += (targetRotY - rotY)*0.06;
+    else rotY = targetRotY;
     scale += (targetScale - scale)*0.08;
 
     // 星尘
     for(const d of dust){
       const p = project(d.x, d.y, d.z);
       if(p.zr > 300) continue;
-      const tw = 0.6 + 0.4*Math.sin(d.tw + performance.now()*0.001);
+      const tw = motion ? 0.6 + 0.4*Math.sin(d.tw + performance.now()*0.001) : 0.8;
       ctx.globalAlpha = d.a*tw*Math.min(1, p.persp);
       ctx.fillStyle = '#BFD4DC';
       ctx.beginPath(); ctx.arc(p.sx, p.sy, d.s*p.persp, 0, Math.PI*2); ctx.fill();
@@ -249,6 +262,9 @@ function render(){
     ctx.globalAlpha = 1;
 
     // 精品星
+    const viewed = new Set((()=>{ try{return JSON.parse(localStorage.getItem('herbal_viewed')||'[]');}catch(e){return [];} })());
+    stars.forEach(st=>{ const projected=project(st.x,st.y,st.z); st.screenX=projected.sx; st.screenY=projected.sy; st.viewed=viewed.has(st.id); st.favorite=isFav(st.id); });
+    const visibleLabels = new Set((window.HerbalCosmos?.selectVisibleLabels?.(stars,{width:W,height:H},scale,{selectedHerb:store.selectedHerb?.id||null,viewedHerbs:viewed})||[]).map(item=>item.id));
     for(const st of stars){
       const p = project(st.x, st.y, st.z);
       if(p.zr > 300) continue;
@@ -262,13 +278,14 @@ function render(){
       ctx.beginPath(); ctx.arc(p.sx,p.sy,Math.max(1.4,sz),0,Math.PI*2); ctx.fill();
       ctx.globalAlpha = 1;
       // 名称：默认只标注药食同源与亮星；放大星云时显示全部药名
-      const showLabel = (hoverId===st.id) || (sz > 2.6) || (st.herb && st.herb.food && sz > 1.7) || (scale > 1.15 && sz > 2.0);
+      const showLabel = visibleLabels.size ? visibleLabels.has(st.id) || hoverId===st.id || focusedId===st.id : ((hoverId===st.id) || (scale >= 1.8 && sz > 2.0) || (st.herb && st.herb.food && scale > 1.25));
       if(showLabel){
         ctx.fillStyle = hoverId===st.id ? '#F3D9A0' : 'rgba(232,224,207,.82)';
         ctx.font = hoverId===st.id ? '600 12px "Noto Sans SC",sans-serif' : '400 11px "Noto Sans SC",sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(st.name, p.sx, p.sy - sz*3.6);
       }
+      if(st.viewed || focusedId===st.id){ ctx.strokeStyle='#F0CA77'; ctx.lineWidth=1.2; ctx.globalAlpha=.85; ctx.beginPath(); ctx.arc(p.sx,p.sy,Math.max(5,sz*1.9),0,Math.PI*2); ctx.stroke(); ctx.globalAlpha=1; }
     }
     requestAnimationFrame(frame);
   }
@@ -304,6 +321,11 @@ function render(){
     const h = hitTest(e.clientX-rect.left, e.clientY-rect.top);
     if(h) { setSelected(h.id); location.hash = '#/herb?id='+h.id; }
   });
+  canvas.addEventListener('dblclick', e=>{
+    const rect = canvas.getBoundingClientRect();
+    const h = hitTest(e.clientX-rect.left, e.clientY-rect.top);
+    if(h){ focusedId=h.id; targetScale=Math.max(targetScale,1.35); targetRotY=Math.atan2(h.x,h.z); setSelected(h.id,{source:'cosmos-dblclick'}); }
+  });
   canvas.addEventListener('wheel', e=>{
     const next = targetScale - e.deltaY*0.001;
     if(next >= 0.5 && next <= 1.8){
@@ -312,7 +334,10 @@ function render(){
     }
   }, {passive:false});
   // 自动慢转
-  setInterval(()=>{ if(!dragging){ targetRotY += 0.0009; } }, 30);
+  setInterval(()=>{ if(motion && !dragging){ targetRotY += 0.0009; } }, 30);
+  window.addEventListener('herbal:focus-herb', event=>{ const star=stars.find(item=>item.id===event.detail?.herbId); if(!star)return; focusedId=star.id; targetRotY=Math.atan2(star.x,star.z); targetScale=Math.max(targetScale,1.35); });
+  window.addEventListener('herbal:motion', event=>{ motion=Boolean(event.detail?.enabled); if(!motion) targetRotY=rotY; });
+  window.addEventListener('herbal:cosmos-color', event=>{ colorMode=event.detail?.mode==='effect'?'effect':'uniform'; buildStars(); });
 
   const ro = new ResizeObserver(()=>{ resize(); });
   ro.observe(canvas);
@@ -327,7 +352,7 @@ function renderHomeMuseum(){
   const kpis=[
     ['18,817','资源星辰','全国中药资源普查','总量口径'],
     [HERBS.length.toLocaleString('zh-CN'),'精品知识卡','四气 · 五味 · 归经 · 功效','可深度联动'],
-    [HERB_CATALOG.length.toLocaleString('zh-CN'),'名称索引','公开名称与古典文本','可搜索分页'],
+    [(window.HERB_CATALOG_MANIFEST?.approvedCount ?? HERB_CATALOG.length).toLocaleString('zh-CN'),'名称索引','公开名称与古典文本','可搜索分页'],
     [FORMULAS.length.toLocaleString('zh-CN'),'关系网络方剂','配伍与证候链路','可点击追踪']
   ];
   const kpiEl=$('#homeKpis');
@@ -348,7 +373,7 @@ function renderHome(){
       <div><div class="n">${esc(h.name)}</div><div class="d">${esc(h.qi)} · ${esc(h.wei)} · 归${esc(h.meridian.join('、'))}经</div></div>
     </a>`).join('');
   const catalogCount = $('#homeCatalogCount');
-  if(catalogCount) catalogCount.textContent = HERB_CATALOG.length.toLocaleString('zh-CN');
+  if(catalogCount) catalogCount.textContent = (window.HERB_CATALOG_MANIFEST?.approvedCount ?? HERB_CATALOG.length).toLocaleString('zh-CN');
   renderHomeMuseum();
   renderHomeClassics();
   updateHomeProgress();
@@ -366,7 +391,7 @@ function renderHerbs(){
   if(featuredPanel) featuredPanel.hidden = mode!=='featured';
   if(catalogPanel) catalogPanel.hidden = mode!=='catalog';
   const featuredCount=$('#featuredAtlasCount'); if(featuredCount) featuredCount.textContent=HERBS.length;
-  const catalogCount=$('#catalogAtlasCount'); if(catalogCount) catalogCount.textContent=HERB_CATALOG.length.toLocaleString('zh-CN');
+  const catalogCount=$('#catalogAtlasCount'); if(catalogCount) catalogCount.textContent=(window.HERB_CATALOG_MANIFEST?.approvedCount ?? HERB_CATALOG.length).toLocaleString('zh-CN');
   if(mode==='catalog'){ renderCatalog(); return; }
   const f = store.filters;
   // 筛选芯片
@@ -728,6 +753,9 @@ function renderFormula(){
   };
   if(focusId) showFormula(formulaById(focusId));
   else if(store.selectedFormula) showFormula(formulaById(store.selectedFormula));
+  if(inspector && q.from==='zheng' && q.z){
+    const back=document.createElement('a'); back.href='#/zheng?z='+encodeURIComponent(q.z)+'&f='+encodeURIComponent(focusId); back.className='inspector-back-link'; back.textContent='返回相关证候'; inspector.prepend(back);
+  }
   gChart.on('click', params=>{if(!params.data||!params.data.id)return;const id=params.data.id;if(id.startsWith('f_')){store._formulaFocus=id.slice(2);showFormula(formulaById(id.slice(2)));renderFormula();}else if(id.startsWith('h_')){showHerb(byId(id.slice(2)));}});
   document.querySelectorAll('[data-formula-index]').forEach(btn=>btn.onclick=()=>{store._formulaFocus=btn.dataset.formulaIndex; location.hash='#/formula?f='+btn.dataset.formulaIndex;});
   // 跨页联动：来自药材详情的"相关方剂"点击，高亮该方剂节点
@@ -757,6 +785,8 @@ function renderFormula(){
 
 function renderZheng(){
   if(typeof echarts === 'undefined'){ return; }
+  const routeQuery=parseHash().params;
+  if(routeQuery.z && ZHENGS.some(item=>item.id===routeQuery.z)) store.selectedZheng=routeQuery.z;
   const p=chartPalette();
   if(!store.selectedZheng) store.selectedZheng = ZHENGS[0].id;
   const cur = ZHENGS.find(z=>z.id===store.selectedZheng) || ZHENGS[0];
@@ -769,6 +799,9 @@ function renderZheng(){
     fm.herbs.slice(0,5).forEach(x=>{if(x[0]&&coreIds.includes(x[0]))links.push({source:'formula-'+fi,target:'herb-'+x[0],value:1});});
   });
   const nodes=[{id:'pattern',name:cur.name,x:90,y:215,fixed:true,symbolSize:34,itemStyle:{color:p.cinnabar}},...selectedFormulas.map((f,i)=>({id:'formula-'+i,name:f.name,x:280,y:80+i*150,fixed:true,symbolSize:26,itemStyle:{color:p.celadon}})),...coreIds.map((id,i)=>({id:'herb-'+id,name:herbName(id),x:500,y:36+i*58,fixed:true,symbolSize:16,itemStyle:{color:p.jin}}))];
+  const formulaNodeMap=new Map(selectedFormulas.map((formula,index)=>['formula-'+index,'formula-'+formula.id]));
+  nodes.forEach(node=>{ if(formulaNodeMap.has(node.id)) node.id=formulaNodeMap.get(node.id); });
+  links.forEach(link=>{ if(formulaNodeMap.has(link.source)) link.source=formulaNodeMap.get(link.source); });
   const zhengEl=document.getElementById('zhengSankey');
   if(!zhengEl) return;
   chartManager.dispose('zhengSankey');
@@ -785,12 +818,13 @@ function renderZheng(){
       emphasis:{focus:'adjacency',lineStyle:{width:4,color:p.cinnabar}}
     }]
   });
-  sChart.on('click', params=>{ const id=params.data&&params.data.id||''; if(id.startsWith('herb-')) location.hash='#/herb?id='+id.slice(5); });
+  sChart.on('click', params=>{ const id=params.data&&params.data.id||''; if(id.startsWith('herb-')) location.hash='#/herb?id='+id.slice(5); if(id.startsWith('formula-')){ const formula=selectedFormulas.find(item=>'formula-'+item.id===id)||selectedFormulas[Number(id.slice(8))]; if(formula) location.hash='#/formula?f='+encodeURIComponent(formula.id)+'&from=zheng&z='+encodeURIComponent(cur.id); } });
   const title=$('#zhengFocusTitle'); if(title) title.textContent=cur.name;
   const desc=$('#zhengFocusDesc'); if(desc) desc.textContent=`${cur.desc} · 当前展示 ${selectedFormulas.length} 首方剂与 ${coreIds.length} 味核心药材`;
   const count=$('#zhengFocusCount'); if(count) count.textContent=`${selectedFormulas.length} 方 · ${coreIds.length} 味药`;
   const evidence=$('#zhengEvidence');
   if(evidence) evidence.innerHTML=`<span>证据检查器 · 当前证候</span><h2>${esc(cur.name)}</h2><p>${esc(cur.desc)}</p>${selectedFormulas.map(f=>`<div class="evidence-formula"><strong>${esc(f.name)}</strong><div class="muted" style="font-size:11px;margin-top:4px;">${esc(f.from)} · ${esc(f.eff)}</div><div class="evidence-herbs">${f.herbs.slice(0,5).map(x=>`<a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a>`).join('')}</div></div>`).join('')}`;
+  if(evidence) evidence.querySelectorAll('.evidence-formula').forEach((el,index)=>{ const formula=selectedFormulas[index]; if(!formula) return; const link=document.createElement('a'); link.href='#/formula?f='+encodeURIComponent(formula.id)+'&from=zheng&z='+encodeURIComponent(cur.id); link.dataset.testid='zheng-formula-link'; link.className='evidence-formula-link'; link.textContent='查看方剂配伍 →'; el.prepend(link); });
   const index=$('#zhengIndex');
   const query=($('#syndromeSearch')?.value||'').trim();
   const filtered=ZHENGS.filter(z=>!query||z.name.includes(query)||z.desc.includes(query));
@@ -867,6 +901,7 @@ function getLearnStats(){try{return JSON.parse(localStorage.getItem('herbal_lear
 function saveLearnStats(){localStorage.setItem('herbal_learn_stats',JSON.stringify({total:learnState.total,correct:learnState.correct}));}
 function renderLearn(){
   const s=getLearnStats(); learnState.total=s.total; learnState.correct=s.correct;
+  const stepParam=Number(parseHash().params.step); if(Number.isFinite(stepParam)&&stepParam>0) learnState.index=Math.min(QUIZ.length-1,Math.max(0,stepParam-1));
   const item=QUIZ[learnState.index%QUIZ.length]; const progress=((learnState.index%QUIZ.length)/QUIZ.length)*100;
   $('#quizCard').innerHTML=`<div class="quiz-top"><span class="badge qing">${currentLang==='en'?'Question':'第'} ${(learnState.index%QUIZ.length)+1} / ${QUIZ.length} ${currentLang==='en'?'':'题'}</span><span class="muted" style="font-size:12px;">${t('learn.total')} ${s.correct} ${currentLang==='en'?'':'题'}</span></div><div class="progress"><i style="width:${progress}%"></i></div><div class="quiz-q">${item.q}</div><div class="quiz-options">${item.options.map((o,i)=>`<button class="quiz-option" data-answer="${i}">${o}</button>`).join('')}</div><div id="quizFeedback"></div>`;
   document.querySelectorAll('[data-answer]').forEach(btn=>btn.addEventListener('click',()=>{if(learnState.answered)return;learnState.answered=true;const picked=Number(btn.dataset.answer),ok=picked===item.answer;learnState.total++;if(ok)learnState.correct++;saveLearnStats();document.querySelectorAll('[data-answer]').forEach((b,i)=>{b.disabled=true;if(i===item.answer)b.classList.add('correct');if(i===picked&&!ok)b.classList.add('wrong')});$('#quizFeedback').innerHTML=`<div class="quiz-note">${ok?t('learn.correct'):t('learn.retry')} ${item.note}</div><button class="quiz-next" id="quizNext">${t('learn.next')}</button>`;$('#quizNext').onclick=()=>{learnState.index++;learnState.answered=false;renderLearn();updateHomeProgress();};$('#learnStats').textContent=`${t('learn.done')} ${learnState.total} · ${t('learn.right')} ${learnState.correct}`;updateHomeProgress();}));

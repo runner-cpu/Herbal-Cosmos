@@ -230,6 +230,7 @@ const HERITAGE_IMAGES = {
 };
 const catalogNoise = /(?:丸|散|汤|膏|丹|片|胶囊|注射|颗粒|口服|药液|液|堂|疗法|治疗|穴位|针刺|针灸|推拿|熏洗|静脉|滴注|加减|方见|可选|选用|用药|服用|水煎|煎服|冲服|外敷|贴敷|茶饮|保健|中成药|成药|一两半|各等)$/;
 const HERB_CATALOG = (Array.isArray(window.HERB_CATALOG) ? window.HERB_CATALOG : []).filter(item=>!catalogNoise.test(item.name));
+if (typeof window !== 'undefined') window.HERB_CATALOG = HERB_CATALOG;
 // 图片加载失败时的内联 SVG 占位（叶脉 + 药名首字），彻底避免裂图图标与本地路径依赖。
 function herbPlaceholder(label){
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='#E8EDE8'/><path d='M200 60 C170 120 170 180 200 240 M200 120 C180 140 160 150 140 150 M200 160 C220 180 240 190 260 190' stroke='#719E87' stroke-width='3' fill='none' stroke-linecap='round'/><text x='200' y='158' font-size='54' fill='#103F34' text-anchor='middle' font-family='serif'>${label||'药'}</text></svg>`;

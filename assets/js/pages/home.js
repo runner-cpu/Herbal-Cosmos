@@ -64,6 +64,7 @@ function showClassicDetail(item) {
 function initHomeModules() {
   renderFood();
   renderCulture();
+  document.querySelectorAll('.path-steps a').forEach((link, index) => { link.href = '#/learn?step=' + (index + 1); });
   document.getElementById('homeCultureExpand')?.addEventListener('click', () => { cultureExpanded = !cultureExpanded; renderCulture(); });
   document.addEventListener('click', event => {
     const item = event.target.closest('.classic-timeline .cl-item');

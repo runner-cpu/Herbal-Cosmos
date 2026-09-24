@@ -6,6 +6,14 @@
 
 ---
 
+## 2026 credibility and runtime notes
+
+- 2,711 describes the total number of standards in Volume I of the 2020 Chinese Pharmacopoeia; it is not presented as 2,711 verified medicinal-material names.
+- The committed authority currently has only names with mechanically traceable row evidence. The generated browser catalog reports its real approvedCount and reviewCount; uncertain candidates remain in reports/catalog-review.json and are hidden from default search.
+- Run node scripts/build-herb-catalog.mjs to regenerate the catalog, npm run validate:catalog for the quality gate, and npm test for Node-level checks. The name-index chunks load lazily only when index mode is entered.
+- npm run test:browser runs responsive, accessibility, lazy-loading and chart-lifecycle checks through Playwright. For a static preview use python -m http.server 4173.
+- The homepage and star map state: 索引层仅名称可检索，药性字段以精品卡为准。
+
 ## 目录
 
 - [在线体验](#在线体验)

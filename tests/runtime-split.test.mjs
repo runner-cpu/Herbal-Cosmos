@@ -33,3 +33,9 @@ test('extracted CSS keeps root-relative image references reachable', () => {
   assert.match(css, /url\(['"]\.\.\/\.\.\/images\/herbs\/renshen\.jpg['"]\)/);
   assert.ok(fs.existsSync(path.join(root, 'images', 'herbs', 'renshen.jpg')));
 });
+
+test('full catalog is not a first-paint script dependency', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.equal(html.includes('data/herb-catalog.js'), false);
+  assert.ok(html.includes('assets/js/core/catalog-loader.js'));
+});

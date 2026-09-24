@@ -55,6 +55,11 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
 .saved-drawer-item span { color:var(--ink-2); font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .saved-drawer-item button { border:1px solid var(--line); background:transparent; color:var(--ink-2); border-radius:4px; padding:4px 7px; font-size:11px; }
 .saved-drawer-empty { padding:30px 0; color:var(--ink-2); text-align:center; }
+.cosmos-controls { position:absolute; right:18px; bottom:18px; z-index:3; display:flex; gap:6px; }
+.cosmos-controls button { border:1px solid rgba(243,237,223,.42); background:rgba(10,32,27,.55); color:#F3EDDF; border-radius:4px; padding:5px 8px; font-size:10px; }
+.cosmos-controls button:hover,.cosmos-controls button:focus-visible { border-color:var(--jin); outline:none; }
+.hero #heroCanvas { transform:translateY(var(--hero-parallax,0)); transition:transform .15s ease-out; }
+@media (prefers-reduced-motion:reduce) { .hero #heroCanvas { transform:none; transition:none; } }
 
 .home-food,.home-culture { margin-top:42px; padding-top:28px; border-top:1px solid var(--line); }
 .home-food-strip { display:flex; gap:10px; overflow-x:auto; padding:8px 0 14px; scrollbar-width:thin; }

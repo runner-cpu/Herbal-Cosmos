@@ -3,8 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:catalog": "node scripts/build-herb-catalog.mjs",
     "test": "node --test tests/*.test.mjs",
+    "test:unit": "node --test tests/*.test.mjs",
     "validate:catalog": "node scripts/validate-catalog.mjs",
-    "check:inline": "node scripts/check-inline-runtime.mjs"
+    "check:inline": "node scripts/check-inline-runtime.mjs",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
   }
 }

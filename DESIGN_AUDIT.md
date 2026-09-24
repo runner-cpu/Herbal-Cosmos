@@ -144,3 +144,10 @@
 - 参考用户提供的“中国地方畜禽品种数字博物馆”首屏结构：核心数据看板、分类速览、功能入口、最新条目、项目说明与数据更新信息；未复制其代码、素材或布局。
 - 本地浏览器验证首页新增板块均出现在可访问性树中；分类按钮可跳转并应用“补虚”等功效筛选；原有探索本草、典籍兼容路由、收藏、性味归经和病证药链继续可访问。
 - 内嵌 JavaScript 语法检查与 `git diff --check` 通过；桌面首页截图确认新增看板、分类和六个主题入口均无溢出。
+
+## 2026 implementation audit
+
+- The approved/review catalog boundary is generated from committed source manifests and checked by validate-catalog; uncertain names remain auditable and hidden from default search.
+- The homepage now previews food-and-medicine and culture/heritage content, while the standalone routes remain available.
+- Global theme, herb context, saved drawer, lazy catalog loading, sparse star-map labels and insight charts are implemented as zero-build modules.
+- Browser regression commands: npm run test:browser and python -m http.server 4173.
