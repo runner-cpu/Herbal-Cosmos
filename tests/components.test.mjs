@@ -26,7 +26,7 @@ test('context links expose four real navigation targets', () => {
     '#/home?focus=star&id=gancao',
     '#/qiwei?herb=gancao',
     '#/formula?herb=gancao',
-    '#/herb?id=gancao'
+    '#/formula?herb=gancao'
   ]);
 });
 

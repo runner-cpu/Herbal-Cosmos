@@ -4,12 +4,13 @@ export function viewedIds(previous = [], id) {
 
 export function contextLinks({ id }) {
   const value = encodeURIComponent(id || '');
-  return [
+  const result = [
     { href: '#/home?focus=star&id=' + value, label: '星图定位' },
     { href: '#/qiwei?herb=' + value, label: '性味归经' },
     { href: '#/formula?herb=' + value, label: '配伍网络' },
     { href: '#/herb?id=' + value, label: '相关方剂' }
   ];
+  return result.map(link => link.href.startsWith('#/herb?id=') ? { ...link, href: '#/formula?herb=' + value } : link);
 }
 
 function storageIds() {

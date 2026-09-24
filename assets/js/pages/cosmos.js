@@ -73,7 +73,12 @@ function initCosmos() {
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false;
   let preference = true;
   try { preference = localStorage.getItem('herbal_motion') !== 'off'; } catch { /* optional */ }
-  window.HerbalCosmos = { selectVisibleLabels, colorForEffect, motionEnabled, focusHerb, setCosmosColorMode, setMotionEnabled, animate: motionEnabled({ reducedMotion: reduced, preference }) };
+  const animate = motionEnabled({ reducedMotion: reduced, preference });
+  let storedColor = 'uniform';
+  try { storedColor = localStorage.getItem('herbal_cosmos_color') === 'effect' ? 'effect' : 'uniform'; } catch { /* optional */ }
+  document.documentElement.dataset.cosmosColor = storedColor;
+  window.HerbalCosmos = { selectVisibleLabels, colorForEffect, motionEnabled, focusHerb, setCosmosColorMode, setMotionEnabled, animate };
+  window.dispatchEvent(new CustomEvent('herbal:motion', { detail: { enabled: animate } }));
   const hero = document.querySelector('.hero');
   if (hero && !document.getElementById('cosmosControls')) {
     const controls = document.createElement('div');

@@ -63,7 +63,10 @@ export function catalogSearch(query, options = {}) {
     worker.addEventListener('message', handler);
     worker.postMessage({ type: 'search', requestId, query, page, pageSize, source });
   });
-  const rows = filterCatalogEntries(window.HERB_CATALOG || []).filter(entry => !query || entry.name.includes(query));
+  const rows = filterCatalogEntries(window.HERB_CATALOG || []).filter(entry => {
+    const matchesSource = !source || (entry.sourceRefs || []).includes(source);
+    return matchesSource && (!query || entry.name.includes(query));
+  });
   return Promise.resolve({ items: rows.slice((page - 1) * pageSize, page * pageSize), total: rows.length, status: 'ready' });
 }
 
@@ -74,7 +77,13 @@ function initLoader() {
   }).catch(() => {});
   const ensure = () => { const route = location.hash.replace(/^#\/?/, '').split('?')[0]; if (route === 'herbs' && location.hash.includes('mode=catalog')) loadCatalog().catch(() => {}); };
   window.addEventListener('hashchange', ensure);
-  window.addEventListener('herbal:catalog-ready', () => { window.render?.(); });
+  window.addEventListener('herbal:catalog-ready', () => {
+    window.render?.();
+    const input=document.getElementById('globalSearch');
+    if(input?.value) input.dispatchEvent(new Event('input',{bubbles:true}));
+  });
+  const searchInput=document.getElementById('globalSearch');
+  searchInput?.addEventListener('input', event => { if(event.target.value.trim() && !window.HERB_CATALOG.length) loadCatalog().catch(()=>{}); });
   ensure();
 }
 
