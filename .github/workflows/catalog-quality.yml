@@ -2,6 +2,7 @@ name: Catalog quality
 
 on:
   push:
+    branches: [main]
   pull_request:
 
 jobs:
