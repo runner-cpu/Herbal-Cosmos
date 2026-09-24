@@ -170,7 +170,8 @@ function render(){
   applyLanguage();
   if(route==='home' && params.focus==='classics') setTimeout(()=>document.getElementById('home-classics')?.scrollIntoView({behavior:'smooth',block:'start'}),80);
 }
-window.addEventListener('hashchange', render);
+  window.render = render;
+  window.addEventListener('hashchange', render);
 
 /* ============================================================
    首页：3D 星云（Canvas 粒子引擎）
