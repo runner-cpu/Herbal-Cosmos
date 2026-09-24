@@ -21,14 +21,19 @@ export function buildCatalog({ candidates = [], authority }) {
     const suppliedReasons = Array.isArray(input.reviewReasons) ? input.reviewReasons : [];
     if (classified.status === 'approved' && !suppliedReasons.length) {
       const name = classified.canonicalName;
-      const existing = approvedMap.get(name) || { id: 'herb-' + hash(name).slice(0, 12), name, aliases: [], sourceRefs: [] };
+      const existing = approvedMap.get(name) || { id: 'herb-' + hash(name).slice(0, 12), name, aliases: [], sourceRefs: [], status: 'approved' };
       existing.aliases = uniqueSorted(existing.aliases.concat(classified.aliases));
       existing.sourceRefs = uniqueSorted(existing.sourceRefs.concat(sourceRefs)); approvedMap.set(name, existing); continue;
     }
-    const existing = reviewMap.get(raw) || { id: 'review-' + hash(raw).slice(0, 12), name: raw, aliases: [], sourceRefs: [], reviewReasons: [] };
+    const existing = reviewMap.get(raw) || { id: 'review-' + hash(raw).slice(0, 12), name: raw, aliases: [], sourceRefs: [], reviewReasons: [], status: 'review' };
     existing.sourceRefs = uniqueSorted(existing.sourceRefs.concat(sourceRefs));
     existing.reviewReasons = uniqueSorted(existing.reviewReasons.concat(classified.reviewReasons, suppliedReasons));
-    if (input.sourceLocation) existing.sourceLocation = input.sourceLocation; reviewMap.set(raw, existing);
+    if (input.sourceLocation) {
+      existing.sourceLocation = input.sourceLocation.startsWith('data/herb-catalog.js:')
+        ? 'legacy-herb-catalog:' + input.sourceLocation.split(':').pop()
+        : input.sourceLocation;
+    }
+    reviewMap.set(raw, existing);
   }
   const approved = [...approvedMap.values()].sort((a, b) => compare(a.name, b.name));
   const review = [...reviewMap.values()].sort((a, b) => compare(a.name, b.name));

@@ -12,7 +12,8 @@
         "not-in-authority",
         "symptom-word"
       ],
-      "sourceLocation": "data/herb-catalog.js:1678"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:1678"
     },
     {
       "id": "review-31ac51c4d0aa",
@@ -26,7 +27,8 @@
         "not-in-authority",
         "unverified-character-variant"
       ],
-      "sourceLocation": "data/herb-catalog.js:1762"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:1762"
     },
     {
       "id": "review-8b91133c03e8",
@@ -40,7 +42,8 @@
         "not-in-authority",
         "unverified-character-variant"
       ],
-      "sourceLocation": "data/herb-catalog.js:1776"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:1776"
     },
     {
       "id": "review-aaf964fd6d1c",
@@ -53,7 +56,8 @@
         "missing-authority-evidence",
         "not-in-authority"
       ],
-      "sourceLocation": "data/herb-catalog.js:10694"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:10694"
     },
     {
       "id": "review-1ba9cdecb68c",
@@ -66,7 +70,8 @@
         "missing-authority-evidence",
         "not-in-authority"
       ],
-      "sourceLocation": "data/herb-catalog.js:15076"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:15076"
     },
     {
       "id": "review-4f3167e29e63",
@@ -79,7 +84,8 @@
         "not-in-authority",
         "unseparated-compound"
       ],
-      "sourceLocation": "data/herb-catalog.js:15083"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:15083"
     },
     {
       "id": "review-6e0c1e44923c",
@@ -92,7 +98,8 @@
         "missing-authority-evidence",
         "not-in-authority"
       ],
-      "sourceLocation": "data/herb-catalog.js:14999"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:14999"
     },
     {
       "id": "review-15d03128b6d4",
@@ -106,7 +113,8 @@
         "not-in-authority",
         "symptom-word"
       ],
-      "sourceLocation": "data/herb-catalog.js:15006"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:15006"
     },
     {
       "id": "review-e571d9c38f94",
@@ -120,7 +128,8 @@
         "not-in-authority",
         "unverified-character-variant"
       ],
-      "sourceLocation": "data/herb-catalog.js:15013"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:15013"
     },
     {
       "id": "review-15c97d680b1f",
@@ -134,7 +143,8 @@
         "not-in-authority",
         "unverified-alias"
       ],
-      "sourceLocation": "data/herb-catalog.js:15020"
+      "status": "review",
+      "sourceLocation": "legacy-herb-catalog:15020"
     }
   ],
   "stats": {

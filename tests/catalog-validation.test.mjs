@@ -43,6 +43,18 @@ test('a noisy candidate in approved output fails validation', () => {
   }
 });
 
+test('approved output requires an explicit approved status', () => {
+  const baseDir = fixture();
+  try {
+    writeCatalog(baseDir, [{ id: 'herb-missing-status', name: '川楝子', aliases: [], sourceRefs: [] }]);
+    const result = validateCatalog({ baseDir });
+    assert.equal(result.ok, false);
+    assert.ok(result.issues.some(issue => issue.code === 'invalid-status'));
+  } finally {
+    fs.rmSync(baseDir, { recursive: true, force: true });
+  }
+});
+
 test('duplicate canonical or alias IDs fail validation', () => {
   const baseDir = fixture();
   try {

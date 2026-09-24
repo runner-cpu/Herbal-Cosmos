@@ -31,6 +31,7 @@ function validateEntries(entries, authority, issues) {
   entries.forEach((entry, index) => {
     const where = 'approved[' + index + ']';
     if (!entry || typeof entry !== 'object') { issues.push(issue('invalid-entry', where + ' is not an object')); return; }
+    if (entry.status !== 'approved') issues.push(issue('invalid-status', where + ' must have status approved'));
     if (!entry.id || typeof entry.id !== 'string') issues.push(issue('missing-id', where + ' has no id'));
     else if (ids.has(entry.id)) issues.push(issue('duplicate-id', where + ' duplicates id ' + entry.id));
     else ids.add(entry.id);
@@ -88,6 +89,7 @@ export function validateCatalog({ baseDir = root } = {}) {
   validateChunks(baseDir, catalog, manifest, issues); validateImages(baseDir, issues);
   const review = Array.isArray(report.review) ? report.review : [];
   if (!Array.isArray(report.review)) issues.push(issue('invalid-review-report', 'review report must contain a review array', reportFile));
+  review.forEach((entry, index) => { if (entry?.status !== 'review') issues.push(issue('invalid-review-status', 'review[' + index + '] must have status review', reportFile)); });
   if (manifest && Number.isInteger(manifest.reviewCount) && manifest.reviewCount !== review.length) issues.push(issue('manifest-review-count', 'manifest reviewCount ' + manifest.reviewCount + ' != report ' + review.length));
   return { ok: issues.length === 0, issues, review, summary: { approvedCount: catalog.length, reviewCount: review.length, issueCount: issues.length } };
 }

@@ -6,7 +6,8 @@ window.HERB_CATALOG = [
     "aliases": [],
     "sourceRefs": [
       "cacm-prescription-name-standard-2021"
-    ]
+    ],
+    "status": "approved"
   },
   {
     "id": "herb-d89852f06790",
@@ -14,6 +15,7 @@ window.HERB_CATALOG = [
     "aliases": [],
     "sourceRefs": [
       "cacm-prescription-name-standard-2021"
-    ]
+    ],
+    "status": "approved"
   }
 ];

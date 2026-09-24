@@ -28,6 +28,9 @@ test('构建与输入顺序无关并聚合 aliases', () => {
   assert.deepEqual(result.approved.find(item => item.name === '皂角刺').sourceRefs, ['cp2020', 'legacy']);
   assert.deepEqual(result.approved.find(item => item.name === '皂角刺').aliases, ['皂角刺异']);
   assert.equal(result.review[0].name, '出现面色苍白');
+  assert.ok(result.approved.every(item => item.status === 'approved'));
+  assert.ok(result.review.every(item => item.status === 'review'));
+  assert.ok(result.review.every(item => !item.sourceLocation || !item.sourceLocation.startsWith('data/herb-catalog.js:')));
   assert.match(result.approved[0].id, /^herb-[a-f0-9]{12}$/);
 });
 
