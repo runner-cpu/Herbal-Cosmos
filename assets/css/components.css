@@ -68,6 +68,9 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
 .home-food-card:hover { border-color:var(--jin); transform:translateY(-2px); }
 .home-food-image { height:100px; background:var(--paper-2); overflow:hidden; }
 .home-food-image img { width:100%; height:100%; object-fit:cover; }
+.home-food-directory-mark { display:grid; place-items:center; background:linear-gradient(135deg,var(--paper-2),color-mix(in srgb,var(--jin) 16%,var(--paper-2))); }
+.home-food-directory-mark span { width:42px; height:42px; padding:0; display:grid; place-items:center; border:1px solid var(--cinnabar); color:var(--cinnabar); font:600 20px var(--serif); transform:rotate(-3deg); }
+.home-food-card.directory-only { cursor:default; }
 .home-food-card .herb-stamp { position:absolute; top:78px; right:9px; width:34px; height:34px; border-width:1px; background:var(--card); }
 .home-food-card .herb-stamp-seal { font-size:11px; }
 .home-food-card .herb-stamp-meta { font-size:6px; margin-top:2px; }

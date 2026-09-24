@@ -12,8 +12,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: npm run build:data
+      - run: git diff --exit-code -- data/ reports/ assets/js/data/food-medicine.generated.js
       - run: npm run validate:catalog
       - run: npm test
+      - run: npm run check:inline
+      - name: Validate runtime assets
+        shell: bash
+        run: |
+          test -s workers/catalog-search.js
+          test -s assets/icons/favicon.svg
+          find assets/js -name '*.js' -print0 | xargs -0 -n1 node --check
+          node --check workers/catalog-search.js
   browser-quality:
     runs-on: ubuntu-latest
     steps:

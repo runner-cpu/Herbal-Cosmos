@@ -5,7 +5,7 @@ import { contextLinks, viewedIds } from '../assets/js/components/context-bar.js'
 import { serializeFavorites } from '../assets/js/components/saved-drawer.js';
 import { filterApproved } from '../assets/js/components/search.js';
 import { stampText } from '../assets/js/components/stamp.js';
-import { foodMatrixData, cultureSelection } from '../assets/js/pages/home.js';
+import { foodCardModel, foodMatrixData, cultureSelection } from '../assets/js/pages/home.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -65,4 +65,14 @@ test('home food matrix aggregates flavor and use dimensions', () => {
   ]);
   assert.equal(cultureSelection([1, 2, 3, 4]).length, 3);
   assert.equal(cultureSelection([1, 2, 3, 4], true).length, 4);
+});
+
+test('food overview keeps unaudited properties out of the matrix and never borrows another herb image', () => {
+  assert.deepEqual(foodMatrixData([
+    { flavor: '甘平', tag: '滋补', enriched: true },
+    { flavor: '未录入', tag: '属性未录入', enriched: false }
+  ]), [{ flavor: '甘平', use: '滋补', count: 1 }]);
+  assert.deepEqual(foodCardModel({ name: '丁香', flavor: '未录入', use: '目录收载', enriched: false }, [
+    { id: 'renshen', name: '人参', image: 'images/herbs/renshen.jpg' }
+  ]), { name: '丁香', detail: '目录收载 · 属性未录入', href: null, image: null, herb: null });
 });

@@ -40,6 +40,21 @@ test('相同输入的构建结果字节级稳定', () => {
   assert.deepEqual(a, b);
 });
 
+test('构建器按明确分隔符逐段匹配，不把复合候选整条丢进 review', () => {
+  const segmentedAuthority = buildAuthority({
+    canonicalNames: ['泽泻', '沙参'],
+    aliases: {},
+    variants: {}
+  });
+  const result = buildCatalog({
+    candidates: [{ raw: '泽泻、沙参', sourceRefs: ['table-row-1'] }],
+    authority: segmentedAuthority
+  });
+  assert.deepEqual(result.approved.map(item => item.name), ['沙参', '泽泻']);
+  assert.deepEqual(result.approved.map(item => item.sourceRefs), [['table-row-1'], ['table-row-1']]);
+  assert.equal(result.review.length, 0);
+});
+
 test('缩小 approved 后清理 stale chunks 且产物哈希稳定', () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-build-'));
   try {

@@ -2,14 +2,15 @@
 
 > 以 18,817 种中药资源为星辰的文化知识图谱 —— 一个数据可视化、强交互的中医药科普网页应用。
 
-「本草宇宙」是一枚**单文件、零构建**的原生 Web 交互式数据可视化作品，把中药资源普查、药典典籍、方剂配伍、性味归经、药食同源等结构化知识，编织成"星云 → 配伍 → 生活 → 历史"的沉浸式叙事。它源于**全国大学生数字媒体科技作品及创意竞赛**赛道，以"新中式数据美学"呈现中医药文化的三重叙事：**天人合一、生生之道、薪火相传**。
+「本草宇宙」是一套**零框架、静态部署**的原生 Web 交互式数据可视化作品，把中药资源普查、药典典籍、方剂配伍、性味归经、食药物质目录等结构化知识，编织成"星云 → 配伍 → 生活 → 历史"的沉浸式叙事。它源于**全国大学生数字媒体科技作品及创意竞赛**赛道，以"新中式数据美学"呈现中医药文化的三重叙事：**天人合一、生生之道、薪火相传**。
 
 ---
 
 ## 2026 credibility and runtime notes
 
 - 2,711 describes the total number of standards in Volume I of the 2020 Chinese Pharmacopoeia; it is not presented as 2,711 verified medicinal-material names.
-- The committed authority currently has only names with mechanically traceable row evidence. The generated browser catalog reports its real approvedCount and reviewCount; uncertain candidates remain in reports/catalog-review.json and are hidden from default search.
+- The committed authority currently approves 2 names with mechanically traceable row evidence. A further 2,283 legacy candidates remain in `reports/catalog-review.json` for audit and are hidden from default search. These counts are generated, not presentation targets.
+- The food-and-medicine directory contains all 106 unique official entries published across the 2002, 2019, 2023 and 2024 notices. Only separately curated property/use fields are shown; all others are explicitly marked “属性未录入”.
 - Run node scripts/build-herb-catalog.mjs to regenerate the catalog, npm run validate:catalog for the quality gate, and npm test for Node-level checks. The name-index chunks load lazily only when index mode is entered.
 - npm run test:browser runs responsive, accessibility, lazy-loading and chart-lifecycle checks through Playwright. For a static preview use python -m http.server 4173.
 - The homepage and star map state: 索引层仅名称可检索，药性字段以精品卡为准。
@@ -80,7 +81,7 @@
 
 ### 4. 响应式与可访问性
 - 桌面端保留表格与网络三栏工作区；移动端将药材表格转为可操作知识卡，网络按“索引 → 图谱 → 检查器”纵向排列。
-- 全站提供跳到主要内容、统一 `:focus-visible` 焦点反馈、可关闭搜索建议、深浅主题与中英文切换；两项偏好均保存在本机，动效遵守 `prefers-reduced-motion`。
+- 全站提供跳到主要内容、统一 `:focus-visible` 焦点反馈、可关闭搜索建议与三种主题；主题偏好保存在本机，动效遵守 `prefers-reduced-motion`。未完成的英文入口已隐藏，避免中英混杂。
 
 ### 5. 图像化学习与资源降级
 - 药材星图、精选本草、搜索建议、药材详情、药食同源、非遗和收藏均使用 `output/imagegen/` 下的本地图谱，图片带有语义化 `alt` 文本与懒加载。
@@ -120,7 +121,7 @@
 
 ## 技术架构
 
-**技术栈**：原生 HTML5 + CSS3 + JavaScript（ES6+），零框架、零构建工具、单文件交付。
+**技术栈**：原生 HTML5 + CSS3 + JavaScript（ES6+），零框架、静态模块化交付。
 
 | 层 | 技术 | 说明 |
 |---|---|---|
@@ -136,7 +137,7 @@
 | 数据层级 | 数量 | 交互能力 | 渲染方式 |
 |---|---|---|---|
 | 药典精品层 | 代表药材子集 | 完整点击/详情/联动 | 高精度 3D 星点 + 详情页 |
-| 名称索引 | 2 条已核验名称（10 条候选进入 review 清单） | 搜索、来源筛选、分页；仅名称，不伪造药性字段 | 分块表格 |
+| 名称索引 | 2 条已核验名称（2,283 条历史候选进入 review 清单） | 搜索、来源筛选、分页；仅名称，不伪造药性字段 | 分块表格 |
 | 普查全量层 | 18,817 种（资源统计口径） | 统计叙事展示，不等同于当前索引条目 | 数据卡片/图例说明 |
 | 动态筛选子集 | ≤500（精品层筛选结果） | 完整交互 | 表格/图表重新渲染 |
 
@@ -149,14 +150,14 @@
 - **FORMULAS（方剂）**：21 首经典代表方，字段含 `id / name / source（出处）/ eff / note / monarch-minister（君臣佐使）/ herbs（组成）/ zheng（主治证型）`，组成均为**真实完整方**（如六味地黄丸六味俱全、麻黄汤含苦杏仁）。
 - **ZHENGS（证候）**：18 个常见中医证候，映射"证 → 方 → 药"链路。
 - **CLASSICS（典籍）**：从《神农本草经》到《中国药典》的历代典籍规模数据。
-- **HERB_CATALOG（全量名称索引）**：由 `scripts/build-herb-catalog.mjs` 从开源名称表与古典本草文本生成；条目标记为 `catalog-only`，不参与性味归经统计。
-- **FOODS（药食同源）**：国家卫健委目录中的代表物质。
+- **HERB_CATALOG（名称索引）**：由 `scripts/build-herb-catalog.mjs` 从受版本控制的权威表与历史候选生成；只有带行级证据的 `approved` 条目进入默认检索，`review` 不参与性味归经统计。
+- **FOODS（食药物质）**：国家卫生健康部门 2002—2024 公告中的 106 个唯一目录项；未独立补录的属性保持“未录入”。
 
 ### 数据来源（可溯源）
 - **第四次全国中药资源普查**：中药资源总量 18,817 种（植物 15,321 / 动物 2,517 / 矿物 153 / 菌物 826；特有 3,151、濒危 464；普查记录约 2,000 万条）。
 - **《本草纲目》**：1,892 药 / 11,096 方 / 1,160 图，52 卷约 190 万字，16 部 60 类。
-- **《中国药典》2020**：一部 2,711 种，"药材和饮片"616 种。
-- **国家卫健委药食同源目录**：官方目录口径为 106 种（动态更新）；当前仓库接入其中的代表样本，首页数字由 `FOODS` 数据实际长度动态显示。
+- **《中国药典》2020**：一部 2,711 项中药标准；该数字不是 2,711 味可检索药材。公开统计中的“药材和饮片”616 项只作为规模交叉核对。
+- **国家卫生健康部门食药物质目录**：2002 年 87 种、2019 年新增 6 种、2023 年新增 9 种、2024 年新增 4 种，去重后 106 种；首页数字由 `FOODS` 的实际长度动态显示。
 - **国家级非遗名录**：中医药相关代表性项目。
 
 ---
@@ -189,14 +190,17 @@
 
 ```
 herbal-cosmos/
-├── index.html                         # 全站唯一文件：结构 + 样式 + 数据 + 交互
-├── DESIGN_AUDIT.md                    # 多维问题审计、设计取舍与开源参考
-├── output/imagegen/concepts/           # 设计概念图（实现参考）
-├── output/imagegen/herbs/              # 本地植物图谱（形态类别素材）
+├── index.html                          # 页面结构与静态入口
+├── assets/js/                          # 数据、组件、路由运行时与图表模块
+├── assets/css/                         # 站点与组件样式
+├── data/sources/                       # 可审计权威源与历史候选
+├── scripts/                            # 数据构建、恢复与质检脚本
+├── tests/                              # Node 与 Playwright 回归测试
+├── DESIGN_AUDIT.md                     # 多维问题审计与设计取舍
 └── README.md                           # 本文档
 ```
 
-> 单文件设计便于部署：可直接放入任意静态托管（GitHub Pages / 对象存储 / 本地打开）。
+> 所有资源均为静态文件，可直接部署到 GitHub Pages、对象存储或本地 HTTP 服务器。
 
 ---
 

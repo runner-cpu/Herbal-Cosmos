@@ -1,7 +1,7 @@
 /* Generated deterministically from data/sources. */
 window.HERB_CATALOG_MANIFEST = {
   "approvedCount": 2,
-  "reviewCount": 10,
+  "reviewCount": 2283,
   "chunks": [
     "c00"
   ],

@@ -294,7 +294,7 @@ const ZHENGS = [
   {id:'jin-mai-luan-ji', name:'阴血不足·筋脉挛急', desc:'小腿抽筋、挛急疼痛', formulas:['shiyaogancaotang']}
 ];
 
-const FOODS = [
+const FOOD_DETAILS = [
   {name:'枸杞子', use:'泡茶 / 煲汤 / 入粥', note:'滋补肝肾，益精明目', tag:'滋补', flavor:'甘平'},
   {name:'山药', use:'蒸食 / 煲汤 / 主食', note:'补脾养胃，生津益肺', tag:'健脾', flavor:'甘平'},
   {name:'大枣', use:'煮粥 / 泡水 / 蒸食', note:'补中益气，养血安神', tag:'滋补', flavor:'甘温'},
@@ -315,11 +315,32 @@ const FOODS = [
   {name:'桔梗', use:'入菜 / 泡茶', note:'宣肺利咽，祛痰排脓', tag:'化痰', flavor:'苦平'},
   {name:'甘草', use:'泡水 / 调味', note:'补脾益气，调和诸药', tag:'调和', flavor:'甘平'},
   {name:'蜂蜜', use:'冲饮 / 烘焙 / 调味', note:'补中润燥，止痛解毒', tag:'滋补', flavor:'甘平'},
-  {name:'核桃仁', use:'零食 / 入菜', note:'补肾温肺，润肠通便', tag:'滋补', flavor:'甘温'},
   {name:'黑芝麻', use:'零食 / 磨粉 / 入粥', note:'补肝肾，益精血，润肠燥', tag:'滋补', flavor:'甘平'},
   {name:'桑葚', use:'鲜食 / 泡酒 / 制酱', note:'滋阴补血，生津润燥', tag:'滋阴', flavor:'甘寒'},
   {name:'罗汉果', use:'代茶饮（甜味）', note:'清热润肺，利咽开音', tag:'润肺', flavor:'甘凉'}
 ];
+
+const FOOD_DETAIL_NAME = {
+  '龙眼肉（桂圆）':'龙眼肉',
+  '枣（大枣、酸枣、黑枣）':'大枣',
+  '姜（生姜、干姜）':'生姜',
+  '桑椹':'桑葚',
+  '橘皮':'陈皮'
+};
+const foodDetailsByName = new Map(FOOD_DETAILS.map(item => [item.name, item]));
+const foodDirectory = typeof window !== 'undefined' && Array.isArray(window.FOOD_MEDICINE_DIRECTORY) ? window.FOOD_MEDICINE_DIRECTORY : [];
+const FOODS = foodDirectory.map(entry => {
+  const detail = foodDetailsByName.get(FOOD_DETAIL_NAME[entry.name] || entry.name);
+  if (detail) return { ...entry, ...detail, directoryName: entry.name, enriched: true };
+  return {
+    ...entry,
+    use:'目录收载',
+    note:'国家食药物质目录收载；具体食用方式与适用范围以相应公告为准。',
+    tag:'属性未录入',
+    flavor:'未录入',
+    enriched:false
+  };
+});
 
 const HERITAGE = [
   {name:'针灸', type:'人类非物质文化遗产', note:'以针刺与艾灸调节经络气血，2010 年列入联合国教科文组织人类非遗名录。'},

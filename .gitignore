@@ -1,3 +1,6 @@
 scripts/__pycache__/
 .worktrees/
 node_modules/
+.tmp-v3/
+test-results/
+playwright-report/

@@ -4,6 +4,9 @@
   "type": "module",
   "scripts": {
     "build:catalog": "node scripts/build-herb-catalog.mjs",
+    "build:food": "node scripts/build-food-medicine.mjs",
+    "build:data": "npm run build:catalog && npm run build:food",
+    "restore:catalog-candidates": "node scripts/restore-legacy-candidates.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:unit": "node --test tests/*.test.mjs",
     "validate:catalog": "node scripts/validate-catalog.mjs",

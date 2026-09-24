@@ -27,8 +27,8 @@ function writeCatalog(baseDir, entries) {
 test('generated output passes and surfaces review entries without failing', () => {
   const result = validateCatalog({ baseDir: root });
   assert.equal(result.ok, true, result.issues.map(issue => issue.message).join('\n'));
-  assert.equal(result.review.length, 10);
-  assert.ok(result.summary.reviewCount > 0);
+  assert.ok(result.review.length >= 2200);
+  assert.ok(result.summary.reviewCount >= 2200);
 });
 
 test('a noisy candidate in approved output fails validation', () => {

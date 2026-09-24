@@ -1,6 +1,6 @@
 export function foodMatrixData(foods = []) {
   const matrix = new Map();
-  foods.forEach(food => {
+  foods.filter(food => food.enriched !== false).forEach(food => {
     const key = (food.flavor || '未标注') + '|' + (food.tag || '未标注');
     matrix.set(key, (matrix.get(key) || 0) + 1);
   });
@@ -8,6 +8,18 @@ export function foodMatrixData(foods = []) {
     const parts = key.split('|');
     return { flavor: parts[0], use: parts[1], count };
   });
+}
+
+export function foodCardModel(food = {}, herbs = []) {
+  const herb = herbs.find(item => item.name === food.name) || null;
+  const enriched = food.enriched !== false;
+  return {
+    name: food.name || '',
+    detail: enriched ? `${food.flavor || '未录入'} · ${food.use || '目录收载'}` : '目录收载 · 属性未录入',
+    href: herb ? '#/herb?id=' + (herb.id || '') : null,
+    image: herb?.image || null,
+    herb
+  };
 }
 
 export function cultureSelection(items = [], expanded = false) {
@@ -23,10 +35,15 @@ function renderFood() {
   const herbs = window.HERBS || [];
   const strip = document.getElementById('homeFoodStrip');
   if (strip) strip.innerHTML = foods.slice(0, window.__HERBAL_FOOD_EXPANDED__ ? foods.length : 12).map(food => {
-    const herb = herbs.find(item => item.name === food.name) || herbs[0] || {};
-    const stamp = window.HerbalStamp?.renderStamp?.(herb, 'home-food-stamp') || '';
-    const href = herbs.some(item => item.name === food.name) ? '#/herb?id=' + escapeHtml(herb.id || '') : '#home-food';
-    return '<a class="home-food-card" href="' + href + '"><div class="home-food-image"><img src="' + escapeHtml(herb.image || '') + '" alt="' + escapeHtml(food.name) + '" loading="lazy"></div>' + stamp + '<strong>' + escapeHtml(food.name) + '</strong><span>' + escapeHtml(food.flavor) + ' · ' + escapeHtml(food.use) + '</span></a>';
+    const model = foodCardModel(food, herbs);
+    const stamp = model.herb ? (window.HerbalStamp?.renderStamp?.(model.herb, 'home-food-stamp') || '') : '';
+    const visual = model.image
+      ? '<div class="home-food-image"><img src="' + escapeHtml(model.image) + '" alt="' + escapeHtml(model.name) + '植物形态，用于科普识别" loading="lazy"></div>'
+      : '<div class="home-food-image home-food-directory-mark" aria-hidden="true"><span>录</span></div>';
+    const content = visual + stamp + '<strong>' + escapeHtml(model.name) + '</strong><span>' + escapeHtml(model.detail) + '</span>';
+    return model.href
+      ? '<a class="home-food-card" href="' + escapeHtml(model.href) + '">' + content + '</a>'
+      : '<article class="home-food-card directory-only">' + content + '</article>';
   }).join('');
   const matrix = document.getElementById('homeFoodMatrix');
   if (matrix) {
@@ -48,7 +65,7 @@ function renderCulture() {
 
 function updateFoodToggle() {
   const button = document.getElementById('homeFoodExpand');
-  if (button) button.textContent = window.__HERBAL_FOOD_EXPANDED__ ? '收起样本' : '查看全部样本';
+  if (button) button.textContent = window.__HERBAL_FOOD_EXPANDED__ ? '收起目录' : '查看' + (window.FOODS?.length || 0) + '种目录';
 }
 
 function scrollHomeAnchor(anchor) {

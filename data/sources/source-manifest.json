@@ -55,14 +55,24 @@
     },
     {
       "id": "legacy-herb-catalog",
-      "title": "Existing project herb candidate corpus",
+      "title": "Legacy project herb candidate corpus at commit 318a5fe",
       "kind": "legacy-candidate-input",
-      "repositoryPath": "data/herb-catalog.js",
+      "repositoryRevision": "318a5fe356d8a25be5ad48be33d20bd2b39e4dee",
+      "repositoryPath": "data/herb-catalog.js@318a5fe356d8a25be5ad48be33d20bd2b39e4dee",
       "retrievedAt": "2026-09-23",
       "retrievalStatus": "verified",
       "sha256": "E7E9E9018B7F2BA4F728E0D5D5456696953809D6DF277CDE933C889A25EB697F",
       "byteLength": 637119,
-      "licenseOrUse": "Project input only. It is not a pharmacopoeia source and can only supply raw candidates for review."
+      "licenseOrUse": "Project input only. It is not a pharmacopoeia source and supplies 2,283 raw candidates for review; it never promotes a name to approved."
+    },
+    {
+      "id": "nhc-food-medicine-106",
+      "title": "按照传统既是食品又是中药材的物质目录（2002—2024公告汇总）",
+      "kind": "official-directory",
+      "repositoryPath": "data/sources/food-medicine-106.json",
+      "retrievedAt": "2026-09-24",
+      "retrievalStatus": "verified-from-official-notices",
+      "licenseOrUse": "Only directory membership and exact published names are admitted. Properties and uses remain unrecorded unless separately sourced."
     }
   ]
 }

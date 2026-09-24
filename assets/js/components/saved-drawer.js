@@ -13,6 +13,14 @@ function readIds() {
 function writeIds(ids) {
   try { localStorage.setItem('herbal_favs', JSON.stringify([...new Set(ids)])); } catch { /* optional */ }
 }
+export function favoriteCount(ids = []) {
+  return new Set(ids.filter(id => typeof id === 'string' && id.trim())).size;
+}
+function syncFavoriteCount(ids = readIds()) {
+  if (typeof document === 'undefined') return;
+  const count = String(favoriteCount(ids));
+  document.querySelectorAll('[data-saved-count]').forEach(node => node.replaceChildren(count));
+}
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>\"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' }[char]));
 }
@@ -26,7 +34,7 @@ function renderDrawer() {
   const ids = readIds();
   const byId = new Map(herbs.map(herb => [herb.id, herb]));
   const list = drawer.querySelector('[data-saved-list]');
-  if (!ids.length) list.innerHTML = '<p class="saved-drawer-empty">还没有收藏药材。</p>';
+  if (!ids.length) list.innerHTML = '<div class="saved-drawer-empty"><p>还没有收藏药材。</p><a href="#/herbs">去探索本草</a></div>';
   else list.innerHTML = ids.map(id => {
     const herb = byId.get(id);
     if (!herb) return '';
@@ -78,10 +86,19 @@ function initDrawer() {
     if (event.target.matches('[data-saved-close]')) closeSavedDrawer();
     if (event.target.matches('[data-saved-export]')) exportSavedJson();
     const remove = event.target.closest('[data-drawer-fav]');
-    if (remove) { writeIds(readIds().filter(id => id !== remove.dataset.drawerFav)); renderDrawer(); window.dispatchEvent(new CustomEvent('herbal:favorites')); }
+    if (remove) {
+      const ids = readIds().filter(id => id !== remove.dataset.drawerFav);
+      writeIds(ids);
+      renderDrawer();
+      syncFavoriteCount(ids);
+      window.dispatchEvent(new CustomEvent('herbal:favorites', { detail: { ids } }));
+    }
   });
   window.openSavedDrawer = openSavedDrawer; window.closeSavedDrawer = closeSavedDrawer; window.exportSavedJson = exportSavedJson;
-  window.addEventListener('herbal:favorites', renderDrawer);
+  window.addEventListener('herbal:favorites', event => {
+    renderDrawer();
+    syncFavoriteCount(Array.isArray(event.detail?.ids) ? event.detail.ids : readIds());
+  });
   window.addEventListener('hashchange', () => {
     if (location.hash.replace(/^#\/?/, '').split('?')[0] === 'saved') {
       openSavedDrawer();
@@ -89,8 +106,7 @@ function initDrawer() {
       window.render?.();
     }
   });
-  const button = document.getElementById('savedDrawerToggle');
-  if (button) button.querySelector('[data-saved-count]')?.replaceChildren(String(readIds().length));
+  syncFavoriteCount();
 }
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {

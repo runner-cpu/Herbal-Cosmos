@@ -3,8 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="本草宇宙是以 18,817 种中药资源为背景的数据可视化与文化科普图谱，连接本草知识卡、方剂配伍、性味归经与食药物质目录。">
+<meta name="theme-color" content="#12372c">
+<meta property="og:title" content="本草宇宙 · HERBAL COSMOS">
+<meta property="og:description" content="从一味药出发，探索性味归经、方剂配伍、典籍与 106 种食药物质目录。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://runner-cpu.github.io/Herbal-Cosmos/">
+<meta property="og:image" content="https://runner-cpu.github.io/Herbal-Cosmos/images/herbs/renshen.jpg">
 <title>本草宇宙 · HERBAL COSMOS</title>
-<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icons/favicon.svg">
 <script src="assets/vendor/echarts.min.js"></script>
 <link rel="stylesheet" href="assets/css/site.css">
 <link rel="stylesheet" href="assets/css/components.css">
@@ -30,11 +38,10 @@
       <div class="searchbox">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
         <input id="globalSearch" placeholder="搜索药材 / 方剂" data-i18n-placeholder="search.placeholder" autocomplete="off">
-        <div class="search-results" id="searchResults" role="listbox" aria-label="搜索建议"></div>
+        <div class="search-results" id="searchResults" role="listbox" aria-label="搜索建议" aria-live="polite" aria-atomic="true"></div>
       </div>
       <button class="saved-drawer-toggle" id="savedDrawerToggle" type="button" aria-label="打开收藏"><span aria-hidden="true">藏</span><b data-saved-count>0</b></button>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深浅模式"><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>夜读</span></button>
-      <button class="language-toggle" id="languageToggle" type="button" aria-label="切换语言">EN</button>
       <button class="hamburger" id="hamburger" aria-label="菜单">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -63,8 +70,8 @@
         <a class="stat primary-stat" href="#/herbs"><div class="v">18,817<small> 种</small></div><div class="l">全国中药资源</div><div class="source-mini">第四次全国中药资源普查</div></a>
         <a class="stat" href="#/home?focus=classics"><div class="v">1,892<small> 药</small></div><div class="l">《本草纲目》收载药物</div></a>
         <a class="stat" href="#/formula"><div class="v">11,096<small> 方</small></div><div class="l">《本草纲目》收载方剂</div></a>
-        <a class="stat" href="#/home?focus=classics"><div class="v">2,711<small> 种</small></div><div class="l">《中国药典》2020 一部</div></a>
-        <a class="stat" href="#home-food"><div class="v"><span data-food-count>24</span><small> 种样本</small></div><div class="l">药食同源样本</div></a>
+        <a class="stat" href="#/home?focus=classics"><div class="v">2,711<small> 项标准</small></div><div class="l">《中国药典》2020 一部中药标准</div></a>
+        <a class="stat" href="#home-food"><div class="v"><span data-food-count>—</span><small> 种</small></div><div class="l">国家食药物质目录</div></a>
       </div>
 
       <div class="hero-bottom">
@@ -76,7 +83,7 @@
         <section class="home-modules" aria-labelledby="homeModulesTitle">
           <div class="home-board-head"><div><span>EXPLORE THE COLLECTION</span><h2 id="homeModulesTitle">从不同角度进入本草</h2></div><p>每个入口都对应一类真实数据与交互方式。</p></div>
           <div class="home-module-grid">
-            <a class="home-module module-atlas" href="#/herbs"><b>01</b><strong>本草星图</strong><span><span data-catalog-count>2</span> 条已核验名称索引与 144 味精品知识卡</span><i>↗</i></a>
+            <a class="home-module module-atlas" href="#/herbs"><b>01</b><strong>本草星图</strong><span><span data-catalog-count>—</span> 条已核验名称索引与 <span data-featured-count>—</span> 味精品知识卡</span><i>↗</i></a>
             <a class="home-module module-qiwei" href="#/qiwei"><b>02</b><strong>性味归经</strong><span>从四气、五味和十二经反查本草</span><i>↗</i></a>
             <a class="home-module module-formula" href="#/formula"><b>03</b><strong>配伍网络</strong><span>看一首方如何组织君臣佐使</span><i>↗</i></a>
             <a class="home-module module-pattern" href="#/zheng"><b>04</b><strong>病证药链</strong><span>从证候走到方剂与核心药材</span><i>↗</i></a>
@@ -125,7 +132,7 @@
 
         <section class="home-source-band" aria-labelledby="homeSourceTitle">
           <div class="home-source-copy"><span>ABOUT THE PROJECT</span><h2 id="homeSourceTitle">让本草知识可以被看见、被点击、被继续学习</h2><p>本草宇宙以公开的资源普查、药典、经典本草与方剂资料为底座，把“认识一味药”拆成图像、属性、关系、典籍和生活五个可以互相跳转的入口。</p><div class="home-source-actions"><a href="#/learn">进入学习舱</a><a href="#home-culture">查看文化与非遗</a></div></div>
-          <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委药食同源目录</span></div><div><strong>当前版本</strong><span>144 味精品知识卡 · <span data-catalog-count>2</span> 条已核验名称索引 · 21 首代表方剂 · 18 个证候链路</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div></div>
+          <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委食药物质目录</span></div><div><strong>当前版本</strong><span><span data-featured-count>—</span> 味精品知识卡 · <span data-catalog-count>—</span> 条已核验名称索引 · <span data-formula-count>—</span> 首代表方剂 · <span data-zheng-count>—</span> 个证候链路 · <span data-review-count>—</span> 条待审候选</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div></div>
         </section>
       </div>
     </section>
@@ -147,8 +154,8 @@
     <section class="page" data-route="herbs">
       <div class="eyebrow">Herb Atlas</div>
       <h1 class="title">药材星图</h1>
-      <p class="page-intro">先用精品知识卡深入理解，再切换全量名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。</p>
-      <div class="atlas-mode-tabs" role="tablist" aria-label="本草数据层"><button type="button" class="atlas-mode-tab on" data-atlas-mode="featured" role="tab">精品知识卡 <span id="featuredAtlasCount">144</span></button><button type="button" class="atlas-mode-tab" data-atlas-mode="catalog" role="tab">已核验名称索引 <span id="catalogAtlasCount">2</span></button></div>
+      <p class="page-intro">先用精品知识卡深入理解，再切换已核验名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。</p>
+      <div class="atlas-mode-tabs" role="tablist" aria-label="本草数据层"><button type="button" class="atlas-mode-tab on" data-atlas-mode="featured" role="tab">精品知识卡 <span id="featuredAtlasCount" data-featured-count>—</span></button><button type="button" class="atlas-mode-tab" data-atlas-mode="catalog" role="tab">已核验名称索引 <span id="catalogAtlasCount">—</span></button></div>
       <div id="featuredAtlasPanel">
       <div class="filter-bar" id="herbFilters">
         <button class="filter-chip" id="resetFilters" type="button" style="border-color:var(--cinnabar);color:var(--cinnabar);">重置筛选</button>
@@ -170,7 +177,7 @@
       <section class="compare-panel" id="comparePanel" hidden><div class="section-heading-row"><div><span>ATTRIBUTE COMPARISON</span><h2>本草属性对比</h2></div><button id="closeCompare" type="button">关闭</button></div><p class="compare-disclaimer">图中分值只用于当前代表数据集的属性对照，不表示药效强弱或临床推荐。</p><div class="chart-box" id="herbCompareChart"></div></section>
       </div>
       <div id="catalogAtlasPanel" hidden>
-        <div class="catalog-summary"><div><strong id="catalogVisibleCount">2</strong><span>已核验名称</span></div><p>目录只展示已通过权威名单与规则校验的名称；缺少独立证据或包含症状短语的候选项会进入 review 清单，不参与默认检索。</p></div>
+        <div class="catalog-summary"><div><strong id="catalogVisibleCount">—</strong><span>已核验名称</span></div><p>目录只展示有可复核行级证据、并通过规则校验的名称；缺少独立证据或包含症状短语的候选项会进入 review 清单，不参与默认检索。</p></div>
         <div class="catalog-toolbar"><label for="catalogSearch">检索名称<input id="catalogSearch" type="search" placeholder="输入本草名称"></label><label for="catalogSource">来源<select id="catalogSource"><option value="">全部来源</option></select></label></div>
         <div class="catalog-table-wrap"><table><thead><tr><th>名称</th><th>来源</th><th>数据状态</th><th>下一步</th></tr></thead><tbody id="catalogTableBody"></tbody></table></div>
         <div class="catalog-pagination" id="catalogPagination"></div>
@@ -196,7 +203,7 @@
       <div class="eyebrow">Qi · Wei · Meridian</div>
       <h1 class="title">性味归经图谱</h1>
       <p class="page-intro">把同一组代表药材拆成五个互相联动的读法：组合、归经、寒热、五味与共现关系。所有数字都来自当前可交互样本，不代表药效强弱或临床推荐。</p>
-      <div class="analysis-toolbar"><div class="analysis-metrics"><div class="analysis-metric"><strong id="qiweiSampleCount">144</strong><span>当前样本</span></div><div class="analysis-metric"><strong id="qiweiCategoryCount">—</strong><span>功效类别</span></div><div class="analysis-metric"><strong id="qiweiMeridianCount">—</strong><span>归经标签</span></div></div><div class="analysis-controls"><label for="qiweiCatFilter">筛选类别<select id="qiweiCatFilter"><option value="">全部类别</option></select></label></div></div>
+      <div class="analysis-toolbar"><div class="analysis-metrics"><div class="analysis-metric"><strong id="qiweiSampleCount" data-featured-count>—</strong><span>当前样本</span></div><div class="analysis-metric"><strong id="qiweiCategoryCount">—</strong><span>功效类别</span></div><div class="analysis-metric"><strong id="qiweiMeridianCount">—</strong><span>归经标签</span></div></div><div class="analysis-controls"><label for="qiweiCatFilter">筛选类别<select id="qiweiCatFilter"><option value="">全部类别</option></select></label></div></div>
       <div class="analysis-dashboard">
         <div class="chart-panel analysis-primary"><h3>四气 × 五味矩阵</h3><div class="cap">颜色与数字表示当前筛选下的药材数，点击单元格查看证据。</div><div class="chart-box wide-chart" id="qiweiMatrixChart"></div></div>
         <div class="chart-panel"><h3>归经分布排行</h3><div class="cap">按归经标签累计计数，点击一项反查本草。</div><div class="chart-box compact-chart" id="meridianBarChart"></div></div>
@@ -214,7 +221,7 @@
       <h1 class="title">方剂配伍网络</h1>
       <p class="page-intro">方剂与药材构成二部图：点一个方剂，看它的组成与君臣佐使；点一味药，看它进入哪些方剂。可拖拽探索。</p>
       <div class="graph-workspace"><aside class="graph-index"><div class="workspace-label">方剂索引</div><label for="formulaFocus">检索方剂<select id="formulaFocus"><option value="">全部方剂</option></select></label><div class="network-stats" id="networkStats"></div><div class="formula-index-list" id="formulaIndex"></div></aside><section class="graph-canvas"><div class="graph-heading"><div><h3>方剂—药材关系图</h3><p id="networkFocusNote">点击节点聚焦邻域，拖动节点调整布局。</p></div><button id="resetGraph" type="button">显示全网</button></div><div class="chart-box" id="formulaGraph"></div></section><aside class="graph-inspector" id="formulaInspector"><span>关系检查器</span><h2>选择一首方剂</h2><p>从左侧索引或网络节点选择，查看出处、主治与君臣佐使组成。</p></aside></div>
-      <section class="insight-grid formula-insights" aria-labelledby="formulaInsightsTitle"><div class="section-heading-row"><div><span>FORMULA EVIDENCE</span><h2 id="formulaInsightsTitle">配伍洞察</h2></div><span class="home-section-note">基于当前 21 首代表方剂；同一方内重复药材只计一次。</span></div><div class="insight-chart-panel"><h3>高频配伍排行</h3><div class="chart-box" id="formulaFrequencyChart"></div></div><div class="insight-chart-panel"><h3>君臣佐使角色分布</h3><div class="chart-box" id="formulaRolesChart"></div></div></section>
+      <section class="insight-grid formula-insights" aria-labelledby="formulaInsightsTitle"><div class="section-heading-row"><div><span>FORMULA EVIDENCE</span><h2 id="formulaInsightsTitle">配伍洞察</h2></div><span class="home-section-note">基于当前 <span data-formula-count>—</span> 首代表方剂；同一方内重复药材只计一次。</span></div><div class="insight-chart-panel"><h3>高频配伍排行</h3><div class="chart-box" id="formulaFrequencyChart"></div></div><div class="insight-chart-panel"><h3>君臣佐使角色分布</h3><div class="chart-box" id="formulaRolesChart"></div></div></section>
       <div class="section-heading-row formula-directory-heading"><div><span>FORMULA DIRECTORY</span><h2>代表方剂目录</h2></div></div>
       <div class="formula-directory" id="formulaCards"></div>
     </section>
@@ -224,7 +231,7 @@
       <div class="eyebrow">Pattern · Formula · Herb</div>
       <h1 class="title">病证 · 方剂 · 药材</h1>
       <p class="page-intro">从一个证候开始，逐级查看推荐方剂与核心药物。默认只展开当前证候的 2–3 首方剂和每方 5 味核心药，避免把所有关系压在一张图上。</p>
-      <div class="focus-workspace"><aside class="syndrome-index"><div class="workspace-label">证候索引 · 18</div><input class="syndrome-search" id="syndromeSearch" type="search" placeholder="搜索证候"><div class="syndrome-list" id="zhengIndex"></div></aside><section class="syndrome-flow"><div class="syndrome-flow-head"><div><h2 id="zhengFocusTitle">选择一个证候</h2><p id="zhengFocusDesc">从左侧选择证候，查看证—方—药的最短阅读路径。</p></div><span class="badge celadon" id="zhengFocusCount">—</span></div><div class="chart-box" id="zhengSankey"></div></section><aside class="syndrome-evidence" id="zhengEvidence"><span>证据检查器</span><h2>从证候开始</h2><p>选中证候后，这里会展示出处、方剂数量与核心药材。点击药材名称可进入本草知识卡。</p></aside></div>
+      <div class="focus-workspace"><aside class="syndrome-index"><div class="workspace-label">证候索引 · <span data-zheng-count>—</span></div><input class="syndrome-search" id="syndromeSearch" type="search" placeholder="搜索证候"><div class="syndrome-list" id="zhengIndex"></div></aside><section class="syndrome-flow"><div class="syndrome-flow-head"><div><h2 id="zhengFocusTitle">选择一个证候</h2><p id="zhengFocusDesc">从左侧选择证候，查看证—方—药的最短阅读路径。</p></div><span class="badge celadon" id="zhengFocusCount">—</span></div><div class="chart-box" id="zhengSankey"></div></section><aside class="syndrome-evidence" id="zhengEvidence"><span>证据检查器</span><h2>从证候开始</h2><p>选中证候后，这里会展示出处、方剂数量与核心药材。点击药材名称可进入本草知识卡。</p></aside></div>
     </section>
 
   </main>
@@ -241,6 +248,7 @@
       </div>
       <div class="compliance" style="max-width:380px;">
         <b>内容声明：</b>本站内容仅供文化科普与学习，不构成医疗建议；用药请遵医嘱，特殊人群慎用药食同源物质（以官方公告为准）。
+        <br><span>应用版本 v3 · 2026-09-24 · 名称索引来源修订 <span data-catalog-revision>—</span></span>
       </div>
     </div>
   </footer>
@@ -248,6 +256,7 @@
 
 <div id="toast"></div>
 
+<script src="assets/js/data/food-medicine.generated.js"></script>
 <script src="assets/js/data/featured.js"></script>
 <script type="module" src="assets/js/components/stamp.js"></script>
 <script type="module" src="assets/js/components/context-bar.js"></script>

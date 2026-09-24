@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { buildAuthority, classifyCandidate } from '../assets/js/lib/catalog-rules.mjs';
+import { buildAuthority, classifyCandidate, splitCandidate } from '../assets/js/lib/catalog-rules.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 function stable(value) { if (Array.isArray(value)) return value.map(stable); if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map(key => [key, stable(value[key])])); return value; }
@@ -16,24 +16,26 @@ export function buildCatalog({ candidates = [], authority }) {
   for (const candidate of candidates) {
     const input = typeof candidate === 'string' ? { raw: candidate } : (candidate || {});
     const raw = String(input.raw ?? input.name ?? '').trim(); if (!raw) continue;
-    const classified = classifyCandidate(raw, authority);
-    const sourceRefs = uniqueSorted(input.sourceRefs || []);
-    const suppliedReasons = Array.isArray(input.reviewReasons) ? input.reviewReasons : [];
-    if (classified.status === 'approved' && !suppliedReasons.length) {
-      const name = classified.canonicalName;
-      const existing = approvedMap.get(name) || { id: 'herb-' + hash(name).slice(0, 12), name, aliases: [], sourceRefs: [], status: 'approved' };
-      existing.aliases = uniqueSorted(existing.aliases.concat(classified.aliases));
-      existing.sourceRefs = uniqueSorted(existing.sourceRefs.concat(sourceRefs)); approvedMap.set(name, existing); continue;
+    for (const segment of splitCandidate(raw)) {
+      const classified = classifyCandidate(segment, authority);
+      const sourceRefs = uniqueSorted(input.sourceRefs || []);
+      const suppliedReasons = Array.isArray(input.reviewReasons) ? input.reviewReasons : [];
+      if (classified.status === 'approved' && !suppliedReasons.length) {
+        const name = classified.canonicalName;
+        const existing = approvedMap.get(name) || { id: 'herb-' + hash(name).slice(0, 12), name, aliases: [], sourceRefs: [], status: 'approved' };
+        existing.aliases = uniqueSorted(existing.aliases.concat(classified.aliases));
+        existing.sourceRefs = uniqueSorted(existing.sourceRefs.concat(sourceRefs)); approvedMap.set(name, existing); continue;
+      }
+      const existing = reviewMap.get(segment) || { id: 'review-' + hash(segment).slice(0, 12), name: segment, aliases: [], sourceRefs: [], reviewReasons: [], status: 'review' };
+      existing.sourceRefs = uniqueSorted(existing.sourceRefs.concat(sourceRefs));
+      existing.reviewReasons = uniqueSorted(existing.reviewReasons.concat(classified.reviewReasons, suppliedReasons));
+      if (input.sourceLocation) {
+        existing.sourceLocation = input.sourceLocation.startsWith('data/herb-catalog.js:')
+          ? 'legacy-herb-catalog:' + input.sourceLocation.split(':').pop()
+          : input.sourceLocation;
+      }
+      reviewMap.set(segment, existing);
     }
-    const existing = reviewMap.get(raw) || { id: 'review-' + hash(raw).slice(0, 12), name: raw, aliases: [], sourceRefs: [], reviewReasons: [], status: 'review' };
-    existing.sourceRefs = uniqueSorted(existing.sourceRefs.concat(sourceRefs));
-    existing.reviewReasons = uniqueSorted(existing.reviewReasons.concat(classified.reviewReasons, suppliedReasons));
-    if (input.sourceLocation) {
-      existing.sourceLocation = input.sourceLocation.startsWith('data/herb-catalog.js:')
-        ? 'legacy-herb-catalog:' + input.sourceLocation.split(':').pop()
-        : input.sourceLocation;
-    }
-    reviewMap.set(raw, existing);
   }
   const approved = [...approvedMap.values()].sort((a, b) => compare(a.name, b.name));
   const review = [...reviewMap.values()].sort((a, b) => compare(a.name, b.name));
