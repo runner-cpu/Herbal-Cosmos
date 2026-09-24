@@ -8,6 +8,7 @@
 <script src="assets/vendor/echarts.min.js"></script>
 <script src="data/herb-catalog.js"></script>
 <link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/components.css">
 </head>
 <body>
 <a class="skip-link" href="#mainContent">跳到主要内容</a>
@@ -25,13 +26,14 @@
         <a href="#/qiwei" data-route-link="qiwei" data-i18n="nav.qiwei">性味归经</a>
         <a href="#/formula" data-route-link="formula" data-i18n="nav.formula">配伍网络</a>
         <a href="#/learn" data-route-link="learn" data-i18n="nav.learn">学习舱</a>
-        <details class="nav-more" id="navMore"><summary data-i18n="nav.more">更多</summary><div class="nav-popover"><a href="#/zheng" data-route-link="zheng" data-i18n="nav.zheng">病证药链</a><a href="#/food" data-route-link="food" data-i18n="nav.food">药食同源</a><a href="#/culture" data-route-link="culture" data-i18n="nav.culture">文化与非遗</a><a href="#/saved" data-route-link="saved" data-i18n="nav.saved">本机收藏</a></div></details>
+        <details class="nav-more" id="navMore"><summary data-i18n="nav.more">更多</summary><div class="nav-popover"><a href="#/zheng" data-route-link="zheng" data-i18n="nav.zheng">病证药链</a><a href="#/food" data-route-link="food" data-i18n="nav.food">药食同源</a><a href="#/culture" data-route-link="culture" data-i18n="nav.culture">文化与非遗</a></div></details>
       </nav>
       <div class="searchbox">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
         <input id="globalSearch" placeholder="搜索药材 / 方剂" data-i18n-placeholder="search.placeholder" autocomplete="off">
         <div class="search-results" id="searchResults" role="listbox" aria-label="搜索建议"></div>
       </div>
+      <button class="saved-drawer-toggle" id="savedDrawerToggle" type="button" aria-label="打开收藏"><span aria-hidden="true">藏</span><b data-saved-count>0</b></button>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深浅模式"><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>夜读</span></button>
       <button class="language-toggle" id="languageToggle" type="button" aria-label="切换语言">EN</button>
       <button class="hamburger" id="hamburger" aria-label="菜单">
@@ -39,6 +41,7 @@
       </button>
     </div>
   </header>
+  <div id="herbContext" class="herb-context" data-testid="herb-context" hidden></div>
 
   <main id="mainContent">
     <!-- ============ 首页 ============ -->
@@ -254,6 +257,11 @@
 <div id="toast"></div>
 
 <script src="assets/js/data/featured.js"></script>
+<script type="module" src="assets/js/components/stamp.js"></script>
+<script type="module" src="assets/js/components/context-bar.js"></script>
+<script type="module" src="assets/js/components/search.js"></script>
+<script type="module" src="assets/js/components/saved-drawer.js"></script>
 <script src="assets/js/core/runtime.js"></script>
+<script type="module" src="assets/js/components/theme.js"></script>
 </body>
 </html>

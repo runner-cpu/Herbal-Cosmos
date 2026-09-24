@@ -86,6 +86,10 @@ if(typeof echarts === 'undefined'){
 }
 function setSelected(herbId, opts){
   store.selectedHerb = herbId ? HERBS.find(h=>h.id===herbId) || null : null;
+  if(store.selectedHerb && typeof window !== 'undefined'){
+    if(typeof window.setSelectedHerb === 'function') window.setSelectedHerb(store.selectedHerb.id, opts?.source||'runtime');
+    else window.dispatchEvent(new CustomEvent('herbal:selected',{detail:{herb:store.selectedHerb,source:opts?.source||'runtime'}}));
+  }
   notify();
 }
 const favKey = 'herbal_favs';
@@ -94,6 +98,7 @@ function toggleFav(id){
   let f = getFavs();
   if(f.includes(id)) f = f.filter(x=>x!==id); else f.push(id);
   localStorage.setItem(favKey, JSON.stringify(f));
+  if(typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('herbal:favorites',{detail:{ids:f}}));
   renderFavButtons(); toast(f.includes(id) ? '已收藏' : '已取消收藏');
 }
 function isFav(id){ return getFavs().includes(id); }
@@ -889,7 +894,8 @@ function updateSearchSuggestions(){
   store._searchIndex=-1;
   if(!kw){ searchResults.classList.remove('open'); searchResults.innerHTML=''; searchInput.setAttribute('aria-expanded','false'); return; }
   const herbs=HERBS.filter(h=>h.name.toLowerCase().includes(kw)||h.pinyin.includes(kw)||h.eff.toLowerCase().includes(kw)).slice(0,6);
-  const catalog=HERB_CATALOG.filter(item=>!byName(item.name)&&item.name.toLowerCase().includes(kw)).slice(0,4);
+  const approvedCatalog=(window.HerbalSearch?.filterApproved||((entries)=>entries.filter(item=>item?.status!=='review')))(HERB_CATALOG);
+  const catalog=approvedCatalog.filter(item=>!byName(item.name)&&item.name.toLowerCase().includes(kw)).slice(0,4);
   const formulas=FORMULAS.filter(f=>f.name.toLowerCase().includes(kw)||f.eff.toLowerCase().includes(kw)).slice(0,4);
   searchResults.innerHTML=herbs.map(h=>`<a class="search-result" role="option" href="#/herb?id=${h.id}"><img class="herb-thumb" src="${h.image}" alt="" loading="lazy"><strong>${esc(h.name)}</strong><span>${currentLang==='en'?'Herb':'药材'} · ${esc(h.qi)} · ${esc(h.wei)}</span></a>`).concat(catalog.map(item=>`<a class="search-result catalog-result" role="option" href="#/herbs?mode=catalog&q=${encodeURIComponent(item.name)}"><span class="catalog-result-mark">索引</span><strong>${esc(item.name)}</strong><span>${currentLang==='en'?'Name index':'仅名称索引'}</span></a>`), formulas.map(f=>`<a class="search-result" role="option" href="#/formula?f=${f.id}"><strong>${esc(f.name)}</strong><span>${currentLang==='en'?'Formula':'方剂'} · ${esc(f.zheng)}</span></a>`)).join('')||`<div class="search-empty">${esc(t('search.empty'))}</div>`;
   searchResults.classList.add('open'); searchInput.setAttribute('aria-expanded','true');
@@ -942,7 +948,10 @@ document.addEventListener('click', e=>{
 });
 const themeToggle=document.getElementById('themeToggle');
 if(localStorage.getItem('herbal_theme')==='night') document.body.classList.add('night');
-themeToggle.addEventListener('click',()=>{document.body.classList.toggle('night');localStorage.setItem('herbal_theme',document.body.classList.contains('night')?'night':'day');updateThemeControl();render();});
+themeToggle.addEventListener('click',()=>{
+  if(window.HerbalTheme?.setTheme){ window.HerbalTheme.setTheme(window.HerbalTheme.nextTheme(document.documentElement.dataset.theme)); return; }
+  document.body.classList.toggle('night');localStorage.setItem('herbal_theme',document.body.classList.contains('night')?'night':'day');updateThemeControl();render();
+});
 const languageToggle=document.getElementById('languageToggle');
 if(languageToggle) languageToggle.addEventListener('click',()=>{currentLang=currentLang==='zh'?'en':'zh';localStorage.setItem('herbal_lang',currentLang);render();toast(currentLang==='en'?'Language switched to English':'已切换为中文');});
 updateThemeControl();

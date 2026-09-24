@@ -3,7 +3,17 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const REQUIRED_ASSETS = ['assets/css/site.css', 'assets/js/data/featured.js', 'assets/js/core/runtime.js'];
+const REQUIRED_ASSETS = [
+  'assets/css/site.css',
+  'assets/css/components.css',
+  'assets/js/data/featured.js',
+  'assets/js/components/stamp.js',
+  'assets/js/components/context-bar.js',
+  'assets/js/components/search.js',
+  'assets/js/components/saved-drawer.js',
+  'assets/js/core/runtime.js',
+  'assets/js/components/theme.js'
+];
 const DEFINITION_NAMES = ['store', 'chartManager', 'routes'];
 
 function byteLength(value) {

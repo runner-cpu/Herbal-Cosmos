@@ -335,6 +335,9 @@ const SOURCE_MAP = {
   census:{label:'普查数据', badge:'gray'}
 };
 
+// Component modules consume an explicit read-only bridge; the canonical data remains here.
+if (typeof window !== 'undefined') window.HERBS = HERBS;
+
 /* ============================================================
    状态中枢（单一事实源 + 订阅）
    ============================================================ */
