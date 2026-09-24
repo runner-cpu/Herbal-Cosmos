@@ -27,3 +27,9 @@ test('route/store/chart globals are not duplicated in HTML', () => {
   const result = checkInlineRuntime({ baseDir: root, html });
   assert.equal(result.duplicates.length, 0, result.duplicates.join('\n'));
 });
+
+test('extracted CSS keeps root-relative image references reachable', () => {
+  const css = fs.readFileSync(path.join(root, 'assets', 'css', 'site.css'), 'utf8');
+  assert.match(css, /url\(['"]\.\.\/\.\.\/images\/herbs\/renshen\.jpg['"]\)/);
+  assert.ok(fs.existsSync(path.join(root, 'images', 'herbs', 'renshen.jpg')));
+});
