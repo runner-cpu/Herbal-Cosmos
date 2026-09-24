@@ -22,10 +22,11 @@ function renderFood() {
   const foods = window.FOODS || [];
   const herbs = window.HERBS || [];
   const strip = document.getElementById('homeFoodStrip');
-  if (strip) strip.innerHTML = foods.slice(0, 12).map(food => {
+  if (strip) strip.innerHTML = foods.slice(0, window.__HERBAL_FOOD_EXPANDED__ ? foods.length : 12).map(food => {
     const herb = herbs.find(item => item.name === food.name) || herbs[0] || {};
     const stamp = window.HerbalStamp?.renderStamp?.(herb, 'home-food-stamp') || '';
-    return '<a class="home-food-card" href="#/food"><div class="home-food-image"><img src="' + escapeHtml(herb.image || '') + '" alt="' + escapeHtml(food.name) + '" loading="lazy"></div>' + stamp + '<strong>' + escapeHtml(food.name) + '</strong><span>' + escapeHtml(food.flavor) + ' · ' + escapeHtml(food.use) + '</span></a>';
+    const href = herbs.some(item => item.name === food.name) ? '#/herb?id=' + escapeHtml(herb.id || '') : '#home-food';
+    return '<a class="home-food-card" href="' + href + '"><div class="home-food-image"><img src="' + escapeHtml(herb.image || '') + '" alt="' + escapeHtml(food.name) + '" loading="lazy"></div>' + stamp + '<strong>' + escapeHtml(food.name) + '</strong><span>' + escapeHtml(food.flavor) + ' · ' + escapeHtml(food.use) + '</span></a>';
   }).join('');
   const matrix = document.getElementById('homeFoodMatrix');
   if (matrix) {
@@ -43,6 +44,20 @@ function renderCulture() {
   grid.innerHTML = items.map(item => '<article class="home-culture-card"><div class="home-culture-image"><img src="' + escapeHtml(images[item.name] || '') + '" alt="' + escapeHtml(item.name) + '" loading="lazy"></div><div class="home-culture-copy"><span>' + escapeHtml(item.type) + '</span><h3>' + escapeHtml(item.name) + '</h3><p>' + escapeHtml(item.note) + '</p></div></article>').join('');
   const button = document.getElementById('homeCultureExpand');
   if (button) button.textContent = cultureExpanded ? '收起精选' : '查看全部';
+}
+
+function updateFoodToggle() {
+  const button = document.getElementById('homeFoodExpand');
+  if (button) button.textContent = window.__HERBAL_FOOD_EXPANDED__ ? '收起样本' : '查看全部样本';
+}
+
+function scrollHomeAnchor(anchor) {
+  if (!anchor) return;
+  setTimeout(() => {
+    const target = document.getElementById(anchor);
+    if (!target) return;
+    window.scrollTo({ top: Math.max(0, target.offsetTop - 72), behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }, 260);
 }
 
 function showClassicDetail(item) {
@@ -64,17 +79,24 @@ function showClassicDetail(item) {
 function initHomeModules() {
   renderFood();
   renderCulture();
+  updateFoodToggle();
+  const initialAnchor = location.hash.replace(/^#\/?/, '').split('?')[0];
+  if (initialAnchor === 'home-food' || initialAnchor === 'home-culture') scrollHomeAnchor(initialAnchor);
   document.querySelectorAll('.path-steps a').forEach((link, index) => { link.href = '#/learn?step=' + (index + 1); });
   document.getElementById('homeCultureExpand')?.addEventListener('click', () => { cultureExpanded = !cultureExpanded; renderCulture(); });
+  document.getElementById('homeFoodExpand')?.addEventListener('click', () => { window.__HERBAL_FOOD_EXPANDED__ = !window.__HERBAL_FOOD_EXPANDED__; renderFood(); updateFoodToggle(); });
   document.addEventListener('click', event => {
     const item = event.target.closest('.classic-timeline .cl-item');
     if (item) showClassicDetail(item);
   });
   window.addEventListener('hashchange', () => {
     const route = location.hash.replace(/^#\/?/, '').split('?')[0] || 'home';
-    if (route === 'home') { renderFood(); renderCulture(); }
+    if (route === 'home' || route === 'home-food' || route === 'home-culture') {
+      renderFood(); renderCulture(); updateFoodToggle();
+      if (route !== 'home') scrollHomeAnchor(route);
+    }
   });
-  window.renderHomeModules = () => { renderFood(); renderCulture(); };
+  window.renderHomeModules = () => { renderFood(); renderCulture(); updateFoodToggle(); };
 }
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {

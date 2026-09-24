@@ -143,13 +143,16 @@ function stampHtml(h, sizeCls){
 /* ============================================================
    Hash 路由
    ============================================================ */
-const routes = ['home','herbs','herb','qiwei','formula','zheng','food','culture','learn','saved'];
+const routes = ['home','herbs','herb','qiwei','formula','zheng','learn','saved'];
 function parseHash(){
   const raw = location.hash.replace(/^#\/?/, '') || 'home';
   const [path, queryStr] = raw.split('?');
   const params = {};
   if(queryStr){ queryStr.split('&').forEach(kv=>{ const [k,v]=kv.split('='); params[k]=decodeURIComponent(v||''); }); }
+  const legacyAnchors = { food: 'home-food', culture: 'home-culture' };
   const route = routes.includes(path) ? path : 'home';
+  if (legacyAnchors[path]) params.anchor = legacyAnchors[path];
+  else if (path.startsWith('home-')) params.anchor = path;
   if(path==='classics') params.focus='classics';
   return { route, params };
 }
@@ -168,17 +171,23 @@ function render(){
     if(params.q!=null){ store._catalogKw=params.q; store._catalogPage=1; }
   }
   const views = { home:renderHome, herbs:renderHerbs, herb:()=>renderHerb(params.id), qiwei:renderQiwei,
-    formula:renderFormula, zheng:renderZheng, food:renderFood, culture:renderCulture, learn:renderLearn, saved:renderSaved };
+    formula:renderFormula, zheng:renderZheng, learn:renderLearn, saved:renderSaved };
   try{ (views[route]||views.home)(); }catch(err){ console.error('[herbal-cosmos] render error:', err); }
   applyLanguage();
   if(route==='home' && params.focus==='star' && params.id){ setSelected(params.id,{source:'context-bar'}); setTimeout(()=>window.HerbalCosmos?.focusHerb?.(params.id,{animate:true}),80); }
   if(route==='home' && params.focus==='classics') setTimeout(()=>document.getElementById('home-classics')?.scrollIntoView({behavior:'smooth',block:'start'}),80);
+  if(route==='home' && params.anchor) setTimeout(()=>{
+    const target = document.getElementById(params.anchor);
+    if (!target) return;
+    const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 72);
+    window.scrollTo({ top, behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  },120);
 }
   window.render = render;
   window.addEventListener('herbal:catalog-manifest', event => {
     const count=event.detail?.approvedCount ?? HERB_CATALOG.length;
     document.querySelectorAll('#catalogAtlasCount,#catalogVisibleCount').forEach(el=>el.textContent=count.toLocaleString('zh-CN'));
-    document.querySelectorAll('.module-atlas span').forEach(el=>el.textContent=count.toLocaleString('zh-CN')+' 条名称索引与 '+HERBS.length+' 味精品知识卡');
+    document.querySelectorAll('[data-catalog-count]').forEach(el=>el.textContent=count.toLocaleString('zh-CN'));
     if(parseHash().route==='home' || parseHash().route==='herbs') render();
   });
   window.addEventListener('hashchange', render);
@@ -375,6 +384,8 @@ function renderHome(){
     </a>`).join('');
   const catalogCount = $('#homeCatalogCount');
   if(catalogCount) catalogCount.textContent = (window.HERB_CATALOG_MANIFEST?.approvedCount ?? HERB_CATALOG.length).toLocaleString('zh-CN');
+  document.querySelectorAll('[data-catalog-count]').forEach(el => el.textContent = (window.HERB_CATALOG_MANIFEST?.approvedCount ?? HERB_CATALOG.length).toLocaleString('zh-CN'));
+  document.querySelectorAll('[data-food-count]').forEach(el => el.textContent = (FOODS || []).length.toLocaleString('zh-CN'));
   renderHomeMuseum();
   renderHomeClassics();
   updateHomeProgress();

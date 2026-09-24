@@ -62,6 +62,7 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
 @media (prefers-reduced-motion:reduce) { .hero #heroCanvas { transform:none; transition:none; } }
 
 .home-food,.home-culture { margin-top:42px; padding-top:28px; border-top:1px solid var(--line); }
+.home-anchor { display:block; height:0; scroll-margin-top:72px; }
 .home-food-strip { display:flex; gap:10px; overflow-x:auto; padding:8px 0 14px; scrollbar-width:thin; }
 .home-food-card { min-width:174px; padding:0 0 12px; display:grid; gap:6px; border:1px solid var(--line); background:var(--card); position:relative; overflow:hidden; }
 .home-food-card:hover { border-color:var(--jin); transform:translateY(-2px); }
@@ -88,7 +89,8 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
 .home-culture-copy>span { color:var(--celadon); font-size:10px; }
 .home-culture-copy h3 { margin:5px 0; color:var(--qing); font:600 16px var(--serif); }
 .home-culture-copy p { color:var(--ink-2); font-size:11px; line-height:1.6; }
-#homeCultureExpand { border:1px solid var(--qing); background:transparent; color:var(--qing); padding:6px 10px; font-size:12px; }
+#homeCultureExpand,#homeFoodExpand { border:1px solid var(--qing); background:transparent; color:var(--qing); padding:6px 10px; font-size:12px; cursor:pointer; }
+#homeCultureExpand:hover,#homeFoodExpand:hover { background:var(--qing); color:#fff; }
 .classic-timeline .cl-item { cursor:pointer; }
 .classic-timeline .cl-item:focus-visible,.classic-timeline .cl-item:hover { outline:2px solid var(--jin); outline-offset:-2px; }
 .classic-detail { width:min(480px,calc(100vw - 32px)); border:1px solid var(--line); background:var(--card); color:var(--ink); padding:26px; box-shadow:var(--shadow); }

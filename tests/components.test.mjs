@@ -52,6 +52,10 @@ test('shell references component modules and removes saved route from navigation
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   for (const asset of ['assets/css/components.css', 'assets/js/components/theme.js', 'assets/js/components/context-bar.js', 'assets/js/components/saved-drawer.js']) assert.ok(html.includes(asset));
   assert.equal(html.includes('<a href="#/saved" data-route-link="saved"'), false);
+  assert.equal(html.includes('class="nav-more"'), false);
+  for (const route of ['home', 'herbs', 'qiwei', 'formula', 'zheng', 'learn']) assert.match(html, new RegExp('href="#/'+route+'" data-route-link="'+route+'"'));
+  assert.match(html, /href="#home-food"/);
+  assert.match(html, /href="#home-culture"/);
 });
 
 test('home food matrix aggregates flavor and use dimensions', () => {

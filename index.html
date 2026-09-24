@@ -24,8 +24,8 @@
         <a href="#/herbs" data-route-link="herbs" data-i18n="nav.herbs">探索本草</a>
         <a href="#/qiwei" data-route-link="qiwei" data-i18n="nav.qiwei">性味归经</a>
         <a href="#/formula" data-route-link="formula" data-i18n="nav.formula">配伍网络</a>
+        <a href="#/zheng" data-route-link="zheng" data-i18n="nav.zheng">病证药链</a>
         <a href="#/learn" data-route-link="learn" data-i18n="nav.learn">学习舱</a>
-        <details class="nav-more" id="navMore"><summary data-i18n="nav.more">更多</summary><div class="nav-popover"><a href="#/zheng" data-route-link="zheng" data-i18n="nav.zheng">病证药链</a><a href="#/food" data-route-link="food" data-i18n="nav.food">药食同源</a><a href="#/culture" data-route-link="culture" data-i18n="nav.culture">文化与非遗</a></div></details>
       </nav>
       <div class="searchbox">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
@@ -64,7 +64,7 @@
         <a class="stat" href="#/home?focus=classics"><div class="v">1,892<small> 药</small></div><div class="l">《本草纲目》收载药物</div></a>
         <a class="stat" href="#/formula"><div class="v">11,096<small> 方</small></div><div class="l">《本草纲目》收载方剂</div></a>
         <a class="stat" href="#/home?focus=classics"><div class="v">2,711<small> 种</small></div><div class="l">《中国药典》2020 一部</div></a>
-        <a class="stat" href="#/food"><div class="v">106<small> 种</small></div><div class="l">国家药食同源目录</div></a>
+        <a class="stat" href="#home-food"><div class="v"><span data-food-count>24</span><small> 种样本</small></div><div class="l">药食同源样本</div></a>
       </div>
 
       <div class="hero-bottom">
@@ -76,12 +76,12 @@
         <section class="home-modules" aria-labelledby="homeModulesTitle">
           <div class="home-board-head"><div><span>EXPLORE THE COLLECTION</span><h2 id="homeModulesTitle">从不同角度进入本草</h2></div><p>每个入口都对应一类真实数据与交互方式。</p></div>
           <div class="home-module-grid">
-            <a class="home-module module-atlas" href="#/herbs"><b>01</b><strong>本草星图</strong><span>2,275 条名称索引与 144 味精品知识卡</span><i>↗</i></a>
+            <a class="home-module module-atlas" href="#/herbs"><b>01</b><strong>本草星图</strong><span><span data-catalog-count>2</span> 条已核验名称索引与 144 味精品知识卡</span><i>↗</i></a>
             <a class="home-module module-qiwei" href="#/qiwei"><b>02</b><strong>性味归经</strong><span>从四气、五味和十二经反查本草</span><i>↗</i></a>
             <a class="home-module module-formula" href="#/formula"><b>03</b><strong>配伍网络</strong><span>看一首方如何组织君臣佐使</span><i>↗</i></a>
             <a class="home-module module-pattern" href="#/zheng"><b>04</b><strong>病证药链</strong><span>从证候走到方剂与核心药材</span><i>↗</i></a>
-            <a class="home-module module-food" href="#/food"><b>05</b><strong>药食同源</strong><span>把传统知识带回日常饮食</span><i>↗</i></a>
-            <a class="home-module module-culture" href="#/culture"><b>06</b><strong>文化与非遗</strong><span>看见本草背后的工艺与地方记忆</span><i>↗</i></a>
+            <a class="home-module module-food" href="#home-food"><b>05</b><strong>药食同源</strong><span>把传统知识带回日常饮食</span><i>↗</i></a>
+            <a class="home-module module-culture" href="#home-culture"><b>06</b><strong>文化与非遗</strong><span>看见本草背后的工艺与地方记忆</span><i>↗</i></a>
           </div>
         </section>
         <p class="data-note" data-i18n="data.note">图表展示代表性数据集中的关系与分布，不表示药效强弱或临床推荐。</p>
@@ -92,7 +92,7 @@
             <a href="#/qiwei"><b>02</b><strong>性味归经</strong><span>理解基础属性</span></a>
             <a href="#/formula"><b>03</b><strong>配伍应用</strong><span>探索君臣佐使</span></a>
             <a href="#home-classics"><b>04</b><strong>典籍研读</strong><span>回到历史证据</span></a>
-            <a href="#/food"><b>05</b><strong>食养同源</strong><span>连接日常生活</span></a>
+            <a href="#home-food"><b>05</b><strong>食养同源</strong><span>连接日常生活</span></a>
           </div>
           <div class="path-progress"><span data-i18n="home.progress">今日进度</span><strong id="homeProgress">0 / 5</strong><a href="#/saved" data-i18n="nav.saved">查看收藏</a></div>
         </div>
@@ -100,8 +100,9 @@
         <div class="section-heading-row home-featured-heading"><div><span>FEATURED HERB CABINET</span><h2 data-i18n="home.discover">精选本草图鉴</h2></div><a href="#/herbs" data-i18n="home.viewAll">查看全部代表药材 →</a></div>
         <div class="grid g4" id="homeFeatured"></div>
 
+        <span id="home-food" class="home-anchor" aria-hidden="true"></span>
         <section class="home-food" id="homeFood" aria-labelledby="homeFoodTitle">
-          <div class="section-heading-row"><div><span>FOOD &amp; MEDICINE</span><h2 id="homeFoodTitle">食养同源</h2></div><a href="#/food">查看全部 106 种 →</a></div>
+          <div class="section-heading-row"><div><span>FOOD &amp; MEDICINE</span><h2 id="homeFoodTitle">食养同源</h2></div><button type="button" id="homeFoodExpand">查看全部样本</button></div>
           <p class="home-section-note">把药食同源放回日常场景：横滑查看性味与用法；索引层仅名称可检索，药性字段以精品卡为准。</p>
           <div class="home-food-strip" id="homeFoodStrip"></div>
           <div class="food-matrix" id="homeFoodMatrix" aria-label="性味与用法矩阵"></div>
@@ -115,6 +116,7 @@
           </div>
         </section>
 
+        <span id="home-culture" class="home-anchor" aria-hidden="true"></span>
         <section class="home-culture" id="homeCulture" aria-labelledby="homeCultureTitle">
           <div class="section-heading-row"><div><span>CULTURE &amp; HERITAGE</span><h2 id="homeCultureTitle">文化非遗</h2></div><button type="button" id="homeCultureExpand">查看全部</button></div>
           <p class="home-section-note">从诊法、炮制到地方记忆，精选三张卡片先看见本草背后的技艺。</p>
@@ -122,8 +124,8 @@
         </section>
 
         <section class="home-source-band" aria-labelledby="homeSourceTitle">
-          <div class="home-source-copy"><span>ABOUT THE PROJECT</span><h2 id="homeSourceTitle">让本草知识可以被看见、被点击、被继续学习</h2><p>本草宇宙以公开的资源普查、药典、经典本草与方剂资料为底座，把“认识一味药”拆成图像、属性、关系、典籍和生活五个可以互相跳转的入口。</p><div class="home-source-actions"><a href="#/learn">进入学习舱</a><a href="#/culture">查看文化与非遗</a></div></div>
-          <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委药食同源目录</span></div><div><strong>当前版本</strong><span>144 味精品知识卡 · 2,275 条名称索引 · 21 首代表方剂 · 18 个证候链路</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div></div>
+          <div class="home-source-copy"><span>ABOUT THE PROJECT</span><h2 id="homeSourceTitle">让本草知识可以被看见、被点击、被继续学习</h2><p>本草宇宙以公开的资源普查、药典、经典本草与方剂资料为底座，把“认识一味药”拆成图像、属性、关系、典籍和生活五个可以互相跳转的入口。</p><div class="home-source-actions"><a href="#/learn">进入学习舱</a><a href="#home-culture">查看文化与非遗</a></div></div>
+          <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委药食同源目录</span></div><div><strong>当前版本</strong><span>144 味精品知识卡 · <span data-catalog-count>2</span> 条已核验名称索引 · 21 首代表方剂 · 18 个证候链路</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div></div>
         </section>
       </div>
     </section>
@@ -146,7 +148,7 @@
       <div class="eyebrow">Herb Atlas</div>
       <h1 class="title">药材星图</h1>
       <p class="page-intro">先用精品知识卡深入理解，再切换全量名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。</p>
-      <div class="atlas-mode-tabs" role="tablist" aria-label="本草数据层"><button type="button" class="atlas-mode-tab on" data-atlas-mode="featured" role="tab">精品知识卡 <span id="featuredAtlasCount">144</span></button><button type="button" class="atlas-mode-tab" data-atlas-mode="catalog" role="tab">全量本草索引 <span id="catalogAtlasCount">2,275</span></button></div>
+      <div class="atlas-mode-tabs" role="tablist" aria-label="本草数据层"><button type="button" class="atlas-mode-tab on" data-atlas-mode="featured" role="tab">精品知识卡 <span id="featuredAtlasCount">144</span></button><button type="button" class="atlas-mode-tab" data-atlas-mode="catalog" role="tab">已核验名称索引 <span id="catalogAtlasCount">2</span></button></div>
       <div id="featuredAtlasPanel">
       <div class="filter-bar" id="herbFilters">
         <button class="filter-chip" id="resetFilters" type="button" style="border-color:var(--cinnabar);color:var(--cinnabar);">重置筛选</button>
@@ -168,7 +170,7 @@
       <section class="compare-panel" id="comparePanel" hidden><div class="section-heading-row"><div><span>ATTRIBUTE COMPARISON</span><h2>本草属性对比</h2></div><button id="closeCompare" type="button">关闭</button></div><p class="compare-disclaimer">图中分值只用于当前代表数据集的属性对照，不表示药效强弱或临床推荐。</p><div class="chart-box" id="herbCompareChart"></div></section>
       </div>
       <div id="catalogAtlasPanel" hidden>
-        <div class="catalog-summary"><div><strong id="catalogVisibleCount">2,275</strong><span>可检索名称</span></div><p>目录来自公开开源名称索引与古典本草文本，仅用于发现与检索；暂未补齐每一条的四气、五味、归经和功效字段。</p></div>
+        <div class="catalog-summary"><div><strong id="catalogVisibleCount">2</strong><span>已核验名称</span></div><p>目录只展示已通过权威名单与规则校验的名称；缺少独立证据或包含症状短语的候选项会进入 review 清单，不参与默认检索。</p></div>
         <div class="catalog-toolbar"><label for="catalogSearch">检索名称<input id="catalogSearch" type="search" placeholder="输入本草名称"></label><label for="catalogSource">来源<select id="catalogSource"><option value="">全部来源</option></select></label></div>
         <div class="catalog-table-wrap"><table><thead><tr><th>名称</th><th>来源</th><th>数据状态</th><th>下一步</th></tr></thead><tbody id="catalogTableBody"></tbody></table></div>
         <div class="catalog-pagination" id="catalogPagination"></div>
@@ -225,31 +227,6 @@
       <div class="focus-workspace"><aside class="syndrome-index"><div class="workspace-label">证候索引 · 18</div><input class="syndrome-search" id="syndromeSearch" type="search" placeholder="搜索证候"><div class="syndrome-list" id="zhengIndex"></div></aside><section class="syndrome-flow"><div class="syndrome-flow-head"><div><h2 id="zhengFocusTitle">选择一个证候</h2><p id="zhengFocusDesc">从左侧选择证候，查看证—方—药的最短阅读路径。</p></div><span class="badge celadon" id="zhengFocusCount">—</span></div><div class="chart-box" id="zhengSankey"></div></section><aside class="syndrome-evidence" id="zhengEvidence"><span>证据检查器</span><h2>从证候开始</h2><p>选中证候后，这里会展示出处、方剂数量与核心药材。点击药材名称可进入本草知识卡。</p></aside></div>
     </section>
 
-    <!-- ============ 药食同源 ============ -->
-    <section class="page" data-route="food">
-      <div class="eyebrow">Food & Medicine</div>
-      <h1 class="title">药食同源</h1>
-      <p class="page-intro">国家卫健委历次公布的"既是食品又是中药材"物质目录（动态更新）。既是厨房食材，也是本草星辰——按用途筛选看看。</p>
-      <div class="filter-bar" id="foodFilters"></div>
-      <div class="grid g4" id="foodGrid"></div>
-      <section class="insight-chart-panel food-insight"><div class="section-heading-row"><div><span>FOOD EVIDENCE</span><h2>性味 × 用法矩阵</h2></div><span class="home-section-note">按药食同源样本的标签聚合，不替代个体化使用建议。</span></div><div class="chart-box" id="foodUsageChart"></div></section>
-    </section>
-
-    <!-- ============ 文化 / 非遗 ============ -->
-    <section class="page" data-route="culture">
-      <div class="eyebrow">Culture & Heritage</div>
-      <h1 class="title">文化与非遗</h1>
-      <p class="page-intro">中医药不仅是一门知识，更是一套被世代传承的生活方式与国家级非物质文化遗产。</p>
-      <div class="section-h">国家级 / 人类非遗中的中医药</div>
-      <div class="grid g3" id="heritageGrid"></div>
-      <div class="section-h">关于「本草宇宙」</div>
-      <div class="card card-pad">
-        <p class="muted" style="font-size:13.5px;">本应用为数据可视化与文化科普项目，以公开权威数据为底座（第四次全国中药资源普查、〈本草纲目〉、〈中国药典〉2020、国家卫健委药食同源目录等），将中医药文化组织为可漫游的知识图谱。首页星尘为全量资源分布的氛围示意，不代表具体点位；精品层代表药材与全部方剂、典籍、证候数据均来自公开经典文献，可追溯。</p>
-      </div>
-      <div class="section-h">来源与方法</div>
-      <div class="heritage-ledger"><span>本页面图片优先采用 Openverse 聚合的 Wikimedia Commons、iNaturalist、Flickr CC 等开放许可资源，逐图保存作者、来源与许可。</span><a class="source-link" href="IMAGE_SOURCES.md" target="_blank" rel="noreferrer">查看图片来源清单 →</a></div>
-      <div class="method-grid"><div class="method-item"><strong>知识图谱思路</strong><span>参考开源 TCM 图谱项目，将“证—方—药—来源”组织成可追溯关系。</span></div><div class="method-item"><strong>数据分层</strong><span>代表性药材用于浏览器交互，全量统计用于宏观叙事，避免图表拥挤。</span></div><div class="method-item"><strong>阅读边界</strong><span>内容用于文化科普与学习，不替代诊疗、处方或个体化用药建议。</span></div></div>
-    </section>
   </main>
 
   <footer>
