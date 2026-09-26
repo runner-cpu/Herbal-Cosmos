@@ -113,6 +113,11 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
 .insight-chart-panel .chart-box { min-height:360px; }
 .meridian-insight .chart-box { min-height:500px; }
 .food-insight .chart-box { min-height:420px; }
+.chart-summary { margin-top:12px; border-top:1px solid var(--line); padding-top:10px; color:var(--ink-2); font-size:12px; }
+.chart-summary summary { min-height:40px; display:flex; align-items:center; color:var(--qing); font-weight:600; cursor:pointer; }
+.chart-summary ol { padding:8px 0 0 22px; }
+.chart-summary li + li { margin-top:5px; }
+.chart-summary summary:focus-visible { outline:2px solid var(--jin); outline-offset:3px; }
 
 @media (max-width:768px) {
   .home-culture-grid { grid-template-columns:1fr; }

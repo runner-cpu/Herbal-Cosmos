@@ -81,10 +81,25 @@ function syncDatasetCounts(){
 const chartManager = {
   _instances: new Map(),
   _observers: new Map(),
+  describe(el, { label='', summary='' }={}) {
+    if(!el) return;
+    const panel=el.closest('.chart-panel,.insight-chart-panel,.syndrome-flow,.graph-canvas,.detail-viz,.compare-panel,.home-classics,.food-matrix')||el.parentElement;
+    const heading=panel?.querySelector('h2,h3')?.textContent?.trim();
+    const method=panel?.querySelector('.cap,.chart-method')?.textContent?.trim();
+    const name=[label||heading,method,summary].filter(Boolean).join('。');
+    el.setAttribute('role','img');
+    el.setAttribute('aria-label',name||'本草数据图表');
+    el.querySelectorAll('canvas').forEach(canvas=>{
+      canvas.setAttribute('aria-hidden','true');
+      canvas.setAttribute('tabindex','-1');
+    });
+  },
   register(id, instance, el) {
     if(this._instances.get(id)===instance){ this._observers.get(id)?.disconnect(); this._observers.delete(id); instance.clear(); } else this.dispose(id);
     if(!instance) return null;
+    instance.on?.('rendered',()=>this.describe(el));
     instance.setOption({animation:!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});
+    this.describe(el);
     this._instances.set(id, instance);
     if(el && typeof ResizeObserver !== 'undefined'){
       const ro = new ResizeObserver(()=>{ try{ instance.resize(); }catch(e){} });
@@ -102,6 +117,7 @@ const chartManager = {
   clear() { Array.from(this._instances.keys()).forEach(id=>this.dispose(id)); }
 };
 window.__HERBAL_DEBUG__ = window.__HERBAL_DEBUG__ || {};
+window.HerbalChartManager = chartManager;
 window.__HERBAL_DEBUG__.chartCounts = () => chartManager._instances.size;
 window.__HERBAL_DEBUG__.observerCounts = () => chartManager._observers.size;
 
