@@ -4,18 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="本草宇宙是以 18,817 种中药资源为背景的数据可视化与文化科普图谱，连接本草知识卡、方剂配伍、性味归经与食药物质目录。">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#12372c">
 <meta property="og:title" content="本草宇宙 · HERBAL COSMOS">
 <meta property="og:description" content="从一味药出发，探索性味归经、方剂配伍、典籍与 106 种食药物质目录。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://runner-cpu.github.io/Herbal-Cosmos/">
 <meta property="og:image" content="https://runner-cpu.github.io/Herbal-Cosmos/images/herbs/open/panax-ginseng-b85bb77ce4d8f0.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="333">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="人参植物开放许可图像，本草宇宙分享预览">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="本草宇宙 · HERBAL COSMOS">
+<meta name="twitter:description" content="从一味药出发，探索性味归经、方剂配伍、典籍与食药物质目录。">
+<meta name="twitter:image" content="https://runner-cpu.github.io/Herbal-Cosmos/images/herbs/open/panax-ginseng-b85bb77ce4d8f0.jpg">
 <title>本草宇宙 · HERBAL COSMOS</title>
+<link rel="canonical" href="https://runner-cpu.github.io/Herbal-Cosmos/">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icons/favicon.svg">
-<script src="assets/vendor/echarts.min.js"></script>
 <link rel="stylesheet" href="assets/css/site.css">
 <link rel="stylesheet" href="assets/css/components.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalApplication","name":"本草宇宙","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://runner-cpu.github.io/Herbal-Cosmos/","inLanguage":"zh-CN","description":"中药名称索引、本草知识卡、方剂配伍与文化资料的可视化学习应用。内容仅供文化科普与学习，不构成医疗建议。"}</script>
 </head>
 <body>
 <a class="skip-link" href="#mainContent">跳到主要内容</a>
@@ -250,13 +263,17 @@
       <div class="compliance" style="max-width:380px;">
         <b>内容声明：</b>本站内容仅供文化科普与学习，不构成医疗建议；用药请遵医嘱，特殊人群慎用药食同源物质（以官方公告为准）。
         <br><span>应用版本 v4 · 2026-09-26 · 名称索引来源修订 <span data-catalog-revision>—</span></span>
+        <p class="privacy-note"><b>隐私说明：</b>无账号、无遥测；收藏、探索足迹和主题偏好仅保存在当前浏览器，不会上传。可从收藏抽屉导出 JSON；清除浏览器数据后不可恢复。</p>
       </div>
     </div>
   </footer>
 </div>
 
+<div class="app-status" id="appStatus" role="status" aria-live="polite" aria-atomic="true" hidden><span id="appStatusText"></span></div>
+<div class="app-update" id="appUpdate" role="status" aria-live="polite" aria-atomic="true" hidden><span>本草宇宙已有新版本。</span><button id="appUpdateRefresh" type="button">刷新更新</button><button id="appUpdateLater" type="button">稍后</button></div>
 <div id="toast"></div>
 
+<script src="assets/vendor/echarts.min.js"></script>
 <script src="assets/js/data/food-medicine.generated.js"></script>
 <script src="assets/js/data/featured.js"></script>
 <script src="assets/js/data/expanded.generated.js"></script>
@@ -271,5 +288,6 @@
 <script type="module" src="assets/js/pages/cross-navigation.js"></script>
 <script type="module" src="assets/js/pages/cosmos.js"></script>
 <script type="module" src="assets/js/core/catalog-loader.js"></script>
+<script type="module" src="assets/js/core/app-shell.js"></script>
 </body>
 </html>

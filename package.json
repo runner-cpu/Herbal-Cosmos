@@ -13,6 +13,7 @@
     "validate:catalog": "node scripts/validate-catalog.mjs",
     "validate:expanded": "node scripts/validate-expanded-data.mjs",
     "validate:data": "npm run validate:catalog && npm run validate:expanded",
+    "validate:app": "node scripts/validate-web-app.mjs",
     "check:inline": "node scripts/check-inline-runtime.mjs",
     "test:browser": "playwright test"
   },

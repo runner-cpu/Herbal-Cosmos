@@ -17,7 +17,8 @@ const REQUIRED_ASSETS = [
   'assets/js/charts/insights.js',
   'assets/js/pages/cross-navigation.js',
   'assets/js/pages/cosmos.js',
-  'assets/js/core/catalog-loader.js'
+  'assets/js/core/catalog-loader.js',
+  'assets/js/core/app-shell.js'
 ];
 const DEFINITION_NAMES = ['store', 'chartManager', 'routes'];
 

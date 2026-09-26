@@ -153,8 +153,8 @@ Expected: FAIL for manifest, canonical, structured data, and privacy.
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="800">
+<meta property="og:image:width" content="333">
+<meta property="og:image:height" content="500">
 <meta property="og:image:alt" content="人参植物开放许可图像，本草宇宙分享预览">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalApplication","name":"本草宇宙","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://runner-cpu.github.io/Herbal-Cosmos/","inLanguage":"zh-CN","description":"中药名称索引、本草知识卡、方剂配伍与文化资料的可视化学习应用。内容仅供文化科普与学习，不构成医疗建议。"}</script>
 ~~~
@@ -239,7 +239,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/components/stamp.js','./assets/js/components/context-bar.js','./assets/js/components/search.js',
   './assets/js/components/saved-drawer.js','./assets/js/components/theme.js','./assets/js/pages/home.js',
   './assets/js/pages/cross-navigation.js','./assets/js/pages/cosmos.js','./assets/js/charts/insights.js',
-  './workers/catalog-search.js','./data/catalog/manifest.json'
+  './workers/catalog-search.js','./data/catalog/manifest.js'
 ]);
 ~~~
 
