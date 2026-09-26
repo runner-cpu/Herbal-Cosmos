@@ -1031,9 +1031,9 @@ function updateSearchSuggestions(){
   const kw=searchInput.value.trim().toLowerCase();
   store._searchIndex=-1;
   if(!kw){ searchResults.classList.remove('open'); searchResults.innerHTML=''; searchInput.setAttribute('aria-expanded','false'); return; }
-  const herbs=HERBS.filter(h=>h.name.toLowerCase().includes(kw)||h.pinyin.includes(kw)||h.eff.toLowerCase().includes(kw)).slice(0,6);
+  const herbs=HERBS.filter(h=>h.name.toLowerCase().includes(kw)||h.pinyin.includes(kw)||h.eff.toLowerCase().includes(kw)||(h.aliases||[]).some(alias=>String(alias).toLowerCase().includes(kw))).slice(0,6);
   const approvedCatalog=(window.HerbalSearch?.filterApproved||((entries)=>entries.filter(item=>item?.status!=='review')))(HERB_CATALOG);
-  const catalog=approvedCatalog.filter(item=>!byName(item.name)&&item.name.toLowerCase().includes(kw)).slice(0,4);
+  const catalog=approvedCatalog.filter(item=>!byName(item.name)&&[item.name,...(item.aliases||[])].some(value=>String(value).toLowerCase().includes(kw))).slice(0,4);
   const formulas=FORMULAS.filter(f=>f.name.toLowerCase().includes(kw)||f.eff.toLowerCase().includes(kw)).slice(0,4);
   searchResults.innerHTML=herbs.map(h=>`<a class="search-result" role="option" href="#/herb?id=${h.id}">${herbImage(h,"herb-thumb")}<strong>${esc(h.name)}</strong><span>${currentLang==='en'?'Herb':'药材'} · ${esc(fact(h.qi))} · ${esc(fact(h.wei))}</span></a>`).concat(catalog.map(item=>`<a class="search-result catalog-result" role="option" href="#/herbs?mode=catalog&q=${encodeURIComponent(item.name)}"><span class="catalog-result-mark">索引</span><strong>${esc(item.name)}</strong><span>${currentLang==='en'?'Name index':'仅名称索引'}</span></a>`), formulas.map(f=>`<a class="search-result" role="option" href="#/formula?f=${f.id}"><strong>${esc(f.name)}</strong><span>${currentLang==='en'?'Formula':'方剂'} · ${esc(f.zheng)}</span></a>`)).join('')||`<div class="search-empty">${esc(t('search.empty'))}</div>`;
   searchResults.classList.add('open'); searchInput.setAttribute('aria-expanded','true');
@@ -1062,8 +1062,8 @@ searchInput.addEventListener('keydown', e=>{
   const kw = searchInput.value.trim();
   if(!kw) return;
   if(options[store._searchIndex]){ options[store._searchIndex].click(); closeSearch(); return; }
-  const herbHit = HERBS.filter(h=>h.name.includes(kw)||h.pinyin.includes(kw.toLowerCase()));
-  const catalogHit = HERB_CATALOG.filter(item=>item.name.includes(kw));
+  const herbHit = HERBS.filter(h=>h.name.includes(kw)||h.pinyin.includes(kw.toLowerCase())||(h.aliases||[]).some(alias=>String(alias).includes(kw)));
+  const catalogHit = HERB_CATALOG.filter(item=>[item.name,...(item.aliases||[])].some(value=>String(value).includes(kw)));
   const formHit = FORMULAS.filter(f=>f.name.includes(kw));
   if(herbHit.length===1){ setSelected(herbHit[0].id); location.hash = '#/herb?id='+herbHit[0].id; }
   else if(formHit.length===1){ location.hash = '#/formula?f='+formHit[0].id; }

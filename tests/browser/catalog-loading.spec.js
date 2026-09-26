@@ -16,3 +16,10 @@ test('clicking the catalog tab loads approved rows without requiring a query URL
   await expect(page.locator('#catalogVisibleCount')).toHaveText('8,818');
   await expect(page.locator('#catalogTableBody tr')).toHaveCount(48);
 });
+
+test('global search resolves an indexed name that maps to a featured alias', async ({ page }) => {
+  await page.goto('/#/home');
+  await page.locator('#globalSearch').fill('公丁香');
+  await expect(page.locator('#searchResults .search-result').first()).toBeVisible();
+  await expect(page.locator('#searchResults')).toContainText('丁香');
+});

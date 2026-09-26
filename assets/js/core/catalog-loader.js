@@ -65,7 +65,7 @@ export function catalogSearch(query, options = {}) {
   });
   const rows = filterCatalogEntries(window.HERB_CATALOG || []).filter(entry => {
     const matchesSource = !source || (entry.sourceRefs || []).includes(source);
-    return matchesSource && (!query || entry.name.includes(query));
+    return matchesSource && (!query || [entry.name, ...(entry.aliases || [])].some(value => String(value).includes(query)));
   });
   return Promise.resolve({ items: rows.slice((page - 1) * pageSize, page * pageSize), total: rows.length, status: 'ready' });
 }
