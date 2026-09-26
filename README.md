@@ -6,14 +6,13 @@
 
 ---
 
-## 2026 credibility and runtime notes
+## 2026 数据可信度与运行说明
 
-- 2,711 describes the total number of standards in Volume I of the 2020 Chinese Pharmacopoeia; it is not presented as 2,711 verified medicinal-material names.
-- The committed authority currently approves 2 names with mechanically traceable row evidence. A further 2,283 legacy candidates remain in `reports/catalog-review.json` for audit and are hidden from default search. These counts are generated, not presentation targets.
-- The food-and-medicine directory contains all 106 unique official entries published across the 2002, 2019, 2023 and 2024 notices. Only separately curated property/use fields are shown; all others are explicitly marked “属性未录入”.
-- Run node scripts/build-herb-catalog.mjs to regenerate the catalog, npm run validate:catalog for the quality gate, and npm test for Node-level checks. The name-index chunks load lazily only when index mode is entered.
-- npm run test:browser runs responsive, accessibility, lazy-loading and chart-lifecycle checks through Playwright. For a static preview use python -m http.server 4173.
-- The homepage and star map state: 索引层仅名称可检索，药性字段以精品卡为准。
+- 当前提交生成 **8,818 条可检索名称索引**，另有 **1,487 条 review** 隐藏于默认检索；每条可检索名称都保留公开数据集的行级来源。名称被公开资料收载不等于《中国药典》收载、临床有效性核验或用药推荐。
+- 《中国药典》2020 年版一部的 2,711 是中药标准总数，不是 2,711 味可检索药名；当前只有 **2 个名称**具备可机械复核的药典逐名证据，字段由 `pharmacopoeiaVerifiedCount` 单独统计。
+- 精品层包含 **608 张知识卡**，配伍与病证层包含 **50 首方剂 / 30 个证候**；食药物质目录包含 2002、2019、2023、2024 年公告去重后的 **106 个唯一条目**。未单独取得来源的属性与用法明确显示“未录入”。
+- 名称索引按 45 个分块延迟加载。运行 `npm run build:data` 可确定性重建目录、食药物质与扩展数据；`npm run validate:data`、`npm test` 和 `npm run test:browser` 分别执行数据门禁、Node 回归及 Playwright 浏览器回归。
+- 首页和星图均明确提示：**索引层仅名称可检索，药性字段以精品卡为准**。
 
 ## 目录
 
@@ -65,8 +64,9 @@
 | 药材星图 | 精品知识卡与全量本草名称索引双层切换；精品层支持筛选、多选对比，索引层支持来源筛选、搜索和分页 | 筛选芯片 + 桌面表格 / 移动卡片 + 索引表 |
 | 药材详情 | 药典属性（四气/五味/归经/功效）、归经画像、性味定位、相关方剂 | 环形图 + 坐标散点 + 卡片 |
 | 性味归经 | 四气×五味热力矩阵 + 十二经归经分布，点击可反查药材 | ECharts 热力图 + 柱状图 + 反查检查器 |
-| 配伍网络 | 21 首代表方剂 × 药材二部图，支持索引、聚焦、详情检查器 | 三栏工作区 + 力导向图 + 方剂目录 |
+| 配伍网络 | 50 首代表方剂 × 药材二部图，支持索引、聚焦、详情检查器及证候联动 | 三栏工作区 + 力导向图 + 方剂目录 |
 | 病证药链 | 证 → 方 → 药三阶链路 | 桑基图 + 证候卡片 |
+| 配伍洞察 | 高频药味、君臣佐使、共现强度与正数克单位剂量分布 | 横向条形图 + 堆积图 + 热力图 + 箱线图 |
 | 首页典籍时光 | 历代本草典籍收药规模演进，合并进首页学习路径后方 | 柱状图 + 时间线 |
 | 药食同源 | 国家目录中的已接入样本，按用途筛选 | 首页横滑样本 + 性味 × 用法矩阵 |
 | 文化与非遗 | 中医药相关国家级非遗代表项目 | 图文卡片 |
@@ -84,14 +84,15 @@
 - 全站提供跳到主要内容、统一 `:focus-visible` 焦点反馈、可关闭搜索建议与三种主题；主题偏好保存在本机，动效遵守 `prefers-reduced-motion`。未完成的英文入口已隐藏，避免中英混杂。
 
 ### 5. 图像化学习与资源降级
-- 药材星图、精选本草、搜索建议、药材详情、药食同源、非遗和收藏均使用 `output/imagegen/` 下的本地图谱，图片带有语义化 `alt` 文本与懒加载。
-- 当前代表样本已扩充至 144 味，每味都绑定独立本地图片文件；新增 45 味使用植物学提示生成的 AI 科普插画，非专业鉴定照片。
-- `IMAGE_SOURCES.md` 与 `data/image-sources.json` 记录图片状态：AI 科普插画标为 `PROJECT-EDUCATIONAL`，历史既有素材标为 `REVIEW-REQUIRED`，不把缺少原始许可元数据的素材宣称为开放许可。
-- 图片加载异常时自动切换到本地备用植物图像，避免 GitHub Pages 网络抖动造成破图；ECharts 本地化并保留文字降级。
+- V4 扩容优先检索 Wikimedia Commons 与 iNaturalist 的开放许可照片，没有为本轮扩容调用图片生成服务。`data/sources/herb-images.json` 保存作者、许可、原始页面、下载地址与本地文件 SHA-256。
+- 当前有 **603 条检索图片来源记录 / 546 个唯一图片文件**；608 张知识卡中 **547 张有开放许可图、61 张无可确认图片并显示占位图**。复用同一来源生物图片的不同药材条目不会伪装成独立图片。
+- 图片仅用于展示来源生物，不证明药用部位、炮制状态、临床功效或安全性。完整署名与许可见 [`IMAGE_SOURCES_V4.md`](IMAGE_SOURCES_V4.md)；旧版图片的原始状态仍记录在 `IMAGE_SOURCES.md`，不把缺少许可元数据的历史素材宣称为开放许可。
+- 图片带语义化 `alt` 与懒加载；加载异常时显示本地降级视觉，避免破图。ECharts 随仓库自托管并保留文字降级。
 
 ### 6. 数据可信度体系
-- 每个知识卡标注 **"数据来源：中国药典 2020 / 本草纲目 / 普查数据"** 徽标，透明化数据层级，学术严谨。
-- 全站附"仅供文化科普，不构成医疗建议"合规声明。
+- 名称、属性、方剂、食药目录与图片分别记录来源，不以一个来源徽标代替逐字段证据。TCM_KG 仅称“公开资料整理”，因其仓库没有明确内容许可，未复用原始临床长文、研究结论、剂量或图片。
+- “资料记录地区”仅表示公开记录中的地区字段，不宣称为道地产地；古方剂量保留原单位，只对原始记录中明确为正数克单位的样本制作箱线图。
+- 全站附“仅供文化科普，不构成医疗建议”合规声明。
 
 ---
 
@@ -106,12 +107,12 @@
 │  #/herbs     精品知识卡 / 全量名称索引 + 筛选分页     │
 │  #/herb?id=x 药材详情（归经环形图 + 性味定位 + 方剂）│
 │  #/qiwei     四气×五味热力矩阵 + 归经柱状图         │
-│  #/formula   方剂—药材二部图 + 21 方剂卡片          │
-│  #/zheng     证→方→药桑基图 + 18 证候卡片           │
+│  #/formula   方剂—药材二部图 + 50 方剂卡片与配伍洞察 │
+│  #/zheng     证→方→药桑基图 + 30 证候卡片           │
 │  #home-food  首页食养同源展开区                     │
 │  #home-culture 首页文化非遗展开区                   │
 │  #/learn     学习舱（知识卡 + 互动测验 + 进度）     │
-│  #/saved     本机收藏（localStorage）                │
+│  全局收藏抽屉 本机收藏、取消收藏与 JSON 导出          │
 ├────────────────────────────────────────────────────┤
 │ 页脚：数据来源 + 内容声明                           │
 └────────────────────────────────────────────────────┘
@@ -136,21 +137,21 @@
 
 | 数据层级 | 数量 | 交互能力 | 渲染方式 |
 |---|---|---|---|
-| 药典精品层 | 代表药材子集 | 完整点击/详情/联动 | 高精度 3D 星点 + 详情页 |
-| 名称索引 | 2 条已核验名称（2,283 条历史候选进入 review 清单） | 搜索、来源筛选、分页；仅名称，不伪造药性字段 | 分块表格 |
+| 精品知识卡层 | 608 张公开资料整理卡片 | 完整点击/详情/联动；属性按卡片来源口径展示 | 高精度 3D 星点 + 详情页 |
+| 名称索引 | 8,818 条公开行级来源名称；1,487 条 review 默认隐藏；其中 2 条具药典逐名证据 | 搜索、来源筛选、分页；仅名称，不伪造药性字段 | 45 个懒加载分块表格 |
 | 普查全量层 | 18,817 种（资源统计口径） | 统计叙事展示，不等同于当前索引条目 | 数据卡片/图例说明 |
-| 动态筛选子集 | ≤500（精品层筛选结果） | 完整交互 | 表格/图表重新渲染 |
+| 动态筛选子集 | ≤608（精品层筛选结果） | 完整交互 | 表格/图表重新渲染 |
 
 ---
 
 ## 数据层设计
 
 ### 数据结构
-- **HERBS（药材）**：代表药材子集，字段含 `id / name / pinyin / qi（四气）/ wei（五味）/ meridian（归经）/ eff（功效）/ cat（分类）/ source（来源）/ food（药食同源）`。
-- **FORMULAS（方剂）**：21 首经典代表方，字段含 `id / name / source（出处）/ eff / note / monarch-minister（君臣佐使）/ herbs（组成）/ zheng（主治证型）`，组成均为**真实完整方**（如六味地黄丸六味俱全、麻黄汤含苦杏仁）。
-- **ZHENGS（证候）**：18 个常见中医证候，映射"证 → 方 → 药"链路。
+- **HERBS（药材）**：608 张精品知识卡，字段含 `id / name / pinyin / qi（四气）/ wei（五味）/ meridian（归经）/ eff（功效）/ cat（分类）/ source（来源）/ food（药食同源）/ origin（资料记录地区）`。
+- **FORMULAS（方剂）**：50 首公开文献索引方，字段含 `id / name / source（出处）/ eff / note / monarch-minister（君臣佐使）/ herbs（组成）/ zheng（主治证型）`；古方剂量保留原始单位，不擅自换算为克。
+- **ZHENGS（证候）**：30 个中医证候索引，映射“证 → 方 → 药”链路。
 - **CLASSICS（典籍）**：从《神农本草经》到《中国药典》的历代典籍规模数据。
-- **HERB_CATALOG（名称索引）**：由 `scripts/build-herb-catalog.mjs` 从受版本控制的权威表与历史候选生成；只有带行级证据的 `approved` 条目进入默认检索，`review` 不参与性味归经统计。
+- **HERB_CATALOG（名称索引）**：由 `scripts/build-herb-catalog.mjs` 从受版本控制的公开名称表与历史候选确定性生成；只有带公开行级来源且通过噪声规则的 `approved` 条目进入默认检索，`review` 隐藏且不参与性味归经统计。`approved` 不等于药典核验。
 - **FOODS（食药物质）**：国家卫生健康部门 2002—2024 公告中的 106 个唯一目录项；未独立补录的属性保持“未录入”。
 
 ### 数据来源（可溯源）
@@ -215,6 +216,13 @@ cd Herbal-Cosmos
 # 方式二：本地静态服务器（可选，体验一致）
 python -m http.server 8080
 # 浏览器访问 http://localhost:8080
+
+# 确定性重建与质检
+npm install
+npm run build:data
+npm run validate:data
+npm test
+npm run test:browser
 ```
 
 **搜索技巧**：右上角搜索框输入药材名（如"枸杞"）或方剂名（如"六味地黄丸"），建议出现后可点击或使用 ↑↓ + Enter；在药材星图页输入过程也会实时过滤列表。
@@ -223,8 +231,9 @@ python -m http.server 8080
 
 ## 数据来源与合规声明
 
-- 数据基于公开权威来源整理：第四次全国中药资源普查、明·李时珍《本草纲目》、国家药典委员会《中国药典》2020、国家卫健委药食同源目录、国家级非遗名录。
-- 方剂组成按经典原著还原，标注出处；知识卡均标注"数据来源"徽标，未覆盖字段标记"待考"，不做编造。
+- 数据按来源等级整理：官方公告与统计口径、带版本号的开放研究数据、经典方剂公开索引、公开资料记录和逐图开放许可元数据互不混用。完整清单见 `data/sources/source-manifest.json`、`docs/formula-sources-v4.md` 与 `IMAGE_SOURCES_V4.md`。
+- 8,818 条名称索引仅表示有公开行级来源且通过规则清洗；只有 2 条具有当前仓库可机械复核的药典逐名证据。608 张知识卡是公开资料整理卡，不整体宣称为《中国药典》收载。
+- 方剂名称、组成和原剂量单位保留来源记录；芍药、干地黄等古名不擅自映射为白芍、熟地黄。未覆盖字段标记“待考/未录入”，不做编造。
 - **内容声明**：本站内容仅供文化科普与学习，不构成医疗建议；用药请遵医嘱，特殊人群慎用药食同源物质（以官方公告为准）。
 
 ---
@@ -233,7 +242,7 @@ python -m http.server 8080
 
 本项目为**全国大学生数字媒体科技作品及创意竞赛**参赛作品，叙事主线：
 
-1. **天人合一**：道地药材 × 应季本草（节气与地域的对应秩序）。
+1. **天人合一**：资料记录地区 × 应季本草（地域记录与节气叙事的对应秩序，不宣称道地产地）。
 2. **生生之道**：单味药 → 方剂配伍，体现"君臣佐使"的组织智慧。
 3. **薪火相传**：从《神农本草经》到《中国药典》的两千年典籍传承。
 

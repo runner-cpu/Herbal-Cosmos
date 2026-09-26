@@ -3,6 +3,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { buildAuthority, classifyCandidate } from '../assets/js/lib/catalog-rules.mjs';
+import { loadCatalogSources } from './catalog-sources.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const issue = (code, message, file) => ({ code, message, ...(file ? { file } : {}) });
@@ -19,6 +20,7 @@ function readGenerated(file, key, issues) {
   } catch (error) { issues.push(issue('invalid-js', file + ': ' + error.message, file)); return null; }
 }
 function loadAuthority(baseDir, issues) {
+  try { return loadCatalogSources(baseDir).authority; } catch(error) { issues.push(issue('source-load',error.message)); }
   const dir = path.join(baseDir, 'data', 'sources');
   const pharma = readJson(path.join(dir, 'pharmacopoeia-2020-materials.json'), issues) || {};
   const aliases = readJson(path.join(dir, 'classic-aliases.json'), issues) || {};
@@ -96,6 +98,6 @@ export function validateCatalog({ baseDir = root } = {}) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const result = validateCatalog();
   console.log('Catalog validation: ' + result.summary.approvedCount + ' approved, ' + result.summary.reviewCount + ' review, ' + result.summary.issueCount + ' issue(s)');
-  if (result.review.length) { console.log('Review candidates (reported, not treated as approved):'); for (const item of result.review) console.log('- ' + item.name + ': ' + ((item.reviewReasons || []).join(', ') || 'needs review')); }
+  if (result.review.length) { console.log('Review candidates: see reports/catalog-review.json (use --verbose to print all)'); if(process.argv.includes('--verbose'))for (const item of result.review) console.log('- ' + item.name + ': ' + ((item.reviewReasons || []).join(', ') || 'needs review')); }
   if (result.issues.length) { for (const item of result.issues) console.error(item.code + ': ' + item.message); process.exitCode = 1; }
 }

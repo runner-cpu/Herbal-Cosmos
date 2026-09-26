@@ -35,3 +35,31 @@ test('别名目标未获准时保留原名并进入 review', () => {
     canonicalName: '皂角针', aliases: [], status: 'review', reviewReasons: ['not-in-authority']
   });
 });
+
+test('有公开记录的名称可进入 searchable，仍保留来源分层', () => {
+  const documented = buildAuthority({ canonicalNames: [], documentedNames: ['丁香'], aliases: {}, variants: {} });
+  assert.deepEqual(classifyCandidate('丁香', documented), {
+    canonicalName: '丁香', aliases: [], status: 'approved', reviewReasons: []
+  });
+});
+
+test('无来源的历史短语不会被软放行', () => {
+  const empty = buildAuthority({ canonicalNames: [], documentedNames: [], aliases: {}, variants: {} });
+  assert.equal(classifyCandidate('两个', empty).status, 'review');
+  assert.equal(classifyCandidate('则治其本', empty).status, 'review');
+});
+
+test('有来源的乱码占位符仍进入 review', () => {
+  const documented = buildAuthority({
+    canonicalNames: [],
+    documentedNames: ['???', '?§?', '川§子', '川\uFFFD子', '川\u0007子'],
+    aliases: {},
+    variants: {}
+  });
+
+  for (const name of ['???', '?§?', '川§子', '川\uFFFD子', '川\u0007子']) {
+    const result = classifyCandidate(name, documented);
+    assert.equal(result.status, 'review', JSON.stringify(name));
+    assert.ok(result.reviewReasons.includes('corrupt-label'), JSON.stringify(name));
+  }
+});

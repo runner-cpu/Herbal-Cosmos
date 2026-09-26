@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { buildAuthority, classifyCandidate, splitCandidate } from '../assets/js/lib/catalog-rules.mjs';
+import { loadCatalogSources } from './catalog-sources.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 function stable(value) { if (Array.isArray(value)) return value.map(stable); if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map(key => [key, stable(value[key])])); return value; }
@@ -19,7 +20,7 @@ export function buildCatalog({ candidates = [], authority }) {
     for (const segment of splitCandidate(raw)) {
       const classified = classifyCandidate(segment, authority);
       const sourceRefs = uniqueSorted(input.sourceRefs || []);
-      const suppliedReasons = Array.isArray(input.reviewReasons) ? input.reviewReasons : [];
+      const suppliedReasons = (Array.isArray(input.reviewReasons) ? input.reviewReasons : []).filter(reason => reason !== 'legacy-candidate-unverified' || classified.status !== 'approved');
       if (classified.status === 'approved' && !suppliedReasons.length) {
         const name = classified.canonicalName;
         const existing = approvedMap.get(name) || { id: 'herb-' + hash(name).slice(0, 12), name, aliases: [], sourceRefs: [], status: 'approved' };
@@ -42,36 +43,29 @@ export function buildCatalog({ candidates = [], authority }) {
   return { approved, review, stats: { candidateCount: candidates.length, approvedCount: approved.length, reviewCount: review.length } };
 }
 
-function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
 function loadSources(base = root) {
-  const dir = path.join(base, 'data', 'sources');
-  const manifest = readJson(path.join(dir, 'source-manifest.json')); const pharma = readJson(path.join(dir, 'pharmacopoeia-2020-materials.json'));
-  const aliases = readJson(path.join(dir, 'classic-aliases.json')); const variants = readJson(path.join(dir, 'character-variants.json')); const raw = readJson(path.join(dir, 'raw-candidates.json'));
-  const authority = buildAuthority({ canonicalNames: pharma.canonicalNames, aliases: aliases.aliases, variants: variants.variants });
-  authority.sourceRefs = new Map(pharma.entries.map(entry => [entry.canonicalName, entry.sourceRefs || []]));
-  const admitted = pharma.entries.map(entry => ({ raw: entry.canonicalName, sourceRefs: entry.sourceRefs || [] }));
-  return { manifest, authority, candidates: admitted.concat(raw.candidates) };
+  return loadCatalogSources(base);
 }
 
 function writeArtifacts(result, sourceRevision, authorityHash, base = root) {
   const dataDir = path.join(base, 'data'); const catalogDir = path.join(dataDir, 'catalog'); const reportsDir = path.join(base, 'reports');
   fs.mkdirSync(catalogDir, { recursive: true }); fs.mkdirSync(reportsDir, { recursive: true });
-  const approved = result.approved.map(item => ({ ...item, sourceRefs: uniqueSorted(item.sourceRefs.concat(result.authorityRefs?.get(item.name) || [])) }));
-  const chunks = []; for (let i = 0; i < approved.length; i += 120) chunks.push(approved.slice(i, i + 120));
+  const approved = result.approved.map(item => ({ ...item, evidenceTier:result.pharmaNames?.has(item.name)?'pharmacopoeia':'documented-name', sourceRefs: uniqueSorted(item.sourceRefs.concat(result.authorityRefs?.get(item.name) || [])) }));
+  const chunks = []; for (let i = 0; i < approved.length; i += 200) chunks.push(approved.slice(i, i + 200));
   const chunkIds = chunks.map((_, i) => 'c' + String(i).padStart(2, '0')); const banner = '/* Generated deterministically from data/sources. */\n';
   fs.writeFileSync(path.join(dataDir, 'herb-catalog.js'), banner + 'window.HERB_CATALOG = ' + JSON.stringify(approved, null, 2) + ';\n', 'utf8');
   for (const file of fs.readdirSync(catalogDir)) {
     if (/^chunk-c\d{2}\.js$/.test(file)) fs.rmSync(path.join(catalogDir, file));
   }
   for (let i = 0; i < chunks.length; i++) { const id = chunkIds[i]; const body = 'window.__HERB_CATALOG_CHUNKS__ = window.__HERB_CATALOG_CHUNKS__ || {};\n' + 'window.__HERB_CATALOG_CHUNKS__[' + JSON.stringify(id) + '] = ' + JSON.stringify(chunks[i]) + ';\n'; fs.writeFileSync(path.join(catalogDir, 'chunk-' + id + '.js'), banner + body, 'utf8'); }
-  const manifest = { approvedCount: approved.length, reviewCount: result.review.length, chunks: chunkIds, sourceRevision, authorityHash };
+  const manifest = { version:4, approvedCount: approved.length, reviewCount: result.review.length, pharmacopoeiaVerifiedCount:approved.filter(x=>x.evidenceTier==='pharmacopoeia').length, chunks: chunkIds, sourceRevision, authorityHash, scope:'Public source-attested names; catalog admission is not pharmacopoeia verification or clinical endorsement.' };
   fs.writeFileSync(path.join(catalogDir, 'manifest.js'), banner + 'window.HERB_CATALOG_MANIFEST = ' + JSON.stringify(manifest, null, 2) + ';\n', 'utf8');
   fs.writeFileSync(path.join(reportsDir, 'catalog-review.json'), JSON.stringify({ sourceRevision, review: result.review, stats: result.stats }, null, 2) + '\n', 'utf8');
 }
 
 export function buildFromSources(base = root) {
-  const loaded = loadSources(base); const result = buildCatalog({ candidates: loaded.candidates, authority: loaded.authority }); result.authorityRefs = loaded.authority.sourceRefs;
-  const authorityHash = hash(JSON.stringify(stable({ canonicalNames: [...loaded.authority.canonicalNames].sort(compare), aliases: Object.fromEntries([...loaded.authority.aliases.entries()].sort()), variants: Object.fromEntries([...loaded.authority.variants.entries()].sort()) })));
+  const loaded = loadSources(base); const result = buildCatalog({ candidates: loaded.candidates, authority: loaded.authority }); result.authorityRefs = loaded.authority.sourceRefs; result.pharmaNames=loaded.authority.canonicalNames;
+  const authorityHash = hash(JSON.stringify(stable({ canonicalNames: [...loaded.authority.canonicalNames].sort(compare), documentedNames:[...loaded.authority.documentedNames].sort(compare), aliases: Object.fromEntries([...loaded.authority.aliases.entries()].sort()), variants: Object.fromEntries([...loaded.authority.variants.entries()].sort()) })));
   writeArtifacts(result, loaded.manifest.sourceRevision, authorityHash, base); return result;
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) { const result = buildFromSources(root); console.log('Generated ' + result.approved.length + ' approved and ' + result.review.length + ' review entries'); }

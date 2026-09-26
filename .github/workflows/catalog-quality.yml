@@ -14,8 +14,9 @@ jobs:
         with:
           node-version: 22
       - run: npm run build:data
-      - run: git diff --exit-code -- data/ reports/ assets/js/data/food-medicine.generated.js
-      - run: npm run validate:catalog
+      - run: git diff --exit-code -- data/ reports/ assets/js/data/food-medicine.generated.js assets/js/data/expanded.generated.js
+      - run: npm run validate:data
+      - run: node scripts/fetch-herb-images.mjs --verify
       - run: npm test
       - run: npm run check:inline
       - name: Validate runtime assets
@@ -23,6 +24,8 @@ jobs:
         run: |
           test -s workers/catalog-search.js
           test -s assets/icons/favicon.svg
+          test -s data/sources/herb-images.json
+          test $(find images/herbs/open -type f | wc -l) -ge 400
           find assets/js -name '*.js' -print0 | xargs -0 -n1 node --check
           node --check workers/catalog-search.js
   browser-quality:

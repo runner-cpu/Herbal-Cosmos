@@ -27,8 +27,10 @@ function writeCatalog(baseDir, entries) {
 test('generated output passes and surfaces review entries without failing', () => {
   const result = validateCatalog({ baseDir: root });
   assert.equal(result.ok, true, result.issues.map(issue => issue.message).join('\n'));
-  assert.ok(result.review.length >= 2200);
-  assert.ok(result.summary.reviewCount >= 2200);
+  assert.ok(result.summary.approvedCount >= 2275);
+  assert.ok(result.review.length > 0);
+  assert.ok(result.review.some(entry => entry.name === '出现面色苍白'));
+  assert.ok(!result.review.some(entry => entry.name === '丁香'));
 });
 
 test('a noisy candidate in approved output fails validation', () => {

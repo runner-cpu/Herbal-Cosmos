@@ -1,13 +1,34 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "2026-09-23",
+  "sourceRevision": "2026-09-26",
+  "dataVersion": 4,
   "hashAlgorithm": "SHA-256",
   "policy": {
     "pharmacopoeiaScope": "《中国药典》2020 年版一部的 2,711 是中药标准总数，不是 2,711 味可检索药名。",
-    "authorityAdmission": "规范名必须有药典页码、公开表格行，或可复核的第二来源交叉记录；缺少该证据的候选只能留在 raw-candidates.json。",
+    "authorityAdmission": "药典核验与公开文献名称分层：有公开数据集行级记录的名称可进入文献索引；仅通过字符串清洗、没有行级来源的历史候选仍为 review。文献收载不等同于药典收载或临床有效性核验。",
     "hashPolicy": "只记录实际取得字节的 SHA-256；无法取得时使用 null 并说明原因，绝不推测。"
   },
   "sources": [
+    {
+      "id": "kdhr",
+      "title": "KDHR: Multi-layer information fusion based on graph convolutional network for knowledge-driven herb recommendation — herb entity table",
+      "kind": "research-name-index",
+      "repositoryPath": "data/sources/open-name-index.json",
+      "repositoryRevision": "50f0eb294766a11536907a4f7273e0d1235d34a1",
+      "publicUrl": "https://github.com/Rao-Yulong/KDHR/blob/50f0eb294766a11536907a4f7273e0d1235d34a1/KG/entity/herbID.csv",
+      "retrievedAt": "2026-09-26",
+      "licenseOrUse": "Apache-2.0; full license in data/licenses/KDHR-Apache-2.0.txt. Only herb names and row identifiers retained; not a pharmacopoeia roster."
+    },
+    {
+      "id": "tcmkg",
+      "title": "TCM_KG 公开中药材事实记录（原始资料：中药材天地网中药材资料页）",
+      "kind": "secondary-materia-medica-facts",
+      "repositoryPath": "data/sources/open-herb-facts.json",
+      "repositoryRevision": "b0c619683f7263811e6027e1f5dff73be6362284",
+      "publicUrl": "https://github.com/owlet0605/TCM_KG/blob/b0c619683f7263811e6027e1f5dff73be6362284/TCM_KG-DataBuilder/originData/data/tcmData.json",
+      "retrievedAt": "2026-09-26",
+      "licenseOrUse": "Only compact factual names, taxonomy and traditional classification transcribed. Repository has no explicit content license: original clinical prose, doses, research claims and images are excluded. Each record retains its array index for audit."
+    },
     {
       "id": "cp2020-nmpa-notice",
       "title": "国家药监局关于颁布2020年版《中华人民共和国药典》的公告（2020年第78号）",
@@ -73,6 +94,25 @@
       "retrievedAt": "2026-09-24",
       "retrievalStatus": "verified-from-official-notices",
       "licenseOrUse": "Only directory membership and exact published names are admitted. Properties and uses remain unrecorded unless separately sourced."
+    },
+    {
+      "id": "huatuo-formulas-v4",
+      "title": "华佗中医辞典公开方剂与证候条目",
+      "kind": "classical-formula-index",
+      "repositoryPath": "data/sources/formulas-expanded.json",
+      "repositoryRevision": "4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679",
+      "publicUrl": "https://github.com/hongge168/huatuo-tcm-dictionary/tree/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679",
+      "retrievedAt": "2026-09-26",
+      "licenseOrUse": "CC BY-NC-SA 4.0; original dose units and source notes are retained. Added rows are literature indexes, not clinical recommendations."
+    },
+    {
+      "id": "searched-herb-images-v4",
+      "title": "Wikimedia Commons / iNaturalist searched herb photographs",
+      "kind": "open-image-attribution-manifest",
+      "repositoryPath": "data/sources/herb-images.json",
+      "retrievedAt": "2026-09-26",
+      "publicUrl": "https://commons.wikimedia.org/; https://www.inaturalist.org/",
+      "licenseOrUse": "Only exact taxon/category matches with CC BY, CC BY-SA, CC0 or public-domain terms are retained. Each record carries author, license, source URL and SHA-256. Images depict a source organism and do not prove the medicinal part or processing state."
     }
   ]
 }

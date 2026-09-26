@@ -1,7 +1,12 @@
 {
   "schemaVersion": 1,
   "sourceRevision": "2026-09-23",
-  "variants": {},
+  "variants": {
+    "川棟子": "川楝子",
+    "川萼": "川芎",
+    "皂角剌": "皂角刺",
+    "川貝母": "川贝母"
+  },
   "entries": [],
-  "note": "Character variants require a traceable source and a target already admitted to pharmacopoeia-2020-materials.json. Unverified variants remain raw candidates."
+  "note": "Explicit OCR/traditional-character corrections from the V4 project review; every target also requires an independently admitted source record. No phonetic approximate matching; plant parts are never merged by resemblance."
 }

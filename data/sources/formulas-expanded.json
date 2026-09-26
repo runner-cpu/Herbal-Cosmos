@@ -1,0 +1,1136 @@
+[
+  {
+    "id": "gegen-tang",
+    "name": "葛根汤",
+    "from": "《伤寒论》",
+    "zheng": "风寒表证",
+    "eff": "解肌发表，升津舒筋",
+    "herbs": [
+      {
+        "name": "葛根",
+        "dose": "四两",
+        "role": "未标注"
+      },
+      {
+        "name": "麻黄",
+        "dose": "三两，去节",
+        "role": "未标注"
+      },
+      {
+        "name": "桂枝",
+        "dose": "二两，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "芍药",
+        "dose": "二两",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "二两，炙",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "三两，切",
+        "role": "未标注"
+      },
+      {
+        "name": "大枣",
+        "dose": "十二枚，擘",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-fang-batch.json#L6",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-evidence-batch.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-014 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "dachengqi-tang",
+    "name": "大承气汤",
+    "from": "《伤寒论》",
+    "zheng": "阳明腑实证",
+    "eff": "峻下热结",
+    "herbs": [
+      {
+        "name": "大黄",
+        "dose": "四两，酒洗",
+        "role": "未标注"
+      },
+      {
+        "name": "厚朴",
+        "dose": "半斤，炙，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "枳实",
+        "dose": "五枚，炙",
+        "role": "未标注"
+      },
+      {
+        "name": "芒硝",
+        "dose": "三合",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json#L96",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-011 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "xiaochengqi-tang",
+    "name": "小承气汤",
+    "from": "《伤寒论》",
+    "zheng": "阳明腑实证",
+    "eff": "轻下热结，行气除满",
+    "herbs": [
+      {
+        "name": "大黄",
+        "dose": "四两",
+        "role": "未标注"
+      },
+      {
+        "name": "厚朴",
+        "dose": "二两，炙，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "枳实",
+        "dose": "三枚大者，炙",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json#L105",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-012 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "tiaowei-chengqi-tang",
+    "name": "调胃承气汤",
+    "from": "《伤寒论》",
+    "zheng": "阳明腑实证",
+    "eff": "缓下热结，调和胃气",
+    "herbs": [
+      {
+        "name": "大黄",
+        "dose": "四两，清酒洗",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "二两，炙",
+        "role": "未标注"
+      },
+      {
+        "name": "芒硝",
+        "dose": "半升",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json#L114",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-013 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "sini-tang",
+    "name": "四逆汤",
+    "from": "《伤寒论》",
+    "zheng": "少阴里寒证",
+    "eff": "回阳救逆",
+    "herbs": [
+      {
+        "name": "甘草",
+        "dose": "二两，炙",
+        "role": "未标注"
+      },
+      {
+        "name": "干姜",
+        "dose": "一两半",
+        "role": "未标注"
+      },
+      {
+        "name": "附子",
+        "dose": "一枚，生用，去皮，破八片",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json#L51",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-diarrhea-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-006 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "zhenwu-tang",
+    "name": "真武汤",
+    "from": "《伤寒论》",
+    "zheng": "阳虚水泛证",
+    "eff": "温阳利水",
+    "herbs": [
+      {
+        "name": "茯苓",
+        "dose": "三两",
+        "role": "未标注"
+      },
+      {
+        "name": "芍药",
+        "dose": "三两",
+        "role": "未标注"
+      },
+      {
+        "name": "白术",
+        "dose": "二两",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "三两，切",
+        "role": "未标注"
+      },
+      {
+        "name": "附子",
+        "dose": "一枚，炮，去皮，破八片",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json#L60",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-007 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "wuling-san",
+    "name": "五苓散",
+    "from": "《伤寒论》",
+    "zheng": "膀胱气化不利证",
+    "eff": "方证索引：脉浮、小便不利、微热消渴等水气与膀胱气化不利语境",
+    "herbs": [
+      {
+        "name": "猪苓",
+        "dose": "十八铢，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "泽泻",
+        "dose": "一两六铢",
+        "role": "未标注"
+      },
+      {
+        "name": "白术",
+        "dose": "十八铢",
+        "role": "未标注"
+      },
+      {
+        "name": "茯苓",
+        "dose": "十八铢",
+        "role": "未标注"
+      },
+      {
+        "name": "桂枝",
+        "dose": "半两，去皮",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-water-lung-batch.json#L33",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-water-lung-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-016 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "zhuling-tang",
+    "name": "猪苓汤",
+    "from": "《伤寒论》",
+    "zheng": "水热互结证",
+    "eff": "方证索引：少阴病下利、咳而呕渴、心烦不得眠等水热互结语境",
+    "herbs": [
+      {
+        "name": "猪苓",
+        "dose": "一两，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "茯苓",
+        "dose": "一两",
+        "role": "未标注"
+      },
+      {
+        "name": "泽泻",
+        "dose": "一两",
+        "role": "未标注"
+      },
+      {
+        "name": "阿胶",
+        "dose": "一两",
+        "role": "未标注"
+      },
+      {
+        "name": "滑石",
+        "dose": "一两，碎",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-water-lung-batch.json#L24",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-water-lung-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-015 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "huanglian-ejiao-tang",
+    "name": "黄连阿胶汤",
+    "from": "《伤寒论》",
+    "zheng": "少阴阴虚证",
+    "eff": "方证索引：少阴病心中烦、不得卧等阴虚火扰语境",
+    "herbs": [
+      {
+        "name": "黄连",
+        "dose": "四两",
+        "role": "未标注"
+      },
+      {
+        "name": "黄芩",
+        "dose": "二两",
+        "role": "未标注"
+      },
+      {
+        "name": "芍药",
+        "dose": "二两",
+        "role": "未标注"
+      },
+      {
+        "name": "鸡子黄",
+        "dose": "二枚",
+        "role": "未标注"
+      },
+      {
+        "name": "阿胶",
+        "dose": "三两",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase4-insomnia-formulas.json#L6",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase4-insomnia-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-030 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "maziren-wan",
+    "name": "麻子仁丸",
+    "from": "《伤寒论》",
+    "zheng": "脾约证",
+    "eff": "润肠泄热，行气通便",
+    "herbs": [
+      {
+        "name": "火麻仁",
+        "dose": "二升",
+        "role": "未标注"
+      },
+      {
+        "name": "芍药",
+        "dose": "半斤",
+        "role": "未标注"
+      },
+      {
+        "name": "枳实",
+        "dose": "半斤，炙",
+        "role": "未标注"
+      },
+      {
+        "name": "大黄",
+        "dose": "一斤，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "厚朴",
+        "dose": "一尺，炙，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "苦杏仁",
+        "dose": "一升，去皮尖，熬",
+        "role": "未标注"
+      },
+      {
+        "name": "蜂蜜",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json#L87",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-010 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。检索名称规范：麻子仁→火麻仁、杏仁→苦杏仁。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "yinchenhao-tang",
+    "name": "茵陈蒿汤",
+    "from": "《伤寒论》《金匮要略》",
+    "zheng": "湿热发黄证",
+    "eff": "清热利湿退黄",
+    "herbs": [
+      {
+        "name": "茵陈",
+        "dose": "六两",
+        "role": "未标注"
+      },
+      {
+        "name": "栀子",
+        "dose": "十四枚，擘",
+        "role": "未标注"
+      },
+      {
+        "name": "大黄",
+        "dose": "二两，去皮",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-fang-batch.json#L15",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-evidence-batch.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-011 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。检索名称规范：茵陈蒿→茵陈。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "zhizi-chi-tang",
+    "name": "栀子豉汤",
+    "from": "《伤寒论》",
+    "zheng": "虚烦不眠证",
+    "eff": "清宣郁热，除烦",
+    "herbs": [
+      {
+        "name": "栀子",
+        "dose": "十四个，擘",
+        "role": "未标注"
+      },
+      {
+        "name": "淡豆豉",
+        "dose": "四合，绵裹",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json#L78",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-009 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。检索名称规范：香豉→淡豆豉。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "xiaojianzhong-tang",
+    "name": "小建中汤",
+    "from": "《伤寒论》《金匮要略》",
+    "zheng": "脾胃虚寒证",
+    "eff": "方证索引：腹中急痛、虚劳里急、心中悸而烦等中焦虚寒和阴阳营卫失和语境",
+    "herbs": [
+      {
+        "name": "桂枝",
+        "dose": "三两，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "二两，炙",
+        "role": "未标注"
+      },
+      {
+        "name": "大枣",
+        "dose": "十二枚，擘",
+        "role": "未标注"
+      },
+      {
+        "name": "芍药",
+        "dose": "六两",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "三两，切",
+        "role": "未标注"
+      },
+      {
+        "name": "饴糖",
+        "dose": "一升",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase4-abdominal-pain-formulas.json#L6",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase4-abdominal-pain-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-028 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。检索名称规范：胶饴→饴糖。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "zhigancao-tang",
+    "name": "炙甘草汤",
+    "from": "《伤寒论》",
+    "zheng": "心脉失养证",
+    "eff": "益气滋阴，通阳复脉",
+    "herbs": [
+      {
+        "name": "甘草",
+        "dose": "四两，炙",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "三两，切",
+        "role": "未标注"
+      },
+      {
+        "name": "人参",
+        "dose": "二两",
+        "role": "未标注"
+      },
+      {
+        "name": "生地黄",
+        "dose": "一斤",
+        "role": "未标注"
+      },
+      {
+        "name": "桂枝",
+        "dose": "三两，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "阿胶",
+        "dose": "二两",
+        "role": "未标注"
+      },
+      {
+        "name": "麦冬",
+        "dose": "半升，去心",
+        "role": "未标注"
+      },
+      {
+        "name": "火麻仁",
+        "dose": "半升",
+        "role": "未标注"
+      },
+      {
+        "name": "大枣",
+        "dose": "三十枚，擘",
+        "role": "未标注"
+      },
+      {
+        "name": "清酒",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json#L69",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-batch-3.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-008 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。检索名称规范：麦门冬→麦冬、麻仁→火麻仁。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "wuzhuyu-tang",
+    "name": "吴茱萸汤",
+    "from": "《伤寒论》",
+    "zheng": "胃寒上逆证",
+    "eff": "方证索引：食谷欲呕、干呕吐涎沫、头痛等厥阴与少阴寒逆语境",
+    "herbs": [
+      {
+        "name": "吴茱萸",
+        "dose": "一升，洗",
+        "role": "未标注"
+      },
+      {
+        "name": "人参",
+        "dose": "三两",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "六两，切",
+        "role": "未标注"
+      },
+      {
+        "name": "大枣",
+        "dose": "十二枚，擘",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-vomiting-formulas.json#L15",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-headache-evidence.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-vomiting-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-017 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "linggui-zhugan-tang",
+    "name": "苓桂术甘汤",
+    "from": "《金匮要略》",
+    "zheng": "痰饮内停证",
+    "eff": "温阳化饮，健脾利湿",
+    "herbs": [
+      {
+        "name": "茯苓",
+        "dose": "四两",
+        "role": "未标注"
+      },
+      {
+        "name": "桂枝",
+        "dose": "三两，去皮",
+        "role": "未标注"
+      },
+      {
+        "name": "白术",
+        "dose": "二两",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "二两，炙",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json#L24",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-batch-3.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-003 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "shenqi-wan",
+    "name": "肾气丸",
+    "from": "《金匮要略》",
+    "zheng": "肾阳不足证",
+    "eff": "温补肾阳，化气行水",
+    "herbs": [
+      {
+        "name": "干地黄",
+        "dose": "八两",
+        "role": "未标注"
+      },
+      {
+        "name": "山药",
+        "dose": "四两",
+        "role": "未标注"
+      },
+      {
+        "name": "山茱萸",
+        "dose": "四两",
+        "role": "未标注"
+      },
+      {
+        "name": "泽泻",
+        "dose": "三两",
+        "role": "未标注"
+      },
+      {
+        "name": "茯苓",
+        "dose": "三两",
+        "role": "未标注"
+      },
+      {
+        "name": "牡丹皮",
+        "dose": "三两",
+        "role": "未标注"
+      },
+      {
+        "name": "桂枝",
+        "dose": "一两",
+        "role": "未标注"
+      },
+      {
+        "name": "附子",
+        "dose": "一两，炮",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json#L15",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-batch-3.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-002 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "maimendong-tang",
+    "name": "麦门冬汤",
+    "from": "《金匮要略》",
+    "zheng": "肺胃阴虚证",
+    "eff": "清养肺胃，降逆下气",
+    "herbs": [
+      {
+        "name": "麦冬",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "半夏",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "人参",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "粳米",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "大枣",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json#L51",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-006 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。检索名称规范：麦门冬→麦冬。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "zexie-tang",
+    "name": "泽泻汤",
+    "from": "《金匮要略》",
+    "zheng": "痰饮内停证",
+    "eff": "利水除饮，健脾制水",
+    "herbs": [
+      {
+        "name": "泽泻",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "白术",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json#L60",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-batch-3.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-007 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "shegan-mahuang-tang",
+    "name": "射干麻黄汤",
+    "from": "《金匮要略》",
+    "zheng": "寒饮郁肺证",
+    "eff": "宣肺散寒，化饮降逆",
+    "herbs": [
+      {
+        "name": "射干",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "麻黄",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "细辛",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "紫菀",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "款冬花",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "五味子",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "大枣",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "半夏",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json#L69",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-008 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "danggui-shaoyao-san",
+    "name": "当归芍药散",
+    "from": "《金匮要略》",
+    "zheng": "血虚水停证",
+    "eff": "养血调肝，健脾利湿",
+    "herbs": [
+      {
+        "name": "当归",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "芍药",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "川芎",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "茯苓",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "白术",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "泽泻",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json#L33",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-004 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "guizhi-gancao-tang",
+    "name": "桂枝甘草汤",
+    "from": "《伤寒论》",
+    "zheng": "心阳不足证",
+    "eff": "方证索引：发汗过多后叉手自冒心、心下悸、欲得按等心阳受损语境",
+    "herbs": [
+      {
+        "name": "桂枝",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-palpitations-formulas.json#L6",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-palpitations-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-020 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "fuling-gancao-tang",
+    "name": "茯苓甘草汤",
+    "from": "《伤寒论》",
+    "zheng": "痰饮内停证",
+    "eff": "方证索引：厥而心下悸、水停胃中等水气凌心语境",
+    "herbs": [
+      {
+        "name": "茯苓",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "桂枝",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-palpitations-formulas.json#L15",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-palpitations-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-021 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "linggui-ganzao-tang",
+    "name": "茯苓桂枝甘草大枣汤",
+    "from": "《伤寒论》",
+    "zheng": "水气上冲证",
+    "eff": "方证索引：发汗后脐下悸、欲作奔豚等水气上冲语境，又称苓桂甘枣汤",
+    "herbs": [
+      {
+        "name": "茯苓",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "桂枝",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "大枣",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-palpitations-formulas.json#L24",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-palpitations-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-022 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "xiaobanxia-tang",
+    "name": "小半夏汤",
+    "from": "《金匮要略》",
+    "zheng": "胃寒上逆证",
+    "eff": "方证索引：诸呕吐、谷不得下等寒饮胃逆语境",
+    "herbs": [
+      {
+        "name": "半夏",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-vomiting-formulas.json#L6",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-vomiting-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-017 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "xuanfu-daizhe-tang",
+    "name": "旋覆代赭石汤",
+    "from": "《伤寒论》",
+    "zheng": "胃虚痰阻证",
+    "eff": "方证索引：心下痞硬、噫气不除等胃虚痰阻、胃气上逆语境",
+    "herbs": [
+      {
+        "name": "旋覆花",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "赭石",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "人参",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "生姜",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "半夏",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "大枣",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-vomiting-formulas.json#L33",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-vomiting-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-019 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。检索名称规范：代赭石→赭石。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "sangju-yin",
+    "name": "桑菊饮",
+    "from": "《温病条辨·上焦篇》",
+    "zheng": "风热表证",
+    "eff": "疏风清热，宣肺止咳",
+    "herbs": [
+      {
+        "name": "桑叶",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "菊花",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "苦杏仁",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "连翘",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "薄荷",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "桔梗",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "芦根",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/wenbing-fang.json#L15",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/neijing-wenbing-batch.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-wb-002 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。检索名称规范：杏仁→苦杏仁、苦桔梗→桔梗、生甘草→甘草、苇根→芦根。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。功用为资料所述传统方义，仅供文献学习。"
+  },
+  {
+    "id": "baihe-dihuang-tang",
+    "name": "百合地黄汤",
+    "from": "《金匮要略》",
+    "zheng": "百合病",
+    "eff": "方证索引：百合病未经吐下发汗、病形如初等语境",
+    "herbs": [
+      {
+        "name": "百合",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      },
+      {
+        "name": "生地黄",
+        "dose": "所引资料未载剂量",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase4-insomnia-formulas.json#L15",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase4-insomnia-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-jk-025 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；所引条目只列组成，未据记忆补写剂量。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  },
+  {
+    "id": "baihu-renshen-tang",
+    "name": "白虎加人参汤",
+    "from": "《伤寒论》《金匮要略》",
+    "zheng": "气津两伤证",
+    "eff": "方证索引：大汗后大烦渴不解、脉洪大，或口燥渴、心烦等阳明里热兼津气受伤语境",
+    "herbs": [
+      {
+        "name": "知母",
+        "dose": "六两",
+        "role": "未标注"
+      },
+      {
+        "name": "石膏",
+        "dose": "一斤，碎",
+        "role": "未标注"
+      },
+      {
+        "name": "甘草",
+        "dose": "二两，炙",
+        "role": "未标注"
+      },
+      {
+        "name": "粳米",
+        "dose": "六合",
+        "role": "未标注"
+      },
+      {
+        "name": "人参",
+        "dose": "三两",
+        "role": "未标注"
+      }
+    ],
+    "sourceRefs": [
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-thirst-formulas.json#L6",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/dosages.json",
+      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-thirst-evidence.json"
+    ],
+    "sourceNote": "据华佗中医辞典 gf-sh-023 整理（固定版本 4bf9786，知识库 CC BY-NC-SA 4.0）；剂量照录 dosages.json 的古籍单位与炮制备注，未换算克数。芍药若出现则保留原名，不指定赤芍或白芍；君臣佐使均未标注。eff 为所引条目的方证摘要，仅供文献学习。"
+  }
+]

@@ -17,7 +17,7 @@ const store = {
 const I18N = {
   zh:{
     'nav.home':'首页','nav.herbs':'探索本草','nav.qiwei':'性味归经','nav.formula':'配伍网络','nav.learn':'学习舱','nav.more':'更多','nav.zheng':'病证药链','nav.classics':'典籍时光','nav.food':'药食同源','nav.culture':'文化与非遗','nav.saved':'本机收藏',
-    'search.placeholder':'搜索药材 / 方剂','search.empty':'没有匹配，试试“人参”或“六味地黄丸”','theme.day':'日间','theme.night':'夜读','lang.button':'EN',
+    'search.placeholder':'搜索药材 / 方剂','search.empty':'没有匹配，试试“人参”或“六味地黄丸”','theme.day':'日间','theme.night':'夜读','theme.classic':'古籍','lang.button':'EN',
     'hero.tagline':'以 18,817 种中药资源为星辰，从一味药出发，漫游性味、配伍、典籍与生活的完整宇宙。','hero.explore':'探索星图','hero.network':'进入配伍网络','hero.hint':'拖动旋转星云 · 滚轮缩放 · 点击星辰查看一味药','home.journey':'从一味药，走进本草世界','home.journeyDesc':'五步完成认识、理解、关联与复习。进度仅保存在本机。','home.start':'开始今日学习','home.discover':'本草发现','home.viewAll':'查看全部代表药材 →','home.progress':'今日进度',
     'herb.imageCaption':'从图像认识本草','herb.imageDesc':'植物形态是理解药材来源的第一条线索。图像用于科普识别，不替代专业鉴定。','herb.visual':'图像档案','herb.openCard':'打开知识卡','herb.addCompare':'加入对比','herb.compare':'对比','herb.save':'收藏','herb.saved':'已收藏',
     'learn.next':'下一题 →','learn.correct':'答对了！','learn.retry':'再想一想。','learn.total':'累计正确','learn.done':'已完成','learn.right':'正确','learn.today':'今日提示','learn.method':'学习方法','learn.footprint':'你的足迹',
@@ -25,7 +25,7 @@ const I18N = {
   },
   en:{
     'nav.home':'Home','nav.herbs':'Herb Atlas','nav.qiwei':'Qi · Wei','nav.formula':'Formula Network','nav.learn':'Learning Lab','nav.more':'More','nav.zheng':'Pattern Chain','nav.classics':'Classics','nav.food':'Food & Medicine','nav.culture':'Culture','nav.saved':'Local Herbarium',
-    'search.placeholder':'Search herbs / formulas','search.empty':'No match. Try “ginseng” or a formula name.','theme.day':'Light','theme.night':'Night','lang.button':'中',
+    'search.placeholder':'Search herbs / formulas','search.empty':'No match. Try “ginseng” or a formula name.','theme.day':'Light','theme.night':'Night','theme.classic':'Classic','lang.button':'中',
     'hero.tagline':'18,817 medicinal resources become stars. Start with one herb and explore properties, formulas, classics and daily life.','hero.explore':'Explore atlas','hero.network':'Open formula network','hero.hint':'Drag to rotate · Scroll to zoom · Select a star for a herb','home.journey':'From one herb into a living materia medica','home.journeyDesc':'Five steps connect recognition, properties, relationships and recall. Progress stays on this device.','home.start':'Start today’s lesson','home.discover':'Featured herbs','home.viewAll':'View the full atlas →','home.progress':'Today',
     'herb.imageCaption':'See the herb first','herb.imageDesc':'Plant form is the first clue to origin. Images support learning and are not a substitute for professional identification.','herb.visual':'Visual archive','herb.openCard':'Open knowledge card','herb.addCompare':'Add to compare','herb.compare':'Compare','herb.save':'Save','herb.saved':'Saved',
     'learn.next':'Next question →','learn.correct':'Correct!','learn.retry':'Not quite.','learn.total':'Correct','learn.done':'Completed','learn.right':'right','learn.today':'Today’s note','learn.method':'Study method','learn.footprint':'Your footprint',
@@ -42,15 +42,17 @@ function applyLanguage(){
   const title=document.querySelector('title'); if(title) title.textContent=currentLang==='en'?'Herbal Cosmos · A visual materia medica':'本草宇宙 · HERBAL COSMOS';
   const routeTitles={home:['本草宇宙','Herbal Cosmos'],learn:['本草学习舱','Learning Lab'],saved:['本机收藏','Local Herbarium'],herbs:['药材星图','Herb Atlas'],herb:['药材知识卡','Herb Knowledge Card'],qiwei:['性味归经图谱','Qi · Wei · Meridian Atlas'],formula:['方剂配伍网络','Formula Network'],zheng:['病证 · 方剂 · 药材','Pattern · Formula · Herb'],food:['药食同源','Food & Medicine'],culture:['文化与非遗','Culture & Heritage']};
   document.querySelectorAll('.page h1.title').forEach(el=>{const route=el.closest('.page')?.dataset.route;const pair=routeTitles[route];if(pair)el.textContent=currentLang==='en'?pair[1]:pair[0];});
-  const intros={herbs:['先用精品知识卡深入理解，再切换全量名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。','Start with complete knowledge cards, then switch to the full name index for wider discovery. Only the curated layer powers properties, charts and detail links.'],qiwei:['四气、五味与归经是中药药性的骨架，两个视角读同一套药性数据。','Qi, wei and meridian form the skeleton of materia medica. Read the same dataset through two visual lenses.'],formula:['方剂与药材构成二部图：点一个方剂，看它的组成与君臣佐使；点一味药，看它进入哪些方剂。','Formulas and herbs form a bipartite graph. Select a formula to inspect its composition, or a herb to trace its relationships.'],learn:['把漫游变成可积累的学习：先看知识卡，再用小测检验记忆。每次答题都会留下学习足迹。','Turn browsing into practice: study a knowledge card, test your recall and keep a local learning footprint.']};
+  const intros={herbs:['先用本草知识卡深入理解，再切换全量名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。','Start with complete knowledge cards, then switch to the full name index for wider discovery. Only the curated layer powers properties, charts and detail links.'],qiwei:['四气、五味与归经是中药药性的骨架，两个视角读同一套药性数据。','Qi, wei and meridian form the skeleton of materia medica. Read the same dataset through two visual lenses.'],formula:['方剂与药材构成二部图：点一个方剂，看它的组成与君臣佐使；点一味药，看它进入哪些方剂。','Formulas and herbs form a bipartite graph. Select a formula to inspect its composition, or a herb to trace its relationships.'],learn:['把漫游变成可积累的学习：先看知识卡，再用小测检验记忆。每次答题都会留下学习足迹。','Turn browsing into practice: study a knowledge card, test your recall and keep a local learning footprint.']};
   Object.entries(intros).forEach(([route,pair])=>{const page=document.querySelector(`.page[data-route="${route}"] .page-intro`);if(page)page.textContent=currentLang==='en'?pair[1]:pair[0];});
   updateThemeControl();
 }
 function updateThemeControl(){
   const button=document.getElementById('themeToggle'); if(!button) return;
-  const night=document.body.classList.contains('night');
-  button.setAttribute('aria-label',night?(currentLang==='en'?'Switch to light mode':'切换日间模式'):(currentLang==='en'?'Switch to night mode':'切换夜读模式'));
-  const label=button.querySelector('[data-theme-label]'); if(label) label.textContent=night?t('theme.day'):t('theme.night');
+  const current=document.documentElement.dataset.theme || (document.body.classList.contains('night')?'night':'day');
+  const next=window.HerbalTheme?.nextTheme ? window.HerbalTheme.nextTheme(current) : (current==='night'?'day':'night');
+  const nextLabel=t('theme.'+next,next);
+  button.setAttribute('aria-label',currentLang==='en'?'Switch to '+nextLabel+' theme':'切换到'+nextLabel+'主题');
+  const label=button.querySelector('[data-theme-label]'); if(label) label.textContent=nextLabel;
 }
 function notify(){ store.listeners.forEach(fn=>{ try{fn();}catch(e){} }); }
 function displayCount(value){ return Number.isFinite(value) ? value.toLocaleString('zh-CN') : '—'; }
@@ -80,8 +82,9 @@ const chartManager = {
   _instances: new Map(),
   _observers: new Map(),
   register(id, instance, el) {
-    this.dispose(id);
+    if(this._instances.get(id)===instance){ this._observers.get(id)?.disconnect(); this._observers.delete(id); instance.clear(); } else this.dispose(id);
     if(!instance) return null;
+    instance.setOption({animation:!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});
     this._instances.set(id, instance);
     if(el && typeof ResizeObserver !== 'undefined'){
       const ro = new ResizeObserver(()=>{ try{ instance.resize(); }catch(e){} });
@@ -140,6 +143,7 @@ const byId = id => HERBS.find(h=>h.id===id) || null;
 const byName = name => HERBS.find(h=>h.name===name) || null;
 const formulaById = id => FORMULAS.find(f=>f.id===id) || null;
 const zhengById = id => ZHENGS.find(z=>z.id===id) || null;
+const herbEfficacyLabel = h => h?.source==='openMateria'?'资料分类':'功效';
 const chartPalette = () => ({
   text: getComputedStyle(document.body).getPropertyValue('--ink').trim() || '#17231D',
   muted: getComputedStyle(document.body).getPropertyValue('--ink-2').trim() || '#59675F',
@@ -153,12 +157,42 @@ const chartPalette = () => ({
 });
 function herbName(herbId){ const h=byId(herbId); return h?h.name:herbId; }
 function sourceBadge(h){
-  const s = SOURCE_MAP[h.source] || SOURCE_MAP.census;
+  const s = SOURCE_MAP[h.source] || {badge:'outline',label:'公开资料整理'};
   return `<span class="badge ${s.badge}">数据来源：${s.label}</span>` + (h.food ? ` <span class="badge cinnabar">药食同源</span>` : '');
 }
+
+function safeSourceUrl(value){ try { const url=new URL(value,location.href); return /^https?:$/.test(url.protocol)?url.href:''; } catch { return ''; } }
+function fact(value){ return value && value!=='未标注' ? value : '未录入'; }
+function hasOpenImageCredit(h){
+  const credit=h?.imageCredit;
+  return Boolean(
+    h?.image
+    && /^images\/herbs\/open\/[^/]+\.(?:jpe?g|png|webp)$/i.test(h.image)
+    && String(h.imageAlt||'').trim()
+    && String(credit?.author||'').trim()
+    && /^(?:CC BY(?:-SA)? [1-4]\.0|CC0 1\.0|Public domain)$/.test(String(credit?.license||''))
+    && safeSourceUrl(credit?.url)
+    && safeSourceUrl(h.imageLicenseUrl)
+  );
+}
+function herbImage(h, cls=''){
+  if(hasOpenImageCredit(h)) return '<img class="'+esc(cls)+'" src="'+esc(h.image)+'" alt="'+esc(h.imageAlt)+'" loading="lazy">';
+  return '<span class="herb-image-empty '+esc(cls)+'" role="img" aria-label="'+esc(h?.name||'本草')+'：暂无已核对图像"><b>'+esc((h?.name||'本草').slice(0,2))+'</b><small>暂无图像</small></span>';
+}
+function sourceLinks(item){
+  return (item?.sourceRefs||[]).map((ref,index)=>{const url=safeSourceUrl(typeof ref==='string'?ref:ref.url);return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(typeof ref==='object'?(ref.title||'原始资料 '+(index+1)):'原始资料 '+(index+1))+' ↗</a>':'';}).join('');
+}
+function imageCredit(h){
+  if(!hasOpenImageCredit(h)) return h?.image?'图像未通过开放许可校验，当前不展示。':'暂无通过开放许可校验的图像。';
+  const credit=h.imageCredit;
+  const sourceUrl=safeSourceUrl(credit.url);
+  const licenseUrl=safeSourceUrl(h.imageLicenseUrl);
+  return esc(credit.author)+' · '+esc(credit.license)+' · <a href="'+esc(sourceUrl)+'" target="_blank" rel="noopener noreferrer">图像来源 ↗</a> · <a href="'+esc(licenseUrl)+'" target="_blank" rel="noopener noreferrer">许可文本 ↗</a>';
+}
+
 function stampHtml(h, sizeCls){
   const short = h.name.replace('子','').replace('仁','').slice(0,2);
-  return `<span class="stamp ${sizeCls||''}"><span class="a">${esc(short)}</span><span class="b">${esc(h.qi)}·${esc(h.wei)}</span></span>`;
+  return `<span class="stamp ${sizeCls||''}"><span class="a">${esc(short)}</span><span class="b">${esc(fact(h.qi))}·${esc(fact(h.wei))}</span></span>`;
 }
 
 /* ============================================================
@@ -178,6 +212,8 @@ function parseHash(){
   return { route, params };
 }
 function render(){
+  chartManager.clear();
+  window.HerbalInsights?.dispose?.();
   syncDatasetCounts();
   const { route, params } = parseHash();
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active', p.dataset.route===route));
@@ -196,6 +232,7 @@ function render(){
     formula:renderFormula, zheng:renderZheng, learn:renderLearn, saved:renderSaved };
   try{ (views[route]||views.home)(); }catch(err){ console.error('[herbal-cosmos] render error:', err); }
   applyLanguage();
+  window.dispatchEvent(new CustomEvent('herbal:route',{detail:{route,params}}));
   if(route==='home' && params.focus==='star' && params.id){ setSelected(params.id,{source:'context-bar'}); setTimeout(()=>window.HerbalCosmos?.focusHerb?.(params.id,{animate:true}),80); }
   if(route==='home' && params.focus==='classics') setTimeout(()=>document.getElementById('home-classics')?.scrollIntoView({behavior:'smooth',block:'start'}),80);
   if(route==='home' && params.anchor) setTimeout(()=>{
@@ -214,6 +251,8 @@ function render(){
     if(parseHash().route==='home' || parseHash().route==='herbs') render();
   });
   window.addEventListener('hashchange', render);
+  window.addEventListener('herbal:theme', render);
+  window.addEventListener('pagehide',()=>chartManager.clear());
 
 /* ============================================================
    首页：3D 星云（Canvas 粒子引擎）
@@ -230,7 +269,9 @@ function render(){
   let running = true;
   let motion = !(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) && (()=>{ try{return localStorage.getItem('herbal_motion')!=='off';}catch(e){return true;} })();
   let colorMode = document.documentElement.dataset.cosmosColor || (()=>{ try{return localStorage.getItem('herbal_cosmos_color')||'uniform';}catch(e){return 'uniform';} })();
-  let focusedId = null;
+  let focusedId = null, panY=0, targetPanY=0, moved=0, animationFrame=0;
+  const activePointers=new Map(); let pinchDistance=0;
+  canvas.setAttribute('tabindex','0'); canvas.setAttribute('aria-label','本草星图：拖动旋转，双击聚焦；也可使用星图搜索与缩放按钮。');
 
   function resize(){
     DPR = Math.min(window.devicePixelRatio||1, 2);
@@ -248,7 +289,7 @@ function render(){
       return {
         id:h.id, name:h.name, herb:h,
         x:r*Math.sin(phi)*Math.cos(theta), y:r*Math.cos(phi), z:r*Math.sin(phi)*Math.sin(theta),
-        size: isFav(h.id) ? 6.2 : 4.6, color: colorMode==='effect' ? (window.HerbalCosmos?.colorForEffect?.(h.cat)||'#D8C9A8') : (h.food ? '#E8C87E' : '#D8C9A8')
+        size: isFav(h.id) ? 6.2 : 4.6, color: colorMode==='effect' ? (window.HerbalCosmos?.colorForEffect?.(h.cat)||'#D8C9A8') : '#D8C9A8'
       };
     });
     // 背景星尘（全量资源分布的氛围示意）
@@ -273,7 +314,7 @@ function render(){
     const xr = x*c + z*s, zr = -x*s + z*c;
     const fov = 640;
     const persp = fov / (fov + zr);
-    return { sx: W/2 + xr*scale*persp, sy: H/2 + y*scale*persp, persp, zr };
+    return { sx: W/2 + xr*scale*persp, sy: H/2 + y*scale*persp + panY, persp, zr };
   }
 
   function frame(){
@@ -281,7 +322,9 @@ function render(){
     ctx.clearRect(0,0,W,H);
     if(motion) rotY += (targetRotY - rotY)*0.06;
     else rotY = targetRotY;
-    scale += (targetScale - scale)*0.08;
+    scale += (targetScale - scale)*(motion?.08:1);
+    panY += (targetPanY-panY)*(motion?.08:1);
+    if(motion&&!dragging&&!focusedId)targetRotY+=.0005;
 
     // 星尘
     for(const d of dust){
@@ -296,7 +339,8 @@ function render(){
 
     // 精品星
     const viewed = new Set((()=>{ try{return JSON.parse(localStorage.getItem('herbal_viewed')||'[]');}catch(e){return [];} })());
-    stars.forEach(st=>{ const projected=project(st.x,st.y,st.z); st.screenX=projected.sx; st.screenY=projected.sy; st.viewed=viewed.has(st.id); st.favorite=isFav(st.id); });
+    const favorites=new Set(getFavs());
+    stars.forEach(st=>{ const projected=project(st.x,st.y,st.z); st.screenX=projected.sx; st.screenY=projected.sy; st.viewed=viewed.has(st.id); st.favorite=favorites.has(st.id); });
     const visibleLabels = new Set((window.HerbalCosmos?.selectVisibleLabels?.(stars,{width:W,height:H},scale,{selectedHerb:store.selectedHerb?.id||null,viewedHerbs:viewed})||[]).map(item=>item.id));
     for(const st of stars){
       const p = project(st.x, st.y, st.z);
@@ -320,7 +364,7 @@ function render(){
       }
       if(st.viewed || focusedId===st.id){ ctx.strokeStyle='#F0CA77'; ctx.lineWidth=1.2; ctx.globalAlpha=.85; ctx.beginPath(); ctx.arc(p.sx,p.sy,Math.max(5,sz*1.9),0,Math.PI*2); ctx.stroke(); ctx.globalAlpha=1; }
     }
-    requestAnimationFrame(frame);
+    animationFrame=requestAnimationFrame(frame);
   }
 
   function hitTest(mx,my){
@@ -335,40 +379,31 @@ function render(){
     return best;
   }
 
-  // 交互
-  canvas.addEventListener('pointerdown', e=>{ dragging=true; lastX=e.clientX; lastY=e.clientY; canvas.setPointerCapture(e.pointerId); });
-  canvas.addEventListener('pointermove', e=>{
-    if(dragging){
-      targetRotY += (e.clientX-lastX)*0.006;
-      lastX=e.clientX; lastY=e.clientY;
-    } else {
-      const rect = canvas.getBoundingClientRect();
-      const h = hitTest(e.clientX-rect.left, e.clientY-rect.top);
-      hoverId = h?h.id:null;
-      canvas.style.cursor = h?'pointer':'grab';
-    }
+  function focusStar(id, animate=true){
+    const star=stars.find(item=>item.id===id); if(!star)return;
+    focusedId=star.id;targetRotY=Math.atan2(star.x,-star.z);targetScale=Math.max(targetScale,1.35);
+    const depth=-Math.hypot(star.x,star.z); targetPanY=-star.y*targetScale*640/(640+depth);
+    if(!animate||!motion){rotY=targetRotY;scale=targetScale;panY=targetPanY;}
+    setSelected(star.id,{source:'cosmos-focus'});
+    window.dispatchEvent(new CustomEvent('herbal:cosmos-selection',{detail:{herb:star.herb}}));
+  }
+  canvas.addEventListener('pointerdown',e=>{activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});dragging=true;moved=0;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);if(activePointers.size===2){const [a,b]=[...activePointers.values()];pinchDistance=Math.hypot(a.x-b.x,a.y-b.y);}});
+  canvas.addEventListener('pointermove',e=>{
+    if(activePointers.has(e.pointerId))activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(activePointers.size===2){const [a,b]=[...activePointers.values()],distance=Math.hypot(a.x-b.x,a.y-b.y);if(pinchDistance)targetScale=Math.max(.5,Math.min(2.4,targetScale*distance/pinchDistance));pinchDistance=distance;moved=20;return;}
+    if(dragging){const delta=Math.hypot(e.clientX-lastX,e.clientY-lastY);moved+=delta;targetRotY+=(e.clientX-lastX)*.006;lastX=e.clientX;lastY=e.clientY;if(moved>5){focusedId=null;targetPanY=0;}}
+    else{const rect=canvas.getBoundingClientRect(),hit=hitTest(e.clientX-rect.left,e.clientY-rect.top);hoverId=hit?.id||null;canvas.style.cursor=hit?'pointer':'grab';}
   });
-  canvas.addEventListener('pointerup', e=>{ dragging=false; });
-  canvas.addEventListener('click', e=>{
-    const rect = canvas.getBoundingClientRect();
-    const h = hitTest(e.clientX-rect.left, e.clientY-rect.top);
-    if(h) { setSelected(h.id); location.hash = '#/herb?id='+h.id; }
-  });
-  canvas.addEventListener('dblclick', e=>{
-    const rect = canvas.getBoundingClientRect();
-    const h = hitTest(e.clientX-rect.left, e.clientY-rect.top);
-    if(h){ focusedId=h.id; targetScale=Math.max(targetScale,1.35); targetRotY=Math.atan2(h.x,h.z); setSelected(h.id,{source:'cosmos-dblclick'}); }
-  });
-  canvas.addEventListener('wheel', e=>{
-    const next = targetScale - e.deltaY*0.001;
-    if(next >= 0.5 && next <= 1.8){
-      e.preventDefault(); // 仅在缩放有效区间内接管滚轮；到达边界时放行，页面可正常滚动
-      targetScale = next;
-    }
-  }, {passive:false});
-  // 自动慢转
-  setInterval(()=>{ if(motion && !dragging){ targetRotY += 0.0009; } }, 30);
-  window.addEventListener('herbal:focus-herb', event=>{ const star=stars.find(item=>item.id===event.detail?.herbId); if(!star)return; focusedId=star.id; targetRotY=Math.atan2(star.x,star.z); targetScale=Math.max(targetScale,1.35); });
+  const release=e=>{activePointers.delete(e.pointerId);dragging=activePointers.size>0;if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);if(activePointers.size===1){const [point]=activePointers.values();lastX=point.x;lastY=point.y;}};
+  canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);
+  canvas.addEventListener('click',e=>{if(moved>5)return;const rect=canvas.getBoundingClientRect(),hit=hitTest(e.clientX-rect.left,e.clientY-rect.top);if(hit){setSelected(hit.id,{source:'cosmos'});window.dispatchEvent(new CustomEvent('herbal:cosmos-selection',{detail:{herb:hit.herb}}));}});
+  canvas.addEventListener('dblclick',e=>{const rect=canvas.getBoundingClientRect(),hit=hitTest(e.clientX-rect.left,e.clientY-rect.top);if(hit)focusStar(hit.id);});
+  canvas.addEventListener('wheel',e=>{const next=Math.max(.5,Math.min(2.4,targetScale-e.deltaY*.001));if(next!==targetScale){e.preventDefault();targetScale=next;}},{passive:false});
+  canvas.addEventListener('keydown',e=>{if(e.key==='+'||e.key==='='){targetScale=Math.min(2.4,targetScale+.2);e.preventDefault();}if(e.key==='-'){targetScale=Math.max(.5,targetScale-.2);e.preventDefault();}if(e.key==='ArrowLeft'||e.key==='ArrowRight'){targetRotY+=(e.key==='ArrowLeft'?-.2:.2);focusedId=null;targetPanY=0;e.preventDefault();}if(e.key==='Enter'&&store.selectedHerb)location.hash='#/herb?id='+store.selectedHerb.id;});
+  window.addEventListener('herbal:focus-herb',event=>focusStar(event.detail?.herbId,event.detail?.animate!==false));
+  window.addEventListener('herbal:cosmos-zoom',event=>{targetScale=Math.max(.5,Math.min(2.4,targetScale+Number(event.detail?.delta||0)));});
+  const updateRunning=()=>{const next=!document.hidden&&document.querySelector('.page.active')?.dataset.route==='home';if(next&&!running){running=true;animationFrame=requestAnimationFrame(frame);}else if(!next){running=false;cancelAnimationFrame(animationFrame);}};
+  window.addEventListener('herbal:route',updateRunning);document.addEventListener('visibilitychange',updateRunning);
   window.addEventListener('herbal:motion', event=>{ motion=Boolean(event.detail?.enabled); if(!motion) targetRotY=rotY; });
   window.addEventListener('herbal:cosmos-color', event=>{ colorMode=event.detail?.mode==='effect'?'effect':'uniform'; buildStars(); });
 
@@ -384,7 +419,7 @@ function renderHomeMuseum(){
   const countBy = key => Object.entries(HERBS.reduce((acc,item)=>{acc[item[key]]=(acc[item[key]]||0)+1;return acc;},{})).sort((a,b)=>b[1]-a[1]);
   const kpis=[
     ['18,817','资源星辰','全国中药资源普查','总量口径'],
-    [HERBS.length.toLocaleString('zh-CN'),'精品知识卡','四气 · 五味 · 归经 · 功效','可深度联动'],
+    [HERBS.length.toLocaleString('zh-CN'),'本草知识卡','四气 · 五味 · 归经 · 功效','可深度联动'],
     [displayCount(catalogManifestCount('approvedCount')),'名称索引','可复核行级来源','可搜索分页'],
     [FORMULAS.length.toLocaleString('zh-CN'),'关系网络方剂','配伍与证候链路','可点击追踪']
   ];
@@ -402,8 +437,8 @@ function renderHome(){
   const featured = picks.slice(0,6).map(byId).filter(Boolean);
   $('#homeFeatured').innerHTML = featured.map(h=>`
     <a class="card card-pad featured-herb" href="#/herb?id=${h.id}">
-      <div class="image-frame"><img src="${h.image}" alt="${esc(h.name)} · ${esc(h.imageAlt)}" loading="lazy"></div>
-      <div><div class="n">${esc(h.name)}</div><div class="d">${esc(h.qi)} · ${esc(h.wei)} · 归${esc(h.meridian.join('、'))}经</div></div>
+      <div class="image-frame">${herbImage(h,"")}</div>
+      <div><div class="n">${esc(h.name)}</div><div class="d">${esc(fact(h.qi))} · ${esc(fact(h.wei))} · 归${esc(h.meridian.length?h.meridian.join('、'):'未录入')}经</div></div>
     </a>`).join('');
   syncDatasetCounts();
   renderHomeMuseum();
@@ -445,10 +480,10 @@ function renderHerbs(){
   if(count) count.textContent = `${list.length} 味药材${kw ? ` · 搜索“${kw}”` : ''}`;
   $('#herbTableBody').innerHTML = list.map(h=>`
     <tr class="hoverable" onclick="location.hash='#/herb?id=${h.id}'">
-      <td class="rowname"><div style="display:flex;align-items:center;gap:10px;"><img class="herb-thumb" src="${h.image}" alt="${esc(h.imageAlt)}" loading="lazy"><span>${esc(h.name)}</span></div></td>
-      <td>${esc(h.qi)}</td>
-      <td>${esc(h.wei)}</td>
-      <td>${esc(h.meridian.join('、'))}经</td>
+      <td class="rowname"><div style="display:flex;align-items:center;gap:10px;">${herbImage(h,"herb-thumb")}<span>${esc(h.name)}</span></div></td>
+      <td>${esc(fact(h.qi))}</td>
+      <td>${esc(fact(h.wei))}</td>
+      <td>${esc(h.meridian.length?h.meridian.join('、'):'未录入')}经</td>
       <td>${esc(h.eff)}</td>
       <td>${sourceBadge(h)}</td>
       <td><button class="compare-btn ${store.compareHerbs.includes(h.id)?'on':''}" data-compare="${h.id}" type="button">${store.compareHerbs.includes(h.id)?'已加入':'对比'}</button> <button class="fav-btn ${isFav(h.id)?'on':''}" data-fav="${h.id}" onclick="event.stopPropagation();toggleFav('${h.id}')">${isFav(h.id)?'已收藏':'收藏'}</button></td>
@@ -456,7 +491,7 @@ function renderHerbs(){
   const mobile = $('#herbMobileGrid');
   if(mobile) mobile.innerHTML = list.map(h=>`
     <article class="herb-mobile-card">
-      <div class="top"><img class="herb-thumb" src="${h.image}" alt="${esc(h.name)} · ${esc(h.imageAlt)}" loading="lazy"><div><h3>${esc(h.name)}</h3><div class="muted">${esc(h.qi)} · ${esc(h.wei)} · 归${esc(h.meridian.join('、'))}经</div></div></div>
+      <div class="top">${herbImage(h,"herb-thumb")}<div><h3>${esc(h.name)}</h3><div class="muted">${esc(fact(h.qi))} · ${esc(fact(h.wei))} · 归${esc(h.meridian.length?h.meridian.join('、'):'未录入')}经</div></div></div>
       <p>${esc(h.eff)}</p><div>${sourceBadge(h)}</div>
       <div class="herb-mobile-actions"><a href="#/herb?id=${h.id}">查看知识卡</a><button type="button" class="compare-btn ${store.compareHerbs.includes(h.id)?'on':''}" data-compare="${h.id}">${store.compareHerbs.includes(h.id)?'已加入':'加入对比'}</button><button type="button" class="fav-btn ${isFav(h.id)?'on':''}" data-fav="${h.id}">${isFav(h.id)?'已收藏':'收藏'}</button></div>
     </article>`).join('') || '<div class="empty">没有匹配的药材，换个筛选试试。</div>';
@@ -467,7 +502,8 @@ function renderCatalog(){
   const input=$('#catalogSearch');
   if(input && input.value!==store._catalogKw) input.value=store._catalogKw||'';
   const sourceSelect=$('#catalogSource');
-  const sourceLabel = item => (item.sourceRefs || []).join(' · ') || item.source || '未标注来源';
+  const sourceLabel = item => { const refs=(item.sourceRefs||[]).join(' '); return item.evidenceTier==='pharmacopoeia'?'药典逐项核验':refs.includes('kdhr:')?'KDHR 研究资料':refs.includes('tcmkg:')?'公开本草资料':refs.includes('legacy-open')?'历史名称索引':'其他文献名称'; };
+  const catalogSourceLink = item => {const ref=(item.sourceRefs||[]).find(value=>/^kdhr:HN\d+/.test(value));if(!ref)return '';const row=Number(ref.match(/HN(\d+)/)[1])+1;return '<a href="https://github.com/Rao-Yulong/KDHR/blob/50f0eb294766a11536907a4f7273e0d1235d34a1/KG/entity/herbID.csv#L'+row+'" target="_blank" rel="noopener noreferrer">来源行 ↗</a>';};
   const sources=[...new Set(HERB_CATALOG.map(sourceLabel))];
   if(sourceSelect){
     sourceSelect.innerHTML='<option value="">全部来源</option>'+sources.map(source=>`<option value="${esc(source)}">${esc(source.split(' · ')[0])}</option>`).join('');
@@ -476,7 +512,7 @@ function renderCatalog(){
   const kw=(store._catalogKw||'').trim().toLowerCase();
   if(store._catalogLoading && !HERB_CATALOG.length){
     const visible=$('#catalogVisibleCount'); if(visible) visible.textContent='—';
-    const body=$('#catalogTableBody'); if(body) body.innerHTML='<tr><td colspan="4" class="empty">正在加载已核验名称索引…</td></tr>';
+    const body=$('#catalogTableBody'); if(body) body.innerHTML='<tr><td colspan="4" class="empty">正在加载文献名称索引…</td></tr>';
     const pagination=$('#catalogPagination'); if(pagination) pagination.innerHTML='';
     return;
   }
@@ -487,7 +523,7 @@ function renderCatalog(){
   }
   const rows=HERB_CATALOG.filter(item=>{
     if(store._catalogSource && sourceLabel(item)!==store._catalogSource) return false;
-    return !kw || item.name.toLowerCase().includes(kw);
+    return !kw || [item.name,...(item.aliases||[])].some(value=>String(value).toLowerCase().includes(kw));
   });
   const pageSize=48;
   const pageCount=Math.max(1,Math.ceil(rows.length/pageSize));
@@ -495,7 +531,7 @@ function renderCatalog(){
   const pageRows=rows.slice((store._catalogPage-1)*pageSize,store._catalogPage*pageSize);
   const visible=$('#catalogVisibleCount'); if(visible) visible.textContent=rows.length.toLocaleString('zh-CN');
   const body=$('#catalogTableBody');
-  if(body) body.innerHTML=pageRows.map(item=>`<tr><td><strong>${esc(item.name)}</strong></td><td><span class="catalog-source">${esc(sourceLabel(item))}</span></td><td><span class="badge outline">仅名称索引</span></td><td><button type="button" class="catalog-open" data-catalog-name="${esc(item.name)}">在精品层查找</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty"><p>没有匹配名称，请检查关键词或来源筛选。</p><button type="button" data-switch-featured>去精品层浏览</button></td></tr>';
+  if(body) body.innerHTML=pageRows.map(item=>`<tr><td><strong>${esc(item.name)}</strong></td><td><span class="catalog-source">${esc(sourceLabel(item))}</span> ${catalogSourceLink(item)}</td><td><span class="badge outline">仅名称索引</span></td><td><button type="button" class="catalog-open" data-catalog-name="${esc(item.name)}">在精品层查找</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty"><p>没有匹配名称，请检查关键词或来源筛选。</p><button type="button" data-switch-featured>去精品层浏览</button></td></tr>';
   const pagination=$('#catalogPagination');
   if(pagination){
     const windowStart=Math.max(1,Math.min(store._catalogPage-2,pageCount-4));
@@ -556,7 +592,7 @@ function renderCompareChart(){
   const weiScore={'酸':1,'苦':2,'甘':3,'辛':4,'咸':5};
   const indicator=[{name:'四气位置',max:9},{name:'五味位置',max:5},{name:'归经数量',max:6},{name:'药食属性',max:1},{name:'配伍关系',max:8}];
   const formulaCounts=Object.fromEntries(herbs.map(h=>[h.id,FORMULAS.filter(f=>f.herbs.some(x=>x[0]===h.id)).length]));
-  const values=herbs.map(h=>({name:h.name,value:[qiScore[h.qi]||5,weiScore[h.wei]||3,Math.min(h.meridian.length,6),h.food?1:0,Math.min(formulaCounts[h.id]||0,8)]}));
+  const values=herbs.map(h=>({name:h.name,value:[qiScore[h.qi]??null,weiScore[h.wei]??null,Math.min(h.meridian.length,6),h.food?1:0,Math.min(formulaCounts[h.id]||0,8)]}));
   const chart=chartManager.register('herbCompare',echarts.init(el),el);
   chart.setOption({backgroundColor:'transparent',tooltip:{trigger:'item',confine:true,backgroundColor:p.card,textStyle:{color:p.text,fontSize:12}},legend:{bottom:0,textStyle:{color:p.muted}},radar:{radius:'66%',indicator,axisName:{color:p.muted,fontSize:11},splitLine:{lineStyle:{color:p.line}},splitArea:{areaStyle:{color:['rgba(113,158,135,.04)','rgba(113,158,135,.1)']}},axisLine:{lineStyle:{color:p.line}}},series:[{type:'radar',data:values,symbolSize:6,lineStyle:{width:2},areaStyle:{opacity:.1},color:[p.celadon,p.cinnabar,p.jin]}]});
 }
@@ -594,22 +630,25 @@ function renderHerb(id){
   const h = byId(id);
   if(!h){ $('#herbCrumb').innerHTML=''; $('#herbDetailHead').innerHTML=`<div class="empty">未找到该药材。</div>`; $('#herbProps').innerHTML=''; $('#herbFormulaList').innerHTML=''; return; }
   const p=chartPalette();
+  const factSource=h.source==='openMateria'?'公开资料整理':'编辑精选资料';
+  const efficacyLabel=herbEfficacyLabel(h);
   setSelected(h.id);
   $('#herbCrumb').innerHTML = `<a href="#/herbs">药材星图</a> / <span>${esc(h.name)}</span>`;
   $('#herbDetailHead').innerHTML = `
-    <div class="detail-visual"><div class="image-frame"><img src="${h.image}" alt="${esc(h.name)} · ${esc(h.imageAlt)}"></div><div class="visual-caption"><span class="eyebrow">${esc(t('herb.visual'))}</span><h2>${esc(t('herb.imageCaption'))}</h2><p>${esc(t('herb.imageDesc'))}</p><div class="signal-row"><span>${esc(h.cat)}</span><span>${esc(h.qi)} · ${esc(h.wei)}</span><span>${esc(h.meridian.length)} 经络</span></div></div></div>
+    <div class="detail-visual"><div class="image-frame">${herbImage(h,"")}</div><div class="visual-caption"><span class="eyebrow">${esc(t('herb.visual'))}</span><h2>${esc(t('herb.imageCaption'))}</h2><p>${esc(t('herb.imageDesc'))}</p><div class="signal-row"><span>${esc(fact(h.cat))}</span><span>${esc(fact(h.qi))} · ${esc(fact(h.wei))}</span><span>${esc(h.meridian.length)} 经络</span></div></div></div>
     <div class="detail-title">
       <h1>${esc(h.name)}</h1>
       <div class="latin">${esc(h.latin)}</div>
-      <div class="source-line">${sourceBadge(h)} <span class="badge outline">${esc(h.cat)}</span>
+      <div class="source-line">${sourceBadge(h)} <span class="badge outline">${esc(fact(h.cat))}</span>
         <button class="fav-btn ${isFav(h.id)?'on':''}" data-fav="${h.id}" onclick="toggleFav('${h.id}')">${isFav(h.id)?'已收藏':'收藏'}</button>
       </div>
-    </div>`;
+    </div><section class="herb-provenance"><h2>资料与图像来源</h2><p><strong>${factSource}</strong> · 记录分层展示；未录入字段不推断，公开资料整理不等同于药典逐项核验。</p><div class="source-links">${sourceLinks(h)||'<span>尚未配置可直接打开的来源链接。</span>'}</div><p class="image-credit">${imageCredit(h)}</p></section>`;
   $('#herbProps').innerHTML = `
-    <div class="prop"><div class="k">四气</div><div class="v">${esc(h.qi)}</div><div class="src">药典记载</div></div>
-    <div class="prop"><div class="k">五味</div><div class="v">${esc(h.wei)}</div><div class="src">药典记载</div></div>
-    <div class="prop"><div class="k">归经</div><div class="v">${esc(h.meridian.join('、'))}</div><div class="src">药典记载</div></div>
-    <div class="prop"><div class="k">功效</div><div class="v" style="font-size:14px;">${esc(h.eff)}</div></div>
+    <div class="prop"><div class="k">四气</div><div class="v">${esc(fact(h.qi))}</div><div class="src">${factSource}</div></div>
+    <div class="prop"><div class="k">五味</div><div class="v">${esc(fact(h.wei))}</div><div class="src">${factSource}</div></div>
+    <div class="prop"><div class="k">归经</div><div class="v">${esc(h.meridian.length?h.meridian.join('、'):'未录入')}</div><div class="src">${factSource}</div></div>
+    <div class="prop"><div class="k">文献分布</div><div class="v">${esc(h.origin?.length?h.origin.join('、'):'未录入')}</div><div class="src">来源记载，不等同道地产区认证</div></div>
+    <div class="prop"><div class="k">${efficacyLabel}</div><div class="v" style="font-size:14px;">${esc(h.eff)}</div></div>
     <div class="prop" style="grid-column:1/-1;"><div class="k">本草小记</div><div class="v" style="font-size:13.5px;font-weight:400;font-family:var(--sans);">${esc(h.note)}</div></div>`;
 
   // 归经图
@@ -642,13 +681,15 @@ function renderHerb(id){
     yAxis:{type:'category', data:qis, name:'四气', nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11}},
     series:[{
       type:'scatter',
-      data:[[pos[h.wei], pos[h.qi]]],
+      data:pos[h.qi]==null?[]:weis.filter(w=>String(h.wei).includes(w)).map(w=>[pos[w],pos[h.qi]]),
       symbolSize:26,
       itemStyle:{color:p.cinnabar},
       label:{show:true, formatter:h.name, position:'top', color:p.text, fontSize:12, fontFamily:'Noto Serif SC'}
     }]
   });
 
+  if(!h.meridian.length){chartManager.dispose('herbMeridian');$('#herbMeridianChart').innerHTML='<p class="chart-empty">此条资料尚未录入归经。</p>';}
+  if(pos[h.qi]==null||!weis.some(w=>String(h.wei).includes(w))){chartManager.dispose('herbQiwei');$('#herbQiweiChart').innerHTML='<p class="chart-empty">此条资料尚无可定位的性味记录。</p>';}
   // 相关方剂
   const rel = FORMULAS.filter(f=>f.herbs.some(x=>x[0]===h.id));
   $('#herbFormulaList').innerHTML = rel.length ? rel.map(f=>`
@@ -665,7 +706,7 @@ function renderQiwei(){
   if(routeQuery.herb) setSelected(routeQuery.herb,{source:'context-bar'});
   const p=chartPalette();
   const categorySelect=$('#qiweiCatFilter');
-  const categories=[...new Set(HERBS.map(h=>h.cat))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+  const categories=[...new Set(HERBS.map(h=>h.cat).filter(value=>value&&value!=='未录入'))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
   if(categorySelect){ categorySelect.innerHTML='<option value="">全部类别</option>'+categories.map(cat=>`<option value="${esc(cat)}">${esc(cat)}</option>`).join(''); categorySelect.value=store._qiweiCat||''; if(categorySelect.dataset.bound!=='1'){ categorySelect.addEventListener('change',()=>{ store._qiweiCat=categorySelect.value; renderQiwei(); }); categorySelect.dataset.bound='1'; } }
   const active=store._qiweiCat||'';
   const herbs=active?HERBS.filter(h=>h.cat===active):HERBS;
@@ -678,15 +719,13 @@ function renderQiwei(){
   qis.forEach((q,i)=>qiPos[q]=i); weis.forEach((w,i)=>weiPos[w]=i);
   const mat = [];
   herbs.forEach(h=>{
-    const q=qiPos[h.qi], w=weiPos[h.wei];
-    if(q==null||w==null) return;
-    const cell = mat.find(m=>m[0]===q&&m[1]===w);
-    if(cell) cell[2]++; else mat.push([q,w,1]);
+    const q=qiPos[h.qi]; if(q==null)return;
+    weis.filter(w=>String(h.wei).includes(w)).forEach(w=>{const wi=weiPos[w];const cell=mat.find(m=>m[0]===wi&&m[1]===q);if(cell)cell[2]++;else mat.push([wi,q,1]);});
   });
   const mChart = chartManager.register('qiweiMatrix', echarts.init(document.getElementById('qiweiMatrixChart')), document.getElementById('qiweiMatrixChart'));
   mChart.setOption({
     backgroundColor:'transparent',
-    tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}, formatter:item=>`${weis[item.value[1]]} · ${qis[item.value[0]]}<br/>代表药材 <b>${item.value[2]}</b> 味`},
+    tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}, formatter:item=>`${weis[item.value[0]]} · ${qis[item.value[1]]}<br/>代表药材 <b>${item.value[2]}</b> 味`},
     grid:{left:54,right:16,top:14,bottom:40},
     xAxis:{type:'category', data:weis, name:'五味', nameLocation:'middle', nameGap:26, nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11}},
     yAxis:{type:'category', data:qis, name:'四气', nameLocation:'middle', nameGap:38, nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11}},
@@ -733,7 +772,7 @@ function renderQiwei(){
   const pairs=new Map();
   herbs.forEach(h=>h.meridian.forEach(mer=>{
     herbs.filter(other=>other!==h&&other.meridian.includes(mer)).forEach(other=>{
-      const key=[h.id,other.id].sort().join('|'); pairs.set(key,(pairs.get(key)||0)+1);
+      if(h.id.localeCompare(other.id)>=0)return;const key=[h.id,other.id].sort().join('|'); pairs.set(key,(pairs.get(key)||0)+1);
     });
   }));
   const topPairs=[...pairs.entries()].sort((a,b)=>b[1]-a[1]).slice(0,18);
@@ -746,11 +785,11 @@ function renderQiwei(){
   const showInspector=(title,desc,items)=>{
     if(!inspector) return;
     inspector.classList.add('has-selection');
-    inspector.innerHTML=`<div><span>INSPECTOR · ${esc(title)}</span><h2>${esc(desc)}</h2></div><div><p>当前组合共 ${items.length} 味代表药材，点击药材名称可进入知识卡。</p><div class="inspector-herbs">${items.length?items.slice(0,28).map(h=>`<a href="#/herb?id=${h.id}"><img src="${h.image}" alt=""><span>${esc(h.name)} <small>${esc(h.qi)}·${esc(h.wei)}</small></span></a>`).join(''):'<span class="muted">暂无匹配药材</span>'}</div></div>`;
+    inspector.innerHTML=`<div><span>INSPECTOR · ${esc(title)}</span><h2>${esc(desc)}</h2></div><div><p>当前组合共 ${items.length} 味代表药材，点击药材名称可进入知识卡。</p><div class="inspector-herbs">${items.length?items.slice(0,28).map(h=>`<a href="#/herb?id=${h.id}">${herbImage(h,"")}<span>${esc(h.name)} <small>${esc(fact(h.qi))}·${esc(fact(h.wei))}</small></span></a>`).join(''):'<span class="muted">暂无匹配药材</span>'}</div></div>`;
   };
   mChart.on('click', params=>{
     if(!params.value || params.value.length<3) return;
-    const q=params.value[0], w=params.value[1];
+    const w=params.value[0], q=params.value[1];
     showInspector(`${qis[q]} · ${weis[w]}`,`${qis[q]} · ${weis[w]} 的药材`,herbs.filter(h=>h.qi===qis[q]&&h.wei.includes(weis[w])));
   });
   bChart.on('click', params=>{
@@ -766,8 +805,9 @@ function renderQiwei(){
 function renderFormula(){
   if(typeof echarts === 'undefined'){ return; }
   const q = parseHash().params;
-  const focusId = store._formulaFocus || q.f || '';
-  const visibleFormulas = focusId ? FORMULAS.filter(f=>f.id===focusId) : FORMULAS;
+  const focusId = q.f && formulaById(q.f) ? q.f : '';
+  store._formulaFocus=focusId;
+  const visibleFormulas = focusId ? FORMULAS.filter(f=>f.id===focusId) : q.herb ? FORMULAS.filter(f=>f.herbs.some(entry=>entry[0]===q.herb)) : FORMULAS;
   // 力导向二部图
   const herbNodes = visibleFormulas.flatMap(f=>f.herbs.map(x=>x[0])).filter((v,i,a)=>a.indexOf(v)===i);
   const palette=chartPalette();
@@ -803,12 +843,13 @@ function renderFormula(){
   const showFormula=(f)=>{
     if(!inspector||!f) return;
     store.selectedFormula=f.id;
-    inspector.innerHTML=`<span>关系检查器 · 方剂</span><h2>${esc(f.name)}</h2><div class="inspector-source"><b>来源</b> ${esc(f.from)}<br><b>主治</b> ${esc(f.zheng)}<br><b>功效</b> ${esc(f.eff)}</div><div class="workspace-label">君臣佐使组成</div><div class="composition-list">${f.herbs.map(x=>`<div class="composition-row"><b>${esc(x[2])}</b><a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a><small>${esc(x[1]||'')}</small></div>`).join('')}</div>`;
+    const relatedZheng=ZHENGS.filter(z=>z.formulas.includes(f.id));
+    inspector.innerHTML=`<span>关系检查器 · 方剂</span><h2>${esc(f.name)}</h2><div class="inspector-source"><b>来源</b> ${esc(f.from)}<br><b>主治</b> ${esc(f.zheng)}<br><b>功效</b> ${esc(f.eff)}<div class="source-links">${sourceLinks(f)}</div></div><div class="evidence-links">${relatedZheng.map(z=>`<a href="#/zheng?z=${encodeURIComponent(z.id)}&f=${encodeURIComponent(f.id)}">${esc(z.name)} →</a>`).join('')}</div><div class="workspace-label">君臣佐使组成</div><div class="composition-list">${f.herbs.map(x=>`<div class="composition-row"><b>${esc(x[2])}</b><a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a><small>${esc(x[1]||'')}</small></div>`).join('')}</div>`;
   };
   const showHerb=(h)=>{
     if(!inspector||!h) return;
     const related=FORMULAS.filter(f=>f.herbs.some(x=>x[0]===h.id));
-    inspector.innerHTML=`<span>关系检查器 · 药材</span><h2>${esc(h.name)}</h2><div class="inspector-source"><b>四气</b> ${esc(h.qi)}　<b>五味</b> ${esc(h.wei)}<br><b>归经</b> ${esc(h.meridian.join('、'))}经<br><b>功效</b> ${esc(h.eff)}</div><div class="workspace-label">进入方剂</div><div class="composition-list">${related.map(f=>`<div class="composition-row"><b>方</b><a href="#/formula?f=${f.id}">${esc(f.name)}</a><small>${esc(f.zheng)}</small></div>`).join('')||'<span class="muted">暂无收录方剂</span>'}</div>`;
+    inspector.innerHTML=`<span>关系检查器 · 药材</span><h2>${esc(h.name)}</h2><div class="inspector-source"><b>四气</b> ${esc(fact(h.qi))}　<b>五味</b> ${esc(fact(h.wei))}<br><b>归经</b> ${esc(h.meridian.length?h.meridian.join('、'):'未录入')}经<br><b>${herbEfficacyLabel(h)}</b> ${esc(h.eff)}</div><div class="workspace-label">进入方剂</div><div class="composition-list">${related.map(f=>`<div class="composition-row"><b>方</b><a href="#/formula?f=${f.id}">${esc(f.name)}</a><small>${esc(f.zheng)}</small></div>`).join('')||'<span class="muted">暂无收录方剂</span>'}</div>`;
   };
   if(focusId) showFormula(formulaById(focusId));
   else if(store.selectedFormula) showFormula(formulaById(store.selectedFormula));
@@ -816,7 +857,7 @@ function renderFormula(){
   if(inspector && q.from==='zheng' && q.z){
     const back=document.createElement('a'); back.href='#/zheng?z='+encodeURIComponent(q.z)+'&f='+encodeURIComponent(focusId); back.className='inspector-back-link'; back.textContent='返回相关证候'; inspector.prepend(back);
   }
-  gChart.on('click', params=>{if(!params.data||!params.data.id)return;const id=params.data.id;if(id.startsWith('f_')){store._formulaFocus=id.slice(2);showFormula(formulaById(id.slice(2)));renderFormula();}else if(id.startsWith('h_')){showHerb(byId(id.slice(2)));}});
+  gChart.on('click', params=>{if(!params.data||!params.data.id)return;const id=params.data.id;if(id.startsWith('f_')){location.hash='#/formula?f='+encodeURIComponent(id.slice(2));}else if(id.startsWith('h_')){showHerb(byId(id.slice(2)));}});
   document.querySelectorAll('[data-formula-index]').forEach(btn=>btn.onclick=()=>{store._formulaFocus=btn.dataset.formulaIndex; location.hash='#/formula?f='+btn.dataset.formulaIndex;});
   // 跨页联动：来自药材详情的"相关方剂"点击，高亮该方剂节点
   if(q.f){
@@ -827,7 +868,7 @@ function renderFormula(){
   }
 
   // 代表方剂卡片
-  const featuredF = ['liuweidihuang','qijudihuangwan','sijunzitang','siwutang','guizhitang','mahuangtang','yinqiaosan','xiaoyaosan','guipitang','buzhongyiqitang','shenlingbaizhusan','xuefuzhuyutang','wendantang','lizhongwan','baihutang','xiaoqinglongtang','yupingfengsan','suanzaorentang','shiyaogancaotang'];
+  const featuredF = FORMULAS.map(formula=>formula.id);
   const activeF = focusId || '';
   $('#formulaCards').innerHTML = featuredF.map(fid=>{
     const f = formulaById(fid); if(!f) return '';
@@ -851,6 +892,7 @@ function renderZheng(){
   if(!store.selectedZheng) store.selectedZheng = ZHENGS[0].id;
   const cur = ZHENGS.find(z=>z.id===store.selectedZheng) || ZHENGS[0];
   const selectedFormulas=cur.formulas.map(formulaById).filter(Boolean);
+  selectedFormulas.sort((a,b)=>Number(b.id===routeQuery.f)-Number(a.id===routeQuery.f));
   const coreIds=[];
   selectedFormulas.forEach(f=>f.herbs.slice(0,5).forEach(x=>{if(x[0]&&!coreIds.includes(x[0])) coreIds.push(x[0]);}));
   const links=[];
@@ -858,10 +900,10 @@ function renderZheng(){
     links.push({source:'pattern',target:'formula-'+fi,value:1});
     fm.herbs.slice(0,5).forEach(x=>{if(x[0]&&coreIds.includes(x[0]))links.push({source:'formula-'+fi,target:'herb-'+x[0],value:1});});
   });
-  const nodes=[{id:'pattern',name:cur.name,x:90,y:215,fixed:true,symbolSize:34,itemStyle:{color:p.cinnabar}},...selectedFormulas.map((f,i)=>({id:'formula-'+i,name:f.name,x:280,y:80+i*150,fixed:true,symbolSize:26,itemStyle:{color:p.celadon}})),...coreIds.map((id,i)=>({id:'herb-'+id,name:herbName(id),x:500,y:36+i*58,fixed:true,symbolSize:16,itemStyle:{color:p.jin}}))];
+  const nodes=[{id:'pattern',name:cur.name,x:90,y:215,fixed:true,symbolSize:34,itemStyle:{color:p.cinnabar}},...selectedFormulas.map((f,i)=>({id:'formula-'+i,name:f.name,x:280,y:80+i*150,fixed:true,symbolSize:f.id===routeQuery.f?34:26,itemStyle:{color:f.id===routeQuery.f?p.cinnabar:p.celadon}})),...coreIds.map((id,i)=>({id:'herb-'+id,name:herbName(id),x:500,y:36+i*58,fixed:true,symbolSize:16,itemStyle:{color:p.jin}}))];
   const formulaNodeMap=new Map(selectedFormulas.map((formula,index)=>['formula-'+index,'formula-'+formula.id]));
   nodes.forEach(node=>{ if(formulaNodeMap.has(node.id)) node.id=formulaNodeMap.get(node.id); });
-  links.forEach(link=>{ if(formulaNodeMap.has(link.source)) link.source=formulaNodeMap.get(link.source); });
+  links.forEach(link=>{ if(formulaNodeMap.has(link.source)) link.source=formulaNodeMap.get(link.source); if(formulaNodeMap.has(link.target)) link.target=formulaNodeMap.get(link.target); });
   const zhengEl=document.getElementById('zhengSankey');
   if(!zhengEl) return;
   chartManager.dispose('zhengSankey');
@@ -883,7 +925,7 @@ function renderZheng(){
   const desc=$('#zhengFocusDesc'); if(desc) desc.textContent=`${cur.desc} · 当前展示 ${selectedFormulas.length} 首方剂与 ${coreIds.length} 味核心药材`;
   const count=$('#zhengFocusCount'); if(count) count.textContent=`${selectedFormulas.length} 方 · ${coreIds.length} 味药`;
   const evidence=$('#zhengEvidence');
-  if(evidence) evidence.innerHTML=`<span>证据检查器 · 当前证候</span><h2>${esc(cur.name)}</h2><p>${esc(cur.desc)}</p>${selectedFormulas.map(f=>`<div class="evidence-formula"><strong>${esc(f.name)}</strong><div class="muted" style="font-size:11px;margin-top:4px;">${esc(f.from)} · ${esc(f.eff)}</div><div class="evidence-herbs">${f.herbs.slice(0,5).map(x=>`<a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a>`).join('')}</div></div>`).join('')}`;
+  if(evidence) evidence.innerHTML=`<span>证据检查器 · 当前证候</span><h2>${esc(cur.name)}</h2><p>${esc(cur.desc)}</p><div class="source-links">${sourceLinks(cur)}</div>${selectedFormulas.map(f=>`<div class="evidence-formula"><strong>${esc(f.name)}</strong><div class="muted" style="font-size:11px;margin-top:4px;">${esc(f.from)} · ${esc(f.eff)}</div><div class="evidence-herbs">${f.herbs.slice(0,5).map(x=>`<a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a>`).join('')}</div></div>`).join('')}`;
   if(evidence) evidence.querySelectorAll('.evidence-formula').forEach((el,index)=>{ const formula=selectedFormulas[index]; if(!formula) return; const link=document.createElement('a'); link.href='#/formula?f='+encodeURIComponent(formula.id)+'&from=zheng&z='+encodeURIComponent(cur.id); link.dataset.testid='zheng-formula-link'; link.className='evidence-formula-link'; link.textContent='查看方剂配伍 →'; el.prepend(link); });
   const index=$('#zhengIndex');
   const query=($('#syndromeSearch')?.value||'').trim();
@@ -892,7 +934,7 @@ function renderZheng(){
 }
 document.addEventListener('click', e=>{
   const card=e.target.closest('[data-zheng]');
-  if(card){ store.selectedZheng=card.dataset.zheng; renderZheng(); }
+  if(card){ store.selectedZheng=card.dataset.zheng; location.hash='#/zheng?z='+encodeURIComponent(card.dataset.zheng); }
 });
 document.addEventListener('input', e=>{if(e.target.id==='syndromeSearch'&&parseHash().route==='zheng')renderZheng();});
 
@@ -927,7 +969,7 @@ function renderFood(){
   const list = FOODS.filter(f=>!store._foodTag || store._foodTag==='全部' || f.tag===store._foodTag);
   $('#foodGrid').innerHTML = list.map(f=>`
     <div class="card card-pad thumb-card">
-      <div class="image-frame food-image"><img src="${(byName(f.name)||HERBS[0]).image}" alt="${esc(f.name)} · ${esc((byName(f.name)||HERBS[0]).imageAlt)}" loading="lazy"></div>
+      <div class="image-frame food-image">${herbImage(byName(f.name)||{name:f.name})}</div>
       <div class="hd"><span class="stamp"><span class="a">${esc(f.name.slice(0,2))}</span><span class="b">${esc(f.flavor)}</span></span>
         <div><h3>${esc(f.name)}</h3><div class="muted" style="font-size:11.5px;">${esc(f.flavor)} · ${esc(f.tag)}</div></div></div>
       <p>${esc(f.note)}</p>
@@ -970,7 +1012,7 @@ function renderLearn(){
 function renderSaved(){
   const ids=getFavs(); const grid=$('#savedGrid');
   if(!ids.length){grid.innerHTML='<div class="saved-empty"><p>还没有本机收藏。去药材星图点亮第一枚收藏吧。</p><a href="#/herbs">去探索本草</a></div>';return;}
-  grid.innerHTML=ids.map(id=>{const h=byId(id);if(!h)return '';return `<a class="card card-pad featured-herb" href="#/herb?id=${h.id}"><div class="image-frame"><img src="${h.image}" alt="${esc(h.name)} · ${esc(h.imageAlt)}" loading="lazy"></div><div><div class="n">${esc(h.name)}</div><div class="d">${esc(h.qi)} · ${esc(h.wei)} · ${esc(h.eff)}</div></div><button class="fav-btn on" data-fav="${h.id}" onclick="event.preventDefault();event.stopPropagation();toggleFav('${h.id}');renderSaved();">已收藏</button></a>`}).join('');
+  grid.innerHTML=ids.map(id=>{const h=byId(id);if(!h)return '';return `<a class="card card-pad featured-herb" href="#/herb?id=${h.id}"><div class="image-frame">${herbImage(h,"")}</div><div><div class="n">${esc(h.name)}</div><div class="d">${esc(fact(h.qi))} · ${esc(fact(h.wei))} · ${esc(h.eff)}</div></div><button class="fav-btn on" data-fav="${h.id}" onclick="event.preventDefault();event.stopPropagation();toggleFav('${h.id}');renderSaved();">已收藏</button></a>`}).join('');
 }
 function updateHomeProgress(){const el=$('#homeProgress');if(el){const s=getLearnStats();el.textContent=`${Math.min(s.total,5)} / 5`;}}
 
@@ -993,7 +1035,7 @@ function updateSearchSuggestions(){
   const approvedCatalog=(window.HerbalSearch?.filterApproved||((entries)=>entries.filter(item=>item?.status!=='review')))(HERB_CATALOG);
   const catalog=approvedCatalog.filter(item=>!byName(item.name)&&item.name.toLowerCase().includes(kw)).slice(0,4);
   const formulas=FORMULAS.filter(f=>f.name.toLowerCase().includes(kw)||f.eff.toLowerCase().includes(kw)).slice(0,4);
-  searchResults.innerHTML=herbs.map(h=>`<a class="search-result" role="option" href="#/herb?id=${h.id}"><img class="herb-thumb" src="${h.image}" alt="" loading="lazy"><strong>${esc(h.name)}</strong><span>${currentLang==='en'?'Herb':'药材'} · ${esc(h.qi)} · ${esc(h.wei)}</span></a>`).concat(catalog.map(item=>`<a class="search-result catalog-result" role="option" href="#/herbs?mode=catalog&q=${encodeURIComponent(item.name)}"><span class="catalog-result-mark">索引</span><strong>${esc(item.name)}</strong><span>${currentLang==='en'?'Name index':'仅名称索引'}</span></a>`), formulas.map(f=>`<a class="search-result" role="option" href="#/formula?f=${f.id}"><strong>${esc(f.name)}</strong><span>${currentLang==='en'?'Formula':'方剂'} · ${esc(f.zheng)}</span></a>`)).join('')||`<div class="search-empty">${esc(t('search.empty'))}</div>`;
+  searchResults.innerHTML=herbs.map(h=>`<a class="search-result" role="option" href="#/herb?id=${h.id}">${herbImage(h,"herb-thumb")}<strong>${esc(h.name)}</strong><span>${currentLang==='en'?'Herb':'药材'} · ${esc(fact(h.qi))} · ${esc(fact(h.wei))}</span></a>`).concat(catalog.map(item=>`<a class="search-result catalog-result" role="option" href="#/herbs?mode=catalog&q=${encodeURIComponent(item.name)}"><span class="catalog-result-mark">索引</span><strong>${esc(item.name)}</strong><span>${currentLang==='en'?'Name index':'仅名称索引'}</span></a>`), formulas.map(f=>`<a class="search-result" role="option" href="#/formula?f=${f.id}"><strong>${esc(f.name)}</strong><span>${currentLang==='en'?'Formula':'方剂'} · ${esc(f.zheng)}</span></a>`)).join('')||`<div class="search-empty">${esc(t('search.empty'))}</div>`;
   searchResults.classList.add('open'); searchInput.setAttribute('aria-expanded','true');
 }
 function closeSearch(){ searchResults.classList.remove('open'); searchInput.setAttribute('aria-expanded','false'); }
@@ -1036,7 +1078,7 @@ document.getElementById('hamburger').addEventListener('click', ()=>{
   document.getElementById('mainNav').classList.toggle('open');
 });
 document.addEventListener('change', e=>{
-  if(e.target.id==='formulaFocus'){ store._formulaFocus=e.target.value; if(parseHash().route==='formula') renderFormula(); else location.hash='#/formula'; }
+  if(e.target.id==='formulaFocus'){ location.hash=e.target.value?'#/formula?f='+encodeURIComponent(e.target.value):'#/formula'; }
   if(e.target.id==='qiweiCatFilter'){ store._qiweiCat=e.target.value; if(parseHash().route==='qiwei') renderQiwei(); }
 });
 document.addEventListener('click', e=>{
@@ -1065,8 +1107,7 @@ document.addEventListener('error', e=>{
   const img=e.target;
   if(!(img instanceof HTMLImageElement) || img.dataset.fallbackApplied) return;
   img.dataset.fallbackApplied='1';
-  img.src=herbPlaceholder((img.alt||'药').slice(0,1));
-  img.alt=(img.alt||'本草植物图谱')+'（备用图像）';
+  const empty=document.createElement('span'); empty.className='herb-image-empty '+img.className; empty.setAttribute('role','img'); empty.setAttribute('aria-label','图像暂不可用'); empty.innerHTML='<b>'+esc((img.alt||'本草').slice(0,2))+'</b><small>图像暂不可用</small>'; img.replaceWith(empty);
 }, true);
 
 // 启动

@@ -37,3 +37,17 @@ test('catalog and saved empty states provide a real next action', () => {
   assert.match(runtime, /去精品层浏览/);
   assert.match(drawer, /href="#\/herbs"/);
 });
+
+test('mixed-source herb views use source-aware classification language', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const runtime = fs.readFileSync(path.join(root, 'assets/js/core/runtime.js'), 'utf8');
+
+  assert.equal(html.includes('<th>功效</th>'), false);
+  assert.equal(html.includes('功效类别'), false);
+  assert.equal(html.includes('归经 → 功效流向'), false);
+  assert.match(html, /<th>资料摘要<\/th>/);
+  assert.match(html, /归经 → 资料分类流向/);
+  assert.match(runtime, /const herbEfficacyLabel\s*=\s*.*openMateria.*资料分类.*功效/);
+  assert.ok((runtime.match(/herbEfficacyLabel\(h\)/g) || []).length >= 2);
+  assert.equal(runtime.includes('<b>功效</b> ${esc(h.eff)}'), false);
+});

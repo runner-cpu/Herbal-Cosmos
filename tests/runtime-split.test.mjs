@@ -30,8 +30,9 @@ test('route/store/chart globals are not duplicated in HTML', () => {
 
 test('extracted CSS keeps root-relative image references reachable', () => {
   const css = fs.readFileSync(path.join(root, 'assets', 'css', 'site.css'), 'utf8');
-  assert.match(css, /url\(['"]\.\.\/\.\.\/images\/herbs\/renshen\.jpg['"]\)/);
-  assert.ok(fs.existsSync(path.join(root, 'images', 'herbs', 'renshen.jpg')));
+  const match = css.match(/url\(['"]\.\.\/\.\.\/(images\/herbs\/open\/[^'"]+)['"]\)/);
+  assert.ok(match, 'expected a root-relative open-license herb image');
+  assert.ok(fs.existsSync(path.join(root, ...match[1].split('/'))));
 });
 
 test('full catalog is not a first-paint script dependency', () => {

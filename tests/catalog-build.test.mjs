@@ -60,9 +60,11 @@ test('缩小 approved 后清理 stale chunks 且产物哈希稳定', () => {
   try {
     fs.mkdirSync(path.join(temp, 'data'), { recursive: true });
     fs.cpSync('data/sources', path.join(temp, 'data/sources'), { recursive: true });
+    fs.writeFileSync(path.join(temp, 'data/sources/open-name-index.json'), JSON.stringify({ entries: [] }));
+    fs.writeFileSync(path.join(temp, 'data/sources/open-herb-facts.json'), JSON.stringify({ herbs: [] }));
     const pharmaFile = path.join(temp, 'data/sources/pharmacopoeia-2020-materials.json');
     const pharma = JSON.parse(fs.readFileSync(pharmaFile, 'utf8'));
-    const names = Array.from({ length: 121 }, (_, i) => '测试' + String(i).padStart(3, '0'));
+    const names = Array.from({ length: 201 }, (_, i) => '测试' + String(i).padStart(3, '0'));
     pharma.canonicalNames = names;
     pharma.entries = names.map(name => ({ canonicalName: name, sourceRefs: ['test'] }));
     fs.writeFileSync(pharmaFile, JSON.stringify(pharma));
