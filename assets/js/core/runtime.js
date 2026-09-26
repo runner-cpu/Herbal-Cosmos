@@ -205,23 +205,43 @@ function parseHash(){
   const params = {};
   if(queryStr){ queryStr.split('&').forEach(kv=>{ const [k,v]=kv.split('='); params[k]=decodeURIComponent(v||''); }); }
   const legacyAnchors = { food: 'home-food', culture: 'home-culture' };
-  const route = routes.includes(path) ? path : 'home';
+  const known = routes.includes(path) || Boolean(legacyAnchors[path]) || path.startsWith('home-') || path==='classics';
+  const route = known ? (routes.includes(path) ? path : 'home') : 'not-found';
   if (legacyAnchors[path]) params.anchor = legacyAnchors[path];
   else if (path.startsWith('home-')) params.anchor = path;
   if(path==='classics') params.focus='classics';
-  return { route, params };
+  return { route, params, unknownPath: known ? '' : path };
+}
+function renderNotFound(path){
+  const unknownRoute=document.getElementById('unknownRoute');
+  if(unknownRoute) unknownRoute.textContent=path||'未知路径';
 }
 function render(){
   chartManager.clear();
   window.HerbalInsights?.dispose?.();
   syncDatasetCounts();
-  const { route, params } = parseHash();
+  const { route, params, unknownPath } = parseHash();
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active', p.dataset.route===route));
   document.querySelectorAll('[data-route-link]').forEach(a=>{
-    a.classList.toggle('active', a.dataset.routeLink===route);
+    const active=a.dataset.routeLink===route;
+    a.classList.toggle('active',active);
+    if(active) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
   });
-  document.getElementById('mainNav').classList.remove('open');
-  const more=document.getElementById('navMore'); if(more) more.removeAttribute('open');
+  const more=document.getElementById('navMore');
+  if(more){
+    const moreActive=route==='zheng';
+    more.classList.toggle('active',moreActive);
+    const moreSummary=more.querySelector('summary');
+    if(moreActive) moreSummary?.setAttribute('aria-current','page');
+    else moreSummary?.removeAttribute('aria-current');
+    more.querySelectorAll('[data-more-route]').forEach(link=>{
+      const active=link.dataset.moreRoute===route;
+      link.classList.toggle('active',active);
+      if(active) link.setAttribute('aria-current','page');
+      else link.removeAttribute('aria-current');
+    });
+  }
   if(typeof closeSearch==='function') closeSearch();
   window.scrollTo(0,0);
   if(route==='herbs'){
@@ -229,10 +249,10 @@ function render(){
     if(params.q!=null){ store._catalogKw=params.q; store._catalogPage=1; }
   }
   const views = { home:renderHome, herbs:renderHerbs, herb:()=>renderHerb(params.id), qiwei:renderQiwei,
-    formula:renderFormula, zheng:renderZheng, learn:renderLearn, saved:renderSaved };
+    formula:renderFormula, zheng:renderZheng, learn:renderLearn, saved:renderSaved, 'not-found':()=>renderNotFound(unknownPath) };
   try{ (views[route]||views.home)(); }catch(err){ console.error('[herbal-cosmos] render error:', err); }
   applyLanguage();
-  window.dispatchEvent(new CustomEvent('herbal:route',{detail:{route,params}}));
+  window.dispatchEvent(new CustomEvent('herbal:route',{detail:{route,params,unknownPath}}));
   if(route==='home' && params.focus==='star' && params.id){ setSelected(params.id,{source:'context-bar'}); setTimeout(()=>window.HerbalCosmos?.focusHerb?.(params.id,{animate:true}),80); }
   if(route==='home' && params.focus==='classics') setTimeout(()=>document.getElementById('home-classics')?.scrollIntoView({behavior:'smooth',block:'start'}),80);
   if(route==='home' && params.anchor) setTimeout(()=>{
@@ -250,7 +270,11 @@ function render(){
     if(visible && (store._catalogKw||store._catalogSource)) visible.textContent=displayCount(HERB_CATALOG.length);
     if(parseHash().route==='home' || parseHash().route==='herbs') render();
   });
-  window.addEventListener('hashchange', render);
+  window.addEventListener('hashchange',()=>{
+    document.getElementById('mainNav')?.classList.remove('open');
+    document.getElementById('navMore')?.removeAttribute('open');
+    render();
+  });
   window.addEventListener('herbal:theme', render);
   window.addEventListener('pagehide',()=>chartManager.clear());
 
@@ -1077,6 +1101,15 @@ searchResults.addEventListener('click', closeSearch);
 document.getElementById('hamburger').addEventListener('click', ()=>{
   document.getElementById('mainNav').classList.toggle('open');
 });
+const navMore=document.getElementById('navMore');
+document.addEventListener('keydown',event=>{
+  if(event.key!=='Escape'||!navMore?.open) return;
+  navMore.open=false;
+  navMore.querySelector('summary')?.focus();
+});
+document.addEventListener('pointerdown',event=>{
+  if(navMore?.open&&!navMore.contains(event.target)) navMore.open=false;
+});
 document.addEventListener('change', e=>{
   if(e.target.id==='formulaFocus'){ location.hash=e.target.value?'#/formula?f='+encodeURIComponent(e.target.value):'#/formula'; }
   if(e.target.id==='qiweiCatFilter'){ store._qiweiCat=e.target.value; if(parseHash().route==='qiwei') renderQiwei(); }
@@ -1095,7 +1128,7 @@ const hero=document.querySelector('.hero');
 if(hero) hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--spot-x',`${((e.clientX-r.left)/r.width)*100}%`);hero.style.setProperty('--spot-y',`${((e.clientY-r.top)/r.height)*100}%`);});
 document.addEventListener('click', e=>{
   const nav = document.getElementById('mainNav');
-  if(e.target.closest('nav a,.nav-popover a') || (e.target.closest('#app') && !e.target.closest('#mainNav') && window.innerWidth<=768)){
+  if(e.target.closest('nav a,.nav-popover a') || (e.target.closest('#app') && !e.target.closest('#mainNav,#hamburger') && window.innerWidth<=768)){
     nav.classList.remove('open');
     const more=document.getElementById('navMore'); if(more) more.removeAttribute('open');
   }

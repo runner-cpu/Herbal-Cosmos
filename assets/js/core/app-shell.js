@@ -5,6 +5,7 @@ const refreshButton = document.getElementById('appUpdateRefresh');
 const laterButton = document.getElementById('appUpdateLater');
 const supported = 'serviceWorker' in navigator && /^https?:$/.test(location.protocol);
 let refreshing = false;
+let refreshApproved = false;
 let restoreTimer = 0;
 let warned = false;
 
@@ -21,6 +22,7 @@ function offerUpdate(worker) {
   if (!worker || !update || !refreshButton || !laterButton) return;
   update.hidden = false;
   refreshButton.onclick = () => {
+    refreshApproved = true;
     refreshButton.disabled = true;
     refreshButton.textContent = '正在更新…';
     worker.postMessage({ type: 'SKIP_WAITING' });
@@ -61,7 +63,7 @@ window.addEventListener('online', () => {
 
 if (supported) {
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (refreshing) return;
+    if (!refreshApproved || refreshing) return;
     refreshing = true;
     window.location.reload();
   });

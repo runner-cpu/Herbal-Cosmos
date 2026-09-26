@@ -159,3 +159,16 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
 @media (prefers-reduced-motion:reduce) {
   .app-status,.app-update { animation:none; transition:none; }
 }
+
+.route-not-found { min-height:58vh; padding-top:clamp(54px,10vh,110px); }
+.route-not-found code {
+  display:inline-block; max-width:100%; overflow-wrap:anywhere; padding:.1em .35em;
+  background:var(--paper-2); color:var(--cinnabar);
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+.route-recovery { display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+.route-recovery a {
+  display:inline-flex; align-items:center; min-height:44px; padding:9px 15px;
+  border:1px solid var(--qing); border-radius:5px; color:var(--qing);
+}
+.route-recovery a:first-child { background:var(--qing); color:var(--card); }

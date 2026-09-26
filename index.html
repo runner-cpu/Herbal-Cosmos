@@ -45,8 +45,16 @@
         <a href="#/herbs" data-route-link="herbs" data-i18n="nav.herbs">探索本草</a>
         <a href="#/qiwei" data-route-link="qiwei" data-i18n="nav.qiwei">性味归经</a>
         <a href="#/formula" data-route-link="formula" data-i18n="nav.formula">配伍网络</a>
-        <a href="#/zheng" data-route-link="zheng" data-i18n="nav.zheng">病证药链</a>
         <a href="#/learn" data-route-link="learn" data-i18n="nav.learn">学习舱</a>
+        <details class="nav-more" id="navMore">
+          <summary aria-label="更多页面">更多</summary>
+          <div class="nav-popover">
+            <a href="#/zheng" data-more-route="zheng">病证药链</a>
+            <a href="#/home-food">食养同源</a>
+            <a href="#/home-culture">文化非遗</a>
+            <a href="#/home-sources">数据来源</a>
+          </div>
+        </details>
       </nav>
       <div class="searchbox">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
@@ -143,7 +151,7 @@
           <div class="home-culture-grid" id="homeCultureGrid"></div>
         </section>
 
-        <section class="home-source-band" aria-labelledby="homeSourceTitle">
+        <section class="home-source-band" id="home-sources" aria-labelledby="homeSourceTitle">
           <div class="home-source-copy"><span>ABOUT THE PROJECT</span><h2 id="homeSourceTitle">让本草知识可以被看见、被点击、被继续学习</h2><p>本草宇宙以公开的资源普查、药典、经典本草与方剂资料为底座，把“认识一味药”拆成图像、属性、关系、典籍和生活五个可以互相跳转的入口。</p><div class="home-source-actions"><a href="#/learn">进入学习舱</a><a href="#home-culture">查看文化与非遗</a></div></div>
           <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委食药物质目录</span></div><div><strong>当前版本</strong><span><span data-featured-count>—</span> 味精品知识卡 · <span data-catalog-count>—</span> 条文献名称索引 · <span data-formula-count>—</span> 首代表方剂 · <span data-zheng-count>—</span> 个证候链路 · <span data-review-count>—</span> 条待审候选</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div><details id="homeImageCredits"><summary>首页图像署名与许可</summary><p><a href="https://www.inaturalist.org/observations/93914221" target="_blank" rel="noopener noreferrer">人参 · Nina Filippova</a>（<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer license">CC BY 4.0</a>） · <a href="https://www.inaturalist.org/observations/41439227" target="_blank" rel="noopener noreferrer">野菊花 · Cheng-Tao Lin</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/photos/142691899" target="_blank" rel="noopener noreferrer">甘草 · Nina Filippova</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/observations/371467034" target="_blank" rel="noopener noreferrer">黄芩 · Urgamal Magsar</a>（CC BY 4.0） · <a href="https://commons.wikimedia.org/wiki/File:Lycium_barbarum_Habitus_Miguelturra_CampodeCalatrava.jpg" target="_blank" rel="noopener noreferrer">枸杞子 · javier martin</a>（<a href="https://creativecommons.org/publicdomain/mark/1.0/" target="_blank" rel="noopener noreferrer license">Public domain</a>）。照片仅按版面缩放与裁切；文化卡背景为项目自有 AI 概念图。<a href="IMAGE_SOURCES_V4.md">查看完整图像来源与许可清单</a>。</p></details></div>
         </section>
@@ -246,6 +254,18 @@
       <h1 class="title">病证 · 方剂 · 药材</h1>
       <p class="page-intro">从一个证候开始，逐级查看文献关联方剂与核心药物。默认只展开当前证候的 2–3 首方剂和每方 5 味核心药，避免把所有关系压在一张图上。</p>
       <div class="focus-workspace"><aside class="syndrome-index"><div class="workspace-label">证候索引 · <span data-zheng-count>—</span></div><input class="syndrome-search" id="syndromeSearch" type="search" placeholder="搜索证候"><div class="syndrome-list" id="zhengIndex"></div></aside><section class="syndrome-flow"><div class="syndrome-flow-head"><div><h2 id="zhengFocusTitle">选择一个证候</h2><p id="zhengFocusDesc">从左侧选择证候，查看证—方—药的最短阅读路径。</p></div><span class="badge celadon" id="zhengFocusCount">—</span></div><div class="chart-box" id="zhengSankey"></div></section><aside class="syndrome-evidence" id="zhengEvidence"><span>证据检查器</span><h2>从证候开始</h2><p>选中证候后，这里会展示出处、方剂数量与核心药材。点击药材名称可进入本草知识卡。</p></aside></div>
+    </section>
+
+    <!-- ============ 未知路径恢复 ============ -->
+    <section class="page route-not-found" data-route="not-found" aria-labelledby="notFoundTitle">
+      <div class="eyebrow">Route not found</div>
+      <h1 class="title" id="notFoundTitle">这条探索路径尚未收录</h1>
+      <p class="page-intro">未找到路径 <code id="unknownRoute">未知路径</code>。你可以回到首页，继续检索本草，或查看数据来源与使用边界。</p>
+      <div class="route-recovery">
+        <a href="#/home" data-not-found-home>返回首页</a>
+        <a href="#/herbs">探索本草</a>
+        <a href="#/home-sources">查看数据来源</a>
+      </div>
     </section>
 
   </main>
