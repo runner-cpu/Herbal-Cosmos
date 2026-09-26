@@ -58,8 +58,9 @@
       </nav>
       <div class="searchbox">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
-        <input id="globalSearch" placeholder="搜索药材 / 方剂" data-i18n-placeholder="search.placeholder" autocomplete="off">
-        <div class="search-results" id="searchResults" role="listbox" aria-label="搜索建议" aria-live="polite" aria-atomic="true"></div>
+        <input id="globalSearch" role="combobox" aria-label="搜索药材、名称索引或方剂" aria-autocomplete="list" aria-controls="searchResults" aria-expanded="false" aria-busy="true" placeholder="搜索药材 / 方剂" data-i18n-placeholder="search.placeholder" autocomplete="off">
+        <div class="search-results" id="searchResults" role="listbox" aria-label="搜索建议"></div>
+        <div class="sr-only" id="searchStatus" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
       <button class="saved-drawer-toggle" id="savedDrawerToggle" type="button" aria-label="打开收藏"><span aria-hidden="true">藏</span><b data-saved-count>0</b></button>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深浅模式"><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>夜读</span></button>

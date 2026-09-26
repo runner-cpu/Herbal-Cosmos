@@ -27,6 +27,7 @@ export async function loadCatalogManifest() {
 
 export async function loadCatalog() {
   if (loadPromise) return loadPromise;
+  window.dispatchEvent(new CustomEvent('herbal:catalog-loading'));
   loadPromise = (async () => {
     const manifest = await loadCatalogManifest();
     const chunks = manifest.chunks || [];

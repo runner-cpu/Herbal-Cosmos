@@ -1050,19 +1050,77 @@ function renderFavButtons(){
 }
 const searchInput = document.getElementById('globalSearch');
 const searchResults = document.getElementById('searchResults');
+const searchStatus = document.getElementById('searchStatus');
 let searchTimer = null;
+let catalogSearchUnavailable = false;
+function searchOptionId(type, key, index){
+  const encoded=encodeURIComponent(String(key??index)).replace(/%/g,'x').replace(/[^a-z0-9_.:-]/gi,'-');
+  return 'search-option-'+type+'-'+(encoded||index)+'-'+index;
+}
+function setSearchBusy(busy){
+  searchInput.setAttribute('aria-busy',String(Boolean(busy)));
+  if(busy && searchStatus) searchStatus.textContent='名称索引正在加载';
+}
+function setActiveSearchOption(options,index){
+  const safeIndex=index>=0&&index<options.length?index:-1;
+  store._searchIndex=safeIndex;
+  options.forEach((option,i)=>{
+    const active=i===safeIndex;
+    option.classList.toggle('active',active);
+    option.setAttribute('aria-selected',String(active));
+  });
+  if(options[safeIndex]) searchInput.setAttribute('aria-activedescendant',options[safeIndex].id);
+  else searchInput.removeAttribute('aria-activedescendant');
+}
+function announceSearchResults(count,keyword){
+  if(!searchStatus || searchInput.getAttribute('aria-busy')==='true') return;
+  const scopeNote=catalogSearchUnavailable?'；名称索引暂时不可用，结果来自精品卡与方剂':'';
+  searchStatus.textContent=(count?'“'+keyword+'”有 '+count+' 条结果':'没有找到“'+keyword+'”')+scopeNote;
+}
 function updateSearchSuggestions(){
-  const kw=searchInput.value.trim().toLowerCase();
-  store._searchIndex=-1;
-  if(!kw){ searchResults.classList.remove('open'); searchResults.innerHTML=''; searchInput.setAttribute('aria-expanded','false'); return; }
+  const keyword=searchInput.value.trim();
+  const kw=keyword.toLowerCase();
+  setActiveSearchOption([], -1);
+  if(!kw){ searchResults.classList.remove('open'); searchResults.innerHTML=''; searchInput.setAttribute('aria-expanded','false'); if(searchStatus) searchStatus.textContent=''; return; }
   const herbs=HERBS.filter(h=>h.name.toLowerCase().includes(kw)||h.pinyin.includes(kw)||h.eff.toLowerCase().includes(kw)||(h.aliases||[]).some(alias=>String(alias).toLowerCase().includes(kw))).slice(0,6);
   const approvedCatalog=(window.HerbalSearch?.filterApproved||((entries)=>entries.filter(item=>item?.status!=='review')))(HERB_CATALOG);
   const catalog=approvedCatalog.filter(item=>!byName(item.name)&&[item.name,...(item.aliases||[])].some(value=>String(value).toLowerCase().includes(kw))).slice(0,4);
   const formulas=FORMULAS.filter(f=>f.name.toLowerCase().includes(kw)||f.eff.toLowerCase().includes(kw)).slice(0,4);
   searchResults.innerHTML=herbs.map(h=>`<a class="search-result" role="option" href="#/herb?id=${h.id}">${herbImage(h,"herb-thumb")}<strong>${esc(h.name)}</strong><span>${currentLang==='en'?'Herb':'药材'} · ${esc(fact(h.qi))} · ${esc(fact(h.wei))}</span></a>`).concat(catalog.map(item=>`<a class="search-result catalog-result" role="option" href="#/herbs?mode=catalog&q=${encodeURIComponent(item.name)}"><span class="catalog-result-mark">索引</span><strong>${esc(item.name)}</strong><span>${currentLang==='en'?'Name index':'仅名称索引'}</span></a>`), formulas.map(f=>`<a class="search-result" role="option" href="#/formula?f=${f.id}"><strong>${esc(f.name)}</strong><span>${currentLang==='en'?'Formula':'方剂'} · ${esc(f.zheng)}</span></a>`)).join('')||`<div class="search-empty">${esc(t('search.empty'))}</div>`;
+  const options=Array.from(searchResults.querySelectorAll('[role="option"]'));
+  options.forEach((option,index)=>{
+    const href=option.getAttribute('href')||'';
+    const type=option.classList.contains('catalog-result')?'catalog':(href.startsWith('#/formula')?'formula':'herb');
+    option.id=searchOptionId(type,href||option.textContent,index);
+    option.setAttribute('aria-selected','false');
+  });
   searchResults.classList.add('open'); searchInput.setAttribute('aria-expanded','true');
+  announceSearchResults(options.length,keyword);
 }
-function closeSearch(){ searchResults.classList.remove('open'); searchInput.setAttribute('aria-expanded','false'); }
+function closeSearch(){
+  searchResults.classList.remove('open');
+  searchInput.setAttribute('aria-expanded','false');
+  setActiveSearchOption(Array.from(searchResults.querySelectorAll('[role="option"]')),-1);
+}
+window.addEventListener('herbal:catalog-loading',()=>{
+  catalogSearchUnavailable=false;
+  setSearchBusy(true);
+});
+window.addEventListener('herbal:catalog-ready',()=>{
+  catalogSearchUnavailable=false;
+  setSearchBusy(false);
+  setTimeout(()=>{
+    if(searchInput.value.trim()) updateSearchSuggestions();
+    else if(searchStatus) searchStatus.textContent='名称索引已就绪';
+  },0);
+});
+window.addEventListener('herbal:catalog-error',()=>{
+  catalogSearchUnavailable=true;
+  setSearchBusy(false);
+  if(searchInput.value.trim()) updateSearchSuggestions();
+  else if(searchStatus) searchStatus.textContent='名称索引暂时不可用，仍可搜索精品卡与方剂';
+});
+setSearchBusy(false);
 // 输入过程提供建议，也在药材星图页同步过滤
 searchInput.addEventListener('input', ()=>{
   clearTimeout(searchTimer);
@@ -1075,12 +1133,21 @@ searchInput.addEventListener('input', ()=>{
   }, 120);
 });
 searchInput.addEventListener('keydown', e=>{
-  if(e.key==='Escape'){ closeSearch(); return; }
-  const options=Array.from(searchResults.querySelectorAll('.search-result'));
+  if(e.key==='Escape'){ e.preventDefault(); closeSearch(); searchInput.focus(); return; }
+  let options=Array.from(searchResults.querySelectorAll('[role="option"]'));
   if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    if(!searchResults.classList.contains('open') && searchInput.value.trim()){
+      updateSearchSuggestions();
+      options=Array.from(searchResults.querySelectorAll('[role="option"]'));
+    }
     if(!options.length) return;
-    e.preventDefault(); store._searchIndex=(store._searchIndex+(e.key==='ArrowDown'?1:options.length-1))%options.length;
-    options.forEach((el,i)=>el.classList.toggle('active',i===store._searchIndex)); return;
+    e.preventDefault();
+    const next=e.key==='ArrowDown'
+      ? (store._searchIndex>=options.length-1?0:store._searchIndex+1)
+      : (store._searchIndex<=0?options.length-1:store._searchIndex-1);
+    setActiveSearchOption(options,next);
+    options[next]?.scrollIntoView({block:'nearest'});
+    return;
   }
   if(e.key !== 'Enter') return;
   const kw = searchInput.value.trim();

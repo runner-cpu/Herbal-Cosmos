@@ -160,6 +160,11 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
   .app-status,.app-update { animation:none; transition:none; }
 }
 
+.sr-only {
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
 .route-not-found { min-height:58vh; padding-top:clamp(54px,10vh,110px); }
 .route-not-found code {
   display:inline-block; max-width:100%; overflow-wrap:anywhere; padding:.1em .35em;
