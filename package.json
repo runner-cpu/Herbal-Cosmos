@@ -15,7 +15,8 @@
     "validate:data": "npm run validate:catalog && npm run validate:expanded",
     "validate:app": "node scripts/validate-web-app.mjs",
     "check:inline": "node scripts/check-inline-runtime.mjs",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "test:browser:ci": "playwright test --project=chromium --project=mobile"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0"

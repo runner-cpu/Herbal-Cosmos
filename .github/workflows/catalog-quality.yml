@@ -13,9 +13,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
       - run: npm run build:data
       - run: git diff --exit-code -- data/ reports/ assets/js/data/food-medicine.generated.js assets/js/data/expanded.generated.js
       - run: npm run validate:data
+      - run: npm run validate:app
       - run: node scripts/fetch-herb-images.mjs --verify
       - run: npm test
       - run: npm run check:inline
@@ -26,8 +29,8 @@ jobs:
           test -s assets/icons/favicon.svg
           test -s data/sources/herb-images.json
           test $(find images/herbs/open -type f | wc -l) -ge 400
-          find assets/js -name '*.js' -print0 | xargs -0 -n1 node --check
-          node --check workers/catalog-search.js
+          find assets/js workers -type f -name '*.js' -print0 | xargs -0 -n1 node --check
+          find assets/js workers -type f -name '*.mjs' -print0 | xargs -0 -r -n1 node --check
   browser-quality:
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +38,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --ignore-scripts
+          cache: npm
+      - run: npm ci --ignore-scripts
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser -- --project=chromium
+      - run: npm run test:browser:ci
