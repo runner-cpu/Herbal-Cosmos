@@ -80,8 +80,6 @@ function initLoader() {
   window.addEventListener('hashchange', ensure);
   window.addEventListener('herbal:catalog-ready', () => {
     window.render?.();
-    const input=document.getElementById('globalSearch');
-    if(input?.value) input.dispatchEvent(new Event('input',{bubbles:true}));
   });
   const searchInput=document.getElementById('globalSearch');
   searchInput?.addEventListener('input', event => { if(event.target.value.trim() && !window.HERB_CATALOG.length) loadCatalog().catch(()=>{}); });
