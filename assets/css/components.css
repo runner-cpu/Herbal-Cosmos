@@ -134,7 +134,8 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
   .context-inner { padding:7px 14px; gap:10px; }
   .context-identity > span:last-child { display:none; }
   .search-scope-hint { display:none; }
-  .saved-drawer { width:min(360px,94vw); }
+  .saved-drawer-toggle { min-width:44px; height:44px; }
+  .saved-drawer { width:100%; max-width:390px; padding-bottom:calc(22px + env(safe-area-inset-bottom)); }
 }
 
 /* Progressive app shell: connection and version state. */
@@ -182,3 +183,16 @@ html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806
   border:1px solid var(--qing); border-radius:5px; color:var(--qing);
 }
 .route-recovery a:first-child { background:var(--qing); color:var(--card); }
+
+@media (forced-colors:active) {
+  a,button,input,summary,select { forced-color-adjust:auto; }
+  .card,.chart-panel,.insight-chart-panel,.nav-popover,.saved-drawer,.app-status,.app-update {
+    border:1px solid CanvasText;
+    box-shadow:none;
+  }
+  a.active,button.active,[aria-current="page"],:focus-visible {
+    outline:2px solid Highlight !important;
+    outline-offset:2px;
+  }
+  .stamp,.herb-stamp { border:1px solid CanvasText; color:CanvasText; background:Canvas; box-shadow:none; }
+}

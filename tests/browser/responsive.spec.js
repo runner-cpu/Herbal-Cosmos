@@ -45,3 +45,40 @@ test('favorite action keeps navigation badge and drawer in sync', async ({ page 
   await page.locator('#savedDrawer [data-drawer-fav]').click();
   await expect(page.locator('[data-saved-count]')).toHaveText('0');
 });
+
+test('375px routes do not create document or chart overflow', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  for (const route of ['home', 'herbs', 'qiwei', 'formula', 'zheng', 'learn']) {
+    await page.goto('/#/' + route);
+    await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
+    const widths = await page.evaluate(() => ({
+      scroll: document.documentElement.scrollWidth,
+      client: document.documentElement.clientWidth,
+      offenders: [...document.querySelectorAll('.page.active *')].map(element => {
+        const rect = element.getBoundingClientRect();
+        return {
+          element: element.tagName.toLowerCase() + (element.id ? '#' + element.id : '') + (element.classList.length ? '.' + [...element.classList].join('.') : ''),
+          width: Math.round(rect.width),
+          right: Math.round(rect.right),
+          scrollWidth: element.scrollWidth
+        };
+      }).filter(item => item.width > document.documentElement.clientWidth + 1 || item.right > document.documentElement.clientWidth + 1).sort((a, b) => b.right - a.right).slice(0, 8)
+    }));
+    expect(widths.scroll, route + ' document width; offenders=' + JSON.stringify(widths.offenders)).toBeLessThanOrEqual(widths.client + 1);
+    const canvases = page.locator('.page.active canvas:visible');
+    for (let index = 0; index < await canvases.count(); index += 1) {
+      const box = await canvases.nth(index).boundingBox();
+      if (box) expect(box.width, route + ' canvas width').toBeLessThanOrEqual(widths.client + 1);
+    }
+  }
+});
+
+test('375px shell controls meet the minimum touch target', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/#/home');
+  for (const selector of ['#savedDrawerToggle', '#hamburger']) {
+    const box = await page.locator(selector).boundingBox();
+    expect(box?.width, selector + ' width').toBeGreaterThanOrEqual(44);
+    expect(box?.height, selector + ' height').toBeGreaterThanOrEqual(44);
+  }
+});
