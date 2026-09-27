@@ -254,6 +254,13 @@ function renderNotFound(path){
   const unknownRoute=document.getElementById('unknownRoute');
   if(unknownRoute) unknownRoute.textContent=path||'未知路径';
 }
+function setNavigationOpen(open, returnFocus=false){
+  const navigation=document.getElementById('mainNav');
+  const trigger=document.getElementById('hamburger');
+  navigation?.classList.toggle('open',Boolean(open));
+  trigger?.setAttribute('aria-expanded',String(Boolean(open)));
+  if(!open&&returnFocus) trigger?.focus();
+}
 function render(){
   chartManager.clear();
   window.HerbalInsights?.dispose?.();
@@ -309,7 +316,7 @@ function render(){
     if(parseHash().route==='home' || parseHash().route==='herbs') render();
   });
   window.addEventListener('hashchange',()=>{
-    document.getElementById('mainNav')?.classList.remove('open');
+    setNavigationOpen(false);
     document.getElementById('navMore')?.removeAttribute('open');
     render();
   });
@@ -1204,13 +1211,17 @@ searchInput.addEventListener('keydown', e=>{
 searchInput.addEventListener('focus', updateSearchSuggestions);
 searchResults.addEventListener('click', closeSearch);
 document.getElementById('hamburger').addEventListener('click', ()=>{
-  document.getElementById('mainNav').classList.toggle('open');
+  setNavigationOpen(!document.getElementById('mainNav').classList.contains('open'));
 });
 const navMore=document.getElementById('navMore');
 document.addEventListener('keydown',event=>{
-  if(event.key!=='Escape'||!navMore?.open) return;
-  navMore.open=false;
-  navMore.querySelector('summary')?.focus();
+  if(event.key!=='Escape') return;
+  if(navMore?.open){
+    navMore.open=false;
+    navMore.querySelector('summary')?.focus();
+    return;
+  }
+  if(document.getElementById('mainNav')?.classList.contains('open')) setNavigationOpen(false,true);
 });
 document.addEventListener('pointerdown',event=>{
   if(navMore?.open&&!navMore.contains(event.target)) navMore.open=false;
@@ -1232,9 +1243,8 @@ updateThemeControl();
 const hero=document.querySelector('.hero');
 if(hero) hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--spot-x',`${((e.clientX-r.left)/r.width)*100}%`);hero.style.setProperty('--spot-y',`${((e.clientY-r.top)/r.height)*100}%`);});
 document.addEventListener('click', e=>{
-  const nav = document.getElementById('mainNav');
   if(e.target.closest('nav a,.nav-popover a') || (e.target.closest('#app') && !e.target.closest('#mainNav,#hamburger') && window.innerWidth<=768)){
-    nav.classList.remove('open');
+    setNavigationOpen(false);
     const more=document.getElementById('navMore'); if(more) more.removeAttribute('open');
   }
   if(!e.target.closest('.searchbox')) closeSearch();

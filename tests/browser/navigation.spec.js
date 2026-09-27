@@ -64,3 +64,25 @@ test('malformed query encoding cannot stop route rendering', async ({ page }) =>
   await expect(page.locator('[data-route="home"]')).toBeVisible();
   expect(pageErrors).toEqual([]);
 });
+
+test('mobile menu exposes its state and Escape returns focus to the trigger', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'This disclosure replaces the desktop navigation only.');
+  await page.goto('/#/home');
+  const trigger = page.locator('#hamburger');
+  const navigation = page.locator('#mainNav');
+  await expect(trigger).toHaveAttribute('aria-controls', 'mainNav');
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+
+  await trigger.click();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  await expect(navigation).toHaveClass(/open/);
+  await page.keyboard.press('Escape');
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  await expect(navigation).not.toHaveClass(/open/);
+  await expect(trigger).toBeFocused();
+
+  await trigger.click();
+  await navigation.locator('a[href="#/herbs"]').click();
+  await expect(page).toHaveURL(/#\/herbs$/);
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+});
