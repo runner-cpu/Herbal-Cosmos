@@ -50,3 +50,17 @@ test('unknown hash renders a safe recoverable in-app 404', async ({ page }) => {
   await expect(page).toHaveURL(/#\/home$/);
   await expect(page.locator('[data-route="home"]')).toBeVisible();
 });
+
+test('unknown home-prefixed anchors still render the in-app 404', async ({ page }) => {
+  await page.goto('/#/home-not-a-real-section');
+  await expect(page.locator('[data-route="not-found"]')).toBeVisible();
+  await expect(page.locator('#unknownRoute')).toHaveText('home-not-a-real-section');
+});
+
+test('malformed query encoding cannot stop route rendering', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+  await page.goto('/#/home?focus=%E0%A4%A');
+  await expect(page.locator('[data-route="home"]')).toBeVisible();
+  expect(pageErrors).toEqual([]);
+});

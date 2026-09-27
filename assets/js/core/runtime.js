@@ -237,14 +237,16 @@ function stampHtml(h, sizeCls){
 const routes = ['home','herbs','herb','qiwei','formula','zheng','learn','saved'];
 function parseHash(){
   const raw = location.hash.replace(/^#\/?/, '') || 'home';
-  const [path, queryStr] = raw.split('?');
-  const params = {};
-  if(queryStr){ queryStr.split('&').forEach(kv=>{ const [k,v]=kv.split('='); params[k]=decodeURIComponent(v||''); }); }
+  const separator = raw.indexOf('?');
+  const path = separator < 0 ? raw : raw.slice(0, separator);
+  const queryStr = separator < 0 ? '' : raw.slice(separator + 1);
+  const params = Object.fromEntries(new URLSearchParams(queryStr));
   const legacyAnchors = { food: 'home-food', culture: 'home-culture' };
-  const known = routes.includes(path) || Boolean(legacyAnchors[path]) || path.startsWith('home-') || path==='classics';
+  const homeAnchors = new Set(['home-food', 'home-culture', 'home-sources']);
+  const known = routes.includes(path) || Boolean(legacyAnchors[path]) || homeAnchors.has(path) || path==='classics';
   const route = known ? (routes.includes(path) ? path : 'home') : 'not-found';
   if (legacyAnchors[path]) params.anchor = legacyAnchors[path];
-  else if (path.startsWith('home-')) params.anchor = path;
+  else if (homeAnchors.has(path)) params.anchor = path;
   if(path==='classics') params.focus='classics';
   return { route, params, unknownPath: known ? '' : path };
 }
