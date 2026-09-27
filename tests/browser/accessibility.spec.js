@@ -24,3 +24,30 @@ test('forced colors keeps shell controls and panels distinguishable', async ({ p
   await expect(drawer).toHaveCSS('border-top-style', 'solid');
   await expect(toggle).toHaveCSS('forced-color-adjust', 'auto');
 });
+
+test('desktop herb rows expose a native keyboard link to the knowledge card', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'The desktop table is intentionally replaced by mobile cards.');
+  await page.goto('/#/herbs');
+  const link = page.locator('#herbTableBody .rowname a').first();
+  await expect(link).toBeVisible();
+  const destination = await link.getAttribute('href');
+  expect(destination).toMatch(/^#\/herb\?id=/);
+
+  await link.focus();
+  await expect(link).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(new RegExp(destination.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$'));
+});
+
+test('related formulas expose a native keyboard link to the network view', async ({ page }) => {
+  await page.goto('/#/herb?id=gancao');
+  const link = page.locator('#herbFormulaList a.formula-row').first();
+  await expect(link).toBeVisible();
+  const destination = await link.getAttribute('href');
+  expect(destination).toMatch(/^#\/formula\?f=/);
+
+  await link.focus();
+  await expect(link).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(new RegExp(destination.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$'));
+});

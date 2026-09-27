@@ -150,6 +150,7 @@ td{border-top:1px solid var(--line);padding:10px 14px;vertical-align:middle;}
 tr.hoverable{cursor:pointer;transition:background .12s;}
 tr.hoverable:hover{background:#F5EEE0;}
 .rowname{font-weight:600;color:var(--qing);font-family:var(--serif);}
+.herb-row-link{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;}
 .muted{color:var(--ink-2);}
 
 /* ===== 药材详情 ===== */
@@ -167,7 +168,7 @@ tr.hoverable:hover{background:#F5EEE0;}
 .prop .v{font-size:16px;font-weight:600;color:var(--qing);font-family:var(--serif);margin-top:2px;}
 .prop .src{font-size:10.5px;color:var(--celadon);margin-top:2px;}
 .chart-box{width:100%;min-height:300px;}
-.formula-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);}
+.formula-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);color:inherit;text-decoration:none;}
 .formula-row:last-child{border-bottom:none;}
 .formula-row .fn{font-weight:600;color:var(--qing);font-family:var(--serif);}
 .formula-row .fz{font-size:12.5px;color:var(--ink-2);}

@@ -539,8 +539,8 @@ function renderHerbs(){
   const count = $('#herbResultCount');
   if(count) count.textContent = `${list.length} 味药材${kw ? ` · 搜索“${kw}”` : ''}`;
   $('#herbTableBody').innerHTML = list.map(h=>`
-    <tr class="hoverable" onclick="location.hash='#/herb?id=${h.id}'">
-      <td class="rowname"><div style="display:flex;align-items:center;gap:10px;">${herbImage(h,"herb-thumb")}<span>${esc(h.name)}</span></div></td>
+    <tr>
+      <td class="rowname"><a class="herb-row-link" href="#/herb?id=${h.id}">${herbImage(h,"herb-thumb")}<span>${esc(h.name)}</span></a></td>
       <td>${esc(fact(h.qi))}</td>
       <td>${esc(fact(h.wei))}</td>
       <td>${esc(h.meridian.length?h.meridian.join('、'):'未录入')}经</td>
@@ -753,11 +753,11 @@ function renderHerb(id){
   // 相关方剂
   const rel = FORMULAS.filter(f=>f.herbs.some(x=>x[0]===h.id));
   $('#herbFormulaList').innerHTML = rel.length ? rel.map(f=>`
-    <div class="formula-row" style="cursor:pointer;" onclick="location.hash='#/formula?f=${f.id}'">
+    <a class="formula-row" href="#/formula?f=${f.id}">
       <div class="fn">${esc(f.name)}</div>
       <div class="fz">${esc(f.from)} · ${esc(f.eff)}</div>
       <span style="margin-left:auto;" class="muted">组成含 ${esc(herbName(h.id))}</span>
-    </div>`).join('') : `<div class="muted">暂无收录的相关方剂。</div>`;
+    </a>`).join('') : `<div class="muted">暂无收录的相关方剂。</div>`;
 }
 
 function renderQiwei(){
