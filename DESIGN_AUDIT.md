@@ -1,10 +1,12 @@
 # 本草宇宙网页审计与改进基线
 
+> 本文件保留 2026-09-22 起各阶段的审计快照，因此正文会出现当时的 2 条索引、144 张卡片等历史数字；它们不是当前运行口径。当前规模、生产加固决策与验收证据见 [`README.md`](README.md) 和 [`docs/superpowers/specs/2026-09-27-production-hardening-design.md`](docs/superpowers/specs/2026-09-27-production-hardening-design.md)。
+
 ## 目标
 
 把项目从“包含多张图表的文化展示页”提升为“可探索、可比较、可追溯、可学习的中医药数据图谱”。可视化和交互承担知识组织，不只承担装饰。
 
-## 当前不足
+## 初始不足（历史基线）
 
 ### 视觉系统
 
@@ -145,9 +147,25 @@
 - 本地浏览器验证首页新增板块均出现在可访问性树中；分类按钮可跳转并应用“补虚”等功效筛选；原有探索本草、典籍兼容路由、收藏、性味归经和病证药链继续可访问。
 - 内嵌 JavaScript 语法检查与 `git diff --check` 通过；桌面首页截图确认新增看板、分类和六个主题入口均无溢出。
 
-## 2026 implementation audit
+## 生产审计收口（2026-09-27）
 
-- The approved/review catalog boundary is generated from committed source manifests and checked by validate-catalog; uncertain names remain auditable and hidden from default search.
-- The homepage now previews food-and-medicine and culture/heritage content, while the standalone routes remain available.
-- Global theme, herb context, saved drawer, lazy catalog loading, sparse star-map labels and insight charts are implemented as zero-build modules.
-- Browser regression commands: npm run test:browser and python -m http.server 4173.
+### 已进一步修复
+
+- **数据与证据**：生成管道稳定产出 8,818 条可检索名称和 1,487 条 review；608 张知识卡、106 个食药物质条目、50 首方剂、30 个证候与图片许可分别校验，不再把公开名称索引整体宣称为药典收载。
+- **信息架构**：顶栏收敛为五主入口和“更多”；食养同源、文化非遗并入首页长卷，收藏收敛为不改变路由的全局抽屉，旧 `#/saved` 只作兼容迁移。
+- **可视化与联动**：洞察图具有可读名称、生成式文字摘要和证据钻取路径；药、方、证、性味与星图通过 store 和 hash 参数共享选择上下文。
+- **无障碍**：补齐组合框状态、显式表单标签、原生键盘链接、图表文字替代、强制颜色、减少动效、44px 移动触控目标和未知路径恢复。
+- **弱网与错误恢复**：加入 PWA 外壳、品牌 404、在线/离线提示和显式更新确认；缓存写入失败不会吞掉成功网络响应，ECharts 或局部图片失败仍保留文字路径。
+- **隐私与供应链**：无账号、无遥测；本地存储不可用时退化为当前会话；提交锁文件并在 CI 使用 `npm ci --ignore-scripts`，运行时无外部字体或图表 CDN。
+- **测试可信度**：Playwright 使用独立、不可复用的测试服务器端口；CI 同时执行桌面与 375px 移动项目，并检查确定性数据构建、图片来源、资源预算、PWA、语法和交互。
+
+### 仍保留的真实边界
+
+- 8,818 条名称有公开行级来源，但只有 2 条具当前仓库可机械复核的药典逐名证据；继续扩充权威证据需要可合法提交的逐名来源。
+- 608 张卡中 61 张显示占位图；错误配图的风险高于缺图，因此不会用无许可或无法确认物种的图片填满覆盖率。
+- PWA 只预缓存 1,969,522 字节应用外壳，不预取约 65MB 图片或 45 个目录分块；未访问内容不承诺离线可用。
+- 英文内容尚未完整覆盖，入口保持隐藏；本机收藏没有账号与云同步，跨设备只提供 JSON 导出。
+- 自动化浏览器门禁覆盖桌面 Chromium 与 375px 移动 Chromium；Safari、Firefox 和真实低端设备仍属于后续兼容性矩阵。
+- ECharts 自托管文件仍约 1MB；在不引入构建链的约束下保留完整发行包，后续若允许构建可改为按需组件打包。
+
+最终验收命令、测试数量、缓存字节与数据边界以生产加固规格第 14 节为准。
