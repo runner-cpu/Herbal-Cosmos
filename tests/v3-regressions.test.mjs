@@ -19,7 +19,9 @@ test('shell ships complete metadata without external font or partial EN toggle',
   assert.match(html, /<link rel="icon"[^>]+assets\/icons\/favicon\.svg/);
   assert.equal(/miaoda\.feishu\.cn|fonts\.googleapis\.com/.test(html), false);
   assert.equal(html.includes('id="languageToggle"'), false);
-  assert.match(html, /id="searchResults"[^>]+aria-live="polite"/);
+  assert.match(html, /id="searchResults"[^>]+role="listbox"/);
+  assert.doesNotMatch(html, /id="searchResults"[^>]+aria-live=/);
+  assert.match(html, /id="searchStatus"[^>]+role="status"[^>]+aria-live="polite"/);
 });
 
 test('shell publishes install, sharing, structured-data, and privacy metadata', () => {

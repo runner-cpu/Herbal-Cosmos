@@ -7,11 +7,20 @@ export function serializeFavorites(ids = [], herbs = [], exportedAt = new Date()
   };
 }
 
+let memoryIds = [];
+function normalizeIds(ids) {
+  return [...new Set((Array.isArray(ids) ? ids : []).filter(id => typeof id === 'string' && id.trim()))];
+}
 function readIds() {
-  try { return JSON.parse(localStorage.getItem('herbal_favs') || '[]'); } catch { return []; }
+  try {
+    const stored = localStorage.getItem('herbal_favs');
+    if (stored !== null) memoryIds = normalizeIds(JSON.parse(stored));
+  } catch { /* use the current-session copy */ }
+  return [...memoryIds];
 }
 function writeIds(ids) {
-  try { localStorage.setItem('herbal_favs', JSON.stringify([...new Set(ids)])); } catch { /* optional */ }
+  memoryIds = normalizeIds(ids);
+  try { localStorage.setItem('herbal_favs', JSON.stringify(memoryIds)); } catch { /* current-session copy remains available */ }
 }
 export function favoriteCount(ids = []) {
   return new Set(ids.filter(id => typeof id === 'string' && id.trim())).size;
@@ -96,8 +105,9 @@ function initDrawer() {
   });
   window.openSavedDrawer = openSavedDrawer; window.closeSavedDrawer = closeSavedDrawer; window.exportSavedJson = exportSavedJson;
   window.addEventListener('herbal:favorites', event => {
+    if (Array.isArray(event.detail?.ids)) memoryIds = normalizeIds(event.detail.ids);
     renderDrawer();
-    syncFavoriteCount(Array.isArray(event.detail?.ids) ? event.detail.ids : readIds());
+    syncFavoriteCount(readIds());
   });
   window.addEventListener('hashchange', () => {
     if (location.hash.replace(/^#\/?/, '').split('?')[0] === 'saved') {

@@ -32,8 +32,28 @@ const I18N = {
     'data.note':'Charts show relationships and distributions in the representative dataset. They do not indicate efficacy or clinical recommendations.'
   }
 };
+const sessionStorageFallback = new Map();
+function storageRead(key, fallback=null){
+  try{
+    const value=localStorage.getItem(key);
+    if(value!==null){ sessionStorageFallback.set(key,value); return value; }
+  }catch(e){}
+  return sessionStorageFallback.has(key)?sessionStorageFallback.get(key):fallback;
+}
+function storageWrite(key,value){
+  const serialized=String(value);
+  sessionStorageFallback.set(key,serialized);
+  try{ localStorage.setItem(key,serialized); return true; }catch(e){ return false; }
+}
+function storageRemove(key){
+  sessionStorageFallback.delete(key);
+  try{ localStorage.removeItem(key); }catch(e){}
+}
+window.addEventListener('herbal:selected',event=>{
+  if(Array.isArray(event.detail?.viewedIds)) storageWrite('herbal_viewed',JSON.stringify(event.detail.viewedIds));
+});
 let currentLang = 'zh';
-try { localStorage.removeItem('herbal_lang'); } catch (error) {}
+storageRemove('herbal_lang');
 function t(key, fallback=''){ return (I18N[currentLang]&&I18N[currentLang][key]) || I18N.zh[key] || fallback || key; }
 function applyLanguage(){
   document.documentElement.lang=currentLang==='en'?'en':'zh-CN';
@@ -136,11 +156,11 @@ function setSelected(herbId, opts){
   notify();
 }
 const favKey = 'herbal_favs';
-function getFavs(){ try{ return JSON.parse(localStorage.getItem(favKey)||'[]'); }catch(e){ return []; } }
+function getFavs(){ try{ const value=JSON.parse(storageRead(favKey,'[]')); return Array.isArray(value)?value.filter(id=>typeof id==='string'):[]; }catch(e){ return []; } }
 function toggleFav(id){
   let f = getFavs();
   if(f.includes(id)) f = f.filter(x=>x!==id); else f.push(id);
-  localStorage.setItem(favKey, JSON.stringify(f));
+  storageWrite(favKey, JSON.stringify(f));
   if(typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('herbal:favorites',{detail:{ids:f}}));
   renderFavButtons(); toast(f.includes(id) ? '已收藏' : '已取消收藏');
 }
@@ -307,8 +327,8 @@ function render(){
   let dragging = false, lastX = 0, lastY = 0;
   let hoverId = null;
   let running = true;
-  let motion = !(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) && (()=>{ try{return localStorage.getItem('herbal_motion')!=='off';}catch(e){return true;} })();
-  let colorMode = document.documentElement.dataset.cosmosColor || (()=>{ try{return localStorage.getItem('herbal_cosmos_color')||'uniform';}catch(e){return 'uniform';} })();
+  let motion = !(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) && storageRead('herbal_motion','on')!=='off';
+  let colorMode = document.documentElement.dataset.cosmosColor || storageRead('herbal_cosmos_color','uniform');
   let focusedId = null, panY=0, targetPanY=0, moved=0, animationFrame=0;
   const activePointers=new Map(); let pinchDistance=0;
   canvas.setAttribute('tabindex','0'); canvas.setAttribute('aria-label','本草星图：拖动旋转，双击聚焦；也可使用星图搜索与缩放按钮。');
@@ -378,7 +398,7 @@ function render(){
     ctx.globalAlpha = 1;
 
     // 精品星
-    const viewed = new Set((()=>{ try{return JSON.parse(localStorage.getItem('herbal_viewed')||'[]');}catch(e){return [];} })());
+    const viewed = new Set((()=>{ try{const value=JSON.parse(storageRead('herbal_viewed','[]'));return Array.isArray(value)?value:[];}catch(e){return [];} })());
     const favorites=new Set(getFavs());
     stars.forEach(st=>{ const projected=project(st.x,st.y,st.z); st.screenX=projected.sx; st.screenY=projected.sy; st.viewed=viewed.has(st.id); st.favorite=favorites.has(st.id); });
     const visibleLabels = new Set((window.HerbalCosmos?.selectVisibleLabels?.(stars,{width:W,height:H},scale,{selectedHerb:store.selectedHerb?.id||null,viewedHerbs:viewed})||[]).map(item=>item.id));
@@ -1039,8 +1059,8 @@ const QUIZ = [
   {q:'《本草纲目》的作者是？', options:['张仲景','李时珍','孙思邈','陶弘景'], answer:1, note:'明代李时珍历时多年编成《本草纲目》，是本草学的重要典籍。'}
 ];
 const learnState = {index:0, answered:false, correct:0, total:0};
-function getLearnStats(){try{return JSON.parse(localStorage.getItem('herbal_learn_stats')||'{"total":0,"correct":0}')}catch(e){return {total:0,correct:0}}}
-function saveLearnStats(){localStorage.setItem('herbal_learn_stats',JSON.stringify({total:learnState.total,correct:learnState.correct}));}
+function getLearnStats(){try{const value=JSON.parse(storageRead('herbal_learn_stats','{"total":0,"correct":0}'));return {total:Number.isFinite(value?.total)?value.total:0,correct:Number.isFinite(value?.correct)?value.correct:0};}catch(e){return {total:0,correct:0}}}
+function saveLearnStats(){storageWrite('herbal_learn_stats',JSON.stringify({total:learnState.total,correct:learnState.correct}));}
 function renderLearn(){
   const s=getLearnStats(); learnState.total=s.total; learnState.correct=s.correct;
   const stepParam=Number(parseHash().params.step); if(Number.isFinite(stepParam)&&stepParam>0) learnState.index=Math.min(QUIZ.length-1,Math.max(0,stepParam-1));
@@ -1201,10 +1221,10 @@ document.addEventListener('click', e=>{
   if(e.target.id==='resetGraph'){ store._formulaFocus=''; if(parseHash().route==='formula' && !parseHash().params.f) renderFormula(); else location.hash='#/formula'; }
 });
 const themeToggle=document.getElementById('themeToggle');
-if(localStorage.getItem('herbal_theme')==='night') document.body.classList.add('night');
+if(storageRead('herbal_theme')==='night') document.body.classList.add('night');
 themeToggle.addEventListener('click',()=>{
   if(window.HerbalTheme?.setTheme){ window.HerbalTheme.setTheme(window.HerbalTheme.nextTheme(document.documentElement.dataset.theme)); return; }
-  document.body.classList.toggle('night');localStorage.setItem('herbal_theme',document.body.classList.contains('night')?'night':'day');updateThemeControl();render();
+  document.body.classList.toggle('night');storageWrite('herbal_theme',document.body.classList.contains('night')?'night':'day');updateThemeControl();render();
 });
 updateThemeControl();
 const hero=document.querySelector('.hero');

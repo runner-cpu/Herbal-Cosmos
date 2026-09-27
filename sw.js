@@ -59,30 +59,43 @@ async function trimCache(cacheName, maximum) {
   await Promise.all(requests.slice(0, removeCount).map(request => cache.delete(request)));
 }
 
+async function matchCache(cacheName, request, options) {
+  try {
+    const cache = await caches.open(cacheName);
+    return await cache.match(request, options);
+  } catch {
+    return undefined;
+  }
+}
+
+async function storeResponse(cacheName, request, response, maximum) {
+  if (!response || !response.ok) return;
+  try {
+    const cache = await caches.open(cacheName);
+    await cache.put(request, response.clone());
+    if (Number.isFinite(maximum)) await trimCache(cacheName, maximum);
+  } catch {
+    // CacheStorage is an enhancement. A quota or privacy-mode failure must
+    // never turn a successful network response into a failed request.
+  }
+}
+
 async function networkFirstNavigation(request) {
   try {
     const response = await fetch(request);
-    if (response && response.ok) {
-      const cache = await caches.open(PRECACHE);
-      await cache.put('./index.html', response.clone());
-    }
+    await storeResponse(PRECACHE, './index.html', response);
     return response;
   } catch (error) {
-    const cache = await caches.open(PRECACHE);
-    const fallback = await cache.match('./index.html') || await cache.match('./');
+    const fallback = await matchCache(PRECACHE, './index.html') || await matchCache(PRECACHE, './');
     if (fallback) return fallback;
     throw error;
   }
 }
 
 async function staleWhileRevalidate(request, cacheName, maximum, event) {
-  const cache = await caches.open(cacheName);
-  const cached = await cache.match(request, { ignoreSearch: false });
+  const cached = await matchCache(cacheName, request, { ignoreSearch: false });
   const update = fetch(request).then(async response => {
-    if (response && response.ok) {
-      await cache.put(request, response.clone());
-      await trimCache(cacheName, maximum);
-    }
+    await storeResponse(cacheName, request, response, maximum);
     return response;
   });
   if (cached) {
@@ -93,10 +106,9 @@ async function staleWhileRevalidate(request, cacheName, maximum, event) {
 }
 
 async function cacheFirstWithRefresh(request, event) {
-  const cache = await caches.open(PRECACHE);
-  const cached = await cache.match(request, { ignoreSearch: true });
+  const cached = await matchCache(PRECACHE, request, { ignoreSearch: true });
   const update = fetch(request).then(async response => {
-    if (response && response.ok) await cache.put(request, response.clone());
+    await storeResponse(PRECACHE, request, response);
     return response;
   });
   if (cached) {

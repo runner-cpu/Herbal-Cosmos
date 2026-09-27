@@ -29,3 +29,33 @@ test('visited shell reloads offline with an honest status', async ({ page, conte
 
   await context.setOffline(false);
 });
+
+test('blocked persistent storage falls back to current-session state', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+  await page.addInitScript(() => {
+    const blocked = () => { throw new DOMException('Persistent storage is blocked', 'SecurityError'); };
+    for (const method of ['getItem', 'setItem', 'removeItem', 'clear']) {
+      Object.defineProperty(Storage.prototype, method, { configurable: true, value: blocked });
+    }
+  });
+
+  await page.goto('/#/herbs');
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'herbs');
+  await page.locator('[data-fav]:visible').first().click();
+  await expect(page.locator('[data-saved-count]')).toHaveText('1');
+  await page.locator('#savedDrawerToggle').click();
+  await expect(page.locator('#savedDrawer [data-drawer-fav]')).toHaveCount(1);
+  await page.locator('#savedDrawer [data-saved-close]').click();
+
+  await page.locator('#themeToggle').click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'night');
+
+  await page.goto('/#/learn');
+  await page.locator('[data-answer="1"]').click();
+  await expect(page.locator('#learnStats')).toContainText('已完成 1');
+  await page.goto('/#/home');
+  await page.goto('/#/learn');
+  await expect(page.locator('#learnStats')).toContainText('已完成 1');
+  expect(pageErrors).toEqual([]);
+});

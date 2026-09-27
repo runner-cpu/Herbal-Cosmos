@@ -13,8 +13,16 @@ export function contextLinks({ id }) {
   return result.map(link => link.href.startsWith('#/herb?id=') ? { ...link, href: '#/formula?herb=' + value } : link);
 }
 
+let memoryViewedIds = [];
 function storageIds() {
-  try { return JSON.parse(localStorage.getItem('herbal_viewed') || '[]'); } catch { return []; }
+  try {
+    const stored = localStorage.getItem('herbal_viewed');
+    if (stored !== null) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) memoryViewedIds = parsed.filter(value => typeof value === 'string' && value);
+    }
+  } catch { /* use the current-session copy */ }
+  return [...memoryViewedIds];
 }
 
 function escapeHtml(value) {
@@ -26,6 +34,7 @@ export function setSelectedHerb(herbId, source = 'unknown') {
   const herb = herbs.find(item => item.id === herbId) || null;
   if (!herb) return null;
   const ids = viewedIds(storageIds(), herb.id);
+  memoryViewedIds = ids;
   try { localStorage.setItem('herbal_viewed', JSON.stringify(ids)); } catch { /* optional */ }
   window.dispatchEvent(new CustomEvent('herbal:selected', { detail: { herb, source, viewedIds: ids } }));
   return herb;
