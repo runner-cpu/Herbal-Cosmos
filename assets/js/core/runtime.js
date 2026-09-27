@@ -18,7 +18,7 @@ const I18N = {
   zh:{
     'nav.home':'首页','nav.herbs':'探索本草','nav.qiwei':'性味归经','nav.formula':'配伍网络','nav.learn':'学习舱','nav.more':'更多','nav.zheng':'病证药链','nav.classics':'典籍时光','nav.food':'药食同源','nav.culture':'文化与非遗','nav.saved':'本机收藏',
     'search.placeholder':'搜索药材 / 方剂','search.empty':'没有匹配，试试“人参”或“六味地黄丸”','theme.day':'日间','theme.night':'夜读','theme.classic':'古籍','lang.button':'EN',
-    'hero.tagline':'以 18,817 种中药资源为星辰，从一味药出发，漫游性味、配伍、典籍与生活的完整宇宙。','hero.explore':'探索星图','hero.network':'进入配伍网络','hero.hint':'拖动旋转星云 · 滚轮缩放 · 点击星辰查看一味药','home.journey':'从一味药，走进本草世界','home.journeyDesc':'五步完成认识、理解、关联与复习。进度仅保存在本机。','home.start':'开始今日学习','home.discover':'本草发现','home.viewAll':'查看全部代表药材 →','home.progress':'今日进度',
+    'hero.tagline':'以 18,817 种中药资源为星辰，从一味药出发，漫游性味、配伍、典籍与生活的完整宇宙。','hero.explore':'探索星图','hero.network':'进入配伍网络','hero.hint':'拖动旋转星云 · 滚轮缩放 · 点击星辰查看一味药','home.journey':'从一味药，走进本草世界','home.journeyDesc':'五步完成认识、理解、关联与复习。进度仅保存在本机。','home.start':'开始今日学习','home.discover':'本草发现','home.viewAll':'查看全部代表药材 →','home.progress':'今日进度','home.saved':'查看收藏',
     'herb.imageCaption':'从图像认识本草','herb.imageDesc':'植物形态是理解药材来源的第一条线索。图像用于科普识别，不替代专业鉴定。','herb.visual':'图像档案','herb.openCard':'打开知识卡','herb.addCompare':'加入对比','herb.compare':'对比','herb.save':'收藏','herb.saved':'已收藏',
     'learn.next':'下一题 →','learn.correct':'答对了！','learn.retry':'再想一想。','learn.total':'累计正确','learn.done':'已完成','learn.right':'正确','learn.today':'今日提示','learn.method':'学习方法','learn.footprint':'你的足迹',
     'data.note':'图表展示代表性数据集中的关系与分布，不表示药效强弱或临床推荐。'
@@ -26,7 +26,7 @@ const I18N = {
   en:{
     'nav.home':'Home','nav.herbs':'Herb Atlas','nav.qiwei':'Qi · Wei','nav.formula':'Formula Network','nav.learn':'Learning Lab','nav.more':'More','nav.zheng':'Pattern Chain','nav.classics':'Classics','nav.food':'Food & Medicine','nav.culture':'Culture','nav.saved':'Local Herbarium',
     'search.placeholder':'Search herbs / formulas','search.empty':'No match. Try “ginseng” or a formula name.','theme.day':'Light','theme.night':'Night','theme.classic':'Classic','lang.button':'中',
-    'hero.tagline':'18,817 medicinal resources become stars. Start with one herb and explore properties, formulas, classics and daily life.','hero.explore':'Explore atlas','hero.network':'Open formula network','hero.hint':'Drag to rotate · Scroll to zoom · Select a star for a herb','home.journey':'From one herb into a living materia medica','home.journeyDesc':'Five steps connect recognition, properties, relationships and recall. Progress stays on this device.','home.start':'Start today’s lesson','home.discover':'Featured herbs','home.viewAll':'View the full atlas →','home.progress':'Today',
+    'hero.tagline':'18,817 medicinal resources become stars. Start with one herb and explore properties, formulas, classics and daily life.','hero.explore':'Explore atlas','hero.network':'Open formula network','hero.hint':'Drag to rotate · Scroll to zoom · Select a star for a herb','home.journey':'From one herb into a living materia medica','home.journeyDesc':'Five steps connect recognition, properties, relationships and recall. Progress stays on this device.','home.start':'Start today’s lesson','home.discover':'Featured herbs','home.viewAll':'View the full atlas →','home.progress':'Today','home.saved':'Open favorites',
     'herb.imageCaption':'See the herb first','herb.imageDesc':'Plant form is the first clue to origin. Images support learning and are not a substitute for professional identification.','herb.visual':'Visual archive','herb.openCard':'Open knowledge card','herb.addCompare':'Add to compare','herb.compare':'Compare','herb.save':'Save','herb.saved':'Saved',
     'learn.next':'Next question →','learn.correct':'Correct!','learn.retry':'Not quite.','learn.total':'Correct','learn.done':'Completed','learn.right':'right','learn.today':'Today’s note','learn.method':'Study method','learn.footprint':'Your footprint',
     'data.note':'Charts show relationships and distributions in the representative dataset. They do not indicate efficacy or clinical recommendations.'
@@ -60,7 +60,7 @@ function applyLanguage(){
   document.querySelectorAll('[data-i18n]').forEach(el=>{ const value=t(el.dataset.i18n); if(value) el.textContent=value; });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{ el.placeholder=t(el.dataset.i18nPlaceholder); });
   const title=document.querySelector('title'); if(title) title.textContent=currentLang==='en'?'Herbal Cosmos · A visual materia medica':'本草宇宙 · HERBAL COSMOS';
-  const routeTitles={home:['本草宇宙','Herbal Cosmos'],learn:['本草学习舱','Learning Lab'],saved:['本机收藏','Local Herbarium'],herbs:['药材星图','Herb Atlas'],herb:['药材知识卡','Herb Knowledge Card'],qiwei:['性味归经图谱','Qi · Wei · Meridian Atlas'],formula:['方剂配伍网络','Formula Network'],zheng:['病证 · 方剂 · 药材','Pattern · Formula · Herb'],food:['药食同源','Food & Medicine'],culture:['文化与非遗','Culture & Heritage']};
+  const routeTitles={home:['本草宇宙','Herbal Cosmos'],learn:['本草学习舱','Learning Lab'],herbs:['药材星图','Herb Atlas'],herb:['药材知识卡','Herb Knowledge Card'],qiwei:['性味归经图谱','Qi · Wei · Meridian Atlas'],formula:['方剂配伍网络','Formula Network'],zheng:['病证 · 方剂 · 药材','Pattern · Formula · Herb'],food:['药食同源','Food & Medicine'],culture:['文化与非遗','Culture & Heritage']};
   document.querySelectorAll('.page h1.title').forEach(el=>{const route=el.closest('.page')?.dataset.route;const pair=routeTitles[route];if(pair)el.textContent=currentLang==='en'?pair[1]:pair[0];});
   const intros={herbs:['先用本草知识卡深入理解，再切换全量名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。','Start with complete knowledge cards, then switch to the full name index for wider discovery. Only the curated layer powers properties, charts and detail links.'],qiwei:['四气、五味与归经是中药药性的骨架，两个视角读同一套药性数据。','Qi, wei and meridian form the skeleton of materia medica. Read the same dataset through two visual lenses.'],formula:['方剂与药材构成二部图：点一个方剂，看它的组成与君臣佐使；点一味药，看它进入哪些方剂。','Formulas and herbs form a bipartite graph. Select a formula to inspect its composition, or a herb to trace its relationships.'],learn:['把漫游变成可积累的学习：先看知识卡，再用小测检验记忆。每次答题都会留下学习足迹。','Turn browsing into practice: study a knowledge card, test your recall and keep a local learning footprint.']};
   Object.entries(intros).forEach(([route,pair])=>{const page=document.querySelector(`.page[data-route="${route}"] .page-intro`);if(page)page.textContent=currentLang==='en'?pair[1]:pair[0];});
@@ -234,7 +234,7 @@ function stampHtml(h, sizeCls){
 /* ============================================================
    Hash 路由
    ============================================================ */
-const routes = ['home','herbs','herb','qiwei','formula','zheng','learn','saved'];
+const routes = ['home','herbs','herb','qiwei','formula','zheng','learn'];
 function parseHash(){
   const raw = location.hash.replace(/^#\/?/, '') || 'home';
   const separator = raw.indexOf('?');
@@ -242,8 +242,9 @@ function parseHash(){
   const queryStr = separator < 0 ? '' : raw.slice(separator + 1);
   const params = Object.fromEntries(new URLSearchParams(queryStr));
   const legacyAnchors = { food: 'home-food', culture: 'home-culture' };
+  const legacyDrawers = new Set(['saved']);
   const homeAnchors = new Set(['home-food', 'home-culture', 'home-sources']);
-  const known = routes.includes(path) || Boolean(legacyAnchors[path]) || homeAnchors.has(path) || path==='classics';
+  const known = routes.includes(path) || Boolean(legacyAnchors[path]) || legacyDrawers.has(path) || homeAnchors.has(path) || path==='classics';
   const route = known ? (routes.includes(path) ? path : 'home') : 'not-found';
   if (legacyAnchors[path]) params.anchor = legacyAnchors[path];
   else if (homeAnchors.has(path)) params.anchor = path;
@@ -294,7 +295,7 @@ function render(){
     if(params.q!=null){ store._catalogKw=params.q; store._catalogPage=1; }
   }
   const views = { home:renderHome, herbs:renderHerbs, herb:()=>renderHerb(params.id), qiwei:renderQiwei,
-    formula:renderFormula, zheng:renderZheng, learn:renderLearn, saved:renderSaved, 'not-found':()=>renderNotFound(unknownPath) };
+    formula:renderFormula, zheng:renderZheng, learn:renderLearn, 'not-found':()=>renderNotFound(unknownPath) };
   try{ (views[route]||views.home)(); }catch(err){ console.error('[herbal-cosmos] render error:', err); }
   applyLanguage();
   window.dispatchEvent(new CustomEvent('herbal:route',{detail:{route,params,unknownPath}}));
@@ -555,7 +556,7 @@ function renderHerbs(){
       <td>${esc(h.meridian.length?h.meridian.join('、'):'未录入')}经</td>
       <td>${esc(h.eff)}</td>
       <td>${sourceBadge(h)}</td>
-      <td><button class="compare-btn ${store.compareHerbs.includes(h.id)?'on':''}" data-compare="${h.id}" type="button">${store.compareHerbs.includes(h.id)?'已加入':'对比'}</button> <button class="fav-btn ${isFav(h.id)?'on':''}" data-fav="${h.id}" onclick="event.stopPropagation();toggleFav('${h.id}')">${isFav(h.id)?'已收藏':'收藏'}</button></td>
+      <td><button class="compare-btn ${store.compareHerbs.includes(h.id)?'on':''}" data-compare="${h.id}" type="button">${store.compareHerbs.includes(h.id)?'已加入':'对比'}</button> <button class="fav-btn ${isFav(h.id)?'on':''}" data-fav="${h.id}" type="button">${isFav(h.id)?'已收藏':'收藏'}</button></td>
     </tr>`).join('') || `<tr><td colspan="7" class="empty">没有匹配的药材，换个筛选试试。</td></tr>`;
   const mobile = $('#herbMobileGrid');
   if(mobile) mobile.innerHTML = list.map(h=>`
@@ -681,7 +682,7 @@ document.addEventListener('click', e=>{
   const remove=e.target.closest('[data-compare-remove]');
   if(remove){ toggleCompareHerb(remove.dataset.compareRemove); return; }
   const fav=e.target.closest('[data-fav]');
-  if(fav && !fav.getAttribute('onclick')){ e.preventDefault(); e.stopPropagation(); toggleFav(fav.dataset.fav); return; }
+  if(fav){ e.preventDefault(); e.stopPropagation(); toggleFav(fav.dataset.fav); return; }
   if(e.target.id==='openCompare'){
     const panel=$('#comparePanel'); if(panel){ panel.hidden=false; renderCompareChart(); panel.scrollIntoView({behavior:'smooth',block:'start'}); }
   }
@@ -709,7 +710,7 @@ function renderHerb(id){
       <h1>${esc(h.name)}</h1>
       <div class="latin">${esc(h.latin)}</div>
       <div class="source-line">${sourceBadge(h)} <span class="badge outline">${esc(fact(h.cat))}</span>
-        <button class="fav-btn ${isFav(h.id)?'on':''}" data-fav="${h.id}" onclick="toggleFav('${h.id}')">${isFav(h.id)?'已收藏':'收藏'}</button>
+        <button class="fav-btn ${isFav(h.id)?'on':''}" data-fav="${h.id}" type="button">${isFav(h.id)?'已收藏':'收藏'}</button>
       </div>
     </div><section class="herb-provenance"><h2>资料与图像来源</h2><p><strong>${factSource}</strong> · 记录分层展示；未录入字段不推断，公开资料整理不等同于药典逐项核验。</p><div class="source-links">${sourceLinks(h)||'<span>尚未配置可直接打开的来源链接。</span>'}</div><p class="image-credit">${imageCredit(h)}</p></section>`;
   $('#herbProps').innerHTML = `
@@ -1077,11 +1078,6 @@ function renderLearn(){
   $('#quizCard').innerHTML=`<div class="quiz-top"><span class="badge qing">${currentLang==='en'?'Question':'第'} ${(learnState.index%QUIZ.length)+1} / ${QUIZ.length} ${currentLang==='en'?'':'题'}</span><span class="muted" style="font-size:12px;">${t('learn.total')} ${s.correct} ${currentLang==='en'?'':'题'}</span></div><div class="progress"><i style="width:${progress}%"></i></div><div class="quiz-q">${item.q}</div><div class="quiz-options">${item.options.map((o,i)=>`<button class="quiz-option" data-answer="${i}">${o}</button>`).join('')}</div><div id="quizFeedback"></div>`;
   document.querySelectorAll('[data-answer]').forEach(btn=>btn.addEventListener('click',()=>{if(learnState.answered)return;learnState.answered=true;const picked=Number(btn.dataset.answer),ok=picked===item.answer;learnState.total++;if(ok)learnState.correct++;saveLearnStats();document.querySelectorAll('[data-answer]').forEach((b,i)=>{b.disabled=true;if(i===item.answer)b.classList.add('correct');if(i===picked&&!ok)b.classList.add('wrong')});$('#quizFeedback').innerHTML=`<div class="quiz-note">${ok?t('learn.correct'):t('learn.retry')} ${item.note}</div><button class="quiz-next" id="quizNext">${t('learn.next')}</button>`;$('#quizNext').onclick=()=>{learnState.index++;learnState.answered=false;renderLearn();updateHomeProgress();};$('#learnStats').textContent=`${t('learn.done')} ${learnState.total} · ${t('learn.right')} ${learnState.correct}`;updateHomeProgress();}));
   $('#learnStats').textContent=`${t('learn.done')} ${s.total} · ${t('learn.right')} ${s.correct}`;
-}
-function renderSaved(){
-  const ids=getFavs(); const grid=$('#savedGrid');
-  if(!ids.length){grid.innerHTML='<div class="saved-empty"><p>还没有本机收藏。去药材星图点亮第一枚收藏吧。</p><a href="#/herbs">去探索本草</a></div>';return;}
-  grid.innerHTML=ids.map(id=>{const h=byId(id);if(!h)return '';return `<a class="card card-pad featured-herb" href="#/herb?id=${h.id}"><div class="image-frame">${herbImage(h,"")}</div><div><div class="n">${esc(h.name)}</div><div class="d">${esc(fact(h.qi))} · ${esc(fact(h.wei))} · ${esc(h.eff)}</div></div><button class="fav-btn on" data-fav="${h.id}" onclick="event.preventDefault();event.stopPropagation();toggleFav('${h.id}');renderSaved();">已收藏</button></a>`}).join('');
 }
 function updateHomeProgress(){const el=$('#homeProgress');if(el){const s=getLearnStats();el.textContent=`${Math.min(s.total,5)} / 5`;}}
 

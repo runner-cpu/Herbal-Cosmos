@@ -35,8 +35,6 @@ function escapeHtml(value) {
 }
 
 let drawer;
-let returnHash = '#/home';
-
 function renderDrawer() {
   if (!drawer) return;
   const herbs = window.HERBS || [];
@@ -53,7 +51,6 @@ function renderDrawer() {
 
 export function openSavedDrawer() {
   if (!drawer) return;
-  if (location.hash && !location.hash.includes('/saved')) returnHash = location.hash;
   drawer.hidden = false;
   drawer.classList.add('is-open');
   drawer.querySelector('[data-saved-close]')?.focus();
@@ -90,7 +87,11 @@ function initDrawer() {
     drawer.innerHTML = '<div class="saved-drawer-head"><div><span>LOCAL HERBARIUM</span><h2>本机收藏</h2></div><button type="button" data-saved-close aria-label="关闭收藏">×</button></div><div class="saved-drawer-actions"><button type="button" data-saved-export>导出 JSON</button><span>仅保存在本机</span></div><div data-saved-list></div>';
     document.body.append(drawer);
   }
-  document.getElementById('savedDrawerToggle')?.addEventListener('click', openSavedDrawer);
+  document.addEventListener('click', event => {
+    if (!event.target.closest('[data-saved-open]')) return;
+    event.preventDefault();
+    openSavedDrawer();
+  });
   drawer.addEventListener('click', event => {
     if (event.target.matches('[data-saved-close]')) closeSavedDrawer();
     if (event.target.matches('[data-saved-export]')) exportSavedJson();
@@ -109,14 +110,16 @@ function initDrawer() {
     renderDrawer();
     syncFavoriteCount(readIds());
   });
-  window.addEventListener('hashchange', () => {
+  const recoverLegacySavedRoute = () => {
     if (location.hash.replace(/^#\/?/, '').split('?')[0] === 'saved') {
       openSavedDrawer();
-      history.replaceState(null, '', returnHash || '#/home');
+      history.replaceState(null, '', '#/home');
       window.render?.();
     }
-  });
+  };
+  window.addEventListener('hashchange', recoverLegacySavedRoute);
   syncFavoriteCount();
+  recoverLegacySavedRoute();
 }
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {

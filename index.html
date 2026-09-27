@@ -62,7 +62,7 @@
         <div class="search-results" id="searchResults" role="listbox" aria-label="搜索建议"></div>
         <div class="sr-only" id="searchStatus" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
-      <button class="saved-drawer-toggle" id="savedDrawerToggle" type="button" aria-label="打开收藏"><span aria-hidden="true">藏</span><b data-saved-count>0</b></button>
+      <button class="saved-drawer-toggle" id="savedDrawerToggle" type="button" data-saved-open aria-label="打开收藏" aria-controls="savedDrawer"><span aria-hidden="true">藏</span><b data-saved-count>0</b></button>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深浅模式"><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>夜读</span></button>
       <button class="hamburger" id="hamburger" type="button" aria-label="菜单" aria-controls="mainNav" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -81,8 +81,8 @@
           <div class="en">HERBAL COSMOS</div>
           <p class="tagline" data-i18n="hero.tagline">以 18,817 种中药资源为星辰，从一味药出发，漫游性味、配伍、典籍与生活的完整宇宙。</p>
           <div class="cta-row">
-            <button class="cta solid" onclick="location.hash='#/herbs'" data-i18n="hero.explore">探索星图</button>
-            <button class="cta" onclick="location.hash='#/formula'" data-i18n="hero.network">进入配伍网络</button>
+            <a class="cta solid" href="#/herbs" data-i18n="hero.explore">探索星图</a>
+            <a class="cta" href="#/formula" data-i18n="hero.network">进入配伍网络</a>
           </div>
         </div>
         <div class="hero-hint" data-i18n="hero.hint">拖动旋转星云 · 滚轮缩放 · 点击星辰查看一味药</div>
@@ -115,7 +115,7 @@
         </section>
         <p class="data-note" data-i18n="data.note">图表展示代表性数据集中的关系与分布，不表示药效强弱或临床推荐。</p>
         <div class="learning-path">
-          <div class="path-intro"><span>LEARNING JOURNEY</span><h2 data-i18n="home.journey">从一味药，走进本草世界</h2><p data-i18n="home.journeyDesc">五步完成认识、理解、关联与复习。进度仅保存在本机。</p><button onclick="location.hash='#/learn'" data-i18n="home.start">开始今日学习</button></div>
+          <div class="path-intro"><span>LEARNING JOURNEY</span><h2 data-i18n="home.journey">从一味药，走进本草世界</h2><p data-i18n="home.journeyDesc">五步完成认识、理解、关联与复习。进度仅保存在本机。</p><a href="#/learn" data-i18n="home.start">开始今日学习</a></div>
           <div class="path-steps">
             <a href="#/herbs"><b>01</b><strong>认识本草</strong><span>检索药材与来源</span></a>
             <a href="#/qiwei"><b>02</b><strong>性味归经</strong><span>理解基础属性</span></a>
@@ -123,7 +123,7 @@
             <a href="#home-classics"><b>04</b><strong>典籍研读</strong><span>回到历史证据</span></a>
             <a href="#home-food"><b>05</b><strong>食养同源</strong><span>连接日常生活</span></a>
           </div>
-          <div class="path-progress"><span data-i18n="home.progress">今日进度</span><strong id="homeProgress">0 / 5</strong><a href="#/saved" data-i18n="nav.saved">查看收藏</a></div>
+          <div class="path-progress"><span data-i18n="home.progress">今日进度</span><strong id="homeProgress">0 / 5</strong><button type="button" data-saved-open data-i18n="home.saved" aria-controls="savedDrawer">查看收藏</button></div>
         </div>
 
         <div class="section-heading-row home-featured-heading"><div><span>FEATURED HERB CABINET</span><h2 data-i18n="home.discover">精选本草图鉴</h2></div><a href="#/herbs" data-i18n="home.viewAll">查看全部代表药材 →</a></div>
@@ -163,13 +163,6 @@
       <div class="eyebrow">Learn · Recall · Grow</div><h1 class="title">本草学习舱</h1>
       <p class="page-intro">把漫游变成可积累的学习：先看知识卡，再用小测检验记忆。每次答题都会留下学习足迹。</p>
       <div class="learn-shell"><div class="quiz-card" id="quizCard"></div><div class="learn-list"><div class="card"><h3 data-i18n="learn.method">学习方法</h3><p>先观察四气、五味与归经，再把功效放回到方剂和生活场景中理解。</p></div><div class="card"><h3 data-i18n="learn.today">今日提示</h3><p>药食同源不等于人人适用；这里的内容用于文化学习，具体使用请遵医嘱。</p></div><div class="card"><h3 data-i18n="learn.footprint">你的足迹</h3><p id="learnStats">已完成 0 题 · 正确 0 题</p></div></div></div>
-    </section>
-
-    <section class="page" data-route="saved">
-      <div class="eyebrow">Local Herbarium</div><h1 class="title">本机收藏</h1>
-      <p class="page-intro">收藏只保存在当前浏览器，不需要登录，不会上传服务器；清除浏览器数据后会丢失。</p>
-      <div class="local-storage-note"><strong>本地学习闭环</strong><span>适合在同一台设备上继续复习。想跨设备同步，请先导出或使用浏览器同步功能。</span></div>
-      <div id="savedGrid" class="saved-grid"></div>
     </section>
 
     <!-- ============ 药材星图（列表） ============ -->
@@ -254,7 +247,7 @@
       <div class="eyebrow">Pattern · Formula · Herb</div>
       <h1 class="title">病证 · 方剂 · 药材</h1>
       <p class="page-intro">从一个证候开始，逐级查看文献关联方剂与核心药物。默认只展开当前证候的 2–3 首方剂和每方 5 味核心药，避免把所有关系压在一张图上。</p>
-      <div class="focus-workspace"><aside class="syndrome-index"><div class="workspace-label">证候索引 · <span data-zheng-count>—</span></div><input class="syndrome-search" id="syndromeSearch" type="search" placeholder="搜索证候"><div class="syndrome-list" id="zhengIndex"></div></aside><section class="syndrome-flow"><div class="syndrome-flow-head"><div><h2 id="zhengFocusTitle">选择一个证候</h2><p id="zhengFocusDesc">从左侧选择证候，查看证—方—药的最短阅读路径。</p></div><span class="badge celadon" id="zhengFocusCount">—</span></div><div class="chart-box" id="zhengSankey"></div></section><aside class="syndrome-evidence" id="zhengEvidence"><span>证据检查器</span><h2>从证候开始</h2><p>选中证候后，这里会展示出处、方剂数量与核心药材。点击药材名称可进入本草知识卡。</p></aside></div>
+      <div class="focus-workspace"><aside class="syndrome-index"><div class="workspace-label">证候索引 · <span data-zheng-count>—</span></div><label class="sr-only" for="syndromeSearch">搜索证候</label><input class="syndrome-search" id="syndromeSearch" type="search" placeholder="搜索证候"><div class="syndrome-list" id="zhengIndex"></div></aside><section class="syndrome-flow"><div class="syndrome-flow-head"><div><h2 id="zhengFocusTitle">选择一个证候</h2><p id="zhengFocusDesc">从左侧选择证候，查看证—方—药的最短阅读路径。</p></div><span class="badge celadon" id="zhengFocusCount">—</span></div><div class="chart-box" id="zhengSankey"></div></section><aside class="syndrome-evidence" id="zhengEvidence"><span>证据检查器</span><h2>从证候开始</h2><p>选中证候后，这里会展示出处、方剂数量与核心药材。点击药材名称可进入本草知识卡。</p></aside></div>
     </section>
 
     <!-- ============ 未知路径恢复 ============ -->
