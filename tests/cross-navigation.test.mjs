@@ -1,10 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { formulaHref, zhengHref, learnStep, quizFeedbackMarkup } from '../assets/js/pages/cross-navigation.js';
+import { formulaHref, zhengHref, learnStep, normalizeLegacyRoute, quizFeedbackMarkup } from '../assets/js/pages/cross-navigation.js';
 
 test('formula and pattern links preserve the navigation context', () => {
   assert.equal(formulaHref('guizhitang', { source: 'zheng', zhengId: 'feng-han' }), '#/formula?f=guizhitang&from=zheng&z=feng-han');
-  assert.equal(zhengHref('feng-han', 'guizhitang'), '#/zheng?z=feng-han&f=guizhitang');
+  assert.equal(zhengHref('feng-han', 'guizhitang'), '#/formula?view=zheng&z=feng-han&f=guizhitang');
+});
+
+test('legacy thin routes resolve into the consolidated home and formula views', () => {
+  assert.deepEqual(normalizeLegacyRoute('learn', { step: '3' }), { route: 'home', params: { step: '3', anchor: 'home-learning' } });
+  assert.deepEqual(normalizeLegacyRoute('zheng', { z: 'feng-han', f: 'guizhitang' }), { route: 'formula', params: { z: 'feng-han', f: 'guizhitang', view: 'zheng' } });
+  assert.deepEqual(normalizeLegacyRoute('herbs', { q: '甘草' }), { route: 'herbs', params: { q: '甘草' } });
 });
 
 test('learning steps are clamped to the five-step journey', () => {

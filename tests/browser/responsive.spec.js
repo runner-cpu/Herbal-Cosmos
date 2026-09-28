@@ -30,7 +30,7 @@ test('homepage exposes audited dataset counts and all official food-directory en
   await page.goto('/#/home');
   await expect(page.locator('[data-food-count]').first()).toHaveText('106');
   const cards=await page.evaluate(()=>window.HERBS.filter(h=>h.kind!=='formula-material').length);
-  expect(cards).toBeGreaterThanOrEqual(780);
+  expect(cards).toBe(902);
   await expect(page.locator('[data-featured-count]').first()).toHaveText(cards.toLocaleString('zh-CN'));
   await expect(page.locator('[data-catalog-count]').first()).toHaveText(/^8,818$/);
   await page.locator('#homeFoodExpand').click();
@@ -50,7 +50,7 @@ test('favorite action keeps navigation badge and drawer in sync', async ({ page 
 
 test('375px routes do not create document or chart overflow', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
-  for (const route of ['home', 'herbs', 'qiwei', 'formula', 'zheng', 'learn']) {
+  for (const route of ['home', 'herbs', 'qiwei', 'formula']) {
     await page.goto('/#/' + route);
     await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
     const widths = await page.evaluate(() => ({
@@ -62,9 +62,10 @@ test('375px routes do not create document or chart overflow', async ({ page }) =
           element: element.tagName.toLowerCase() + (element.id ? '#' + element.id : '') + (element.classList.length ? '.' + [...element.classList].join('.') : ''),
           width: Math.round(rect.width),
           right: Math.round(rect.right),
-          scrollWidth: element.scrollWidth
+          scrollWidth: element.scrollWidth,
+          containedInScroller: Boolean(element.closest('.home-food-strip,.home-categories,#homeFeatured,.formula-index-list,.syndrome-list'))
         };
-      }).filter(item => item.width > document.documentElement.clientWidth + 1 || item.right > document.documentElement.clientWidth + 1).sort((a, b) => b.right - a.right).slice(0, 8)
+      }).filter(item => !item.containedInScroller && (item.width > document.documentElement.clientWidth + 1 || item.right > document.documentElement.clientWidth + 1)).sort((a, b) => b.right - a.right).slice(0, 8)
     }));
     expect(widths.scroll, route + ' document width; offenders=' + JSON.stringify(widths.offenders)).toBeLessThanOrEqual(widths.client + 1);
     const canvases = page.locator('.page.active canvas:visible');
@@ -94,4 +95,19 @@ test('375px shell controls meet the minimum touch target', async ({ page }) => {
     expect(box?.width, selector + ' width').toBeGreaterThanOrEqual(44);
     expect(box?.height, selector + ' height').toBeGreaterThanOrEqual(44);
   }
+});
+
+test('375px consolidated formula views keep the switch usable and within the viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/#/formula');
+  const buttons = page.locator('.formula-view-switch button');
+  await expect(buttons).toHaveCount(2);
+  for (let index = 0; index < await buttons.count(); index += 1) {
+    const box = await buttons.nth(index).boundingBox();
+    expect(box?.width).toBeGreaterThanOrEqual(44);
+    expect(box?.height).toBeGreaterThanOrEqual(44);
+  }
+  await buttons.nth(1).click();
+  await expect(page.locator('#formulaZhengView')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(376);
 });

@@ -17,7 +17,7 @@ html,body{height:100%;}
 body{
   font-family:var(--sans);background:var(--paper);color:var(--ink);
   line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;
-  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);overflow-x:hidden;
 }
 #app{min-height:100vh;display:flex;flex-direction:column;}
 main{flex:1;}
@@ -226,6 +226,7 @@ footer a{color:#E8C87E;}
 
 /* ===== 2026 可视化工作区重构 ===== */
 html{scroll-behavior:smooth}body{line-height:1.65;background:var(--paper)}
+@media (max-width:768px){html{scroll-behavior:auto}}
 .skip-link{position:fixed;left:12px;top:-60px;z-index:200;background:#fff;color:var(--qing);padding:9px 13px;border:2px solid var(--qing);border-radius:6px}.skip-link:focus{top:12px}
 button,a,input,select,summary{outline-offset:3px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--jin)}
 header{background:#0C3028;box-shadow:0 1px 0 rgba(255,255,255,.12)}

@@ -128,6 +128,42 @@ html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#6
 @media (prefers-reduced-motion:reduce) {
   .saved-drawer { transition:none; }
 }
+
+/* Continuous editorial surface: analysis sections remain part of the same paper. */
+.page[data-route="herbs"] .insight-chart-panel,
+.page[data-route="qiwei"] .chart-panel,
+.page[data-route="formula"] .insight-chart-panel,
+.page[data-route="formula"] .graph-workspace,
+.page[data-route="formula"] .formula-zheng-view {
+  background:color-mix(in srgb,var(--paper) 82%,var(--paper-2));
+  border-color:var(--line);
+  box-shadow:none;
+}
+.page[data-route="herbs"] .insight-chart-panel,
+.page[data-route="qiwei"] .chart-panel,
+.page[data-route="formula"] .insight-chart-panel {
+  border-left:0;border-right:0;border-radius:0;padding-left:0;padding-right:0;
+}
+.page[data-route="herbs"] .insight-chart-panel + .insight-chart-panel,
+.page[data-route="qiwei"] .chart-panel + .chart-panel,
+.page[data-route="formula"] .insight-chart-panel + .insight-chart-panel { margin-top:0; }
+.page[data-route="formula"] .graph-workspace { border-radius:0; }
+.formula-view-switch { display:flex; flex-wrap:wrap; gap:4px; margin:18px 0 0; padding:4px; width:max-content; max-width:100%; border:1px solid var(--line); background:var(--paper-2); }
+.formula-view-switch button { min-height:44px; padding:8px 16px; border:0; background:transparent; color:var(--ink-2); font:600 12px var(--sans); }
+.formula-view-switch button:hover,.formula-view-switch button:focus-visible { color:var(--qing); background:var(--card); outline:2px solid var(--jin); outline-offset:-2px; }
+.formula-view-switch button[aria-pressed="true"] { color:var(--card); background:var(--qing); }
+.formula-zheng-view { margin-top:18px; border-top:1px solid var(--line); padding-top:26px; }
+.home-learning-workbench { background:color-mix(in srgb,var(--paper) 88%,var(--paper-2)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.completeness-insight .chart-box { min-height:380px; }
+
+@media (max-width:768px) {
+  .formula-view-switch { width:100%; }
+  .formula-view-switch button { flex:1; min-width:0; }
+  .page[data-route="herbs"] .insight-chart-panel,
+  .page[data-route="qiwei"] .chart-panel,
+  .page[data-route="formula"] .insight-chart-panel { padding-top:24px; padding-bottom:24px; }
+  .completeness-insight .chart-box { min-height:330px; }
+}
 @media (max-width:768px) {
   .context-inner { padding:7px 14px; gap:10px; }
   .context-identity > span:last-child { display:none; }

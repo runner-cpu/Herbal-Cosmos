@@ -238,7 +238,7 @@ function stampHtml(h, sizeCls){
 /* ============================================================
    Hash 路由
    ============================================================ */
-const routes = ['home','herbs','herb','qiwei','formula','zheng','learn'];
+const routes = ['home','herbs','herb','qiwei','formula'];
 function parseHash(){
   const raw = location.hash.replace(/^#\/?/, '') || 'home';
   const separator = raw.indexOf('?');
@@ -246,10 +246,13 @@ function parseHash(){
   const queryStr = separator < 0 ? '' : raw.slice(separator + 1);
   const params = Object.fromEntries(new URLSearchParams(queryStr));
   const legacyAnchors = { food: 'home-food', culture: 'home-culture' };
+  const legacyRoutes = new Set(['learn','zheng']);
   const legacyDrawers = new Set(['saved']);
-  const homeAnchors = new Set(['home-food', 'home-culture', 'home-sources']);
-  const known = routes.includes(path) || Boolean(legacyAnchors[path]) || legacyDrawers.has(path) || homeAnchors.has(path) || path==='classics';
-  const route = known ? (routes.includes(path) ? path : 'home') : 'not-found';
+  const homeAnchors = new Set(['home-learning','home-food','home-classics','home-culture','home-sources']);
+  const known = routes.includes(path) || legacyRoutes.has(path) || Boolean(legacyAnchors[path]) || legacyDrawers.has(path) || homeAnchors.has(path) || path==='classics';
+  let route = known ? (routes.includes(path) ? path : 'home') : 'not-found';
+  if(path==='learn'){route='home';params.anchor='home-learning';}
+  if(path==='zheng'){route='formula';params.view='zheng';}
   if (legacyAnchors[path]) params.anchor = legacyAnchors[path];
   else if (homeAnchors.has(path)) params.anchor = path;
   if(path==='classics') params.focus='classics';
@@ -278,30 +281,17 @@ function render(){
     if(active) a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
-  const more=document.getElementById('navMore');
-  if(more){
-    const moreActive=route==='zheng';
-    more.classList.toggle('active',moreActive);
-    const moreSummary=more.querySelector('summary');
-    if(moreActive) moreSummary?.setAttribute('aria-current','page');
-    else moreSummary?.removeAttribute('aria-current');
-    more.querySelectorAll('[data-more-route]').forEach(link=>{
-      const active=link.dataset.moreRoute===route;
-      link.classList.toggle('active',active);
-      if(active) link.setAttribute('aria-current','page');
-      else link.removeAttribute('aria-current');
-    });
-  }
   if(typeof closeSearch==='function') closeSearch();
   window.scrollTo(0,0);
   if(route==='herbs'){
     if(params.mode==='catalog') store._atlasMode='catalog';
     if(params.mode==='featured') store._atlasMode='featured';
     if(params.coverage !== undefined){store._coverage=params.coverage;store._atlasMode='featured';store.filters={qi:'',wei:'',cat:''};store._kw='';}
+    if(params.cat !== undefined){store._coverage='';store._atlasMode='featured';store.filters={qi:'',wei:'',cat:params.cat};store._kw='';}
     if(params.q!=null){ store._catalogKw=params.q; store._catalogPage=1; }
   }
   const views = { home:renderHome, herbs:renderHerbs, herb:()=>renderHerb(params.id), qiwei:renderQiwei,
-    formula:renderFormula, zheng:renderZheng, learn:renderLearn, 'not-found':()=>renderNotFound(unknownPath) };
+    formula:renderFormula, 'not-found':()=>renderNotFound(unknownPath) };
   try{ (views[route]||views.home)(); }catch(err){ console.error('[herbal-cosmos] render error:', err); }
   applyLanguage();
   window.dispatchEvent(new CustomEvent('herbal:route',{detail:{route,params,unknownPath}}));
@@ -324,7 +314,6 @@ function render(){
   });
   window.addEventListener('hashchange',()=>{
     setNavigationOpen(false);
-    document.getElementById('navMore')?.removeAttribute('open');
     render();
   });
   window.addEventListener('herbal:theme', render);
@@ -519,6 +508,7 @@ function renderHome(){
   syncDatasetCounts();
   renderHomeMuseum();
   renderHomeClassics();
+  renderLearn();
   updateHomeProgress();
 }
 
@@ -552,6 +542,8 @@ function renderHerbs(){
     if(kw && !(h.name.toLowerCase().includes(kw)||h.pinyin.includes(kw)||h.eff.includes(kw)||(h.aliases||[]).some(alias=>alias.toLowerCase().includes(kw)))) return false;
     if(store._coverage==='images' && !h.image) return false;
     if(store._coverage==='missing-image' && h.image) return false;
+    if(store._coverage==='complete' && h.factStatus!=='complete') return false;
+    if(store._coverage==='partial' && h.factStatus!=='partial') return false;
     if(store._coverage==='origin' && !h.origin?.length) return false;
     if(store._coverage==='sources' && ![h.sourceRefs,h.distributionSourceRefs].some(refs=>refs?.some(ref=>/^https?:\/\//.test(ref)))) return false;
     return true;
@@ -898,6 +890,13 @@ function renderQiwei(){
 function renderFormula(){
   if(typeof echarts === 'undefined'){ return; }
   const q = parseHash().params;
+  const view = q.view === 'zheng' ? 'zheng' : 'network';
+  document.querySelectorAll('[data-formula-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.formulaView===view)));
+  const networkView=document.getElementById('formulaNetworkView');
+  const zhengView=document.getElementById('formulaZhengView');
+  if(networkView) networkView.hidden=view!=='network';
+  if(zhengView) zhengView.hidden=view!=='zheng';
+  if(view==='zheng'){renderZheng();return;}
   const focusId = q.f && formulaById(q.f) ? q.f : '';
   store._formulaFocus=focusId;
   const visibleFormulas = focusId ? FORMULAS.filter(f=>f.id===focusId) : q.herb ? FORMULAS.filter(f=>f.herbs.some(entry=>entry[0]===q.herb)) : FORMULAS;
@@ -937,7 +936,7 @@ function renderFormula(){
     if(!inspector||!f) return;
     store.selectedFormula=f.id;
     const relatedZheng=ZHENGS.filter(z=>z.formulas.includes(f.id));
-    inspector.innerHTML=`<span>关系检查器 · 方剂</span><h2>${esc(f.name)}</h2><div class="inspector-source"><b>来源</b> ${esc(f.from)}<br><b>主治</b> ${esc(f.zheng)}<br><b>功效</b> ${esc(f.eff)}<div class="source-links">${sourceLinks(f)}</div></div><div class="evidence-links">${relatedZheng.map(z=>`<a href="#/zheng?z=${encodeURIComponent(z.id)}&f=${encodeURIComponent(f.id)}">${esc(z.name)} →</a>`).join('')}</div><div class="workspace-label">君臣佐使组成</div><div class="composition-list">${f.herbs.map(x=>`<div class="composition-row"><b>${esc(x[2])}</b><a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a><small>${esc(x[1]||'')}</small></div>`).join('')}</div>`;
+    inspector.innerHTML=`<span>关系检查器 · 方剂</span><h2>${esc(f.name)}</h2><div class="inspector-source"><b>来源</b> ${esc(f.from)}<br><b>主治</b> ${esc(f.zheng)}<br><b>功效</b> ${esc(f.eff)}<div class="source-links">${sourceLinks(f)}</div></div><div class="evidence-links">${relatedZheng.map(z=>`<a href="#/formula?view=zheng&z=${encodeURIComponent(z.id)}&f=${encodeURIComponent(f.id)}">${esc(z.name)} →</a>`).join('')}</div><div class="workspace-label">君臣佐使组成</div><div class="composition-list">${f.herbs.map(x=>`<div class="composition-row"><b>${esc(x[2])}</b><a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a><small>${esc(x[1]||'')}</small></div>`).join('')}</div>`;
   };
   const showHerb=(h)=>{
     if(!inspector||!h) return;
@@ -948,7 +947,7 @@ function renderFormula(){
   else if(store.selectedFormula) showFormula(formulaById(store.selectedFormula));
   if(q.herb) { const focusedHerb=byId(q.herb); if(focusedHerb) showHerb(focusedHerb); }
   if(inspector && q.from==='zheng' && q.z){
-    const back=document.createElement('a'); back.href='#/zheng?z='+encodeURIComponent(q.z)+'&f='+encodeURIComponent(focusId); back.className='inspector-back-link'; back.textContent='返回相关证候'; inspector.prepend(back);
+    const back=document.createElement('a'); back.href='#/formula?view=zheng&z='+encodeURIComponent(q.z)+'&f='+encodeURIComponent(focusId); back.className='inspector-back-link'; back.textContent='返回相关证候'; inspector.prepend(back);
   }
   gChart.on('click', params=>{if(!params.data||!params.data.id)return;const id=params.data.id;if(id.startsWith('f_')){location.hash='#/formula?f='+encodeURIComponent(id.slice(2));}else if(id.startsWith('h_')){showHerb(byId(id.slice(2)));}});
   document.querySelectorAll('[data-formula-index]').forEach(btn=>btn.onclick=()=>{store._formulaFocus=btn.dataset.formulaIndex; location.hash='#/formula?f='+btn.dataset.formulaIndex;});
@@ -1013,13 +1012,13 @@ function renderZheng(){
       emphasis:{focus:'adjacency',lineStyle:{width:4,color:p.cinnabar}}
     }]
   });
-  sChart.on('click', params=>{ const id=params.data&&params.data.id||''; if(id.startsWith('herb-')) location.hash='#/herb?id='+id.slice(5); if(id.startsWith('formula-')){ const formula=selectedFormulas.find(item=>'formula-'+item.id===id)||selectedFormulas[Number(id.slice(8))]; if(formula) location.hash='#/formula?f='+encodeURIComponent(formula.id)+'&from=zheng&z='+encodeURIComponent(cur.id); } });
+  sChart.on('click', params=>{ const id=params.data&&params.data.id||''; if(id.startsWith('herb-')) location.hash='#/herb?id='+id.slice(5); if(id.startsWith('formula-')){ const formula=selectedFormulas.find(item=>'formula-'+item.id===id)||selectedFormulas[Number(id.slice(8))]; if(formula) location.hash='#/formula?view=network&f='+encodeURIComponent(formula.id)+'&from=zheng&z='+encodeURIComponent(cur.id); } });
   const title=$('#zhengFocusTitle'); if(title) title.textContent=cur.name;
   const desc=$('#zhengFocusDesc'); if(desc) desc.textContent=`${cur.desc} · 当前展示 ${selectedFormulas.length} 首方剂与 ${coreIds.length} 味核心药材`;
   const count=$('#zhengFocusCount'); if(count) count.textContent=`${selectedFormulas.length} 方 · ${coreIds.length} 味药`;
   const evidence=$('#zhengEvidence');
   if(evidence) evidence.innerHTML=`<span>证据检查器 · 当前证候</span><h2>${esc(cur.name)}</h2><p>${esc(cur.desc)}</p><div class="source-links">${sourceLinks(cur)}</div>${selectedFormulas.map(f=>`<div class="evidence-formula"><strong>${esc(f.name)}</strong><div class="muted" style="font-size:11px;margin-top:4px;">${esc(f.from)} · ${esc(f.eff)}</div><div class="evidence-herbs">${f.herbs.slice(0,5).map(x=>`<a href="#/herb?id=${x[0]}">${esc(herbName(x[0]))}</a>`).join('')}</div></div>`).join('')}`;
-  if(evidence) evidence.querySelectorAll('.evidence-formula').forEach((el,index)=>{ const formula=selectedFormulas[index]; if(!formula) return; const link=document.createElement('a'); link.href='#/formula?f='+encodeURIComponent(formula.id)+'&from=zheng&z='+encodeURIComponent(cur.id); link.dataset.testid='zheng-formula-link'; link.className='evidence-formula-link'; link.textContent='查看方剂配伍 →'; el.prepend(link); });
+  if(evidence) evidence.querySelectorAll('.evidence-formula').forEach((el,index)=>{ const formula=selectedFormulas[index]; if(!formula) return; const link=document.createElement('a'); link.href='#/formula?view=network&f='+encodeURIComponent(formula.id)+'&from=zheng&z='+encodeURIComponent(cur.id); link.dataset.testid='zheng-formula-link'; link.className='evidence-formula-link'; link.textContent='查看方剂配伍 →'; el.prepend(link); });
   const index=$('#zhengIndex');
   const query=($('#syndromeSearch')?.value||'').trim();
   const filtered=ZHENGS.filter(z=>!query||z.name.includes(query)||z.desc.includes(query));
@@ -1027,9 +1026,9 @@ function renderZheng(){
 }
 document.addEventListener('click', e=>{
   const card=e.target.closest('[data-zheng]');
-  if(card){ store.selectedZheng=card.dataset.zheng; location.hash='#/zheng?z='+encodeURIComponent(card.dataset.zheng); }
+  if(card){ store.selectedZheng=card.dataset.zheng; location.hash='#/formula?view=zheng&z='+encodeURIComponent(card.dataset.zheng); }
 });
-document.addEventListener('input', e=>{if(e.target.id==='syndromeSearch'&&parseHash().route==='zheng')renderZheng();});
+document.addEventListener('input', e=>{const state=parseHash();if(e.target.id==='syndromeSearch'&&state.route==='formula'&&state.params.view==='zheng')renderZheng();});
 
 function renderHomeClassics(){
   if(typeof echarts === 'undefined'){ return; }
@@ -1095,12 +1094,15 @@ const learnState = {index:0, answered:false, correct:0, total:0};
 function getLearnStats(){try{const value=JSON.parse(storageRead('herbal_learn_stats','{"total":0,"correct":0}'));return {total:Number.isFinite(value?.total)?value.total:0,correct:Number.isFinite(value?.correct)?value.correct:0};}catch(e){return {total:0,correct:0}}}
 function saveLearnStats(){storageWrite('herbal_learn_stats',JSON.stringify({total:learnState.total,correct:learnState.correct}));}
 function renderLearn(){
+  const quizCard=$('#quizCard');
+  const stats=$('#learnStats');
+  if(!quizCard||!stats) return;
   const s=getLearnStats(); learnState.total=s.total; learnState.correct=s.correct;
   const stepParam=Number(parseHash().params.step); if(Number.isFinite(stepParam)&&stepParam>0) learnState.index=Math.min(QUIZ.length-1,Math.max(0,stepParam-1));
   const item=QUIZ[learnState.index%QUIZ.length]; const progress=((learnState.index%QUIZ.length)/QUIZ.length)*100;
-  $('#quizCard').innerHTML=`<div class="quiz-top"><span class="badge qing">${currentLang==='en'?'Question':'第'} ${(learnState.index%QUIZ.length)+1} / ${QUIZ.length} ${currentLang==='en'?'':'题'}</span><span class="muted" style="font-size:12px;">${t('learn.total')} ${s.correct} ${currentLang==='en'?'':'题'}</span></div><div class="progress"><i style="width:${progress}%"></i></div><div class="quiz-q">${item.q}</div><div class="quiz-options">${item.options.map((o,i)=>`<button class="quiz-option" data-answer="${i}">${o}</button>`).join('')}</div><div id="quizFeedback"></div>`;
+  quizCard.innerHTML=`<div class="quiz-top"><span class="badge qing">${currentLang==='en'?'Question':'第'} ${(learnState.index%QUIZ.length)+1} / ${QUIZ.length} ${currentLang==='en'?'':'题'}</span><span class="muted" style="font-size:12px;">${t('learn.total')} ${s.correct} ${currentLang==='en'?'':'题'}</span></div><div class="progress"><i style="width:${progress}%"></i></div><div class="quiz-q">${item.q}</div><div class="quiz-options">${item.options.map((o,i)=>`<button class="quiz-option" data-answer="${i}">${o}</button>`).join('')}</div><div id="quizFeedback" aria-live="polite"></div>`;
   document.querySelectorAll('[data-answer]').forEach(btn=>btn.addEventListener('click',()=>{if(learnState.answered)return;learnState.answered=true;const picked=Number(btn.dataset.answer),ok=picked===item.answer;learnState.total++;if(ok)learnState.correct++;saveLearnStats();document.querySelectorAll('[data-answer]').forEach((b,i)=>{b.disabled=true;if(i===item.answer)b.classList.add('correct');if(i===picked&&!ok)b.classList.add('wrong')});$('#quizFeedback').innerHTML=`<div class="quiz-note">${ok?t('learn.correct'):t('learn.retry')} ${item.note}</div><button class="quiz-next" id="quizNext">${t('learn.next')}</button>`;$('#quizNext').onclick=()=>{learnState.index++;learnState.answered=false;renderLearn();updateHomeProgress();};$('#learnStats').textContent=`${t('learn.done')} ${learnState.total} · ${t('learn.right')} ${learnState.correct}`;updateHomeProgress();}));
-  $('#learnStats').textContent=`${t('learn.done')} ${s.total} · ${t('learn.right')} ${s.correct}`;
+  stats.textContent=`${t('learn.done')} ${s.total} · ${t('learn.right')} ${s.correct}`;
 }
 function updateHomeProgress(){const el=$('#homeProgress');if(el){const s=getLearnStats();el.textContent=`${Math.min(s.total,5)} / 5`;}}
 
@@ -1242,18 +1244,9 @@ searchResults.addEventListener('click', closeSearch);
 document.getElementById('hamburger').addEventListener('click', ()=>{
   setNavigationOpen(!document.getElementById('mainNav').classList.contains('open'));
 });
-const navMore=document.getElementById('navMore');
 document.addEventListener('keydown',event=>{
   if(event.key!=='Escape') return;
-  if(navMore?.open){
-    navMore.open=false;
-    navMore.querySelector('summary')?.focus();
-    return;
-  }
   if(document.getElementById('mainNav')?.classList.contains('open')) setNavigationOpen(false,true);
-});
-document.addEventListener('pointerdown',event=>{
-  if(navMore?.open&&!navMore.contains(event.target)) navMore.open=false;
 });
 document.addEventListener('change', e=>{
   if(e.target.id==='formulaFocus'){ location.hash=e.target.value?'#/formula?f='+encodeURIComponent(e.target.value):'#/formula'; }
@@ -1261,6 +1254,14 @@ document.addEventListener('change', e=>{
 });
 document.addEventListener('click', e=>{
   if(e.target.id==='resetGraph'){ store._formulaFocus=''; if(parseHash().route==='formula' && !parseHash().params.f) renderFormula(); else location.hash='#/formula'; }
+  const formulaView=e.target.closest('[data-formula-view]');
+  if(formulaView){
+    const params=parseHash().params;
+    const next=new URLSearchParams();
+    if(formulaView.dataset.formulaView==='zheng'){next.set('view','zheng');if(params.z)next.set('z',params.z);if(params.f)next.set('f',params.f);}
+    else {if(params.f)next.set('f',params.f);if(params.from)next.set('from',params.from);if(params.z)next.set('z',params.z);}
+    location.hash='#/formula'+(next.toString()?'?'+next.toString():'');
+  }
 });
 const themeToggle=document.getElementById('themeToggle');
 if(storageRead('herbal_theme')==='night') document.body.classList.add('night');
@@ -1272,9 +1273,8 @@ updateThemeControl();
 const hero=document.querySelector('.hero');
 if(hero) hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--spot-x',`${((e.clientX-r.left)/r.width)*100}%`);hero.style.setProperty('--spot-y',`${((e.clientY-r.top)/r.height)*100}%`);});
 document.addEventListener('click', e=>{
-  if(e.target.closest('nav a,.nav-popover a') || (e.target.closest('#app') && !e.target.closest('#mainNav,#hamburger') && window.innerWidth<=768)){
+  if(e.target.closest('nav a') || (e.target.closest('#app') && !e.target.closest('#mainNav,#hamburger') && window.innerWidth<=768)){
     setNavigationOpen(false);
-    const more=document.getElementById('navMore'); if(more) more.removeAttribute('open');
   }
   if(!e.target.closest('.searchbox')) closeSearch();
 });

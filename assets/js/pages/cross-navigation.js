@@ -6,9 +6,15 @@ export function formulaHref(formulaId, { source = 'zheng', zhengId = '' } = {}) 
 }
 
 export function zhengHref(zhengId, formulaId = '') {
-  const params = new URLSearchParams({ z: zhengId });
+  const params = new URLSearchParams({ view: 'zheng', z: zhengId });
   if (formulaId) params.set('f', formulaId);
-  return '#/zheng?' + params.toString();
+  return '#/formula?' + params.toString();
+}
+
+export function normalizeLegacyRoute(route, params = {}) {
+  if (route === 'learn') return { route: 'home', params: { ...params, anchor: 'home-learning' } };
+  if (route === 'zheng') return { route: 'formula', params: { ...params, view: 'zheng' } };
+  return { route, params: { ...params } };
 }
 
 export function learnStep(value, total = 5) {
@@ -21,7 +27,7 @@ export function quizFeedbackMarkup({ ok, note, correctLabel = '答对了！', re
 }
 
 function initCrossNavigation() {
-  window.HerbalCrossNavigation = { formulaHref, zhengHref, learnStep, quizFeedbackMarkup };
+  window.HerbalCrossNavigation = { formulaHref, zhengHref, learnStep, normalizeLegacyRoute, quizFeedbackMarkup };
   window.openQuizFeedback = result => {
     const target = document.getElementById('quizFeedback');
     if (!target) return;

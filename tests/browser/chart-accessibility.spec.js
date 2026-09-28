@@ -28,3 +28,14 @@ test('rendered charts have readable names and generated evidence summaries', asy
   await evidenceLink.focus();
   await expect(evidenceLink).toBeFocused();
 });
+
+test('catalog completeness matrix exposes a keyboard-accessible evidence path', async ({ page }) => {
+  await page.goto('/#/herbs');
+  await expect(page.locator('#factCompletenessChart canvas')).toBeVisible();
+  await expect(page.locator('#factCompletenessChart')).toHaveAttribute('role', 'img');
+  await expect(page.locator('#factCompletenessChart')).toHaveAttribute('aria-label', /资料|覆盖/);
+  const access = page.locator('#factCompletenessAccess select');
+  await expect(access).toBeVisible();
+  await access.selectOption({ index: 1 });
+  await expect(page.locator('#factCompletenessEvidence .evidence-links a').first()).toBeVisible();
+});

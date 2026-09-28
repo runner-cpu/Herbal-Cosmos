@@ -104,7 +104,6 @@ function initHomeModules() {
   updateFoodToggle();
   const initialAnchor = location.hash.replace(/^#\/?/, '').split('?')[0];
   if (initialAnchor === 'home-food' || initialAnchor === 'home-culture') scrollHomeAnchor(initialAnchor);
-  document.querySelectorAll('.path-steps a').forEach((link, index) => { link.href = '#/learn?step=' + (index + 1); });
   document.getElementById('homeCultureExpand')?.addEventListener('click', () => { cultureExpanded = !cultureExpanded; renderCulture(); });
   document.getElementById('homeFoodExpand')?.addEventListener('click', () => { window.__HERBAL_FOOD_EXPANDED__ = !window.__HERBAL_FOOD_EXPANDED__; renderFood(); updateFoodToggle(); });
   document.addEventListener('click', event => {

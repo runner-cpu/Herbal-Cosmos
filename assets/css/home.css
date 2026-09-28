@@ -47,6 +47,7 @@
 .page[data-route="home"] .module-food b,.page[data-route="home"] .module-culture b,.page[data-route="home"] .module-food i,.page[data-route="home"] .module-culture i{position:static;color:var(--celadon)}
 .page[data-route="home"] .module-food span,.page[data-route="home"] .module-culture span{color:var(--ink-2);max-width:none}
 .page[data-route="home"] .learning-path{margin-top:var(--section-space);padding:34px 0;gap:24px;background:transparent}
+.page[data-route="home"] .home-learning-journey,.page[data-route="home"] .home-learning-workbench{min-width:0;max-width:100%;}
 .page[data-route="home"] .path-steps b{background:var(--paper-2);color:var(--qing);border:1px solid var(--line)}
 .page[data-route="home"] .section-heading-row{margin:0 0 20px;align-items:baseline;gap:18px}
 .page[data-route="home"] .section-heading-row h2{font-size:clamp(26px,3vw,34px);line-height:1.5}
@@ -60,6 +61,8 @@
 .page[data-route="home"] .home-food,.page[data-route="home"] .home-culture,.page[data-route="home"] .home-classics,.page[data-route="home"] .home-source-band{background:transparent;border:0;border-top:1px solid var(--line);border-radius:0;margin-top:var(--section-space);padding:32px 0 0;box-shadow:none}
 .page[data-route="home"] .home-classics-chart,.page[data-route="home"] .home-culture-card,.page[data-route="home"] .home-food-card{background:transparent;border:0;box-shadow:none}
 .page[data-route="home"] .home-food-strip{gap:18px;scroll-snap-type:x proximity;padding:4px 0 18px}
+.page[data-route="home"] .home-food-strip{max-width:100%;min-width:0}
+.page[data-route="home"] #homeFoodExpand{position:relative;z-index:2;scroll-margin-top:92px}
 .page[data-route="home"] .home-food-card{scroll-snap-align:start;padding:0;min-width:168px}
 .page[data-route="home"] .home-food-image{border-radius:4px;background:var(--paper-2);height:136px}
 .page[data-route="home"] .home-food-card>strong,.page[data-route="home"] .home-food-card>span{padding:0 2px}

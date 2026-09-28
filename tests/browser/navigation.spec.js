@@ -8,37 +8,33 @@ async function openPrimaryNavigation(page) {
   }
 }
 
-test('primary navigation has five entries and More closes accessibly', async ({ page }) => {
+test('primary navigation has four substantial entries', async ({ page }) => {
   await page.goto('/#/home');
-  await expect(page.locator('#mainNav > a')).toHaveCount(5);
+  await expect(page.locator('#mainNav > a')).toHaveCount(4);
   await openPrimaryNavigation(page);
-
-  const more = page.locator('#navMore');
-  const summary = more.locator('summary');
-  await summary.focus();
-  await page.keyboard.press('Enter');
-  await expect(more).toHaveAttribute('open', '');
-  await page.keyboard.press('Escape');
-  await expect(more).not.toHaveAttribute('open', '');
-  await expect(summary).toBeFocused();
-
-  await summary.click();
-  const viewport = page.viewportSize();
-  if (viewport && viewport.width <= 768) await page.mouse.click(4, viewport.height - 4);
-  else await page.locator('main').click({ position: { x: 1, y: 1 } });
-  await expect(more).not.toHaveAttribute('open', '');
+  await expect(page.locator('#navMore')).toHaveCount(0);
 });
 
-test('More reflects the current secondary route and closes after navigation', async ({ page }) => {
-  await page.goto('/#/home');
-  await openPrimaryNavigation(page);
-  const more = page.locator('#navMore');
-  await more.locator('summary').click();
-  await more.locator('a[href="#/zheng"]').click();
-  await expect(page).toHaveURL(/#\/zheng$/);
-  await expect(more).not.toHaveAttribute('open', '');
-  await expect(more.locator('summary')).toHaveAttribute('aria-current', 'page');
-  await expect(page.locator('[data-route="zheng"]')).toBeVisible();
+test('legacy learning and syndrome routes open their consolidated views', async ({ page }) => {
+  await page.goto('/#/learn?step=2');
+  await expect(page.locator('[data-route="home"]')).toBeVisible();
+  await expect(page.locator('#home-learning')).toBeVisible();
+  await page.goto('/#/zheng?z=feng-han&f=guizhitang');
+  await expect(page.locator('[data-route="formula"]')).toBeVisible();
+  await expect(page.locator('#formulaZhengView')).toBeVisible();
+  await expect(page.locator('[data-formula-view="zheng"]')).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('formula views preserve syndrome and formula context in both directions', async ({ page }) => {
+  await page.goto('/#/formula?view=zheng&z=feng-han&f=guizhitang');
+  await expect(page.locator('#zhengFocusTitle')).not.toHaveText('选择一个证候');
+  await page.locator('[data-formula-view="network"]').click();
+  await expect(page).toHaveURL(/#\/formula[?]f=guizhitang&z=feng-han$/);
+  await expect(page.locator('#formulaNetworkView')).toBeVisible();
+  await page.locator('[data-formula-view="zheng"]').click();
+  await expect(page).toHaveURL(/view=zheng/);
+  await expect(page).toHaveURL(/z=feng-han/);
+  await expect(page).toHaveURL(/f=guizhitang/);
 });
 
 test('unknown hash renders a safe recoverable in-app 404', async ({ page }) => {

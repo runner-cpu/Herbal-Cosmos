@@ -40,7 +40,7 @@ test('desktop herb rows expose a native keyboard link to the knowledge card', as
 });
 
 test('syndrome filtering exposes an explicit accessible name', async ({ page }) => {
-  await page.goto('/#/zheng');
+  await page.goto('/#/formula?view=zheng');
   await expect(page.getByLabel('搜索证候', { exact: true })).toBeVisible();
 });
 
@@ -58,7 +58,7 @@ test('home route actions remain native keyboard links', async ({ page }) => {
   const destinations = new Map([
     ['探索星图', '#/herbs'],
     ['进入配伍网络', '#/formula'],
-    ['开始今日学习', '#/learn']
+    ['开始今日学习', '#/home?anchor=home-learning']
   ]);
   for (const [name, href] of destinations) {
     await expect(page.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);

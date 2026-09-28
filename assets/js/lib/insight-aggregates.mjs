@@ -126,4 +126,38 @@ export function buildFoodUsageMatrix(foods = []) {
   return [...counts.values()].sort((a, b) => a.flavor.localeCompare(b.flavor) || a.use.localeCompare(b.use));
 }
 
+/**
+ * Summarise which source-backed knowledge fields are present for each
+ * traditional category. Counts are deliberately additive (not percentages)
+ * so the chart can show both the category size and the evidence available.
+ */
+export function buildFactCompletenessMatrix(herbs = [], limit = 12) {
+  const features = ['图片', '归经', '地区', '分类学', '逐行来源'];
+  const records = herbs.filter(herb => herb?.kind !== 'formula-material' && herb?.id);
+  const groups = new Map();
+  const hasSource = herb => [herb.sourceRefs, herb.distributionSourceRefs]
+    .some(refs => Array.isArray(refs) && refs.some(ref => /^https?:\/\//.test(ref)));
+  records.forEach(herb => {
+    const category = known(herb.cat) ? herb.cat.trim() : '未分类';
+    if (!groups.has(category)) groups.set(category, []);
+    groups.get(category).push(herb);
+  });
+  const rows = [...groups.entries()]
+    .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0], 'zh-CN'))
+    .slice(0, Math.max(1, limit))
+    .map(([category, items]) => ({
+      category,
+      total: items.length,
+      values: [
+        items.filter(item => Boolean(item.image)).length,
+        items.filter(item => Array.isArray(item.meridian) && item.meridian.length > 0).length,
+        items.filter(item => Array.isArray(item.origin) && item.origin.some(known)).length,
+        items.filter(item => known(item.taxonomy)).length,
+        items.filter(hasSource).length
+      ],
+      ids: items.map(item => item.id)
+    }));
+  return { features, categories: rows.map(row => row.category), rows, total: records.length };
+}
+
 export { ROLE_NAMES };

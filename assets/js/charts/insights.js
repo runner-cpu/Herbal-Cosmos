@@ -1,8 +1,9 @@
-import { rankFormulaHerbs, countFormulaRoles, buildMeridianEffectFlow, buildFoodUsageMatrix, buildCooccurrenceMatrix, buildRoleDoseDistribution, buildProvinceDistribution } from '../lib/insight-aggregates.mjs';
+import { rankFormulaHerbs, countFormulaRoles, buildMeridianEffectFlow, buildFoodUsageMatrix, buildCooccurrenceMatrix, buildRoleDoseDistribution, buildProvinceDistribution, buildFactCompletenessMatrix } from '../lib/insight-aggregates.mjs';
 import { buildDataCoverage } from '../lib/data-coverage.mjs';
 const colors=['#B23A2E','#C8A24A','#6B9E8A','#4A6A80'];
 const chartMap=new Map(), observers=new Map();
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const knownValue=value=>typeof value==='string'&&value.trim()&&!/^(?:未录入|未分类|暂无|未知)$/.test(value.trim());
 const herbs=()=>(window.HERBS||[]).filter(h=>h.kind!=='formula-material'), formulas=()=>window.FORMULAS||[];
 const link=(kind,id)=>'<a href="#/'+kind+'?'+(kind==='herb'?'id':'f')+'='+encodeURIComponent(id)+'">'+esc((kind==='herb'?herbs():formulas()).find(item=>item.id===id)?.name||id)+'</a>';
 export function disposeInsights(){chartMap.forEach(instance=>instance.dispose());chartMap.clear();observers.forEach(observer=>observer.disconnect());observers.clear();}
@@ -61,6 +62,22 @@ export function renderProvinceInsight(){
  renderChartSummary('provinceDistributionChart','文字摘要：'+data.covered+' 味有省级分布记录',data.provinces.map(row=>row.province+'：'+row.count+' 味记录'));
  access('provinceAccess','选择省级分布记录',data.provinces.map(row=>({label:row.province+' · '+row.count+' 味',row})),r=>show(r.row));if(data.provinces[0])show(data.provinces[0]);
 }
+export function renderCompletenessInsight(){
+ const p=palette(),data=buildFactCompletenessMatrix(herbs(),12),el=document.getElementById('factCompletenessChart');
+ const note=document.getElementById('completenessCoverage');
+ if(note)note.textContent='覆盖 '+data.total+' 味知识卡；每个色块是该分类中已有记录的数量，点击后按分类筛选。';
+ const show=(row,featureIndex=null)=>{
+   const title=featureIndex===null?row.category:row.category+' · '+data.features[featureIndex];
+   const ids=featureIndex===null?row.ids:row.ids.filter(id=>{const herb=herbs().find(item=>item.id===id);if(!herb)return false;return [Boolean(herb.image),Array.isArray(herb.meridian)&&herb.meridian.length>0,Array.isArray(herb.origin)&&herb.origin.some(knownValue),knownValue(herb.taxonomy),[herb.sourceRefs,herb.distributionSourceRefs].some(refs=>Array.isArray(refs)&&refs.some(ref=>/^https?:\/\//.test(ref)))][featureIndex];});
+   inspect('factCompletenessEvidence',title,'<p>'+esc(ids.length)+' 味记录已满足该项；空白字段继续保留为空。</p><div class="evidence-links">'+ids.slice(0,48).map(id=>link('herb',id)).join('')+'</div>');
+ };
+ const c=chart('factCompletenessChart',data.rows.length>0);
+ c?.setOption({tooltip:{confine:true,formatter:e=>{const value=e.value||[];const row=data.rows[e.data[1]];const feature=data.features[e.data[0]];return esc(row.category)+' · '+esc(feature)+'<br>'+value[2]+' / '+row.total+' 味有记录 · 点击筛选';}},grid:{left:86,right:24,top:12,bottom:54},xAxis:{type:'category',data:data.features,axisLabel:{color:p.muted,fontSize:11}},yAxis:{type:'category',data:data.categories,axisLabel:{color:p.text,fontSize:11}},visualMap:{min:0,max:Math.max(1,...data.rows.flatMap(row=>row.values)),orient:'horizontal',left:'center',bottom:2,textStyle:{color:p.muted},inRange:{color:[p.card,'#B7D0BE','#3C7862']}},series:[{type:'heatmap',data:data.rows.flatMap((row,rowIndex)=>row.values.map((value,featureIndex)=>[featureIndex,rowIndex,value])),label:{show:true,color:p.text,formatter:e=>e.value[2]||''},itemStyle:{borderColor:p.card,borderWidth:2}}]});
+ c?.on('click',e=>{const row=data.rows[e.value[1]],featureIndex=e.value[0];show(row,featureIndex);location.hash='#/herbs?cat='+encodeURIComponent(row.category);});
+ access('factCompletenessAccess','按传统分类查看完整度记录',data.rows.map(row=>({label:row.category+' · '+row.total+' 味',row})),r=>{show(r.row);location.hash='#/herbs?cat='+encodeURIComponent(r.row.category);});
+ if(data.rows[0])show(data.rows[0]);
+ renderChartSummary('factCompletenessChart','文字摘要：资料字段覆盖情况',data.rows.map(row=>row.category+'：'+row.values.map((value,index)=>data.features[index]+' '+value+'/'+row.total).join('、')));
+}
 export function renderMeridianEffectInsight(){
  const p=palette(),flow=buildMeridianEffectFlow(herbs()),c=chart('meridianEffectChart',flow.links.length>0);
  c?.setOption({tooltip:{confine:true},series:[{type:'sankey',data:flow.nodes,links:flow.links,left:25,right:25,top:15,bottom:15,nodeWidth:13,nodeGap:8,emphasis:{focus:'adjacency'},lineStyle:{color:'gradient',opacity:.36},label:{color:p.text,fontSize:10},itemStyle:{borderColor:p.card,borderWidth:1,color:colors[2]}}]});
@@ -77,19 +94,19 @@ export function renderFoodUsageInsight(){
 let scheduled=0;
 export function renderCoverageInsight(){
  const data=buildDataCoverage(window.HERBS||[]),p=palette(),total=data.featuredCards;
- const rows=[{name:'完整属性',count:data.completeFacts,filter:''},{name:'开放图片',count:data.imageBacked,filter:'images'},{name:'逐行链接',count:data.sourceCovered,filter:'sources'},{name:'省级分布',count:data.originCovered,filter:'origin'}];
+ const rows=[{name:'完整来源事实',count:data.completeFacts,filter:'complete'},{name:'部分字段记录',count:data.partialFacts,filter:'partial'},{name:'开放图片',count:data.imageBacked,filter:'images'},{name:'逐行来源',count:data.sourceCovered,filter:'sources'}];
  const go=row=>{location.hash='#/herbs?mode=featured&coverage='+row.filter;};
  const c=chart('homeCoverageChart',total>0);
  c?.setOption({tooltip:{trigger:'axis',confine:true,formatter:items=>{const row=rows[items[0].dataIndex];return row.name+'：'+row.count+' / '+total+' 张卡<br>覆盖 '+(row.count/total*100).toFixed(1)+'% · 点击查看记录';}},grid:{left:68,right:30,top:8,bottom:28},xAxis:{type:'value',max:total,minInterval:1,axisLabel:{color:p.muted},splitLine:{lineStyle:{color:p.line}}},yAxis:{type:'category',inverse:true,data:rows.map(r=>r.name),axisLabel:{color:p.text}},series:[{name:'已记录',type:'bar',stack:'coverage',barMaxWidth:22,data:rows.map(r=>r.count),itemStyle:{color:colors[2]},label:{show:true,position:'insideRight',color:'#132D22'}},{name:'待补充',type:'bar',stack:'coverage',data:rows.map(r=>total-r.count),itemStyle:{color:p.line}}]});
  c?.on('click',event=>go(rows[event.dataIndex]));
- const note=document.getElementById('homeCoverageNote');if(note)note.textContent='当前 '+total+' 张知识卡为同一统计分母；各项可以重叠，不相加。来源链接表示可追溯，并不等于药典逐名核验。';
- const summary=document.getElementById('homeCoverageSummary');if(summary)summary.textContent=data.imageBacked+' 张有开放许可图片，'+data.placeholder+' 张图片待补充；省级分布为文献记载，不表示道地产区认证。';
+ const note=document.getElementById('homeCoverageNote');if(note)note.textContent='当前 '+total+' 张知识卡按完整、部分与既有基础卡分层；图片、来源和地区字段可重叠，不相加。空白字段不会被推断。';
+ const summary=document.getElementById('homeCoverageSummary');if(summary)summary.textContent='完整来源事实 '+data.completeFacts+' 张，部分字段记录 '+data.partialFacts+' 张，既有基础卡 '+data.legacyFacts+' 张；开放图片 '+data.imageBacked+' 张，逐行来源 '+data.sourceCovered+' 张。';
  const controls=document.getElementById('homeCoverageControls');if(controls)controls.innerHTML=rows.map(r=>'<a href="#/herbs?mode=featured&coverage='+r.filter+'">'+r.name+' '+r.count+' ↗</a>').join('')+'<a href="#/herbs?mode=featured&coverage=missing-image">图片待补 '+data.placeholder+' ↗</a>';
  renderChartSummary('homeCoverageChart','文字摘要：知识卡资料覆盖情况',rows.map(r=>r.name+'：'+r.count+' / '+total+' 张'));
 }
-function renderRoute(){cancelAnimationFrame(scheduled);disposeInsights();scheduled=requestAnimationFrame(()=>{const route=document.querySelector('.page.active')?.dataset.route;if(route==='formula')renderFormulaInsights();if(route==='qiwei')renderMeridianEffectInsight();if(route==='herbs')renderProvinceInsight();if(route==='home'){renderFoodUsageInsight();renderCoverageInsight();}});}
+function renderRoute(){cancelAnimationFrame(scheduled);disposeInsights();scheduled=requestAnimationFrame(()=>{const route=document.querySelector('.page.active')?.dataset.route;if(route==='formula'&&!document.getElementById('formulaNetworkView')?.hidden)renderFormulaInsights();if(route==='qiwei')renderMeridianEffectInsight();if(route==='herbs'){renderProvinceInsight();renderCompletenessInsight();}if(route==='home'){renderFoodUsageInsight();renderCoverageInsight();}});}
 if(typeof window!=='undefined'&&typeof document!=='undefined'){
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderRoute,{once:true});else renderRoute();
  window.addEventListener('herbal:route',renderRoute);window.addEventListener('herbal:theme',renderRoute);window.addEventListener('pagehide',disposeInsights);
- window.HerbalInsights={renderFormulaInsights,renderMeridianEffectInsight,renderFoodUsageInsight,renderProvinceInsight,dispose:disposeInsights};window.__HERBAL_DEBUG__=window.__HERBAL_DEBUG__||{};window.__HERBAL_DEBUG__.insightCounts=()=>({charts:chartMap.size,observers:observers.size});
+ window.HerbalInsights={renderFormulaInsights,renderMeridianEffectInsight,renderFoodUsageInsight,renderProvinceInsight,renderCompletenessInsight,dispose:disposeInsights};window.__HERBAL_DEBUG__=window.__HERBAL_DEBUG__||{};window.__HERBAL_DEBUG__.insightCounts=()=>({charts:chartMap.size,observers:observers.size});
 }

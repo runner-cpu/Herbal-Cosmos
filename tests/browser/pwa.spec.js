@@ -51,11 +51,10 @@ test('blocked persistent storage falls back to current-session state', async ({ 
   await page.locator('#themeToggle').click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'night');
 
-  await page.goto('/#/learn');
+  await page.goto('/#/home?anchor=home-learning');
   await page.locator('[data-answer="1"]').click();
   await expect(page.locator('#learnStats')).toContainText('已完成 1');
   await page.goto('/#/home');
-  await page.goto('/#/learn');
   await expect(page.locator('#learnStats')).toContainText('已完成 1');
   expect(pageErrors).toEqual([]);
 });

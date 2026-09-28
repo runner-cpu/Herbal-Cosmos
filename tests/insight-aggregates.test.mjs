@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { rankFormulaHerbs, countFormulaRoles, buildMeridianEffectFlow, buildFoodUsageMatrix } from '../assets/js/lib/insight-aggregates.mjs';
+import { rankFormulaHerbs, countFormulaRoles, buildMeridianEffectFlow, buildFoodUsageMatrix, buildFactCompletenessMatrix } from '../assets/js/lib/insight-aggregates.mjs';
 
 test('formula herb ranking counts each herb once per formula', () => {
   const ranked = rankFormulaHerbs([
@@ -28,4 +28,16 @@ test('food usage matrix counts flavor and usage dimensions', () => {
   const matrix = buildFoodUsageMatrix([{ flavor: '甘平', use: '煮粥 / 泡茶', tag: '滋补' }, { flavor: '甘平', use: '煮粥', tag: '滋补' }]);
   assert.deepEqual(matrix.find(cell => cell.flavor === '甘平' && cell.use === '煮粥'), { flavor: '甘平', use: '煮粥', count: 2 });
   assert.deepEqual(matrix.find(cell => cell.flavor === '甘平' && cell.use === '泡茶'), { flavor: '甘平', use: '泡茶', count: 1 });
+});
+
+test('fact completeness matrix groups cards by traditional category and keeps missing facts explicit', () => {
+  const matrix = buildFactCompletenessMatrix([
+    { id: 'a', cat: '补气', image: 'a.jpg', meridian: ['脾经'], origin: ['吉林'], taxonomy: 'Panax ginseng', sourceRefs: ['https://example.org/a'] },
+    { id: 'b', cat: '补气', image: '', meridian: [], origin: [], taxonomy: '', sourceRefs: [] },
+    { id: 'c', cat: '清热', image: 'c.jpg', meridian: ['肺经'], origin: ['安徽'], taxonomy: 'Chrysanthemum', sourceRefs: ['https://example.org/c'] }
+  ], 2);
+  assert.deepEqual(matrix.categories, ['补气', '清热']);
+  assert.deepEqual(matrix.features, ['图片', '归经', '地区', '分类学', '逐行来源']);
+  assert.deepEqual(matrix.rows[0], { category: '补气', total: 2, values: [1, 1, 1, 1, 1], ids: ['a', 'b'] });
+  assert.deepEqual(matrix.rows[1], { category: '清热', total: 1, values: [1, 1, 1, 1, 1], ids: ['c'] });
 });

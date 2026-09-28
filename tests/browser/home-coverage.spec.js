@@ -4,7 +4,13 @@ test('coverage chart links to bounded, correctly filtered knowledge-card pages',
  await page.goto('/#/home');
  await expect(page.locator('#homeCoverageChart canvas')).toBeVisible();
  const expected=await page.evaluate(()=>window.HERBAL_DATA_COVERAGE);
- await expect(page.locator('#homeCoverageSummary')).toContainText(String(expected.placeholder));
+ const summary=page.locator('#homeCoverageSummary');
+ await expect(summary).toContainText('完整来源事实 '+expected.completeFacts+' 张');
+ await expect(summary).toContainText('部分字段记录 '+expected.partialFacts+' 张');
+ await expect(summary).toContainText('既有基础卡 '+expected.legacyFacts+' 张');
+ await expect(summary).toContainText('开放图片 '+expected.imageBacked+' 张');
+ await expect(summary).toContainText('逐行来源 '+expected.sourceCovered+' 张');
+ await expect(page.locator('#homeCoverageControls a[href*="coverage=missing-image"]')).toContainText('图片待补 '+expected.placeholder);
  await page.locator('#homeCoverageControls a[href*="coverage=missing-image"]').click();
  await expect(page.locator('#coverageFilter')).toHaveValue('missing-image');
  await expect(page.locator('#herbResultCount')).toContainText(expected.placeholder+' 味');
@@ -19,7 +25,8 @@ test('coverage chart links to bounded, correctly filtered knowledge-card pages',
 
 test('homepage sections share the theme surface and secondary navigation is reduced',async({page})=>{
  await page.goto('/#/home');
- await expect(page.locator('#navMore .nav-popover a')).toHaveCount(1);
+ await expect(page.locator('#mainNav > a')).toHaveCount(4);
+ await expect(page.locator('#navMore')).toHaveCount(0);
  for(let i=0;i<3;i++){
   const colors=await page.locator('.home-dashboard,.home-modules,.home-food,.home-culture,.home-classics').evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));
   expect(new Set(colors).size).toBe(1);

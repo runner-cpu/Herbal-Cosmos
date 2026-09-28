@@ -7,9 +7,8 @@ import {buildDataCoverage, hasCompleteFacts} from '../assets/js/lib/data-coverag
 import {serializeSharedStrings} from './shared-string-codec.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const DATA_VERSION=5;
-const DATA_DATE='2026-09-27';
-const FEATURED_TARGET=780;
+const DATA_VERSION=6;
+const DATA_DATE='2026-09-28';
 const read=file=>JSON.parse(fs.readFileSync(path.join(root,file),'utf8'));
 const optional=file=>fs.existsSync(path.join(root,file))?read(file):{};
 const byName=(a,b)=>a.name<b.name?-1:a.name>b.name?1:0;
@@ -39,27 +38,19 @@ export function buildExpandedData(){
   const emptyImageFields={image:null,imageAlt:'',imageCredit:null,imageLicenseUrl:'',placeholder:true};
   function addFact(h){
     if(!h||baseNames.has(h.name)||additions.some(x=>x.name===h.name))return;
-    additions.push({...h,id:idFor(h.name),food:foodNames.has(h.name),...emptyImageFields,...imageFields(h.name)});
+    additions.push({...h,id:idFor(h.name),food:foodNames.has(h.name),factStatus:hasCompleteFacts(h)?'complete':'partial',...emptyImageFields,...imageFields(h.name)});
   }
   for(const h of window.HERBS){
     const f=resolveFact(h.name);
     enrichments[h.id]={
-      ...(f?{origin:f.origin,distributionSourceRefs:f.sourceRefs,taxonomy:f.taxonomy,aliases:f.aliases,sourceRecord:f.sourceRecord}:{}),
+      ...(f?{origin:f.origin,sourceRefs:f.sourceRefs,distributionSourceRefs:f.sourceRefs,taxonomy:f.taxonomy,aliases:f.aliases,sourceRecord:f.sourceRecord,factStatus:hasCompleteFacts(f)?'complete':'partial'}:{factStatus:'legacy'}),
       ...emptyImageFields,
       ...imageFields(h.name)
     };
   }
-  const eligible=facts.filter(h=>!baseNames.has(h.name)&&hasCompleteFacts(h));
-  const categoryCounts=new Map();
-  window.HERBS.forEach(h=>categoryCounts.set(h.cat,(categoryCounts.get(h.cat)||0)+1));
-  const remaining=eligible.sort(byName);
-  while(window.HERBS.length+additions.length<FEATURED_TARGET && remaining.length){
-    // Prefer records with an attributed, locally stored image so the expanded
-    // knowledge layer reflects the user's "images first" requirement.
-    remaining.sort((a,b)=>Number(Boolean(photos[b.name]))-Number(Boolean(photos[a.name]))||(categoryCounts.get(a.cat)||0)-(categoryCounts.get(b.cat)||0)||byName(a,b));
-    const h=remaining.shift();addFact(h);categoryCounts.set(h.cat,(categoryCounts.get(h.cat)||0)+1);
-  }
-  if(window.HERBS.length+additions.length<FEATURED_TARGET)throw new Error('Insufficient complete source facts to support '+FEATURED_TARGET+' cards');
+  facts.filter(h=>!baseNames.has(h.name))
+    .sort((a,b)=>Number(Boolean(photos[b.name]))-Number(Boolean(photos[a.name]))||byName(a,b))
+    .forEach(addFact);
   const idByName=new Map(window.HERBS.concat(additions).map(h=>[h.name,h.id]));
   const formulaAliases={'麦门冬':'麦冬','生地':'生地黄','代赭石':'赭石','旋复花':'旋覆花'};
   const formulaMaterials=[];
@@ -68,7 +59,7 @@ export function buildExpandedData(){
     if(idByName.has(name))return idByName.get(name);
     const fact=resolveFact(name);
     if(fact){addFact(fact);const id=idByName.get(fact.name)||idFor(fact.name);idByName.set(fact.name,id);idByName.set(name,id);return id;}
-    const material={id:idFor(name),name,pinyin:'',latin:'',qi:'未录入',wei:'未录入',meridian:[],cat:'原方物料',eff:'原文组成物料；未单独录入药性',food:false,source:'classicalFormula',sourceRefs:formula.sourceRefs||[],note:'保留原方用名，不将未分品种、炮制或非药材物料推断为其他药材。',origin:[],kind:'formula-material',placeholder:true,image:null,imageAlt:'',imageCredit:null,imageLicenseUrl:''};
+    const material={id:idFor(name),name,pinyin:'',latin:'',qi:'未录入',wei:'未录入',meridian:[],cat:'原方物料',eff:'原文组成物料；未单独录入药性',food:false,source:'classicalFormula',sourceRefs:formula.sourceRefs||[],note:'保留原方用名，不将未分品种、炮制或非药材物料推断为其他药材。',origin:[],kind:'formula-material',factStatus:'material',placeholder:true,image:null,imageAlt:'',imageCredit:null,imageLicenseUrl:''};
     additions.push(material);formulaMaterials.push(name);idByName.set(name,material.id);return material.id;
   };
   const formulas=sourceFormulas.map(f=>({...f,herbs:f.herbs.map(h=>[resolveIngredient(h,f),h.dose||'原文未标注',h.role||'未标注']),doseBasis:f.doseBasis||'原方文本单位；不换算为现代处方剂量'}));
@@ -87,12 +78,12 @@ export function buildExpandedData(){
     "Object.assign(SOURCE_MAP,{openMateria:{label:'公开本草资料',badge:'cha'},classicalFormula:{label:'原方文献',badge:'gray'}});",
     'Object.assign(window,{HERBS,FORMULAS,ZHENGS,SOURCE_MAP});',
     'window.HERBAL_DATA_COVERAGE='+JSON.stringify(coverage)+';',
-    "window.HERBAL_DATA_VERSION={version:"+DATA_VERSION+",date:'"+DATA_DATE+"',featured:HERBS.length,featuredCards:"+coverage.featuredCards+",formulas:FORMULAS.length,syndromes:ZHENGS.length};",
+    "window.HERBAL_DATA_VERSION={version:"+DATA_VERSION+",date:'"+DATA_DATE+"',records:HERBS.length,featured:"+coverage.featuredCards+",featuredCards:"+coverage.featuredCards+",formulas:FORMULAS.length,syndromes:ZHENGS.length};",
     '})();',''
   ].join('\n');
   fs.writeFileSync(path.join(root,'assets/js/data/expanded.generated.js'),code);
   const featuredCards=runtimeHerbs.filter(h=>h.kind!=='formula-material');
-  const summary={version:DATA_VERSION,date:DATA_DATE,featured:runtimeHerbs.length,...coverage,baseCards:window.HERBS.length,additionalCards:additions.filter(h=>h.kind!=='formula-material').length,formulas:window.FORMULAS.length+formulas.length,syndromes:window.ZHENGS.length+sourceSyndromes.length,sourcedImages:coverage.imageBacked,missingImages:featuredCards.filter(h=>!h.image).map(h=>h.name),sourcedNewImages:additions.filter(h=>h.kind!=='formula-material'&&h.image).length,missingNewImages:additions.filter(h=>h.kind!=='formula-material'&&!h.image).map(h=>h.name),formulaMaterials};
+  const summary={version:DATA_VERSION,date:DATA_DATE,featured:coverage.featuredCards,...coverage,baseCards:window.HERBS.length,additionalCards:additions.filter(h=>h.kind!=='formula-material').length,formulas:window.FORMULAS.length+formulas.length,syndromes:window.ZHENGS.length+sourceSyndromes.length,sourcedImages:coverage.imageBacked,missingImages:featuredCards.filter(h=>!h.image).map(h=>h.name),sourcedNewImages:additions.filter(h=>h.kind!=='formula-material'&&h.image).length,missingNewImages:additions.filter(h=>h.kind!=='formula-material'&&!h.image).map(h=>h.name),formulaMaterials};
   fs.writeFileSync(path.join(root,'reports/data-coverage.json'),JSON.stringify(summary,null,2)+'\n');
   console.log(JSON.stringify({...summary,missingNewImages:summary.missingNewImages.length}));
   return summary;

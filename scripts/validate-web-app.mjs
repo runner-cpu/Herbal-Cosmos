@@ -14,7 +14,9 @@ const REQUIRED_FILES = [
 
 export const RESOURCE_LIMITS = Object.freeze({
   'assets/vendor/echarts.min.js': 1_100_000,
-  'assets/js/data/expanded.generated.js': 700_000,
+  // The curated layer now carries 902 audited cards. The catalog index remains
+  // lazy-loaded in chunks; this budget covers the expanded evidence layer only.
+  'assets/js/data/expanded.generated.js': 850_000,
   'assets/js/core/runtime.js': 100_000
 });
 export const HANDWRITTEN_MODULE_LIMIT = 40_000;

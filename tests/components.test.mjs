@@ -48,13 +48,16 @@ test('stamp text uses the canonical name and qi/wei pair', () => {
   assert.deepEqual(stampText({ name: '甘草', qi: '平', wei: '甘' }), { seal: '甘草', meta: '平·甘' });
 });
 
-test('shell references component modules and removes saved route from navigation', () => {
+test('shell exposes four substantial routes and keeps shallow content on the home page', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   for (const asset of ['assets/css/components.css', 'assets/js/components/theme.js', 'assets/js/components/context-bar.js', 'assets/js/components/saved-drawer.js']) assert.ok(html.includes(asset));
   assert.equal(html.includes('<a href="#/saved" data-route-link="saved"'), false);
-  assert.match(html, /<details class="nav-more" id="navMore">/);
-  for (const route of ['home', 'herbs', 'qiwei', 'formula', 'learn']) assert.match(html, new RegExp('href="#/'+route+'" data-route-link="'+route+'"'));
-  assert.match(html, /href="#\/zheng" data-more-route="zheng"/);
+  assert.equal(html.includes('id="navMore"'), false);
+  for (const route of ['home', 'herbs', 'qiwei', 'formula']) assert.match(html, new RegExp('href="#/'+route+'" data-route-link="'+route+'"'));
+  assert.equal(html.includes('data-route="learn"'), false);
+  assert.equal(html.includes('data-route="zheng"'), false);
+  assert.match(html, /id="home-learning"/);
+  assert.match(html, /id="formulaZhengView"/);
   assert.match(html, /href="#home-food"/);
   assert.match(html, /href="#home-culture"/);
 });
