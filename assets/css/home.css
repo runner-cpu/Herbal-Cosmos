@@ -51,7 +51,8 @@
 .page[data-route="home"] .section-heading-row{margin:0 0 20px;align-items:baseline;gap:18px}
 .page[data-route="home"] .section-heading-row h2{font-size:clamp(26px,3vw,34px);line-height:1.5}
 .page[data-route="home"] .home-featured-heading{margin-top:var(--section-space)}
-.page[data-route="home"] #homeFeatured{border:0;gap:16px}
+.page[data-route="home"] #homeFeatured{border:0;gap:16px;grid-template-columns:repeat(6,minmax(0,1fr))}
+.page[data-route="home"] #homeFeatured .featured-herb{min-width:0}
 .page[data-route="home"] .featured-herb{background:transparent;border:0;padding:0;box-shadow:none;display:block}
 .page[data-route="home"] .featured-herb .image-frame{height:160px;border-radius:4px;overflow:hidden;background:var(--paper-2);margin-bottom:12px}
 .page[data-route="home"] .featured-herb .n{font-size:21px}

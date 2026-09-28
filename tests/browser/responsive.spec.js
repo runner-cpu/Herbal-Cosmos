@@ -75,6 +75,17 @@ test('375px routes do not create document or chart overflow', async ({ page }) =
   }
 });
 
+test('desktop homepage keeps the featured grid within the viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/#/home');
+  const widths = await page.evaluate(() => ({
+    scroll: document.documentElement.scrollWidth,
+    client: document.documentElement.clientWidth,
+    featured: document.querySelector('#homeFeatured')?.scrollWidth || 0
+  }));
+  expect(widths.scroll, 'desktop document overflow; featured=' + widths.featured).toBeLessThanOrEqual(widths.client + 1);
+});
+
 test('375px shell controls meet the minimum touch target', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/#/home');
