@@ -14,8 +14,6 @@ html[data-theme="classic"] {
 }
 html[data-theme="classic"] body { font-family:var(--serif); background:var(--paper); }
 html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#624936); }
-html[data-theme="classic"] .home-dashboard,
-html[data-theme="classic"] .home-modules { background:#4B392A; border-color:#806143; }
 
 .saved-drawer-toggle { position:relative; border:1px solid rgba(243,237,223,.28); background:rgba(255,255,255,.08); color:#F3EDDF; border-radius:7px; min-width:34px; height:32px; padding:0 8px; }
 .saved-drawer-toggle span { font-family:var(--serif); font-size:15px; }

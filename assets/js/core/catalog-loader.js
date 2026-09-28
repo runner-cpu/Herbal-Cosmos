@@ -5,12 +5,28 @@ let manifestPromise;
 let loadPromise;
 let worker;
 
+export async function loadInBatches(items, task, { concurrency = 4, onProgress = () => {} } = {}) {
+  let next = 0, completed = 0, failure;
+  const results = new Array(items.length);
+  await Promise.all(Array.from({ length: Math.min(items.length, Math.max(1, concurrency)) }, async () => {
+    while (!failure && next < items.length) {
+      const index = next++;
+      try { results[index] = await task(items[index]); onProgress(++completed, items.length); }
+      catch (error) { failure ||= error; }
+    }
+  }));
+  if (failure) throw failure;
+  return results;
+}
+
 function loadScript(url) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = url;
-    script.onload = resolve;
-    script.onerror = () => reject(new Error('catalog chunk failed: ' + url));
+    const finish = error => { clearTimeout(timer); script.remove(); error ? reject(error) : resolve(); };
+    const timer = setTimeout(() => finish(new Error('catalog request timed out: '+url)), 20000);
+    script.onload = () => finish();
+    script.onerror = () => finish(new Error('catalog chunk failed: ' + url));
     document.head.append(script);
   });
 }
@@ -21,7 +37,7 @@ export async function loadCatalogManifest() {
     if (window.HERB_CATALOG_MANIFEST) return window.HERB_CATALOG_MANIFEST;
     await loadScript('data/catalog/manifest.js');
     return window.HERB_CATALOG_MANIFEST || { chunks: [] };
-  })();
+  })().catch(error => { manifestPromise = null; throw error; });
   return manifestPromise;
 }
 
@@ -31,18 +47,19 @@ export async function loadCatalog() {
   loadPromise = (async () => {
     const manifest = await loadCatalogManifest();
     const chunks = manifest.chunks || [];
-    if (location.protocol === 'file:' || typeof Worker === 'undefined') {
-      for (const id of chunks) {
-        if (!window.__HERB_CATALOG_CHUNKS__?.[id]) await loadScript(catalogScriptUrl(id));
-        const entries = window.__HERB_CATALOG_CHUNKS__?.[id] || [];
-        window.HERB_CATALOG.push(...filterCatalogEntries(entries));
-      }
-    } else {
-      for (const id of chunks) {
-        if (!window.__HERB_CATALOG_CHUNKS__?.[id]) await loadScript(catalogScriptUrl(id));
-        const entries = window.__HERB_CATALOG_CHUNKS__?.[id] || [];
-        window.HERB_CATALOG.push(...filterCatalogEntries(entries));
-      }
+    const progress = (completed, total) => window.dispatchEvent(new CustomEvent('herbal:catalog-progress', { detail: { completed, total } }));
+    progress(0, chunks.length);
+    const loaded = await loadInBatches(chunks, async id => {
+      if (!window.__HERB_CATALOG_CHUNKS__?.[id]) await loadScript(catalogScriptUrl(id));
+      const entries = window.__HERB_CATALOG_CHUNKS__?.[id];
+      if (!Array.isArray(entries)) throw new Error('catalog chunk missing: '+id);
+      return filterCatalogEntries(entries);
+    }, { concurrency: 4, onProgress: progress });
+    const entries = [...new Map(loaded.flat().map(entry => [entry.id || entry.name, entry])).values()];
+    if (Number.isFinite(manifest.approvedCount) && entries.length !== manifest.approvedCount) throw new Error('catalog count does not match manifest');
+    // Publish once. A failed attempt keeps cached chunks without partial or duplicated rows.
+    window.HERB_CATALOG.splice(0, window.HERB_CATALOG.length, ...entries);
+    if (location.protocol !== 'file:' && typeof Worker !== 'undefined') {
       try {
         worker = new Worker('workers/catalog-search.js');
         worker.postMessage({ type: 'init', entries: window.HERB_CATALOG });
@@ -58,17 +75,24 @@ export function catalogSearch(query, options = {}) {
   const page = options.page || 1;
   const pageSize = options.pageSize || 48;
   const source = options.source || '';
+  const fallback = () => {
+    const normalized = String(query || '').trim().toLowerCase();
+    const rows = filterCatalogEntries(window.HERB_CATALOG || []).filter(entry =>
+      (!source || (entry.sourceRefs || []).includes(source)) && (!normalized || [entry.name, ...(entry.aliases || [])].some(value => String(value).toLowerCase().includes(normalized))));
+    return { items: rows.slice((page - 1) * pageSize, page * pageSize), total: rows.length, status: 'ready' };
+  };
   if (worker) return new Promise(resolve => {
+    const activeWorker = worker;
     const requestId = Math.random().toString(36).slice(2);
-    const handler = event => { if (event.data?.type === 'result' && event.data.requestId === requestId) { worker.removeEventListener('message', handler); resolve(event.data); } };
-    worker.addEventListener('message', handler);
-    worker.postMessage({ type: 'search', requestId, query, page, pageSize, source });
+    const finish = result => { clearTimeout(timer); activeWorker.removeEventListener('message', handler); activeWorker.removeEventListener('error', fail); resolve(result); };
+    const fail = () => { worker = null; activeWorker.terminate(); finish(fallback()); };
+    const handler = event => { if (event.data?.type === 'result' && event.data.requestId === requestId) finish(event.data); };
+    const timer = setTimeout(fail, 3000);
+    activeWorker.addEventListener('message', handler);
+    activeWorker.addEventListener('error', fail);
+    try { activeWorker.postMessage({ type: 'search', requestId, query, page, pageSize, source }); } catch { fail(); }
   });
-  const rows = filterCatalogEntries(window.HERB_CATALOG || []).filter(entry => {
-    const matchesSource = !source || (entry.sourceRefs || []).includes(source);
-    return matchesSource && (!query || [entry.name, ...(entry.aliases || [])].some(value => String(value).includes(query)));
-  });
-  return Promise.resolve({ items: rows.slice((page - 1) * pageSize, page * pageSize), total: rows.length, status: 'ready' });
+  return Promise.resolve(fallback());
 }
 
 function initLoader() {

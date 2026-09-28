@@ -29,7 +29,9 @@ test('theme control names the next theme in the three-theme cycle', async ({ pag
 test('homepage exposes audited dataset counts and all official food-directory entries', async ({ page }) => {
   await page.goto('/#/home');
   await expect(page.locator('[data-food-count]').first()).toHaveText('106');
-  await expect(page.locator('[data-featured-count]').first()).toHaveText(/^(60[0-9]|[1-9][0-9]{3,})$/);
+  const cards=await page.evaluate(()=>window.HERBS.filter(h=>h.kind!=='formula-material').length);
+  expect(cards).toBeGreaterThanOrEqual(780);
+  await expect(page.locator('[data-featured-count]').first()).toHaveText(cards.toLocaleString('zh-CN'));
   await expect(page.locator('[data-catalog-count]').first()).toHaveText(/^8,818$/);
   await page.locator('#homeFoodExpand').click();
   await expect(page.locator('#homeFoodStrip .home-food-card')).toHaveCount(106);

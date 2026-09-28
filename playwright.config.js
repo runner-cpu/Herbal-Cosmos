@@ -14,5 +14,5 @@ export default defineConfig({
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     { name: 'mobile', use: { ...devices['Pixel 5'], viewport: { width: 375, height: 812 } } }
   ],
-  webServer: { command: `python -m http.server ${port}`, url: origin, reuseExistingServer: false, timeout: 15_000 }
+  webServer: { command: `node scripts/serve-local.mjs ${port}`, url: origin, reuseExistingServer: false, timeout: 15_000 }
 });

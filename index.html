@@ -28,6 +28,7 @@
 <link rel="apple-touch-icon" href="assets/icons/favicon.svg">
 <link rel="stylesheet" href="assets/css/site.css">
 <link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/home.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalApplication","name":"本草宇宙","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://runner-cpu.github.io/Herbal-Cosmos/","inLanguage":"zh-CN","description":"中药名称索引、本草知识卡、方剂配伍与文化资料的可视化学习应用。内容仅供文化科普与学习，不构成医疗建议。"}</script>
 </head>
 <body>
@@ -50,9 +51,6 @@
           <summary aria-label="更多页面">更多</summary>
           <div class="nav-popover">
             <a href="#/zheng" data-more-route="zheng">病证药链</a>
-            <a href="#/home-food">食养同源</a>
-            <a href="#/home-culture">文化非遗</a>
-            <a href="#/home-sources">数据来源</a>
           </div>
         </details>
       </nav>
@@ -100,6 +98,10 @@
         <section class="home-dashboard" aria-labelledby="homeDashboardTitle">
           <div class="home-board-head"><div><span>THE HERBAL ARCHIVE</span><h2 id="homeDashboardTitle">一张看懂本草宇宙</h2></div><p>把资源规模、知识卡、关系网络与文化内容放在同一条探索路径里。</p></div>
           <div class="home-kpis" id="homeKpis"></div>
+          <div class="home-coverage insight-chart-panel" aria-labelledby="coverageTitle">
+            <div class="coverage-intro"><span class="section-kicker">已收录 · 可追溯 · 持续补全</span><h3 id="coverageTitle">这一册，已经整理到哪里？</h3><p id="homeCoverageNote" class="chart-method">按当前知识卡计算图片、来源与分布字段覆盖情况。</p><a href="#/home-sources">查看来源与收录边界 ↗</a></div>
+            <div><div id="homeCoverageChart" class="chart-box"></div><div id="homeCoverageControls" class="coverage-controls" aria-label="按资料覆盖情况浏览"></div><p id="homeCoverageSummary" class="chart-method"></p></div>
+          </div>
           <div class="home-category-row"><div class="home-subhead"><span>HERB CATEGORIES</span><strong>按功效分类速览</strong></div><div class="home-categories" id="homeCategories"></div></div>
         </section>
         <section class="home-modules" aria-labelledby="homeModulesTitle">
@@ -128,6 +130,7 @@
 
         <div class="section-heading-row home-featured-heading"><div><span>FEATURED HERB CABINET</span><h2 data-i18n="home.discover">精选本草图鉴</h2></div><a href="#/herbs" data-i18n="home.viewAll">查看全部代表药材 →</a></div>
         <div class="grid g4" id="homeFeatured"></div>
+        <aside id="homeRecent" class="home-recent" aria-label="最近探索" hidden></aside>
 
         <span id="home-food" class="home-anchor" aria-hidden="true"></span>
         <section class="home-food" id="homeFood" aria-labelledby="homeFoodTitle">
@@ -138,7 +141,7 @@
         </section>
 
         <section class="home-classics" id="home-classics" aria-labelledby="homeClassicsTitle">
-          <div class="section-heading-row"><div><span>CLASSICS THROUGH TIME</span><h2 id="homeClassicsTitle">典籍时光</h2></div><span class="muted home-section-note">历史节点与收药规模合并到首页，减少跳转</span></div>
+          <div class="section-heading-row"><div><span>CLASSICS THROUGH TIME</span><h2 id="homeClassicsTitle">典籍时光</h2></div><span class="muted home-section-note">沿着年代，观察典籍收载的变化</span></div>
           <div class="home-classics-grid">
             <div class="chart-panel home-classics-chart"><h3>典籍收药规模演进</h3><div class="cap">柱高表示各典籍收载药物数量，数字为文献统计口径。</div><div class="chart-box" id="homeClassicBarChart"></div></div>
             <div class="classic-timeline compact" id="homeClassicTimeline"></div>
@@ -172,6 +175,7 @@
       <p class="page-intro">先用精品知识卡深入理解，再切换文献名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。</p>
       <div class="atlas-mode-tabs" role="tablist" aria-label="本草数据层"><button type="button" class="atlas-mode-tab on" data-atlas-mode="featured" role="tab">精品知识卡 <span id="featuredAtlasCount" data-featured-count>—</span></button><button type="button" class="atlas-mode-tab" data-atlas-mode="catalog" role="tab">文献名称索引 <span id="catalogAtlasCount">—</span></button></div>
       <div id="featuredAtlasPanel">
+      <label class="coverage-filter" for="coverageFilter">资料覆盖<select id="coverageFilter"><option value="">全部知识卡</option><option value="images">有开放许可图片</option><option value="missing-image">图片待补充</option><option value="origin">有省级分布记录</option><option value="sources">有逐行来源链接</option></select></label>
       <div class="filter-bar" id="herbFilters">
         <button class="filter-chip" id="resetFilters" type="button" style="border-color:var(--cinnabar);color:var(--cinnabar);">重置筛选</button>
         <span class="muted" style="font-size:12.5px;">四气：</span>
@@ -189,6 +193,7 @@
         </table>
       </div>
       <div class="herb-mobile-grid" id="herbMobileGrid"></div>
+      <div class="catalog-pagination" id="featuredPagination" aria-label="知识卡分页"></div>
       <section class="compare-panel" id="comparePanel" hidden><div class="section-heading-row"><div><span>ATTRIBUTE COMPARISON</span><h2>本草属性对比</h2></div><button id="closeCompare" type="button">关闭</button></div><p class="compare-disclaimer">图中分值只用于当前代表数据集的属性对照，不表示药效强弱或临床推荐。</p><div class="chart-box" id="herbCompareChart"></div></section>
       </div>
       <div id="catalogAtlasPanel" hidden>
@@ -276,7 +281,7 @@
       </div>
       <div class="compliance" style="max-width:380px;">
         <b>内容声明：</b>本站内容仅供文化科普与学习，不构成医疗建议；用药请遵医嘱，特殊人群慎用药食同源物质（以官方公告为准）。
-        <br><span>应用版本 v4 · 2026-09-26 · 名称索引来源修订 <span data-catalog-revision>—</span></span>
+        <br><span><span data-data-version>数据版本加载中</span> · 名称索引来源修订 <span data-catalog-revision>—</span></span>
         <p class="privacy-note"><b>隐私说明：</b>无账号、无遥测；收藏、探索足迹和主题偏好仅保存在当前浏览器，不会上传。可从收藏抽屉导出 JSON；清除浏览器数据后不可恢复。</p>
       </div>
     </div>

@@ -103,13 +103,13 @@ function inatPhoto(photo, taxon, sourceUrl, matchMethod, authorFallback) {
 }
 
 async function inatCandidates(name) {
-  const data = await json(`https://api.inaturalist.org/v1/taxa?${new URLSearchParams({ q: name, rank: 'species', per_page: '5' })}`);
+  const data = await json(`https://api.inaturalist.org/v1/taxa?${new URLSearchParams({ q: name, rank: 'species', per_page: '30' })}`);
   const taxon = (data.results || []).find(t => t.is_active && (norm(t.name) === norm(name) || norm(t.matched_term) === norm(name)));
   if (!taxon) return [];
   const match = norm(taxon.name) === norm(name) ? 'exact iNaturalist taxon' : `iNaturalist indexed synonym: ${name}`;
   const candidate = inatPhoto(taxon.default_photo, taxon, `https://www.inaturalist.org/photos/${taxon.default_photo?.id}`, match);
   if (candidate) return [candidate];
-  const observations = await json(`https://api.inaturalist.org/v1/observations?${new URLSearchParams({ taxon_id: String(taxon.id), photos: 'true', photo_license: 'cc-by,cc-by-sa,cc0', quality_grade: 'research', per_page: '4', order_by: 'votes' })}`);
+  const observations = await json(`https://api.inaturalist.org/v1/observations?${new URLSearchParams({ taxon_id: String(taxon.id), photos: 'true', photo_license: 'cc-by,cc-by-sa,cc0', quality_grade: 'research', per_page: '20', order_by: 'votes' })}`);
   return (observations.results || []).filter(o => o.taxon?.id === taxon.id && o.quality_grade === 'research').flatMap(o => (o.photos || []).map(p => inatPhoto(p, taxon, o.uri || `https://www.inaturalist.org/observations/${o.id}`, `${match}; research-grade observation`, o.user?.name || o.user?.login)).filter(Boolean)).slice(0, 3);
 }
 
@@ -133,11 +133,16 @@ async function verify(manifest) {
 }
 
 async function main() {
+  if (args.includes('--help')) { console.log('Usage: node scripts/fetch-herb-images.mjs [--missing-runtime] [--limit N] [--provider inat|all] [--concurrency 1..3] [--input PATH] [--cache PATH] [--transport powershell|fetch] [--dry-run] [--verify]. --help never fetches or writes files.'); return; }
+  const known = new Set(['--missing-runtime','--limit','--provider','--concurrency','--input','--cache','--transport','--dry-run','--verify']);
+  for (const arg of args) if (arg.startsWith('--') && !known.has(arg)) throw new Error('Unknown option: '+arg);
   if (args.includes('--verify')) return verify(JSON.parse(await fs.readFile(manifestPath, 'utf8')));
   const inputRaw = await fs.readFile(input, 'utf8');
   const inputData = JSON.parse(inputRaw);
   const rows = inputData.data || inputData;
-  const sourceRows = maxRows ? rows.slice(0, maxRows) : rows;
+  const missing = new Set(loadExpanded(root).HERBS.filter(h => !h.image && h.kind !== 'formula-material').map(h => h.name));
+  const candidates = args.includes('--missing-runtime') ? rows.filter(r => missing.has(r['中药名']) && extractTaxa(r).length) : rows;
+  const sourceRows = maxRows ? candidates.slice(0, maxRows) : candidates;
   if (args.includes('--dry-run')) { console.log(JSON.stringify({ sourceRecords: rows.length, recordsWithTaxa: rows.filter(r => extractTaxa(r).length).length, uniqueTaxa: new Set(rows.flatMap(extractTaxa)).size, candidates: sourceRows.map(r => ({ name: r['中药名'], taxa: extractTaxa(r) })) }, null, 2)); return; }
   await fs.mkdir(cacheDir, { recursive: true });
   await fs.mkdir(path.join(root, 'images/herbs/open'), { recursive: true });
@@ -155,6 +160,8 @@ async function main() {
     }
   }
   const manifest = { version: 1, policy: 'Searched photographs only. Exact source species/category or indexed taxonomic synonym; CC BY, CC BY-SA, CC0 or public domain. Source-organism reference, not proof of the harvested medicinal part.', source: { upstream: `https://github.com/owlet0605/TCM_KG/blob/${sourceCommit}/TCM_KG-DataBuilder/originData/data/tcmData.json`, commit: sourceCommit, sha256: sha256(inputRaw), origin: 'zhongyoo.com records mirrored by TCM_KG' }, images: previous.images || {}, exclusions: [] };
+  const targetNames = new Set(sourceRows.map(row => row['中药名']));
+  manifest.exclusions = (previous.exclusions || []).filter(item => !targetNames.has(item.name));
   const resolved = new Map();
   for (const image of Object.values(manifest.images)) resolved.set(image.sourceTaxon || image.taxon, Promise.resolve(image));
   let completed = 0;
@@ -163,7 +170,7 @@ async function main() {
   async function find(taxon) {
     if (resolved.has(taxon)) return resolved.get(taxon);
     const promise = (async () => {
-      for (const search of [commonsCandidates, inatCandidates]) {
+      for (const search of option('--provider','all') === 'inat' ? [inatCandidates] : [commonsCandidates, inatCandidates]) {
         try { for (const candidate of await search(taxon)) { try { return { ...(await download(candidate)), sourceTaxon: taxon }; } catch (error) { console.log(`download unavailable ${taxon}: ${error.message.slice(0, 80)}`); } } } catch (error) { console.log(`search unavailable ${taxon}: ${error.message.slice(0, 80)}`); }
       }
       return null;

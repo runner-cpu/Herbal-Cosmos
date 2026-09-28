@@ -38,7 +38,7 @@ function renderFood() {
     const model = foodCardModel(food, herbs);
     const stamp = model.herb ? (window.HerbalStamp?.renderStamp?.(model.herb, 'home-food-stamp') || '') : '';
     const visual = model.image
-      ? '<div class="home-food-image"><img src="' + escapeHtml(model.image) + '" alt="' + escapeHtml(model.name) + '植物形态，用于科普识别" loading="lazy"></div>'
+      ? '<div class="home-food-image"><img src="' + escapeHtml(model.image) + '" alt="' + escapeHtml(model.herb.imageAlt || model.name+'的来源生物参考图') + '" loading="lazy"></div>'
       : '<div class="home-food-image home-food-directory-mark" aria-hidden="true"><span>录</span></div>';
     const content = visual + stamp + '<strong>' + escapeHtml(model.name) + '</strong><span>' + escapeHtml(model.detail) + '</span>';
     return model.href
@@ -73,7 +73,7 @@ function scrollHomeAnchor(anchor) {
   setTimeout(() => {
     const target = document.getElementById(anchor);
     if (!target) return;
-    window.scrollTo({ top: Math.max(0, target.offsetTop - 72), behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - 84), behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   }, 260);
 }
 
@@ -94,6 +94,11 @@ function showClassicDetail(item) {
 }
 
 function initHomeModules() {
+  let recent=[];
+  try{const saved=JSON.parse(localStorage.getItem('herbal_viewed')||'[]');if(Array.isArray(saved))recent=saved;}catch{}
+  const renderRecent=()=>{const el=document.getElementById('homeRecent');if(!el)return;const cards=recent.slice(-6).reverse().map(id=>(window.HERBS||[]).find(h=>h.id===id)).filter(Boolean);el.hidden=!cards.length;el.innerHTML='<strong>继续上次探索</strong>'+cards.map(h=>'<a href="#/herb?id='+encodeURIComponent(h.id)+'">'+escapeHtml(h.name)+' ↗</a>').join('');};
+  renderRecent();
+  window.addEventListener('herbal:selected',event=>{recent=event.detail?.viewedIds||recent;renderRecent();});
   renderFood();
   renderCulture();
   updateFoodToggle();

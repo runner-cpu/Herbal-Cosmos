@@ -1,0 +1,29 @@
+import {test,expect} from '@playwright/test';
+
+test('coverage chart links to bounded, correctly filtered knowledge-card pages',async({page})=>{
+ await page.goto('/#/home');
+ await expect(page.locator('#homeCoverageChart canvas')).toBeVisible();
+ const expected=await page.evaluate(()=>window.HERBAL_DATA_COVERAGE);
+ await expect(page.locator('#homeCoverageSummary')).toContainText(String(expected.placeholder));
+ await page.locator('#homeCoverageControls a[href*="coverage=missing-image"]').click();
+ await expect(page.locator('#coverageFilter')).toHaveValue('missing-image');
+ await expect(page.locator('#herbResultCount')).toContainText(expected.placeholder+' 味');
+ await expect(page.locator('#herbTableBody tr')).toHaveCount(Math.min(48,expected.placeholder));
+ expect(await page.locator('#herbTableBody img').count()).toBe(0);
+ const first=await page.locator('#herbTableBody tr').first().textContent();
+ await page.locator('[data-featured-page="2"]').click();
+ await expect(page.locator('#herbTableBody tr').first()).not.toHaveText(first);
+ await page.locator('#resetFilters').click();
+ await expect(page.locator('#herbResultCount')).toContainText(expected.featuredCards+' 味');
+});
+
+test('homepage sections share the theme surface and secondary navigation is reduced',async({page})=>{
+ await page.goto('/#/home');
+ await expect(page.locator('#navMore .nav-popover a')).toHaveCount(1);
+ for(let i=0;i<3;i++){
+  const colors=await page.locator('.home-dashboard,.home-modules,.home-food,.home-culture,.home-classics').evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));
+  expect(new Set(colors).size).toBe(1);
+  expect(colors[0]).toBe('rgba(0, 0, 0, 0)');
+  await page.locator('#themeToggle').click();
+ }
+});

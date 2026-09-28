@@ -1,8 +1,9 @@
 import { rankFormulaHerbs, countFormulaRoles, buildMeridianEffectFlow, buildFoodUsageMatrix, buildCooccurrenceMatrix, buildRoleDoseDistribution, buildProvinceDistribution } from '../lib/insight-aggregates.mjs';
+import { buildDataCoverage } from '../lib/data-coverage.mjs';
 const colors=['#B23A2E','#C8A24A','#6B9E8A','#4A6A80'];
 const chartMap=new Map(), observers=new Map();
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const herbs=()=>window.HERBS||[], formulas=()=>window.FORMULAS||[];
+const herbs=()=>(window.HERBS||[]).filter(h=>h.kind!=='formula-material'), formulas=()=>window.FORMULAS||[];
 const link=(kind,id)=>'<a href="#/'+kind+'?'+(kind==='herb'?'id':'f')+'='+encodeURIComponent(id)+'">'+esc((kind==='herb'?herbs():formulas()).find(item=>item.id===id)?.name||id)+'</a>';
 export function disposeInsights(){chartMap.forEach(instance=>instance.dispose());chartMap.clear();observers.forEach(observer=>observer.disconnect());observers.clear();}
 function chart(id,hasData=true){
@@ -74,7 +75,19 @@ export function renderFoodUsageInsight(){
  renderChartSummary('foodUsageChart','文字摘要：'+foods.length+' 种食药物质的性味与用法',ranked.map(row=>row.flavor+' × '+row.use+'：'+row.count+' 种'));
 }
 let scheduled=0;
-function renderRoute(){cancelAnimationFrame(scheduled);disposeInsights();scheduled=requestAnimationFrame(()=>{const route=document.querySelector('.page.active')?.dataset.route;if(route==='formula')renderFormulaInsights();if(route==='qiwei')renderMeridianEffectInsight();if(route==='herbs')renderProvinceInsight();if(route==='home')renderFoodUsageInsight();});}
+export function renderCoverageInsight(){
+ const data=buildDataCoverage(window.HERBS||[]),p=palette(),total=data.featuredCards;
+ const rows=[{name:'完整属性',count:data.completeFacts,filter:''},{name:'开放图片',count:data.imageBacked,filter:'images'},{name:'逐行链接',count:data.sourceCovered,filter:'sources'},{name:'省级分布',count:data.originCovered,filter:'origin'}];
+ const go=row=>{location.hash='#/herbs?mode=featured&coverage='+row.filter;};
+ const c=chart('homeCoverageChart',total>0);
+ c?.setOption({tooltip:{trigger:'axis',confine:true,formatter:items=>{const row=rows[items[0].dataIndex];return row.name+'：'+row.count+' / '+total+' 张卡<br>覆盖 '+(row.count/total*100).toFixed(1)+'% · 点击查看记录';}},grid:{left:68,right:30,top:8,bottom:28},xAxis:{type:'value',max:total,minInterval:1,axisLabel:{color:p.muted},splitLine:{lineStyle:{color:p.line}}},yAxis:{type:'category',inverse:true,data:rows.map(r=>r.name),axisLabel:{color:p.text}},series:[{name:'已记录',type:'bar',stack:'coverage',barMaxWidth:22,data:rows.map(r=>r.count),itemStyle:{color:colors[2]},label:{show:true,position:'insideRight',color:'#132D22'}},{name:'待补充',type:'bar',stack:'coverage',data:rows.map(r=>total-r.count),itemStyle:{color:p.line}}]});
+ c?.on('click',event=>go(rows[event.dataIndex]));
+ const note=document.getElementById('homeCoverageNote');if(note)note.textContent='当前 '+total+' 张知识卡为同一统计分母；各项可以重叠，不相加。来源链接表示可追溯，并不等于药典逐名核验。';
+ const summary=document.getElementById('homeCoverageSummary');if(summary)summary.textContent=data.imageBacked+' 张有开放许可图片，'+data.placeholder+' 张图片待补充；省级分布为文献记载，不表示道地产区认证。';
+ const controls=document.getElementById('homeCoverageControls');if(controls)controls.innerHTML=rows.map(r=>'<a href="#/herbs?mode=featured&coverage='+r.filter+'">'+r.name+' '+r.count+' ↗</a>').join('')+'<a href="#/herbs?mode=featured&coverage=missing-image">图片待补 '+data.placeholder+' ↗</a>';
+ renderChartSummary('homeCoverageChart','文字摘要：知识卡资料覆盖情况',rows.map(r=>r.name+'：'+r.count+' / '+total+' 张'));
+}
+function renderRoute(){cancelAnimationFrame(scheduled);disposeInsights();scheduled=requestAnimationFrame(()=>{const route=document.querySelector('.page.active')?.dataset.route;if(route==='formula')renderFormulaInsights();if(route==='qiwei')renderMeridianEffectInsight();if(route==='herbs')renderProvinceInsight();if(route==='home'){renderFoodUsageInsight();renderCoverageInsight();}});}
 if(typeof window!=='undefined'&&typeof document!=='undefined'){
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderRoute,{once:true});else renderRoute();
  window.addEventListener('herbal:route',renderRoute);window.addEventListener('herbal:theme',renderRoute);window.addEventListener('pagehide',disposeInsights);

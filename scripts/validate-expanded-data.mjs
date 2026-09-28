@@ -3,10 +3,11 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { verifyImagePolicy } from './image-policy.mjs';
+import { buildDataCoverage, hasCompleteFacts } from '../assets/js/lib/data-coverage.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const issue = (code, message) => ({ code, message });
-const readJson = file => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
+const readJson = (file, baseDir = root) => JSON.parse(fs.readFileSync(path.join(baseDir, file), 'utf8'));
 
 export function loadExpanded(baseDir = root) {
   const window = {};
@@ -28,7 +29,8 @@ export function validateExpandedData({ baseDir = root } = {}) {
   const formulas = Array.isArray(data.FORMULAS) ? data.FORMULAS : [];
   const syndromes = Array.isArray(data.ZHENGS) ? data.ZHENGS : [];
   const foods = Array.isArray(data.FOOD_MEDICINE_DIRECTORY) ? data.FOOD_MEDICINE_DIRECTORY : [];
-  if (herbs.length < 600) issues.push(issue('featured-count', 'knowledge cards ' + herbs.length + ' < 600'));
+  const measured = buildDataCoverage(herbs);
+  if (measured.featuredCards < 780) issues.push(issue('featured-count', 'knowledge cards ' + measured.featuredCards + ' < 780'));
   if (formulas.length < 50) issues.push(issue('formula-count', 'formulas ' + formulas.length + ' < 50'));
   if (syndromes.length < 30) issues.push(issue('syndrome-count', 'syndromes ' + syndromes.length + ' < 30'));
   if (foods.length !== 106) issues.push(issue('food-count', 'food directory ' + foods.length + ' != 106'));
@@ -38,6 +40,8 @@ export function validateExpandedData({ baseDir = root } = {}) {
     if (!herb?.id || ids.has(herb.id)) issues.push(issue('herb-id', 'duplicate or missing herb id: ' + (herb?.id || '(empty)')));
     ids.add(herb?.id);
     for (const field of ['name', 'source', 'note']) if (!String(herb?.[field] || '').trim()) issues.push(issue('herb-field', (herb?.id || '(unknown)') + ' missing ' + field));
+    if (herb.kind !== 'formula-material' && !hasCompleteFacts(herb)) issues.push(issue('herb-facts', herb.name + ': incomplete knowledge card'));
+    if (herb.placeholder !== !Boolean(herb.image)) issues.push(issue('image-state', herb.name + ': incorrect placeholder state'));
   }
   for (const formula of formulas) {
     if (!formula?.id || !formula.name || !Array.isArray(formula.herbs) || !formula.herbs.length) issues.push(issue('formula-shape', (formula?.id || '(unknown)') + ' is incomplete'));
@@ -46,9 +50,12 @@ export function validateExpandedData({ baseDir = root } = {}) {
       if (!String(row?.[1] || '').trim() || !String(row?.[2] || '').trim()) issues.push(issue('formula-herb-fields', formula.id + ': incomplete dose/role row'));
     }
   }
-  const coverage = readJson('reports/data-coverage.json');
+  const coverage = readJson('reports/data-coverage.json', baseDir);
+  for (const [key, value] of Object.entries(measured)) {
+    if (coverage[key] !== value || data.HERBAL_DATA_COVERAGE?.[key] !== value) issues.push(issue('coverage-report', key + ': generated coverage does not match runtime'));
+  }
   if (coverage.featured !== herbs.length || coverage.formulas !== formulas.length || coverage.syndromes !== syndromes.length) issues.push(issue('coverage-report', 'reports/data-coverage.json does not match generated runtime counts'));
-  const imageManifest = readJson('data/sources/herb-images.json');
+  const imageManifest = readJson('data/sources/herb-images.json', baseDir);
   const imagePolicy = verifyImagePolicy({ baseDir, manifest: imageManifest, herbs });
   for (const message of imagePolicy.errors) issues.push(issue('runtime-image-manifest', message));
   if (coverage.sourcedImages !== imagePolicy.runtimeImages) issues.push(issue('coverage-report', `reports/data-coverage.json sourcedImages ${coverage.sourcedImages} != runtime ${imagePolicy.runtimeImages}`));

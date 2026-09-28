@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v5-20260927';
+const CACHE_VERSION = 'herbal-cosmos-v6-20260927-continuity';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -13,6 +13,10 @@ const PRECACHE_URLS = Object.freeze([
   './assets/icons/favicon.svg',
   './assets/css/site.css',
   './assets/css/components.css',
+  './assets/css/home.css',
+  './assets/js/lib/data-coverage.mjs',
+  './assets/js/lib/insight-aggregates.mjs',
+  './assets/js/lib/catalog-rules.mjs',
   './assets/vendor/echarts.min.js',
   './assets/js/data/food-medicine.generated.js',
   './assets/js/data/featured.js',

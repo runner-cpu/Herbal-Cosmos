@@ -8,7 +8,7 @@ test('browser tests use the requested port and never reuse an unrelated listener
     const { default: config } = await import(`../playwright.config.js?port-test=${Date.now()}`);
     assert.equal(config.use.baseURL, 'http://127.0.0.1:43123');
     assert.equal(config.webServer.url, 'http://127.0.0.1:43123');
-    assert.match(config.webServer.command, /http\.server 43123$/);
+    assert.match(config.webServer.command, /serve-local\.mjs 43123$/);
     assert.equal(config.webServer.reuseExistingServer, false);
   } finally {
     if (previousPort === undefined) delete process.env.PLAYWRIGHT_PORT;

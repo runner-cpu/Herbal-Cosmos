@@ -1,14 +1,14 @@
 
 /* ============ 设计系统 ============ */
 :root{
-  --paper:#F6F1E7; --paper-2:#EFE7D6; --card:#FDFBF5;
-  --ink:#2B2B26; --ink-2:#5F5A4E;
-  --qing:#20364B; --qing-2:#2F4A61; --qing-3:#4A6A80;
-  --cha:#9C5A2C; --jin:#C8A24A; --celadon:#6B9E8A;
-  --cinnabar:#B23A2E; --line:#DCCFB6;
-  --ok:#3E7A55; --warn:#A5712B;
-  --radius:14px;
-  --shadow:0 1px 3px rgba(43,43,38,.08);
+  --paper:#F5F3EB; --paper-2:#EAEDE3; --card:#FBFBF5;
+  --ink:#1D2C25; --ink-2:#56665B;
+  --qing:#103F34; --qing-2:#245B49; --qing-3:#3C7862;
+  --cha:#A96032; --jin:#B68A3D; --celadon:#5D826E;
+  --cinnabar:#B84B3E; --line:#D5DBCF;
+  --ok:#34734F; --warn:#9B6A24;
+  --radius:8px;
+  --shadow:0 8px 28px rgba(16,63,52,.07);
   --serif:'Noto Serif SC','Songti SC','STSong','SimSun',serif;
   --sans:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
 }
@@ -225,14 +225,6 @@ footer a{color:#E8C87E;}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* ===== 2026 可视化工作区重构 ===== */
-:root{
-  --paper:#F4F7F3;--paper-2:#E9F0EB;--card:#FFFFFF;
-  --ink:#17231D;--ink-2:#59675F;
-  --qing:#103F34;--qing-2:#245B49;--qing-3:#3C7862;
-  --cha:#A96032;--jin:#B68A3D;--celadon:#719E87;
-  --cinnabar:#B84B3E;--line:#D7E1D9;--ok:#34734F;--warn:#9B6A24;
-  --radius:8px;--shadow:0 8px 28px rgba(16,63,52,.07);
-}
 html{scroll-behavior:smooth}body{line-height:1.65;background:var(--paper)}
 .skip-link{position:fixed;left:12px;top:-60px;z-index:200;background:#fff;color:var(--qing);padding:9px 13px;border:2px solid var(--qing);border-radius:6px}.skip-link:focus{top:12px}
 button,a,input,select,summary{outline-offset:3px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--jin)}
