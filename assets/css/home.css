@@ -81,3 +81,33 @@
 @media(max-width:1000px){.page[data-route="home"] .home-module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.page[data-route="home"] .home-module.module-food,.page[data-route="home"] .home-module.module-culture{grid-column:auto;grid-template-columns:22px 1fr 18px;gap:8px}.page[data-route="home"] .module-food span,.page[data-route="home"] .module-culture span{grid-column:2;grid-row:2}.page[data-route="home"] .module-food i,.page[data-route="home"] .module-culture i{grid-column:3;grid-row:1}.page[data-route="home"] .learning-path{grid-template-columns:1fr;gap:28px}}
 @media(max-width:768px){.page[data-route="home"] .evidence-rail{padding:12px 16px 24px;grid-template-columns:repeat(2,minmax(0,1fr))}.page[data-route="home"] .stat{padding:14px 8px;min-width:0}.page[data-route="home"] .stat:first-child{grid-column:1/-1}.page[data-route="home"] .home-board-head{display:block}.page[data-route="home"] .home-board-head p{max-width:50ch;padding-top:5px}.page[data-route="home"] .home-kpi{padding:20px 12px}.page[data-route="home"] .home-kpi:nth-child(3){padding-left:0}.page[data-route="home"] .home-coverage{grid-template-columns:1fr;gap:14px;padding:26px 0}.coverage-intro{max-width:none}.page[data-route="home"] .section-heading-row{flex-wrap:wrap}.page[data-route="home"] .home-module{min-height:180px;padding:16px}.page[data-route="home"] .home-module strong{font-size:20px}.page[data-route="home"] .home-module.module-food,.page[data-route="home"] .home-module.module-culture{padding:14px 10px}.page[data-route="home"] .hero #cosmosControls{bottom:74px}.page[data-route="home"] .hero:has(#cosmosControls){min-height:760px}.page[data-route="home"] .hero:has(#cosmosControls) .hero-overlay{padding-bottom:285px}.coverage-controls a{min-height:44px}.page[data-route="home"] .home-source-band{gap:26px}.page[data-route="home"] .home-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.page[data-route="home"] *,#herbResultCount{scroll-behavior:auto!important;transition:none!important}}
+
+/* Keep each home chapter on one continuous paper surface. The section wrappers
+   stay transparent for the narrative flow; only their inner reading modules
+   receive a shared, theme-aware lift. */
+.page[data-route="home"] .home-kpis,
+.page[data-route="home"] .home-coverage,
+.page[data-route="home"] .home-learning-workbench,
+.page[data-route="home"] .home-food-card,
+.page[data-route="home"] .home-culture-card,
+.page[data-route="home"] .home-classics-chart,
+.page[data-route="home"] .classic-timeline.compact,
+.page[data-route="home"] .home-source-ledger > div,
+.page[data-route="home"] .home-source-ledger > details {
+  background:var(--surface-soft);
+  border-color:var(--line);
+}
+.page[data-route="home"] .home-coverage { padding-left:18px; padding-right:18px; }
+.page[data-route="home"] .home-learning-workbench { padding:18px; }
+.page[data-route="home"] .home-food-card,
+.page[data-route="home"] .home-culture-card { border:1px solid var(--line); }
+.page[data-route="home"] .home-food-card:hover,
+.page[data-route="home"] .home-culture-card:hover { border-color:var(--jin); }
+.page[data-route="home"] .home-classics-chart,
+.page[data-route="home"] .classic-timeline.compact { border:1px solid var(--line); }
+.page[data-route="home"] .home-source-ledger > div,
+.page[data-route="home"] .home-source-ledger > details { padding:13px 15px; }
+@media(max-width:768px){
+  .page[data-route="home"] .home-coverage { padding-left:12px; padding-right:12px; }
+  .page[data-route="home"] .home-learning-workbench { padding:12px; }
+}

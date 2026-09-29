@@ -5,7 +5,7 @@ import { contextLinks, viewedIds } from '../assets/js/components/context-bar.js'
 import { serializeFavorites } from '../assets/js/components/saved-drawer.js';
 import { filterApproved } from '../assets/js/components/search.js';
 import { stampText } from '../assets/js/components/stamp.js';
-import { foodCardModel, foodMatrixData, cultureSelection } from '../assets/js/pages/home.js';
+import { foodCardModel, foodMatrixData, cultureSelection, homeChapterState } from '../assets/js/pages/home.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -79,4 +79,10 @@ test('food overview keeps unaudited properties out of the matrix and never borro
   assert.deepEqual(foodCardModel({ name: '丁香', flavor: '未录入', use: '目录收载', enriched: false }, [
     { id: 'renshen', name: '人参', image: 'images/herbs/renshen.jpg' }
   ]), { name: '丁香', detail: '目录收载 · 属性未录入', href: null, image: null, herb: null });
+});
+
+test('home chapter state exposes a bounded reading path', () => {
+  assert.deepEqual(homeChapterState(0), { index: 0, label: '本草档案', progress: '1 / 7', ratio: 14.29 });
+  assert.deepEqual(homeChapterState(99), { index: 6, label: '项目来源', progress: '7 / 7', ratio: 100 });
+  assert.deepEqual(homeChapterState(-4), { index: 0, label: '本草档案', progress: '1 / 7', ratio: 14.29 });
 });

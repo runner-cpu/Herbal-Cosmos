@@ -1,5 +1,7 @@
 /* Runtime extracted from index.html; data bindings come from data/featured.js. */
-const KNOWLEDGE_HERBS = HERBS.filter(herb => herb.kind !== 'formula-material');
+// Curated cards power charts and the star atlas. Official directory-only rows
+// remain searchable/detailable, but are not presented as fully profiled cards.
+const KNOWLEDGE_HERBS = HERBS.filter(herb => !['formula-material', 'directory-only'].includes(herb.kind));
 const store = {
   selectedHerb: null,      // 当前选中药材
   selectedFormula: null,
@@ -90,7 +92,8 @@ function syncDatasetCounts(){
     ['[data-formula-count]',FORMULAS.length],
     ['[data-zheng-count]',ZHENGS.length],
     ['[data-catalog-count]',catalogManifestCount('approvedCount')],
-    ['[data-review-count]',catalogManifestCount('reviewCount')]
+    ['[data-review-count]',catalogManifestCount('reviewCount')],
+    ['[data-directory-only-count]',window.HERBAL_DATA_COVERAGE?.directoryOnlyCount]
   ];
   values.forEach(([selector,value])=>document.querySelectorAll(selector).forEach(el=>{el.textContent=displayCount(value);}));
   const atlas=document.getElementById('catalogAtlasCount');
@@ -495,6 +498,14 @@ function renderHomeMuseum(){
   const catEl=$('#homeCategories');
   if(catEl) catEl.innerHTML=categories.map(([name,count],i)=>`<button type="button" class="home-category" data-home-category="${esc(name)}" style="--cat-color:${palette[i%palette.length]}"><b>${esc(name.replace(/药$/,''))}</b><span>${count} 味精品卡 · 查看 →</span></button>`).join('');
   catEl?.querySelectorAll('[data-home-category]').forEach(btn=>btn.addEventListener('click',()=>{store.filters={qi:'',wei:'',cat:btn.dataset.homeCategory};store._kw='';location.hash='#/herbs';}));
+  const directoryCount=window.HERBAL_DATA_COVERAGE?.directoryOnlyCount||0;
+  const boundary=document.querySelector('[data-directory-only-note]');
+  if(boundary){
+    boundary.hidden=directoryCount<1;
+    boundary.textContent=directoryCount>0
+      ? '当前官方食药物质目录中，有 '+directoryCount+' 条仅确认目录身份，性味、归经与功效仍待逐条补录；它们不会计入精品知识卡或属性图表。'
+      : '';
+  }
 }
 function renderHome(){
   // 精选本草

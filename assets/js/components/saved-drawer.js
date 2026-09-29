@@ -35,6 +35,21 @@ function escapeHtml(value) {
 }
 
 let drawer;
+let lastTrigger = null;
+
+function setDrawerStatus(message = '') {
+  const status = drawer?.querySelector('[data-saved-status]');
+  if (status) status.textContent = message;
+}
+
+function syncDrawerA11y(open) {
+  if (!drawer) return;
+  drawer.setAttribute('aria-hidden', String(!open));
+  document.querySelectorAll('[data-saved-open]').forEach(trigger => {
+    trigger.setAttribute('aria-expanded', String(Boolean(open)));
+  });
+}
+
 function renderDrawer() {
   if (!drawer) return;
   const herbs = window.HERBS || [];
@@ -51,8 +66,10 @@ function renderDrawer() {
 
 export function openSavedDrawer() {
   if (!drawer) return;
+  if (!lastTrigger && document.activeElement?.matches?.('[data-saved-open]')) lastTrigger = document.activeElement;
   drawer.hidden = false;
   drawer.classList.add('is-open');
+  syncDrawerA11y(true);
   drawer.querySelector('[data-saved-close]')?.focus();
   renderDrawer();
 }
@@ -60,6 +77,10 @@ export function closeSavedDrawer() {
   if (!drawer) return;
   drawer.classList.remove('is-open');
   drawer.hidden = true;
+  syncDrawerA11y(false);
+  const trigger = lastTrigger;
+  lastTrigger = null;
+  if (trigger?.isConnected) trigger.focus();
 }
 export function exportSavedJson() {
   const payload = serializeFavorites(readIds(), window.HERBS || []);
@@ -69,8 +90,10 @@ export function exportSavedJson() {
     const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
     const link = document.createElement('a'); link.href = url; link.download = 'herbal-cosmos-favorites.json'; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 0);
+    setDrawerStatus('已导出 ' + payload.herbs.length + ' 条收藏。');
   } catch {
     window.prompt('请复制收藏 JSON', text);
+    setDrawerStatus('已打开复制提示，共 ' + payload.herbs.length + ' 条收藏。');
   }
   return text;
 }
@@ -84,12 +107,16 @@ function initDrawer() {
     drawer.hidden = true;
     drawer.setAttribute('role', 'complementary');
     drawer.setAttribute('aria-label', '本机收藏');
-    drawer.innerHTML = '<div class="saved-drawer-head"><div><span>LOCAL HERBARIUM</span><h2>本机收藏</h2></div><button type="button" data-saved-close aria-label="关闭收藏">×</button></div><div class="saved-drawer-actions"><button type="button" data-saved-export>导出 JSON</button><span>仅保存在本机</span></div><div data-saved-list></div>';
+    drawer.setAttribute('aria-hidden', 'true');
+    drawer.setAttribute('aria-labelledby', 'savedDrawerTitle');
+    drawer.innerHTML = '<div class="saved-drawer-head"><div><span>LOCAL HERBARIUM</span><h2 id="savedDrawerTitle">本机收藏</h2></div><button type="button" data-saved-close aria-label="关闭收藏">×</button></div><div class="saved-drawer-actions"><button type="button" data-saved-export>导出 JSON</button><span>仅保存在本机</span></div><p class="saved-drawer-status" data-saved-status role="status" aria-live="polite"></p><div data-saved-list></div>';
     document.body.append(drawer);
   }
   document.addEventListener('click', event => {
-    if (!event.target.closest('[data-saved-open]')) return;
+    const trigger = event.target.closest('[data-saved-open]');
+    if (!trigger) return;
     event.preventDefault();
+    lastTrigger = trigger;
     openSavedDrawer();
   });
   drawer.addEventListener('click', event => {
@@ -101,7 +128,14 @@ function initDrawer() {
       writeIds(ids);
       renderDrawer();
       syncFavoriteCount(ids);
+      setDrawerStatus('已移除收藏。');
       window.dispatchEvent(new CustomEvent('herbal:favorites', { detail: { ids } }));
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && drawer.classList.contains('is-open')) {
+      event.preventDefault();
+      closeSavedDrawer();
     }
   });
   window.openSavedDrawer = openSavedDrawer; window.closeSavedDrawer = closeSavedDrawer; window.exportSavedJson = exportSavedJson;
@@ -109,6 +143,18 @@ function initDrawer() {
     if (Array.isArray(event.detail?.ids)) memoryIds = normalizeIds(event.detail.ids);
     renderDrawer();
     syncFavoriteCount(readIds());
+  });
+  window.addEventListener('storage', event => {
+    if (event.key !== 'herbal_favs') return;
+    try {
+      memoryIds = normalizeIds(event.newValue ? JSON.parse(event.newValue) : []);
+    } catch {
+      memoryIds = [];
+    }
+    renderDrawer();
+    syncFavoriteCount(memoryIds);
+    setDrawerStatus('收藏已从其他标签页同步。');
+    window.dispatchEvent(new CustomEvent('herbal:favorites', { detail: { ids: [...memoryIds], source: 'storage' } }));
   });
   const recoverLegacySavedRoute = () => {
     if (location.hash.replace(/^#\/?/, '').split('?')[0] === 'saved') {
@@ -119,6 +165,7 @@ function initDrawer() {
   };
   window.addEventListener('hashchange', recoverLegacySavedRoute);
   syncFavoriteCount();
+  syncDrawerA11y(false);
   recoverLegacySavedRoute();
 }
 

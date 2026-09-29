@@ -75,6 +75,26 @@ test('legacy saved links recover to the home route and open the drawer', async (
   await expect(page.locator('#savedDrawer')).toHaveClass(/is-open/);
 });
 
+test('home chapter rail follows the consolidated reading path', async ({ page }) => {
+  await page.goto('/#/home');
+  await expect(page.locator('[data-home-chapter-current]')).toHaveText('本草档案');
+  await page.locator('[data-home-chapter="home-food"]').click();
+  await expect(page).toHaveURL(/#\/home\?anchor=home-food$/);
+  await expect(page.locator('[data-home-chapter-current]')).toHaveText('食养同源');
+  await expect(page.locator('[data-home-chapter-progress]')).toHaveText('4 / 7');
+  await expect(page.locator('[data-home-chapter="home-food"]')).toHaveAttribute('aria-current', 'location');
+});
+
+test('favorites drawer closes with Escape and returns focus', async ({ page }) => {
+  await page.goto('/#/home');
+  const trigger = page.locator('#savedDrawerToggle');
+  await trigger.click();
+  await expect(page.locator('#savedDrawer')).toHaveAttribute('aria-hidden', 'false');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#savedDrawer')).toHaveAttribute('aria-hidden', 'true');
+  await expect(trigger).toBeFocused();
+});
+
 test('related formulas expose a native keyboard link to the network view', async ({ page }) => {
   await page.goto('/#/herb?id=gancao');
   const link = page.locator('#herbFormulaList a.formula-row').first();

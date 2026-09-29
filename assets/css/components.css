@@ -15,6 +15,22 @@ html[data-theme="classic"] {
 html[data-theme="classic"] body { font-family:var(--serif); background:var(--paper); }
 html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#624936); }
 
+/* Component-level tokens keep the three themes on one visual surface. */
+:root {
+  --surface-soft: color-mix(in srgb,var(--paper) 88%,var(--paper-2));
+  --surface-raised: color-mix(in srgb,var(--card) 92%,var(--paper-2));
+  --control-focus: var(--jin);
+}
+html[data-theme="classic"] {
+  --surface-soft: color-mix(in srgb,var(--paper) 82%,var(--paper-2));
+  --surface-raised: color-mix(in srgb,var(--card) 94%,var(--paper-2));
+}
+
+.theme-icon { display:inline-grid; place-items:center; width:15px; height:15px; vertical-align:-3px; margin-right:4px; }
+.theme-icon svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; }
+html[data-theme="night"] .theme-icon svg { transform:rotate(30deg); }
+html[data-theme="classic"] .theme-icon svg { transform:rotate(-18deg); }
+
 .saved-drawer-toggle { position:relative; border:1px solid rgba(243,237,223,.28); background:rgba(255,255,255,.08); color:#F3EDDF; border-radius:7px; min-width:34px; height:32px; padding:0 8px; }
 .saved-drawer-toggle span { font-family:var(--serif); font-size:15px; }
 .saved-drawer-toggle b { position:absolute; top:-6px; right:-6px; min-width:17px; height:17px; padding:0 4px; border-radius:99px; background:var(--cinnabar); color:#fff; font-size:10px; line-height:17px; }
@@ -45,6 +61,7 @@ html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#6
 .saved-drawer-head span { font-size:10px; letter-spacing:2px; color:var(--celadon); }
 .saved-drawer-head h2 { margin-top:4px; color:var(--qing); font:600 24px var(--serif); }
 .saved-drawer-head button { border:0; background:transparent; color:var(--ink-2); font-size:25px; line-height:1; }
+.saved-drawer-head button:hover { color:var(--cinnabar); }
 .saved-drawer-actions { display:flex; align-items:center; gap:10px; padding:14px 0; color:var(--ink-2); font-size:11px; }
 .saved-drawer-actions button { border:1px solid var(--qing); background:transparent; color:var(--qing); padding:6px 9px; border-radius:4px; font-size:12px; }
 .saved-drawer-item { display:flex; align-items:center; gap:8px; padding:12px 0; border-bottom:1px solid var(--line); }
@@ -53,6 +70,8 @@ html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#6
 .saved-drawer-item span { color:var(--ink-2); font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .saved-drawer-item button { border:1px solid var(--line); background:transparent; color:var(--ink-2); border-radius:4px; padding:4px 7px; font-size:11px; }
 .saved-drawer-empty { padding:30px 0; color:var(--ink-2); text-align:center; }
+.saved-drawer-empty a { display:inline-flex; align-items:center; min-height:44px; margin-top:12px; padding:8px 13px; border:1px solid var(--qing); color:var(--qing); }
+.saved-drawer-status { min-height:1.5em; color:var(--celadon); font-size:11px; }
 .cosmos-controls { position:absolute; right:18px; bottom:18px; z-index:3; display:flex; gap:6px; }
 .cosmos-controls button { border:1px solid rgba(243,237,223,.42); background:rgba(10,32,27,.55); color:#F3EDDF; border-radius:4px; padding:5px 8px; font-size:10px; }
 .cosmos-controls button:hover,.cosmos-controls button:focus-visible { border-color:var(--jin); outline:none; }
@@ -61,6 +80,55 @@ html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#6
 
 .home-food,.home-culture { margin-top:42px; padding-top:28px; border-top:1px solid var(--line); }
 .home-anchor { display:block; height:0; scroll-margin-top:72px; }
+.home-chapter-nav { position:sticky; top:64px; z-index:20; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:20px; padding:11px 0 10px; border-bottom:1px solid var(--line); background:color-mix(in srgb,var(--paper) 94%,transparent); backdrop-filter:blur(12px); }
+.home-chapter-meta { display:flex; align-items:baseline; gap:9px; min-width:166px; }
+.home-chapter-meta span { color:var(--celadon); font-size:10px; letter-spacing:1.4px; font-weight:700; }
+.home-chapter-meta strong { color:var(--qing); font:600 14px var(--serif); white-space:nowrap; }
+.home-chapter-meta small { color:var(--ink-2); font-size:11px; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.home-chapter-links { display:flex; gap:4px; min-width:0; overflow-x:auto; scrollbar-width:none; }
+.home-chapter-links::-webkit-scrollbar { display:none; }
+.home-chapter-links a { display:inline-flex; align-items:center; min-height:38px; padding:6px 10px; border-bottom:2px solid transparent; color:var(--ink-2); font-size:12px; white-space:nowrap; transition:color .2s,border-color .2s,background .2s; }
+.home-chapter-links a:hover { color:var(--qing); background:var(--surface-soft); }
+.home-chapter-links a[aria-current="location"] { color:var(--qing); border-color:var(--cinnabar); font-weight:600; }
+.home-chapter-meter { width:74px; height:3px; overflow:hidden; background:var(--paper-2); border-radius:99px; }
+.home-chapter-meter i { display:block; width:14.28%; height:100%; background:var(--cinnabar); border-radius:inherit; transition:width .24s ease; }
+.home-source-dynamic-note { margin-top:12px; color:var(--ink-2); font-size:11.5px; line-height:1.7; }
+.home-source-dynamic-note::before { content:'数据边界 · '; color:var(--celadon); font-weight:600; }
+.compliance-narrow { max-width:620px; }
+.filter-label { margin-left:4px; }
+.filter-label-spaced { margin-left:12px; }
+.filter-reset { min-height:38px; }
+
+/* One editorial surface: inner modules carry the same quiet paper lift while
+   the page sections themselves stay transparent and continuous. */
+.page[data-route="home"] .home-kpis,
+.page[data-route="home"] .home-coverage,
+.page[data-route="home"] .home-learning-workbench,
+.page[data-route="home"] .home-food-card,
+.page[data-route="home"] .home-culture-card,
+.page[data-route="home"] .home-classics-chart,
+.page[data-route="home"] .classic-timeline.compact,
+.page[data-route="home"] .home-source-ledger > div,
+.page[data-route="home"] .home-source-ledger > details {
+  background:var(--surface-soft);
+  border-color:var(--line);
+}
+.page[data-route="home"] .home-kpis { border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.page[data-route="home"] .home-coverage { padding-left:18px; padding-right:18px; }
+.page[data-route="home"] .home-food-card,
+.page[data-route="home"] .home-culture-card { border:1px solid var(--line); }
+.page[data-route="home"] .home-food-card:hover,
+.page[data-route="home"] .home-culture-card:hover { border-color:var(--jin); }
+.page[data-route="home"] .home-classics-chart,
+.page[data-route="home"] .classic-timeline.compact { border:1px solid var(--line); }
+.page[data-route="home"] .home-learning-workbench { padding:18px; }
+.page[data-route="home"] .home-source-ledger > div,
+.page[data-route="home"] .home-source-ledger > details { padding:13px 15px; }
+
+@media (max-width:768px) {
+  .page[data-route="home"] .home-coverage { padding-left:12px; padding-right:12px; }
+  .page[data-route="home"] .home-learning-workbench { padding:12px; }
+}
 .home-food-strip { display:flex; gap:10px; overflow-x:auto; padding:8px 0 14px; scrollbar-width:thin; }
 .home-food-card { min-width:174px; padding:0 0 12px; display:grid; gap:6px; border:1px solid var(--line); background:var(--card); position:relative; overflow:hidden; }
 .home-food-card:hover { border-color:var(--jin); transform:translateY(-2px); }
@@ -118,6 +186,10 @@ html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#6
 .chart-summary summary:focus-visible { outline:2px solid var(--jin); outline-offset:3px; }
 
 @media (max-width:768px) {
+  .home-chapter-nav { top:58px; grid-template-columns:1fr auto; gap:8px 12px; padding:9px 0 8px; }
+  .home-chapter-meta { min-width:0; }
+  .home-chapter-links { grid-column:1/-1; grid-row:2; margin:0 -2px; }
+  .home-chapter-meter { width:54px; }
   .home-culture-grid { grid-template-columns:1fr; }
   .home-culture-card { grid-template-columns:92px 1fr; }
   .food-matrix { grid-template-columns:repeat(2,1fr); }
@@ -127,6 +199,7 @@ html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#6
 
 @media (prefers-reduced-motion:reduce) {
   .saved-drawer { transition:none; }
+  .home-chapter-meter i { transition:none; }
 }
 
 /* Continuous editorial surface: analysis sections remain part of the same paper. */
@@ -204,6 +277,22 @@ html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#6
   position:absolute; width:1px; height:1px; padding:0; margin:-1px;
   overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
 }
+
+/* Legend swatches are class-based so the star map does not emit inline style attributes. */
+.cosmos-legend .cosmos-dot-0 { background:#D0A24C; }
+.cosmos-legend .cosmos-dot-1 { background:#B84B3E; }
+.cosmos-legend .cosmos-dot-2 { background:#7C9DB3; }
+.cosmos-legend .cosmos-dot-3 { background:#9D86AF; }
+.cosmos-legend .cosmos-dot-4 { background:#6B9E8A; }
+.cosmos-legend .cosmos-dot-5 { background:#D88C61; }
+.cosmos-legend .cosmos-dot-6 { background:#86B8AF; }
+.cosmos-legend .cosmos-dot-7 { background:#B6A0C8; }
+.cosmos-legend .cosmos-dot-8 { background:#B9AC72; }
+.cosmos-legend .cosmos-dot-9 { background:#DA8065; }
+.cosmos-legend .cosmos-dot-10 { background:#A4AD71; }
+.cosmos-legend .cosmos-dot-11 { background:#98AABD; }
+.cosmos-legend .cosmos-dot-12 { background:#D7A4A3; }
+.cosmos-legend .cosmos-dot-other { background:#D8C9A8; }
 
 .route-not-found { min-height:58vh; padding-top:clamp(54px,10vh,110px); }
 .route-not-found code {

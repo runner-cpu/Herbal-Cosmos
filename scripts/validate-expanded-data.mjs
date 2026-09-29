@@ -31,6 +31,7 @@ export function validateExpandedData({ baseDir = root } = {}) {
   const foods = Array.isArray(data.FOOD_MEDICINE_DIRECTORY) ? data.FOOD_MEDICINE_DIRECTORY : [];
   const measured = buildDataCoverage(herbs);
   if (measured.featuredCards !== 902) issues.push(issue('featured-count', 'knowledge cards ' + measured.featuredCards + ' != 902'));
+  if (measured.directoryOnlyCount < 1) issues.push(issue('directory-count', 'official food directory has no directory-only runtime rows'));
   if (formulas.length < 50) issues.push(issue('formula-count', 'formulas ' + formulas.length + ' < 50'));
   if (syndromes.length < 30) issues.push(issue('syndrome-count', 'syndromes ' + syndromes.length + ' < 30'));
   if (foods.length !== 106) issues.push(issue('food-count', 'food directory ' + foods.length + ' != 106'));
@@ -41,6 +42,10 @@ export function validateExpandedData({ baseDir = root } = {}) {
     ids.add(herb?.id);
     for (const field of ['name', 'source', 'note']) if (!String(herb?.[field] || '').trim()) issues.push(issue('herb-field', (herb?.id || '(unknown)') + ' missing ' + field));
     const status = factStatus(herb);
+    if (status === 'directory-only') {
+      if (herb.kind !== 'directory-only' || herb.food !== true) issues.push(issue('directory-row', herb.name + ': directory-only row must be marked as food'));
+      if (!(herb.sourceRefs || []).some(ref => /^https?:\/\//.test(ref))) issues.push(issue('directory-source', herb.name + ': directory-only row lacks the official notice URL'));
+    }
     if (status === 'complete' && !hasCompleteFacts(herb)) issues.push(issue('herb-facts', herb.name + ': complete card has missing core fields'));
     if (status === 'partial' && !(herb.sourceRefs || herb.distributionSourceRefs || []).some(ref => /^https?:\/\//.test(ref))) issues.push(issue('herb-source', herb.name + ': partial card lacks a traceable source'));
     if (herb.placeholder !== !Boolean(herb.image)) issues.push(issue('image-state', herb.name + ': incorrect placeholder state'));
@@ -61,7 +66,7 @@ export function validateExpandedData({ baseDir = root } = {}) {
   const imagePolicy = verifyImagePolicy({ baseDir, manifest: imageManifest, herbs });
   for (const message of imagePolicy.errors) issues.push(issue('runtime-image-manifest', message));
   if (coverage.sourcedImages !== imagePolicy.runtimeImages) issues.push(issue('coverage-report', `reports/data-coverage.json sourcedImages ${coverage.sourcedImages} != runtime ${imagePolicy.runtimeImages}`));
-  return { ok: issues.length === 0, issues, summary: { featured: measured.featuredCards, records: herbs.length, formulas: formulas.length, syndromes: syndromes.length, food: foods.length, sourcedImages: herbs.filter(h => h.image).length, manifestImages: Object.keys(imageManifest.images || {}).length } };
+  return { ok: issues.length === 0, issues, summary: { featured: measured.featuredCards, directoryOnly: measured.directoryOnlyCount, records: herbs.length, formulas: formulas.length, syndromes: syndromes.length, food: foods.length, sourcedImages: herbs.filter(h => h.image).length, manifestImages: Object.keys(imageManifest.images || {}).length } };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

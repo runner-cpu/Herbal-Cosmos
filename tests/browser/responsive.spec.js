@@ -29,7 +29,7 @@ test('theme control names the next theme in the three-theme cycle', async ({ pag
 test('homepage exposes audited dataset counts and all official food-directory entries', async ({ page }) => {
   await page.goto('/#/home');
   await expect(page.locator('[data-food-count]').first()).toHaveText('106');
-  const cards=await page.evaluate(()=>window.HERBS.filter(h=>h.kind!=='formula-material').length);
+  const cards=await page.evaluate(()=>window.HERBS.filter(h=>!['formula-material','directory-only'].includes(h.kind)).length);
   expect(cards).toBe(902);
   await expect(page.locator('[data-featured-count]').first()).toHaveText(cards.toLocaleString('zh-CN'));
   await expect(page.locator('[data-catalog-count]').first()).toHaveText(/^8,818$/);

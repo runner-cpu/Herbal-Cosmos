@@ -7,8 +7,8 @@ import {buildDataCoverage, hasCompleteFacts} from '../assets/js/lib/data-coverag
 import {serializeSharedStrings} from './shared-string-codec.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const DATA_VERSION=6;
-const DATA_DATE='2026-09-28';
+const DATA_VERSION=7;
+const DATA_DATE='2026-09-29';
 const read=file=>JSON.parse(fs.readFileSync(path.join(root,file),'utf8'));
 const optional=file=>fs.existsSync(path.join(root,file))?read(file):{};
 const byName=(a,b)=>a.name<b.name?-1:a.name>b.name?1:0;
@@ -27,7 +27,10 @@ export function buildExpandedData(){
   const syndromeSource=optional('data/sources/syndromes-expanded.json');
   const sourceFormulas=Array.isArray(formulaSource)?formulaSource:(formulaSource.formulas||formulaSource.entries||[]);
   const sourceSyndromes=Array.isArray(syndromeSource)?syndromeSource:(syndromeSource.syndromes||syndromeSource.entries||[]);
-  const foodNames=new Set(read('data/sources/food-medicine-106.json').entries.flatMap(x=>[x.name,x.name.replace(/（.*$/, '')]));
+  const foodDirectory=read('data/sources/food-medicine-106.json');
+  const foodNotices=new Map((foodDirectory.notices||[]).map(notice=>[notice.id,notice]));
+  const foodEntries=Array.isArray(foodDirectory.entries)?foodDirectory.entries:[];
+  const foodNames=new Set(foodEntries.flatMap(x=>[x.name,x.name.replace(/（.*$/, '')]));
   const baseNames=new Set(window.HERBS.map(h=>h.name));
   const factByName=new Map(facts.map(h=>[h.name,h]));
   const aliasTargets=new Map();
@@ -51,6 +54,28 @@ export function buildExpandedData(){
   facts.filter(h=>!baseNames.has(h.name))
     .sort((a,b)=>Number(Boolean(photos[b.name]))-Number(Boolean(photos[a.name]))||byName(a,b))
     .forEach(addFact);
+  // Keep official food-directory names discoverable even when the compact
+  // nomenclature snapshot has no matching property record. These rows are
+  // deliberately marked directory-only: they prove list membership, not qi,
+  // wei, meridian, efficacy, taxonomy or a usable image.
+  const knownNames=new Set([...baseNames,...facts.map(h=>h.name),...additions.map(h=>h.name)]);
+  const directoryOnly=[];
+  for(const entry of foodEntries){
+    const name=String(entry?.name||'').trim();
+    if(!name || knownNames.has(name) || knownNames.has(name.replace(/（.*$/, ''))) continue;
+    const notice=foodNotices.get(entry.notice);
+    const sourceUrl=notice?.officialUrl||'';
+    const row={
+      id:idFor('food-directory:'+name), name, pinyin:'', latin:'', qi:'未录入', wei:'未录入', meridian:[],
+      cat:'目录条目', eff:'目录收载；性味、归经与功效待补', food:true, source:'foodDirectory',
+      sourceRefs:sourceUrl?[sourceUrl]:[], distributionSourceRefs:sourceUrl?[sourceUrl]:[],
+      sourceRecord:notice?{title:notice.title,url:sourceUrl,notice:notice.id}:entry.notice||'',
+      note:'国家食药物质目录收载；此条仅说明目录身份，不推断药性或日常用法。',
+      origin:[], aliases:Array.isArray(entry.aliases)?entry.aliases:[], kind:'directory-only', factStatus:'partial',
+      image:null, imageAlt:'', imageCredit:null, imageLicenseUrl:'', placeholder:true
+    };
+    additions.push(row); directoryOnly.push(row); knownNames.add(name);
+  }
   const idByName=new Map(window.HERBS.concat(additions).map(h=>[h.name,h.id]));
   const formulaAliases={'麦门冬':'麦冬','生地':'生地黄','代赭石':'赭石','旋复花':'旋覆花'};
   const formulaMaterials=[];
@@ -75,15 +100,15 @@ export function buildExpandedData(){
     'for(const h of data.herbs)if(!old.has(h.id)){HERBS.push(h);old.add(h.id);}',
     'for(const f of data.formulas)if(!FORMULAS.some(x=>x.id===f.id))FORMULAS.push(f);',
     'for(const z of data.syndromes)if(!ZHENGS.some(x=>x.id===z.id))ZHENGS.push(z);',
-    "Object.assign(SOURCE_MAP,{openMateria:{label:'公开本草资料',badge:'cha'},classicalFormula:{label:'原方文献',badge:'gray'}});",
+    "Object.assign(SOURCE_MAP,{openMateria:{label:'公开本草资料',badge:'cha'},classicalFormula:{label:'原方文献',badge:'gray'},foodDirectory:{label:'国家食药物质目录',badge:'celadon'}});",
     'Object.assign(window,{HERBS,FORMULAS,ZHENGS,SOURCE_MAP});',
     'window.HERBAL_DATA_COVERAGE='+JSON.stringify(coverage)+';',
-    "window.HERBAL_DATA_VERSION={version:"+DATA_VERSION+",date:'"+DATA_DATE+"',records:HERBS.length,featured:"+coverage.featuredCards+",featuredCards:"+coverage.featuredCards+",formulas:FORMULAS.length,syndromes:ZHENGS.length};",
+    "window.HERBAL_DATA_VERSION={version:"+DATA_VERSION+",date:'"+DATA_DATE+"',records:HERBS.length,featured:"+coverage.featuredCards+",featuredCards:"+coverage.featuredCards+",directoryOnly:"+coverage.directoryOnlyCount+",formulas:FORMULAS.length,syndromes:ZHENGS.length};",
     '})();',''
   ].join('\n');
   fs.writeFileSync(path.join(root,'assets/js/data/expanded.generated.js'),code);
-  const featuredCards=runtimeHerbs.filter(h=>h.kind!=='formula-material');
-  const summary={version:DATA_VERSION,date:DATA_DATE,featured:coverage.featuredCards,...coverage,baseCards:window.HERBS.length,additionalCards:additions.filter(h=>h.kind!=='formula-material').length,formulas:window.FORMULAS.length+formulas.length,syndromes:window.ZHENGS.length+sourceSyndromes.length,sourcedImages:coverage.imageBacked,missingImages:featuredCards.filter(h=>!h.image).map(h=>h.name),sourcedNewImages:additions.filter(h=>h.kind!=='formula-material'&&h.image).length,missingNewImages:additions.filter(h=>h.kind!=='formula-material'&&!h.image).map(h=>h.name),formulaMaterials};
+  const featuredCards=runtimeHerbs.filter(h=>!['formula-material','directory-only'].includes(h.kind));
+  const summary={version:DATA_VERSION,date:DATA_DATE,featured:coverage.featuredCards,...coverage,baseCards:window.HERBS.length,additionalCards:additions.filter(h=>!['formula-material','directory-only'].includes(h.kind)).length,directoryOnlyCards:directoryOnly.length,formulas:window.FORMULAS.length+formulas.length,syndromes:window.ZHENGS.length+sourceSyndromes.length,sourcedImages:coverage.imageBacked,missingImages:featuredCards.filter(h=>!h.image).map(h=>h.name),sourcedNewImages:additions.filter(h=>!['formula-material','directory-only'].includes(h.kind)&&h.image).length,missingNewImages:featuredCards.filter(h=>!h.image).map(h=>h.name),formulaMaterials};
   fs.writeFileSync(path.join(root,'reports/data-coverage.json'),JSON.stringify(summary,null,2)+'\n');
   console.log(JSON.stringify({...summary,missingNewImages:summary.missingNewImages.length}));
   return summary;
