@@ -14,11 +14,11 @@ const EFFECT_COLORS = {
   '止血药': '#D7A4A3'
 };
 
-export function colorForEffect(category = '') {
+function colorForEffect(category = '') {
   return EFFECT_COLORS[category] || '#D8C9A8';
 }
 
-export function motionEnabled({ reducedMotion = false, preference = true } = {}) {
+function motionEnabled({ reducedMotion = false, preference = true } = {}) {
   return !reducedMotion && preference !== false;
 }
 
@@ -33,7 +33,7 @@ function priority(star, state = {}) {
   return 100;
 }
 
-export function selectVisibleLabels(stars = [], viewport = { width: 1280, height: 720 }, scale = 1, state = {}) {
+function selectVisibleLabels(stars = [], viewport = { width: 1280, height: 720 }, scale = 1, state = {}) {
   const limit = scale < 1.25 ? 18 : scale < 1.8 ? 40 : 90;
   const deduped = new Map();
   stars.forEach(star => {

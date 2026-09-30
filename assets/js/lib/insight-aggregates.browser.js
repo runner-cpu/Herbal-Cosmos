@@ -1,8 +1,11 @@
-export const ROLE_NAMES = ['君', '臣', '佐', '使'];
+/* file:// 兼容：lib 以普通脚本加载，IIFE 隔离作用域后挂全局 */
+(function () {
+  'use strict';
+const ROLE_NAMES = ['君', '臣', '佐', '使'];
 const UNKNOWN = /^(?:未录入|未标注|未知|暂无|无|不详)$/;
 const known = value => typeof value === 'string' && value.trim() && !UNKNOWN.test(value.trim());
 
-export function buildCooccurrenceMatrix(formulas = [], herbs = [], limit = 14) {
+function buildCooccurrenceMatrix(formulas = [], herbs = [], limit = 14) {
   const items = rankFormulaHerbs(formulas, herbs).slice(0, limit);
   const ids = new Set(items.map(item => item.id));
   const cells = new Map();
@@ -18,18 +21,21 @@ export function buildCooccurrenceMatrix(formulas = [], herbs = [], limit = 14) {
   });
   return { items, cells: items.flatMap(a => items.map(b => cells.get(a.id + '\u0000' + b.id) || { a: a.id, b: b.id, count: 0, formulaIds: [] })) };
 }
-export function parseGramDose(dose) {
+
+function parseGramDose(dose) {
   if (typeof dose !== 'string') return null;
   const match = dose.trim().match(/^(\d+(?:\.\d+)?|\.\d+)\s*(?:g|克)$/i);
   const value = match ? Number(match[1]) : NaN;
   return Number.isFinite(value) && value > 0 ? value : null;
 }
+
 function quantile(sorted, fraction) {
   const index = (sorted.length - 1) * fraction;
   const low = Math.floor(index);
   return sorted[low] + (sorted[Math.ceil(index)] - sorted[low]) * (index - low);
 }
-export function buildRoleDoseDistribution(formulas = []) {
+
+function buildRoleDoseDistribution(formulas = []) {
   const groups = ROLE_NAMES.map(role => ({ role, samples: [], box: null, outliers: [] }));
   const excluded = { unitOrRange: 0, unassignedRole: 0 };
   let total = 0;
@@ -53,7 +59,7 @@ export function buildRoleDoseDistribution(formulas = []) {
   return { groups, total, included: groups.reduce((sum, group) => sum + group.samples.length, 0), excluded };
 }
 
-export function buildProvinceDistribution(herbs = []) {
+function buildProvinceDistribution(herbs = []) {
   const provinces = new Map();
   const covered = new Set();
   herbs.forEach(herb => {
@@ -67,7 +73,7 @@ export function buildProvinceDistribution(herbs = []) {
   return { covered: covered.size, missing: new Set(herbs.map(herb => herb.id).filter(Boolean)).size - covered.size, provinces: [...provinces].map(([province, ids]) => ({ province, count: ids.size, herbIds: [...ids] })).sort((a, b) => b.count - a.count || a.province.localeCompare(b.province, 'zh-CN')) };
 }
 
-export function rankFormulaHerbs(formulas = [], herbs = []) {
+function rankFormulaHerbs(formulas = [], herbs = []) {
   const counts = new Map();
   formulas.forEach(formula => {
     const ids = new Set((formula?.herbs || []).map(entry => entry?.[0]).filter(Boolean));
@@ -81,7 +87,7 @@ export function rankFormulaHerbs(formulas = [], herbs = []) {
   });
 }
 
-export function countFormulaRoles(formulas = []) {
+function countFormulaRoles(formulas = []) {
   const formulasResult = formulas.map(formula => {
     const row = { id: formula.id, name: formula.name || formula.id };
     ROLE_NAMES.forEach(role => { row[role] = 0; });
@@ -94,7 +100,7 @@ export function countFormulaRoles(formulas = []) {
   return { roles: [...ROLE_NAMES], formulas: formulasResult };
 }
 
-export function buildMeridianEffectFlow(herbs = []) {
+function buildMeridianEffectFlow(herbs = []) {
   const counts = new Map();
   herbs.forEach(herb => {
     const target = known(herb?.cat) ? herb.cat : (herb?.eff || '').split(/[，,。；;]/)[0];
@@ -110,7 +116,7 @@ export function buildMeridianEffectFlow(herbs = []) {
   return { nodes, links };
 }
 
-export function buildFoodUsageMatrix(foods = []) {
+function buildFoodUsageMatrix(foods = []) {
   const counts = new Map();
   foods.forEach(food => {
     const flavor = food?.flavor || '未标注性味';
@@ -128,7 +134,7 @@ export function buildFoodUsageMatrix(foods = []) {
  * traditional category. Counts are deliberately additive (not percentages)
  * so the chart can show both the category size and the evidence available.
  */
-export function buildFactCompletenessMatrix(herbs = [], limit = 12) {
+function buildFactCompletenessMatrix(herbs = [], limit = 12) {
   const features = ['图片', '归经', '地区', '分类学', '逐行来源'];
   const records = herbs.filter(herb => herb?.kind !== 'formula-material' && herb?.id);
   const groups = new Map();
@@ -156,3 +162,13 @@ export function buildFactCompletenessMatrix(herbs = [], limit = 12) {
     }));
   return { features, categories: rows.map(row => row.category), rows, total: records.length };
 }
+
+/* file:// 兼容：挂到全局供 insights.js 调用 */
+if (typeof window !== 'undefined') {
+  window.HerbalInsightLib = {
+    rankFormulaHerbs, countFormulaRoles, buildMeridianEffectFlow,
+    buildFoodUsageMatrix, buildCooccurrenceMatrix, buildRoleDoseDistribution,
+    buildProvinceDistribution, buildFactCompletenessMatrix,
+  };
+}
+})();

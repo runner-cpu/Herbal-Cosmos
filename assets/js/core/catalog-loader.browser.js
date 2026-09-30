@@ -1,11 +1,11 @@
-export function filterCatalogEntries(entries = []) { return entries.filter(entry => entry?.status !== 'review' && entry?.status !== 'rejected'); }
-export function catalogScriptUrl(id) { return 'data/catalog/chunk-' + id + '.js'; }
+function filterCatalogEntries(entries = []) { return entries.filter(entry => entry?.status !== 'review' && entry?.status !== 'rejected'); }
+function catalogScriptUrl(id) { return 'data/catalog/chunk-' + id + '.js'; }
 
 let manifestPromise;
 let loadPromise;
 let worker;
 
-export async function loadInBatches(items, task, { concurrency = 4, onProgress = () => {} } = {}) {
+async function loadInBatches(items, task, { concurrency = 4, onProgress = () => {} } = {}) {
   let next = 0, completed = 0, failure;
   const results = new Array(items.length);
   await Promise.all(Array.from({ length: Math.min(items.length, Math.max(1, concurrency)) }, async () => {

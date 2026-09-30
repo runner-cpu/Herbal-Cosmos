@@ -2,7 +2,7 @@ function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>\"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' }[char]));
 }
 
-export function stampText(herb = {}) {
+function stampText(herb = {}) {
   return {
     seal: String(herb.name || '').replace(/[的子]$/, '').slice(0, 2),
     meta: (herb.qi || '') + '·' + (herb.wei || '')

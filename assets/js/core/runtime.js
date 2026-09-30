@@ -252,7 +252,7 @@ function herbPlaceholderSvg(h, cls=''){
 }
 function herbImage(h, cls=''){
   if(hasOpenImageCredit(h)) return '<img class="'+esc(cls)+'" src="'+esc(h.image)+'" alt="'+esc(h.imageAlt)+'" loading="lazy">';
-  return '<span class="herb-image-empty '+esc(cls)+'" role="img" aria-label="'+esc(h?.name||'本草')+'：植物示意占位图"><img class="herb-plant-svg" src="'+herbPlaceholderSvg(h,cls)+'" alt="" loading="lazy" decoding="async"></span>';
+  return '<span class="herb-image-empty '+esc(cls)+'" role="img" aria-label="'+esc(h?.name||'本草')+'：植物示意占位图"><span class="herb-plant-svg" aria-hidden="true" style="background-image:url(\''+herbPlaceholderSvg(h,cls)+'\')"></span></span>';
 }
 function sourceLinks(item){
   return (item?.sourceRefs||[]).map((ref,index)=>{const url=safeSourceUrl(typeof ref==='string'?ref:ref.url);return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(typeof ref==='object'?(ref.title||'原始资料 '+(index+1)):'原始资料 '+(index+1))+' ↗</a>':'';}).join('');

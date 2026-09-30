@@ -1,4 +1,4 @@
-export function foodMatrixData(foods = []) {
+function foodMatrixData(foods = []) {
   const matrix = new Map();
   foods.filter(food => food.enriched !== false).forEach(food => {
     const key = (food.flavor || '未标注') + '|' + (food.tag || '未标注');
@@ -10,7 +10,7 @@ export function foodMatrixData(foods = []) {
   });
 }
 
-export function foodCardModel(food = {}, herbs = []) {
+function foodCardModel(food = {}, herbs = []) {
   const herb = herbs.find(item => item.name === food.name) || null;
   const enriched = food.enriched !== false;
   return {
@@ -22,7 +22,7 @@ export function foodCardModel(food = {}, herbs = []) {
   };
 }
 
-export function cultureSelection(items = [], expanded = false) {
+function cultureSelection(items = [], expanded = false) {
   return expanded ? items : items.slice(0, 3);
 }
 

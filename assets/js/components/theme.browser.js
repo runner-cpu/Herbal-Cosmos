@@ -1,10 +1,10 @@
-export const THEMES = ['day', 'night', 'classic'];
+const THEMES = ['day', 'night', 'classic'];
 
-export function normalizeTheme(value) {
+function normalizeTheme(value) {
   return THEMES.includes(value) ? value : 'day';
 }
 
-export function nextTheme(value) {
+function nextTheme(value) {
   const current = normalizeTheme(value);
   return THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
 }
@@ -13,7 +13,7 @@ function readStorage(key, fallback) {
   try { return localStorage.getItem(key) || fallback; } catch { return fallback; }
 }
 
-export function setTheme(theme, target = typeof document !== 'undefined' ? document.documentElement : null) {
+function setTheme(theme, target = typeof document !== 'undefined' ? document.documentElement : null) {
   const value = normalizeTheme(theme);
   if (target) target.dataset.theme = value;
   if (typeof document !== 'undefined') document.body?.classList.toggle('night', value === 'night');

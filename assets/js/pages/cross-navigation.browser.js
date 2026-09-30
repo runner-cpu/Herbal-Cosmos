@@ -1,28 +1,28 @@
-export function formulaHref(formulaId, { source = 'zheng', zhengId = '' } = {}) {
+function formulaHref(formulaId, { source = 'zheng', zhengId = '' } = {}) {
   const params = new URLSearchParams({ f: formulaId });
   if (source) params.set('from', source);
   if (zhengId) params.set('z', zhengId);
   return '#/formula?' + params.toString();
 }
 
-export function zhengHref(zhengId, formulaId = '') {
+function zhengHref(zhengId, formulaId = '') {
   const params = new URLSearchParams({ view: 'zheng', z: zhengId });
   if (formulaId) params.set('f', formulaId);
   return '#/formula?' + params.toString();
 }
 
-export function normalizeLegacyRoute(route, params = {}) {
+function normalizeLegacyRoute(route, params = {}) {
   if (route === 'learn') return { route: 'home', params: { ...params, anchor: 'home-learning' } };
   if (route === 'zheng') return { route: 'formula', params: { ...params, view: 'zheng' } };
   return { route, params: { ...params } };
 }
 
-export function learnStep(value, total = 5) {
+function learnStep(value, total = 5) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? Math.min(total, Math.max(1, Math.floor(numeric))) : 1;
 }
 
-export function quizFeedbackMarkup({ ok, note, correctLabel = '答对了！', retryLabel = '再想一想。' }) {
+function quizFeedbackMarkup({ ok, note, correctLabel = '答对了！', retryLabel = '再想一想。' }) {
   return '<div class="quiz-note" role="status" tabindex="-1">' + (ok ? correctLabel : retryLabel) + ' ' + String(note || '') + '</div>';
 }
 

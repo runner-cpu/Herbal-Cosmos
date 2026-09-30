@@ -1,4 +1,4 @@
-export function filterApproved(entries = []) {
+function filterApproved(entries = []) {
   return entries.filter(entry => entry && entry.status !== 'review' && entry.status !== 'rejected');
 }
 

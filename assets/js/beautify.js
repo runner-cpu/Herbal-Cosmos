@@ -66,12 +66,32 @@
   function runCountUp(el) {
     if (reduce || el.dataset.counted) return;
     el.dataset.counted = '1';
-    const raw = (el.textContent || '').replace(/,/g, '');
+    // Preserve runtime-owned count nodes such as [data-food-count]. Replacing
+    // the parent markup would remove their selectors after the first animation.
+    const nested = el.querySelector('[data-food-count],[data-featured-count],[data-catalog-count]');
+    const targetNode = nested || el;
+    const raw = (targetNode.textContent || '').replace(/,/g, '');
     const match = String(raw).match(/[\d.]+/);
     if (!match) return;
     const target = parseFloat(match[0]);
     if (!Number.isFinite(target)) return;
     const decimals = (match[0].split('.')[1] || '').length;
+    if (nested) {
+      const n = nested;
+      const duration = 1300;
+      const start = performance.now();
+      const ease = t => (1 - Math.pow(1 - t, 3));
+      const frame = now => {
+        const p = Math.min(1, (now - start) / duration);
+        const value = target * ease(p);
+        n.textContent = decimals
+          ? value.toFixed(decimals)
+          : Math.round(value).toLocaleString('zh-CN');
+        if (p < 1) requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+      return;
+    }
     const small = el.querySelector('small');
     const keep = small ? small.outerHTML : '';
     el.innerHTML = '<b class="n">0</b>' + keep;
