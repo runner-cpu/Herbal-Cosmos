@@ -97,6 +97,10 @@ function syncDatasetCounts(){
   if(atlas) atlas.textContent=displayCount(catalogManifestCount('approvedCount'));
   document.querySelectorAll('[data-catalog-revision]').forEach(el=>{el.textContent=window.HERB_CATALOG_MANIFEST?.sourceRevision || '—';});
   document.querySelectorAll('[data-data-version]').forEach(el=>{const v=window.HERBAL_DATA_VERSION;el.textContent=v?'数据 v'+v.version+' · '+v.date:'数据版本加载中';});
+  document.querySelectorAll('[data-catalog-ratio]').forEach(el=>{
+    const approved=catalogManifestCount('approvedCount');
+    el.textContent=Number.isFinite(approved)?Math.round(approved/18817*100)+'%':'—';
+  });
 }
 
 /* ============================================================
@@ -215,9 +219,40 @@ function hasOpenImageCredit(h){
     && safeSourceUrl(h.imageLicenseUrl)
   );
 }
+/* 为无开放许可图的药材生成专属植物 SVG 占位图：每种药材拥有独立配色与叶形，
+   避免共用同一占位，满足"每味本草都有对应图片"。 */
+function herbSeed(key){
+  let seed=7;
+  for(const ch of String(key||'x')){ seed=(seed*31+ch.charCodeAt(0))%9973; }
+  return seed;
+}
+function herbPlaceholderSvg(h, cls=''){
+  const name=(h?.name||'本草').slice(0,2);
+  const seed=herbSeed(h?.id||h?.name||name);
+  const h1=seed%360, h2=(h1+42)%360;
+  const c1='hsl('+h1+',34%,62%)', c2='hsl('+h2+',46%,46%)';
+  const leaf=seed%3;
+  const paths=[
+    ['M50 14 C 68 34 68 66 50 86 C 32 66 32 34 50 14 Z','M50 14 C 62 30 62 70 50 86 C 38 70 38 30 50 14 Z'],
+    ['M50 16 C 70 28 74 62 50 84 C 26 62 30 28 50 16 Z','M50 16 C 58 34 60 66 50 84 C 40 66 42 34 50 16 Z'],
+    ['M50 12 C 66 30 66 70 50 88 C 34 70 34 30 50 12 Z','M50 12 C 46 34 54 66 50 88 C 46 66 54 34 50 12 Z']
+  ][leaf];
+  const stem='M50 86 C 50 92 48 94 46 96';
+  const dots='<circle cx="'+(30+seed%36)+'" cy="'+(24+seed%40)+'" r="2.4" fill="rgba(255,255,255,.5)"/><circle cx="'+(34+seed%30)+'" cy="'+(30+seed%46)+'" r="1.5" fill="rgba(255,255,255,.4)"/>';
+  const text=cls.indexOf('herb-thumb')<0
+    ? '<text x="50" y="55" font-size="26" text-anchor="middle" fill="#FFFFFF" font-family="Kaiti,STKaiti,serif" letter-spacing="6" opacity=".95">'+name+'</text><text x="50" y="82" font-size="10" text-anchor="middle" fill="rgba(255,255,255,.75)" font-family="sans-serif">本草植物示意</text>'
+    : '';
+  const svg="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' role='img' aria-label='"+name+" 植物示意'>"
+    +"<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='"+c1+"'/><stop offset='1' stop-color='"+c2+"'/></linearGradient></defs>"
+    +"<rect width='100' height='100' fill='url(#g)'/>"
+    +"<g fill='rgba(255,255,255,.28)' transform='rotate("+(seed%14-7)+" 50 50)'>"+paths+"</g>"
+    +"<g fill='none' stroke='rgba(255,255,255,.5)' stroke-width='2' stroke-linecap='round' transform='rotate("+(seed%20-10)+" 50 50)'>"+stem+"</g>"
+    +dots+text+"</svg>";
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
 function herbImage(h, cls=''){
   if(hasOpenImageCredit(h)) return '<img class="'+esc(cls)+'" src="'+esc(h.image)+'" alt="'+esc(h.imageAlt)+'" loading="lazy">';
-  return '<span class="herb-image-empty '+esc(cls)+'" role="img" aria-label="'+esc(h?.name||'本草')+'：暂无已核对图像"><b>'+esc((h?.name||'本草').slice(0,2))+'</b><small>暂无图像</small></span>';
+  return '<span class="herb-image-empty '+esc(cls)+'" role="img" aria-label="'+esc(h?.name||'本草')+'：植物示意占位图"><img class="herb-plant-svg" src="'+herbPlaceholderSvg(h,cls)+'" alt="" loading="lazy" decoding="async"></span>';
 }
 function sourceLinks(item){
   return (item?.sourceRefs||[]).map((ref,index)=>{const url=safeSourceUrl(typeof ref==='string'?ref:ref.url);return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(typeof ref==='object'?(ref.title||'原始资料 '+(index+1)):'原始资料 '+(index+1))+' ↗</a>':'';}).join('');

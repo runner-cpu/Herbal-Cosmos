@@ -230,3 +230,107 @@ html[data-theme="classic"] header { background:linear-gradient(180deg,#4B392A,#6
   }
   .stamp,.herb-stamp { border:1px solid CanvasText; color:CanvasText; background:Canvas; box-shadow:none; }
 }
+
+/* ============================================================
+   React Bits 风格美化层（原生实现）
+   背景 · 文字动画 · 卡片聚光 · 滚动揭示 · 点击涟漪
+   ============================================================ */
+
+/* —— 背景：柔和极光（Aurora）与全页点阵（DotGrid）—— */
+.hero { position:relative; overflow:hidden; }
+.hero-aurora {
+  position:absolute; inset:-18%; z-index:0; pointer-events:none; opacity:.55;
+  filter:blur(52px) saturate(1.15);
+  background:
+    radial-gradient(42% 38% at 26% 30%, rgba(143,193,168,.55), transparent 70%),
+    radial-gradient(36% 32% at 74% 26%, rgba(208,162,76,.40), transparent 70%),
+    radial-gradient(48% 42% at 58% 72%, rgba(184,75,62,.26), transparent 72%);
+  animation: aurora-drift 26s ease-in-out infinite alternate;
+  will-change:transform;
+}
+body { background-image:radial-gradient(rgba(18,55,44,.055) 1px, transparent 1.4px); background-size:26px 26px; }
+body.night { background-image:radial-gradient(rgba(220,234,225,.05) 1px, transparent 1.4px); }
+@keyframes aurora-drift {
+  0%   { transform:translate3d(-3%,-2%,0) rotate(-2deg) scale(1.04); }
+  50%  { transform:translate3d(3%,3%,0) rotate(2deg) scale(1.12); }
+  100% { transform:translate3d(-2%,1%,0) rotate(0deg) scale(1.06); }
+}
+
+/* —— 噪点层（Noise）—— */
+.noise-layer {
+  position:fixed; inset:0; z-index:700; pointer-events:none; opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size:140px 140px;
+}
+
+/* —— 首页口径说明 —— */
+.evidence-note { max-width:1260px; margin:-8px auto 0; padding:0 24px 10px; font-size:12px; color:var(--ink-2); text-align:center; letter-spacing:.02em; }
+
+/* —— 标题逐字模糊入场（BlurText）—— */
+.blur-title .blur-char { display:inline-block; opacity:0; filter:blur(10px); transform:translateY(10px); animation:blur-in .9s cubic-bezier(.2,.7,.3,1) forwards; }
+@keyframes blur-in { to { opacity:1; filter:blur(0); transform:none; } }
+
+/* —— 小标题光泽扫过（ShinyText）—— */
+.kicker-shine {
+  background:linear-gradient(100deg,var(--celadon) 30%,#E5C272 50%,var(--celadon) 70%);
+  background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:shine-sweep 4.6s linear infinite;
+}
+@keyframes shine-sweep { to { background-position:-220% 0; } }
+
+/* —— 主按钮星光边框（StarBorder）—— */
+@property --star-angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+.cta.star-border { position:relative; isolation:isolate; }
+.cta.star-border::before {
+  content:''; position:absolute; inset:-2px; z-index:-1; border-radius:inherit; padding:2px;
+  background:conic-gradient(from var(--star-angle), #E5C272, #8FC1A8, #B84B3E, #E5C272);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask-composite:exclude; opacity:.95; animation:star-rotate 7s linear infinite;
+}
+@keyframes star-rotate { to { --star-angle:360deg; } }
+@supports not (background:conic-gradient(from 0deg,#000,#000)) {
+  .cta.star-border::before { background:#E5C272; }
+}
+
+/* —— 卡片聚光灯（SpotlightCard）—— */
+[data-spotlight]{ position:relative; }
+[data-spotlight]::after{
+  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0;
+  transition:opacity .28s ease;
+  background:radial-gradient(240px circle at var(--spot-x,50%) var(--spot-y,50%), rgba(208,162,76,.18), transparent 65%);
+}
+[data-spotlight]:hover::after,[data-spotlight]:focus-within::after{ opacity:1; }
+
+/* —— 3D 倾斜卡（TiltedCard + GlareHover）—— */
+[data-tilt]{ transform-style:preserve-3d; transition:transform .18s ease-out; will-change:transform; }
+[data-tilt].tilt-glare{ position:relative; }
+[data-tilt].tilt-glare::after{
+  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0;
+  transition:opacity .22s ease;
+  background:radial-gradient(280px circle at var(--glare-x,50%) var(--glare-y,0%), rgba(255,255,255,.34), transparent 62%);
+  mix-blend-mode:overlay;
+}
+[data-tilt].tilt-glare:hover::after{ opacity:1; }
+
+/* —— 滚动揭示（FadeContent / ScrollReveal）—— */
+.reveal { opacity:0; transform:translateY(26px); transition:opacity .75s cubic-bezier(.2,.7,.3,1), transform .75s cubic-bezier(.2,.7,.3,1); }
+.reveal.revealed { opacity:1; transform:none; }
+
+/* —— 点击涟漪（MagicRings）—— */
+.magic-ring {
+  position:fixed; border:1.5px solid rgba(208,162,76,.7); border-radius:50%;
+  pointer-events:none; z-index:950; transform:translate(-50%,-50%);
+  animation:ring-expand .75s cubic-bezier(.2,.7,.3,1) forwards;
+}
+@keyframes ring-expand { from{ width:6px; height:6px; opacity:.9; } to { width:92px; height:92px; opacity:0; } }
+
+/* —— 磁吸按钮（Magnet）—— */
+.magnet { transition:transform .22s cubic-bezier(.2,.7,.3,1); will-change:transform; }
+
+@media (prefers-reduced-motion:reduce) {
+  .hero-aurora,.noise-layer,.kicker-shine,.cta.star-border::before,.magic-ring{ animation:none; }
+  .blur-title .blur-char{ opacity:1; filter:none; transform:none; animation:none; }
+  .reveal{ opacity:1; transform:none; transition:none; }
+  .magnet,[data-tilt]{ transition:none; }
+}

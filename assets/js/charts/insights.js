@@ -5,6 +5,12 @@ const chartMap=new Map(), observers=new Map();
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const knownValue=value=>typeof value==='string'&&value.trim()&&!/^(?:未录入|未分类|暂无|未知)$/.test(value.trim());
 const herbs=()=>(window.HERBS||[]).filter(h=>h.kind!=='formula-material'), formulas=()=>window.FORMULAS||[];
+const herbName=id=>{
+  const match=(window.HERBS||[]).find(item=>item.id===id);
+  if(match?.name) return match.name;
+  const catalog=(window.HERB_CATALOG||[]).find(entry=>entry.id===id||entry.name===id);
+  return catalog?.name||id;
+};
 const link=(kind,id)=>'<a href="#/'+kind+'?'+(kind==='herb'?'id':'f')+'='+encodeURIComponent(id)+'">'+esc((kind==='herb'?herbs():formulas()).find(item=>item.id===id)?.name||id)+'</a>';
 export function disposeInsights(){chartMap.forEach(instance=>instance.dispose());chartMap.clear();observers.forEach(observer=>observer.disconnect());observers.clear();}
 function chart(id,hasData=true){
@@ -26,7 +32,7 @@ function renderChartSummary(id,title,rows){
  details.append(heading,list);container.insertAdjacentElement('afterend',details);
 }
 function access(id,label,rows,select){const el=document.getElementById(id);if(!el)return;el.innerHTML='<label>'+esc(label)+'<select><option value="">选择一项查看记录</option>'+rows.map((row,i)=>'<option value="'+i+'">'+esc(row.label)+'</option>').join('')+'</select></label>';el.querySelector('select').onchange=e=>{if(e.target.value!=='')select(rows[Number(e.target.value)]);};}
-function bars(id,rows,select){const p=palette(),c=chart(id,rows.length>0);c?.setOption({tooltip:{trigger:'axis',confine:true},grid:{left:82,right:35,top:14,bottom:28},xAxis:{type:'value',minInterval:1,axisLabel:{color:p.muted},splitLine:{lineStyle:{color:p.line}}},yAxis:{type:'category',data:rows.map(r=>r.name),axisLabel:{color:p.text,fontSize:11}},dataZoom:rows.length>18?[{type:'slider',yAxisIndex:0,right:0,start:Math.max(0,100-1800/rows.length),end:100,width:12}]:[],series:[{type:'bar',data:rows.map(r=>r.count),itemStyle:{color:colors[2]},label:{show:true,position:'right',color:p.text}}]});c?.on('click',e=>select(rows[e.dataIndex]));return c;}
+function bars(id,rows,select){const p=palette(),c=chart(id,rows.length>0);c?.setOption({tooltip:{trigger:'axis',confine:true},grid:{left:82,right:35,top:14,bottom:28},xAxis:{type:'value',minInterval:1,axisLabel:{color:p.muted},splitLine:{lineStyle:{color:p.line}}},yAxis:{type:'category',data:rows.map(r=>r.name||herbName(r.id)),axisLabel:{color:p.text,fontSize:11}},dataZoom:rows.length>18?[{type:'slider',yAxisIndex:0,right:0,start:Math.max(0,100-1800/rows.length),end:100,width:12}]:[],series:[{type:'bar',data:rows.map(r=>r.count),itemStyle:{color:colors[2]},label:{show:true,position:'right',color:p.text}}]});c?.on('click',e=>select(rows[e.dataIndex]));return c;}
 export function renderFormulaInsights(){
  const p=palette(),rankedTop=rankFormulaHerbs(formulas(),herbs()).slice(0,12),ranked=[...rankedTop].reverse();
  bars('formulaFrequencyChart',ranked,r=>{location.hash='#/formula?herb='+encodeURIComponent(r.id);});

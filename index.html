@@ -67,6 +67,7 @@
     <section class="page" data-route="home">
       <div class="hero">
         <canvas id="heroCanvas"></canvas>
+        <div class="hero-aurora" aria-hidden="true"></div>
         <div class="hero-overlay">
           <h1>本草宇宙</h1>
           <div class="en">HERBAL COSMOS</div>
@@ -86,6 +87,7 @@
         <a class="stat" href="#/home?focus=classics"><div class="v">2,711<small> 项标准</small></div><div class="l">《中国药典》2020 一部中药标准</div></a>
         <a class="stat" href="#home-food"><div class="v"><span data-food-count>—</span><small> 种</small></div><div class="l">国家食药物质目录</div></a>
       </div>
+      <p class="evidence-note">本应用已收录 <span data-catalog-count>—</span> 条文献名称索引与 <span data-featured-count>—</span> 味精品知识卡，约占普查总量 18,817 的 <span data-catalog-ratio>—</span>；其余部分持续补全，未收录不推断。</p>
 
       <div class="hero-bottom">
         <section class="home-dashboard" aria-labelledby="homeDashboardTitle">
@@ -223,7 +225,7 @@
         <div class="chart-panel analysis-primary"><h3>四气 × 五味矩阵</h3><div class="cap">颜色与数字表示当前筛选下的药材数，点击单元格查看证据。</div><div class="chart-box wide-chart" id="qiweiMatrixChart"></div></div>
         <div class="chart-panel"><h3>归经分布排行</h3><div class="cap">按归经标签累计计数，点击一项反查本草。</div><div class="chart-box compact-chart" id="meridianBarChart"></div></div>
         <div class="chart-panel"><h3>四气占比</h3><div class="cap">从寒到热的当前样本分布。</div><div class="chart-box compact-chart" id="qiRoseChart"></div></div>
-        <div class="chart-panel"><h3>五味分布</h3><div class="cap">复合五味会分别计入对应味型。</div><div class="chart-box compact-chart" id="weiBarChart"></div></div>
+        <div class="chart-panel analysis-wide"><h3>五味分布</h3><div class="cap">复合五味会分别计入对应味型。</div><div class="chart-box wide-chart" id="weiBarChart"></div></div>
         <div class="chart-panel analysis-wide"><h3>药材共现关系</h3><div class="cap">从同一归经中抽取高频药材对，帮助发现属性相近的本草群。</div><div class="chart-box wide-chart" id="qiweiFlowChart"></div></div>
       </div>
       <div class="viz-inspector" id="qiweiInspector"><div><span>点击图表继续探索</span><h2>从分布回到每一味药</h2></div><p>点击热力矩阵中的气味组合，或点击归经柱形，即可查看对应药材并跳转知识卡。</p></div>
@@ -300,6 +302,7 @@
 <script type="module" src="assets/js/pages/cross-navigation.js"></script>
 <script type="module" src="assets/js/pages/cosmos.js"></script>
 <script type="module" src="assets/js/core/catalog-loader.js"></script>
+<script type="module" src="assets/js/beautify.js"></script>
 <script type="module" src="assets/js/core/app-shell.js"></script>
 </body>
 </html>
