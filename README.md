@@ -49,7 +49,7 @@
 
 ## 在线体验
 
-- **直接打开**：将仓库中的 `index.html` 下载到本地，用任意现代浏览器（Chrome / Edge / Firefox / Safari）双击打开即可，无需服务器、无需安装依赖。
+- **直接打开**：将仓库中的 `index.html` 下载到本地，用任意现代浏览器（Chrome / Edge / Firefox / Safari）双击打开即可，无需服务器、无需安装依赖。全站脚本已做 **file:// 兼容**（不依赖 ES Module），双击打开与在线访问效果完全一致：3D 星云、ECharts 图表、全部美化动效与目录索引均正常加载。
 - **在线访问**：[GitHub Pages](https://runner-cpu.github.io/Herbal-Cosmos/)
 - **推荐环境**：桌面端 Chrome 或 Edge 体验最佳（3D 星云粒子与 ECharts 交互完整）；移动端已做响应式适配。
 

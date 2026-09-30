@@ -1,9 +1,9 @@
-export const NOISE_WORDS = ['疼痛', '抽搐', '烦躁', '苍白', '破溃'];
-export const SEPARATORS = /[、，,；;\/＋+]/;
+const NOISE_WORDS = ['疼痛', '抽搐', '烦躁', '苍白', '破溃'];
+const SEPARATORS = /[、，,；;\/＋+]/;
 const SAFE_NAME = /^[\p{Script=Han}\p{L}\p{N}·（）()\-]+$/u;
 const CORRUPT_CODEPOINT = /[?\uFFFD\u0000-\u001F\u007F-\u009F]/u;
 
-export function buildAuthority({ canonicalNames = [], documentedNames = [], aliases = {}, variants = {} }) {
+function buildAuthority({ canonicalNames = [], documentedNames = [], aliases = {}, variants = {} }) {
   return {
     canonicalNames: new Set(canonicalNames),
     documentedNames: new Set(documentedNames),
@@ -12,16 +12,16 @@ export function buildAuthority({ canonicalNames = [], documentedNames = [], alia
   };
 }
 
-export function splitCandidate(raw) {
+function splitCandidate(raw) {
   return String(raw).split(SEPARATORS).map(value => value.trim()).filter(Boolean);
 }
 
-export function normalizeCandidate(raw, variants = new Map()) {
+function normalizeCandidate(raw, variants = new Map()) {
   const compact = String(raw).replace(/\uFEFF|\s+/g, '');
   return variants.get(compact) || compact;
 }
 
-export function classifyCandidate(raw, authority) {
+function classifyCandidate(raw, authority) {
   const original = String(raw).trim();
   const normalized = normalizeCandidate(original, authority.variants);
   const reasons = [];

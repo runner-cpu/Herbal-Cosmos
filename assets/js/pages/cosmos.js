@@ -14,11 +14,11 @@ const EFFECT_COLORS = {
   '止血药': '#D7A4A3'
 };
 
-export function colorForEffect(category = '') {
+function colorForEffect(category = '') {
   return EFFECT_COLORS[category] || '#D8C9A8';
 }
 
-export function motionEnabled({ reducedMotion = false, preference = true } = {}) {
+function motionEnabled({ reducedMotion = false, preference = true } = {}) {
   return !reducedMotion && preference !== false;
 }
 
@@ -33,7 +33,7 @@ function priority(star, state = {}) {
   return 100;
 }
 
-export function selectVisibleLabels(stars = [], viewport = { width: 1280, height: 720 }, scale = 1, state = {}) {
+function selectVisibleLabels(stars = [], viewport = { width: 1280, height: 720 }, scale = 1, state = {}) {
   const limit = scale < 1.25 ? 18 : scale < 1.8 ? 40 : 90;
   const deduped = new Map();
   stars.forEach(star => {
@@ -56,13 +56,13 @@ export function selectVisibleLabels(stars = [], viewport = { width: 1280, height
   return labels;
 }
 
-export function focusHerb(herbId, { animate = true } = {}) {
+function focusHerb(herbId, { animate = true } = {}) {
   if (typeof window === 'undefined') return herbId;
   window.dispatchEvent(new CustomEvent('herbal:focus-herb', { detail: { herbId, animate } }));
   return herbId;
 }
 
-export function setCosmosColorMode(mode = 'uniform') {
+function setCosmosColorMode(mode = 'uniform') {
   const value = mode === 'effect' ? 'effect' : 'uniform';
   try { localStorage.setItem('herbal_cosmos_color', value); } catch { /* optional */ }
   if (typeof document !== 'undefined') document.documentElement.dataset.cosmosColor = value;
@@ -70,7 +70,7 @@ export function setCosmosColorMode(mode = 'uniform') {
   return value;
 }
 
-export function setMotionEnabled(enabled) {
+function setMotionEnabled(enabled) {
   const value = Boolean(enabled);
   try { localStorage.setItem('herbal_motion', value ? 'on' : 'off'); } catch { /* optional */ }
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('herbal:motion', { detail: { enabled: value } }));

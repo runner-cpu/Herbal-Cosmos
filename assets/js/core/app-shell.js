@@ -38,7 +38,7 @@ function watchInstalling(registration) {
   });
 }
 
-export async function registerAppShell() {
+async function registerAppShell() {
   if (!supported) return null;
   try {
     const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });

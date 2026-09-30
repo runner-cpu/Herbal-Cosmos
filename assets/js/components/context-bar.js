@@ -1,8 +1,8 @@
-export function viewedIds(previous = [], id) {
+function viewedIds(previous = [], id) {
   return [...new Set(previous.filter(Boolean).filter(value => value !== id).concat(id || []))];
 }
 
-export function contextLinks({ id }) {
+function contextLinks({ id }) {
   const value = encodeURIComponent(id || '');
   const result = [
     { href: '#/home?focus=star&id=' + value, label: '星图定位' },
@@ -29,7 +29,7 @@ function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>\"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' }[char]));
 }
 
-export function setSelectedHerb(herbId, source = 'unknown') {
+function setSelectedHerb(herbId, source = 'unknown') {
   const herbs = window.HERBS || [];
   const herb = herbs.find(item => item.id === herbId) || null;
   if (!herb) return null;

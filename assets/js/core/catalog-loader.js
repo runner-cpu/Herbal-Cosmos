@@ -1,11 +1,11 @@
-export function filterCatalogEntries(entries = []) { return entries.filter(entry => entry?.status !== 'review' && entry?.status !== 'rejected'); }
-export function catalogScriptUrl(id) { return 'data/catalog/chunk-' + id + '.js'; }
+function filterCatalogEntries(entries = []) { return entries.filter(entry => entry?.status !== 'review' && entry?.status !== 'rejected'); }
+function catalogScriptUrl(id) { return 'data/catalog/chunk-' + id + '.js'; }
 
 let manifestPromise;
 let loadPromise;
 let worker;
 
-export async function loadInBatches(items, task, { concurrency = 4, onProgress = () => {} } = {}) {
+async function loadInBatches(items, task, { concurrency = 4, onProgress = () => {} } = {}) {
   let next = 0, completed = 0, failure;
   const results = new Array(items.length);
   await Promise.all(Array.from({ length: Math.min(items.length, Math.max(1, concurrency)) }, async () => {
@@ -31,7 +31,7 @@ function loadScript(url) {
   });
 }
 
-export async function loadCatalogManifest() {
+async function loadCatalogManifest() {
   if (manifestPromise) return manifestPromise;
   manifestPromise = (async () => {
     if (window.HERB_CATALOG_MANIFEST) return window.HERB_CATALOG_MANIFEST;
@@ -41,7 +41,7 @@ export async function loadCatalogManifest() {
   return manifestPromise;
 }
 
-export async function loadCatalog() {
+async function loadCatalog() {
   if (loadPromise) return loadPromise;
   window.dispatchEvent(new CustomEvent('herbal:catalog-loading'));
   loadPromise = (async () => {
@@ -71,7 +71,7 @@ export async function loadCatalog() {
   return loadPromise;
 }
 
-export function catalogSearch(query, options = {}) {
+function catalogSearch(query, options = {}) {
   const page = options.page || 1;
   const pageSize = options.pageSize || 48;
   const source = options.source || '';
