@@ -5,7 +5,7 @@ const ROLE_NAMES = ['君', '臣', '佐', '使'];
 const UNKNOWN = /^(?:未录入|未标注|未知|暂无|无|不详)$/;
 const known = value => typeof value === 'string' && value.trim() && !UNKNOWN.test(value.trim());
 
-function buildCooccurrenceMatrix(formulas = [], herbs = [], limit = 14) {
+function buildCooccurrenceMatrix(formulas = [], herbs = [], limit = 10) {
   const items = rankFormulaHerbs(formulas, herbs).slice(0, limit);
   const ids = new Set(items.map(item => item.id));
   const cells = new Map();

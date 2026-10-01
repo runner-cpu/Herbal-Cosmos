@@ -107,8 +107,8 @@ function renderCoverageInsight(){
  const c=chart('homeCoverageChart',total>0);
  c?.setOption({tooltip:{trigger:'axis',confine:true,formatter:items=>{const row=rows[items[0].dataIndex];return row.name+'：'+row.count+' / '+total+' 张卡<br>覆盖 '+(row.count/total*100).toFixed(1)+'% · 点击查看记录';}},grid:{left:68,right:30,top:8,bottom:28},xAxis:{type:'value',max:total,minInterval:1,axisLabel:{color:p.muted},splitLine:{lineStyle:{color:p.line}}},yAxis:{type:'category',inverse:true,data:rows.map(r=>r.name),axisLabel:{color:p.text}},series:[{name:'已记录',type:'bar',stack:'coverage',barMaxWidth:22,data:rows.map(r=>r.count),itemStyle:{color:colors[2]},label:{show:true,position:'insideRight',color:'#132D22'}},{name:'待补充',type:'bar',stack:'coverage',data:rows.map(r=>total-r.count),itemStyle:{color:p.line}}]});
  c?.on('click',event=>go(rows[event.dataIndex]));
- const note=document.getElementById('homeCoverageNote');if(note)note.textContent='当前 '+total+' 张知识卡按完整、部分与既有基础卡分层；图片、来源和地区字段可重叠，不相加。空白字段不会被推断。';
- const summary=document.getElementById('homeCoverageSummary');if(summary)summary.textContent='完整来源事实 '+data.completeFacts+' 张，部分字段记录 '+data.partialFacts+' 张，既有基础卡 '+data.legacyFacts+' 张；开放图片 '+data.imageBacked+' 张，逐行来源 '+data.sourceCovered+' 张。';
+ const note=document.getElementById('homeCoverageNote');if(note)note.textContent='当前 n='+total+' 张知识卡的四类覆盖指标；图片、来源和地区字段可重叠，不相加。空白字段不会被推断。';
+ const summary=document.getElementById('homeCoverageSummary');if(summary)summary.textContent='完整来源事实 '+data.completeFacts+' 张 · 部分字段记录 '+data.partialFacts+' 张 · 既有基础卡 '+data.legacyFacts+' 张 · 开放图片 '+data.imageBacked+' 张 · 逐行来源 '+data.sourceCovered+' 张。四类覆盖指标均以 n='+total+' 为分母，既有基础卡为历史分层信息，不与覆盖指标相加。';
  const controls=document.getElementById('homeCoverageControls');if(controls)controls.innerHTML=rows.map(r=>'<a href="#/herbs?mode=featured&coverage='+r.filter+'">'+r.name+' '+r.count+' ↗</a>').join('')+'<a href="#/herbs?mode=featured&coverage=missing-image">图片待补 '+data.placeholder+' ↗</a>';
  renderChartSummary('homeCoverageChart','文字摘要：知识卡资料覆盖情况',rows.map(r=>r.name+'：'+r.count+' / '+total+' 张'));
 }

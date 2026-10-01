@@ -173,12 +173,10 @@
       <label class="coverage-filter" for="coverageFilter">资料覆盖<select id="coverageFilter"><option value="">全部知识卡</option><option value="complete">完整来源事实</option><option value="partial">部分字段记录</option><option value="images">有开放许可图片</option><option value="missing-image">图片待补充</option><option value="origin">有省级分布记录</option><option value="sources">有逐行来源链接</option></select></label>
       <div class="filter-bar" id="herbFilters">
         <button class="filter-chip" id="resetFilters" type="button" style="border-color:var(--cinnabar);color:var(--cinnabar);">重置筛选</button>
-        <span class="muted" style="font-size:12.5px;">四气：</span>
-        <span class="fgroup" id="qiFilter"></span>
-        <span class="muted" style="font-size:12.5px;margin-left:8px;">五味：</span>
-        <span class="fgroup" id="weiFilter"></span>
-        <span class="muted" style="font-size:12.5px;margin-left:8px;">资料分类：</span>
-        <span class="fgroup" id="catFilter"></span>
+        <label class="filter-control" for="qiFilter">四气<select id="qiFilter" data-herb-filter="qi"></select></label>
+        <label class="filter-control" for="weiFilter">五味<select id="weiFilter" data-herb-filter="wei"></select></label>
+        <label class="filter-control" for="catFilter">资料分类<select id="catFilter" data-herb-filter="cat"></select></label>
+        <span class="filter-summary" id="herbFilterSummary">按字段筛选精品知识卡</span>
       </div>
       <div class="atlas-toolbar"><span id="herbResultCount">代表药材</span><div class="compare-tray" id="compareTray">选择 2-3 味药材进行属性对比</div><button id="openCompare" type="button" disabled>生成对比图</button></div>
       <div class="table-wrap">
@@ -222,11 +220,11 @@
       <p class="page-intro">把同一组代表药材拆成五个互相联动的读法：组合、归经、寒热、五味与共现关系。所有数字都来自当前可交互样本，不代表药效强弱或临床推荐。</p>
       <div class="analysis-toolbar"><div class="analysis-metrics"><div class="analysis-metric"><strong id="qiweiSampleCount" data-featured-count>—</strong><span>当前样本</span></div><div class="analysis-metric"><strong id="qiweiCategoryCount">—</strong><span>资料类别</span></div><div class="analysis-metric"><strong id="qiweiMeridianCount">—</strong><span>归经标签</span></div></div><div class="analysis-controls"><label for="qiweiCatFilter">筛选类别<select id="qiweiCatFilter"><option value="">全部类别</option></select></label></div></div>
       <div class="analysis-dashboard">
-        <div class="chart-panel analysis-primary"><h3>四气 × 五味矩阵</h3><div class="cap">颜色与数字表示当前筛选下的药材数，点击单元格查看证据。</div><div class="chart-box wide-chart" id="qiweiMatrixChart"></div></div>
+        <div class="chart-panel analysis-primary"><h3>四气 × 五味矩阵</h3><div class="cap">样本 n=<span id="qiweiMatrixSample">—</span>；复合五味拆分计入对应味型，点击单元格查看证据。</div><div class="chart-box wide-chart" id="qiweiMatrixChart"></div></div>
         <div class="chart-panel"><h3>归经分布排行</h3><div class="cap">按归经标签累计计数，点击一项反查本草。</div><div class="chart-box compact-chart" id="meridianBarChart"></div></div>
         <div class="chart-panel"><h3>四气占比</h3><div class="cap">从寒到热的当前样本分布。</div><div class="chart-box compact-chart" id="qiRoseChart"></div></div>
-        <div class="chart-panel analysis-wide"><h3>五味分布</h3><div class="cap">复合五味会分别计入对应味型。</div><div class="chart-box wide-chart" id="weiBarChart"></div></div>
-        <div class="chart-panel analysis-wide"><h3>药材共现关系</h3><div class="cap">从同一归经中抽取高频药材对，帮助发现属性相近的本草群。</div><div class="chart-box wide-chart" id="qiweiFlowChart"></div></div>
+        <div class="chart-panel analysis-wide"><h3>五味分布</h3><div class="cap">样本 n=<span id="weiBarSample">—</span>；复合五味拆分计入对应味型，因此合计可能高于样本数。</div><div class="chart-box wide-chart" id="weiBarChart"></div></div>
+        <div class="chart-panel analysis-wide"><h3>药材共现关系</h3><div class="cap">从同一归经中抽取高频药材对；名称缺失的关系物料自动隐藏。</div><div class="chart-box wide-chart" id="qiweiFlowChart"></div></div>
       </div>
       <div class="viz-inspector" id="qiweiInspector"><div><span>点击图表继续探索</span><h2>从分布回到每一味药</h2></div><p>点击热力矩阵中的气味组合，或点击归经柱形，即可查看对应药材并跳转知识卡。</p></div>
       <section class="insight-chart-panel meridian-insight"><div class="section-heading-row"><div><span>BRIDGE VIEW</span><h2>归经 → 资料分类流向</h2></div><span class="home-section-note">把十二经与当前精品卡资料分类连成一条可追溯的流。</span></div><div class="chart-box" id="meridianEffectChart"></div><div class="chart-evidence" id="meridianEvidence" aria-live="polite"><p>点击连线或节点查看对应药材。</p></div></section>
@@ -240,7 +238,7 @@
       <div class="formula-view-switch" role="group" aria-label="配伍关系视图"><button type="button" data-formula-view="network" aria-pressed="true">方剂网络</button><button type="button" data-formula-view="zheng" aria-pressed="false">证候药链</button></div>
       <div id="formulaNetworkView">
       <div class="graph-workspace"><aside class="graph-index"><div class="workspace-label">方剂索引</div><label for="formulaFocus">检索方剂<select id="formulaFocus"><option value="">全部方剂</option></select></label><div class="network-stats" id="networkStats"></div><div class="formula-index-list" id="formulaIndex"></div></aside><section class="graph-canvas"><div class="graph-heading"><div><h3>方剂—药材关系图</h3><p id="networkFocusNote">点击节点聚焦邻域，拖动节点调整布局。</p></div><button id="resetGraph" type="button">显示全网</button></div><div class="chart-box" id="formulaGraph"></div></section><aside class="graph-inspector" id="formulaInspector"><span>关系检查器</span><h2>选择一首方剂</h2><p>从左侧索引或网络节点选择，查看出处、主治与君臣佐使组成。</p></aside></div>
-      <section class="insight-grid formula-insights" aria-labelledby="formulaInsightsTitle"><div class="section-heading-row"><div><span>FORMULA EVIDENCE</span><h2 id="formulaInsightsTitle">配伍洞察</h2></div><span class="home-section-note">基于当前 <span data-formula-count>—</span> 首代表方剂；同一方内重复药材只计一次。</span></div><div class="insight-chart-panel"><h3>高频配伍排行</h3><div class="chart-box" id="formulaFrequencyChart"></div></div><div class="insight-chart-panel"><h3>君臣佐使角色分布</h3><div class="chart-box" id="formulaRolesChart"></div><p class="chart-method">只统计明确标注的君臣佐使；角色未标注的组成不计入。</p></div><div class="insight-chart-panel insight-wide"><h3>方剂内药材共现</h3><p class="chart-method">展示收录方剂中最高频的 14 味药。对角线为该药出现方数；其余单元格为两药同方出现次数。点击色块追溯共同方剂。</p><div class="insight-detail-layout"><div><div class="chart-box" id="formulaCooccurrenceChart"></div><div class="chart-access" id="cooccurrenceAccess"></div></div><div class="chart-evidence" id="cooccurrenceEvidence" aria-live="polite"></div></div></div><div class="insight-chart-panel insight-wide"><h3>角色与原载克数</h3><p class="chart-method" id="doseCoverage">正在检查剂量单位与角色记录…</p><div class="insight-detail-layout"><div><div class="chart-box" id="formulaDoseChart"></div><div class="chart-access" id="doseAccess"></div></div><div class="chart-evidence" id="doseEvidence" aria-live="polite"></div></div></div></section>
+      <section class="insight-grid formula-insights" aria-labelledby="formulaInsightsTitle"><div class="section-heading-row"><div><span>FORMULA EVIDENCE</span><h2 id="formulaInsightsTitle">配伍洞察</h2></div><span class="home-section-note">基于当前 <span data-formula-count>—</span> 首代表方剂；同一方内重复药材只计一次。</span></div><div class="insight-chart-panel"><h3>高频配伍排行</h3><div class="chart-box" id="formulaFrequencyChart"></div></div><div class="insight-chart-panel"><h3>君臣佐使角色分布</h3><div class="chart-box" id="formulaRolesChart"></div><p class="chart-method">只统计明确标注的君臣佐使；角色未标注的组成不计入。</p></div><div class="insight-chart-panel insight-wide"><h3>方剂内药材共现</h3><p class="chart-method">展示收录方剂中最高频的 10 味药。对角线为该药出现方数；其余单元格为两药同方出现次数。点击色块追溯共同方剂。</p><div class="insight-detail-layout"><div><div class="chart-box" id="formulaCooccurrenceChart"></div><div class="chart-access" id="cooccurrenceAccess"></div></div><div class="chart-evidence" id="cooccurrenceEvidence" aria-live="polite"></div></div></div><div class="insight-chart-panel insight-wide"><h3>角色与原载克数</h3><p class="chart-method" id="doseCoverage">正在检查剂量单位与角色记录…</p><div class="insight-detail-layout"><div><div class="chart-box" id="formulaDoseChart"></div><div class="chart-access" id="doseAccess"></div></div><div class="chart-evidence" id="doseEvidence" aria-live="polite"></div></div></div></section>
       <div class="section-heading-row formula-directory-heading"><div><span>FORMULA DIRECTORY</span><h2>代表方剂目录</h2></div></div>
       <div class="formula-directory" id="formulaCards"></div>
       </div>
@@ -291,6 +289,7 @@
 <script src="assets/js/data/food-medicine.generated.js"></script>
 <script src="assets/js/data/featured.js"></script>
 <script src="assets/js/data/expanded.generated.js"></script>
+<script src="assets/js/core/field-utils.js"></script>
 <script defer src="assets/js/components/stamp.browser.js"></script>
 <script defer src="assets/js/components/context-bar.browser.js"></script>
 <script defer src="assets/js/components/search.browser.js"></script>
