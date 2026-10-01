@@ -334,3 +334,21 @@ body.night { background-image:radial-gradient(rgba(220,234,225,.05) 1px, transpa
   .reveal{ opacity:1; transform:none; transition:none; }
   .magnet,[data-tilt]{ transition:none; }
 }
+
+/* —— React Bits 精修：让装饰层参与纸张层次，但不抢占内容 —— */
+.hero-aurora{opacity:.42;mix-blend-mode:screen;filter:blur(58px) saturate(1.08)}
+.noise-layer{opacity:.032;mix-blend-mode:multiply}
+body.night .noise-layer{mix-blend-mode:screen;opacity:.028}
+.page[data-route="home"]{background-color:var(--paper);background-image:radial-gradient(rgba(18,55,44,.07) .8px,transparent 1.2px);background-size:26px 26px}
+body.night .page[data-route="home"]{background-image:radial-gradient(rgba(220,234,225,.065) .8px,transparent 1.2px)}
+.page[data-route="home"] .hero{height:min(82dvh,780px);min-height:610px;background-color:#0b2821}
+.page[data-route="home"] .hero::after{background:linear-gradient(180deg,rgba(4,28,23,.15) 0%,rgba(4,28,23,.38) 58%,rgba(245,243,235,.12) 82%,var(--paper) 100%)}
+.page[data-route="home"] .hero-overlay{background:radial-gradient(62% 66% at 50% 43%,rgba(7,35,29,.03) 0%,rgba(7,35,29,.58) 100%);text-shadow:0 2px 26px rgba(4,28,23,.34)}
+.page[data-route="home"] .hero-overlay h1{letter-spacing:clamp(6px,1.1vw,12px)}
+.page[data-route="home"] .hero-overlay .tagline{max-width:650px;text-wrap:balance}
+.page[data-route="home"] .hero-overlay .cta{box-shadow:0 10px 26px rgba(5,32,24,.2)}
+.page[data-route="home"] .hero-overlay .cta:active{transform:translateY(1px) scale(.98)}
+[data-spotlight],[data-tilt]{overflow:hidden}
+[data-spotlight]:focus-visible,[data-tilt]:focus-visible{outline:2px solid var(--jin);outline-offset:4px}
+@media (pointer:coarse){[data-tilt]{transform:none!important;transition:none!important}.page[data-route="home"] .hero-aurora{opacity:.28;filter:blur(48px) saturate(1.02)}.page[data-route="home"] .noise-layer{opacity:.018}}
+@media (max-width:600px){.page[data-route="home"] .hero{height:auto;min-height:760px}.page[data-route="home"] .hero-overlay{padding:0 18px 245px}.page[data-route="home"] .hero-overlay h1{font-size:clamp(40px,13vw,58px)}.page[data-route="home"] .hero-overlay .tagline{font-size:14px;line-height:1.8}.page[data-route="home"] .hero-overlay .cta-row{gap:9px}.page[data-route="home"] .hero-overlay .cta{padding:10px 17px}}

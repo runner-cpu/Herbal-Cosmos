@@ -116,6 +116,8 @@
     const cards = document.querySelectorAll('.home-module-grid .home-module');
     if (!finePointer || reduce) return;
     cards.forEach(card => {
+      if (card.dataset.spotlightBound === '1') return;
+      card.dataset.spotlightBound = '1';
       card.setAttribute('data-spotlight', '');
       card.addEventListener('mousemove', e => {
         const r = card.getBoundingClientRect();
@@ -130,6 +132,8 @@
     const cards = document.querySelectorAll('#homeFeatured .featured-herb');
     if (!finePointer || reduce) return;
     cards.forEach(card => {
+      if (card.dataset.tiltBound === '1') return;
+      card.dataset.tiltBound = '1';
       card.setAttribute('data-tilt', '');
       card.classList.add('tilt-glare');
       card.addEventListener('mousemove', e => {
@@ -155,6 +159,8 @@
     const buttons = document.querySelectorAll('.hero-overlay .cta');
     if (!finePointer || reduce) return;
     buttons.forEach(btn => {
+      if (btn.dataset.magnetBound === '1') return;
+      btn.dataset.magnetBound = '1';
       btn.classList.add('magnet');
       btn.addEventListener('mousemove', e => {
         const r = btn.getBoundingClientRect();
