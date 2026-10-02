@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v8-20261002-evidence-chunks';
+const CACHE_VERSION = 'herbal-cosmos-v11-20261002-expanded-evidence-xss';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -14,9 +14,8 @@ const PRECACHE_URLS = Object.freeze([
   './assets/css/site.css',
   './assets/css/components.css',
   './assets/css/home.css',
-  './assets/js/lib/data-coverage.mjs',
-  './assets/js/lib/insight-aggregates.mjs',
-  './assets/js/lib/catalog-rules.mjs',
+  './assets/js/lib/data-coverage.browser.js',
+  './assets/js/lib/insight-aggregates.browser.js',
   './assets/vendor/echarts.min.js',
   './assets/js/data/food-medicine.generated.js',
   './assets/js/data/featured.js',
@@ -32,16 +31,17 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/data/expanded.generated.js',
   './assets/js/core/runtime.js',
   './assets/js/core/app-shell.js',
-  './assets/js/core/catalog-loader.js',
-  './assets/js/components/stamp.js',
-  './assets/js/components/context-bar.js',
-  './assets/js/components/search.js',
-  './assets/js/components/saved-drawer.js',
-  './assets/js/components/theme.js',
-  './assets/js/pages/home.js',
-  './assets/js/pages/cross-navigation.js',
-  './assets/js/pages/cosmos.js',
+  './assets/js/core/catalog-loader.browser.js',
+  './assets/js/components/stamp.browser.js',
+  './assets/js/components/context-bar.browser.js',
+  './assets/js/components/search.browser.js',
+  './assets/js/components/saved-drawer.browser.js',
+  './assets/js/components/theme.browser.js',
+  './assets/js/pages/home.browser.js',
+  './assets/js/pages/cross-navigation.browser.js',
+  './assets/js/pages/cosmos.browser.js',
   './assets/js/charts/insights.js',
+  './assets/js/beautify.js',
   './workers/catalog-search.js',
   './data/catalog/manifest.js'
 ]);

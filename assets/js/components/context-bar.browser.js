@@ -1,8 +1,8 @@
-export function viewedIds(previous = [], id) {
+function viewedIds(previous = [], id) {
   return [...new Set(previous.filter(Boolean).filter(value => value !== id).concat(id || []))];
 }
 
-export function contextLinks({ id }) {
+function contextLinks({ id }) {
   const value = encodeURIComponent(id || '');
   const result = [
     { href: '#/home?focus=star&id=' + value, label: '星图定位' },

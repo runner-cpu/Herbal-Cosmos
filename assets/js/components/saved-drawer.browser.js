@@ -1,4 +1,4 @@
-export function serializeFavorites(ids = [], herbs = [], exportedAt = new Date()) {
+function serializeFavorites(ids = [], herbs = [], exportedAt = new Date()) {
   const byId = new Map(herbs.map(herb => [herb.id, herb]));
   return {
     schemaVersion: 1,
@@ -22,7 +22,7 @@ function writeIds(ids) {
   memoryIds = normalizeIds(ids);
   try { localStorage.setItem('herbal_favs', JSON.stringify(memoryIds)); } catch { /* current-session copy remains available */ }
 }
-export function favoriteCount(ids = []) {
+function favoriteCount(ids = []) {
   return new Set(ids.filter(id => typeof id === 'string' && id.trim())).size;
 }
 function syncFavoriteCount(ids = readIds()) {

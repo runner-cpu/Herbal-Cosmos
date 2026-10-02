@@ -111,3 +111,18 @@
   .page[data-route="home"] .home-coverage { padding-left:12px; padding-right:12px; }
   .page[data-route="home"] .home-learning-workbench { padding:12px; }
 }
+/* —— 精选本草展廊：Spotlight / Glare 的内容承载层 —— */
+.page[data-route="home"] #homeFeatured{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;border:0;align-items:stretch;overflow:visible}
+.page[data-route="home"] #homeFeatured .featured-herb{display:flex;flex-direction:column;gap:0;min-height:100%;padding:12px;background:color-mix(in srgb,var(--card) 84%,transparent);border:1px solid color-mix(in srgb,var(--line) 82%,transparent);border-radius:7px;box-shadow:0 12px 30px rgba(16,63,52,.055);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.page[data-route="home"] #homeFeatured .featured-herb:hover{background:var(--card);border-color:var(--celadon);box-shadow:0 16px 36px rgba(16,63,52,.11)}
+.page[data-route="home"] #homeFeatured .featured-herb:focus-visible{outline:2px solid var(--jin);outline-offset:4px}
+.page[data-route="home"] #homeFeatured .featured-herb .image-frame{height:clamp(170px,14vw,220px);margin:0 0 14px;border-radius:4px;background:var(--paper-2);aspect-ratio:auto}
+.page[data-route="home"] #homeFeatured .featured-herb .image-frame img{transition:transform .55s cubic-bezier(.2,.7,.3,1),filter .55s ease}
+.page[data-route="home"] #homeFeatured .featured-herb:hover .image-frame img{transform:scale(1.045);filter:saturate(1.08)}
+.page[data-route="home"] #homeFeatured .featured-herb>div:last-child{display:grid;gap:4px;min-height:72px}
+.page[data-route="home"] #homeFeatured .featured-herb .n{font-size:clamp(18px,1.8vw,22px);line-height:1.35;text-wrap:balance}
+.page[data-route="home"] #homeFeatured .featured-herb .d{font-size:12px;line-height:1.75;color:var(--ink-2);text-wrap:pretty}
+.page[data-route="home"] .home-module{box-shadow:0 10px 24px rgba(16,63,52,.08)}
+.page[data-route="home"] .home-module:focus-visible{outline:2px solid var(--jin);outline-offset:4px}
+@media(max-width:900px){.page[data-route="home"] #homeFeatured{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.page[data-route="home"] #homeFeatured .featured-herb .image-frame{height:clamp(160px,28vw,205px)}}
+@media(max-width:560px){.page[data-route="home"] #homeFeatured{grid-template-columns:1fr;gap:12px}.page[data-route="home"] #homeFeatured .featured-herb{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:center;gap:12px;padding:10px}.page[data-route="home"] #homeFeatured .featured-herb .image-frame{height:112px;margin:0}.page[data-route="home"] #homeFeatured .featured-herb>div:last-child{min-height:0}.page[data-route="home"] #homeFeatured .featured-herb .n{font-size:19px}}

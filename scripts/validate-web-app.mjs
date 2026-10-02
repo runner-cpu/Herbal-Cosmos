@@ -101,8 +101,8 @@ export function validateWebApp({ baseDir = root } = {}) {
     ['twitter-description', /<meta\b[^>]*name=["']twitter:description["']/i],
     ['twitter-image', /<meta\b[^>]*name=["']twitter:image["']/i],
     ['og-image-type', /<meta\b[^>]*property=["']og:image:type["'][^>]*content=["']image\/jpeg["']/i],
-    ['og-image-width', /<meta\b[^>]*property=["']og:image:width["'][^>]*content=["']333["']/i],
-    ['og-image-height', /<meta\b[^>]*property=["']og:image:height["'][^>]*content=["']500["']/i],
+    ['og-image-width', /<meta\b[^>]*property=["']og:image:width["'][^>]*content=["']1200["']/i],
+    ['og-image-height', /<meta\b[^>]*property=["']og:image:height["'][^>]*content=["']630["']/i],
     ['og-image-alt', /<meta\b[^>]*property=["']og:image:alt["']/i],
     ['json-ld', /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?EducationalApplication[\s\S]*?<\/script>/i]
   ];
