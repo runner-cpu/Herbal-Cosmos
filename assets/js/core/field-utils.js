@@ -7,3 +7,4 @@ function weiTokens(value){var text=String(value||'').replace(/[、，,；;／\/\
 function isCompositeWei(value){return weiTokens(value).length>1;}
 function missingLabel(){return '待补充';}
 function coverageLabel(value){return ({complete:'完整事实',partial:'部分字段',images:'开放图片','missing-image':'图片待补',origin:'省级分布',sources:'逐行来源'}[value]||value);}
+function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}

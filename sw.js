@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v9-20261002-defer-nav-shell';
+const CACHE_VERSION = 'herbal-cosmos-v10-20261002-xss-hardening';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
