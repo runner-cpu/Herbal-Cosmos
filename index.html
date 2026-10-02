@@ -7,20 +7,21 @@
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#12372c">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#0C3028">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09110D">
 <meta property="og:title" content="本草宇宙 · HERBAL COSMOS">
 <meta property="og:description" content="从一味药出发，探索性味归经、方剂配伍、典籍与 106 种食药物质目录。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://runner-cpu.github.io/Herbal-Cosmos/">
-<meta property="og:image" content="https://runner-cpu.github.io/Herbal-Cosmos/images/herbs/open/panax-ginseng-b85bb77ce4d8f0.jpg">
+<meta property="og:image" content="https://runner-cpu.github.io/Herbal-Cosmos/assets/og-cover.jpg">
 <meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="333">
-<meta property="og:image:height" content="500">
-<meta property="og:image:alt" content="人参植物开放许可图像，本草宇宙分享预览">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="本草宇宙品牌横幅：朱砂印章与「本草宇宙」标题，数据可视化漫游中医药文化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="本草宇宙 · HERBAL COSMOS">
 <meta name="twitter:description" content="从一味药出发，探索性味归经、方剂配伍、典籍与食药物质目录。">
-<meta name="twitter:image" content="https://runner-cpu.github.io/Herbal-Cosmos/images/herbs/open/panax-ginseng-b85bb77ce4d8f0.jpg">
+<meta name="twitter:image" content="https://runner-cpu.github.io/Herbal-Cosmos/assets/og-cover.jpg">
 <title>本草宇宙 · HERBAL COSMOS</title>
 <link rel="canonical" href="https://runner-cpu.github.io/Herbal-Cosmos/">
 <link rel="manifest" href="manifest.webmanifest">
@@ -46,10 +47,17 @@
         <a href="#/herbs" data-route-link="herbs" data-i18n="nav.herbs">探索本草</a>
         <a href="#/qiwei" data-route-link="qiwei" data-i18n="nav.qiwei">性味归经</a>
         <a href="#/formula" data-route-link="formula" data-i18n="nav.formula">配伍网络</a>
+        <details class="nav-more">
+          <summary aria-label="更多入口">更多</summary>
+          <div class="nav-popover">
+            <a href="#/home?anchor=home-learning" data-i18n="nav.learn">学习舱</a>
+            <a href="#/formula?view=zheng" data-i18n="nav.zheng">病证药链</a>
+          </div>
+        </details>
       </nav>
       <div class="searchbox">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
-        <input id="globalSearch" role="combobox" aria-label="搜索药材、名称索引或方剂" aria-autocomplete="list" aria-controls="searchResults" aria-expanded="false" aria-busy="true" placeholder="搜索药材 / 方剂" data-i18n-placeholder="search.placeholder" autocomplete="off">
+        <input id="globalSearch" role="combobox" aria-label="搜索药材、名称索引或方剂" aria-autocomplete="list" aria-controls="searchResults" aria-expanded="false" aria-busy="false" placeholder="搜索药材 / 方剂" data-i18n-placeholder="search.placeholder" autocomplete="off">
         <div class="search-results" id="searchResults" role="listbox" aria-label="搜索建议"></div>
         <div class="sr-only" id="searchStatus" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
@@ -172,7 +180,7 @@
       <div id="featuredAtlasPanel">
       <label class="coverage-filter" for="coverageFilter">资料覆盖<select id="coverageFilter"><option value="">全部知识卡</option><option value="complete">完整来源事实</option><option value="partial">部分字段记录</option><option value="images">有开放许可图片</option><option value="missing-image">图片待补充</option><option value="origin">有省级分布记录</option><option value="sources">有逐行来源链接</option></select></label>
       <div class="filter-bar" id="herbFilters">
-        <button class="filter-chip" id="resetFilters" type="button" style="border-color:var(--cinnabar);color:var(--cinnabar);">重置筛选</button>
+        <button class="filter-chip filter-chip-reset" id="resetFilters" type="button">重置筛选</button>
         <label class="filter-control" for="qiFilter">四气<select id="qiFilter" data-herb-filter="qi"></select></label>
         <label class="filter-control" for="weiFilter">五味<select id="weiFilter" data-herb-filter="wei"></select></label>
         <label class="filter-control" for="catFilter">资料分类<select id="catFilter" data-herb-filter="cat"></select></label>
@@ -285,16 +293,16 @@
 <div class="app-update" id="appUpdate" role="status" aria-live="polite" aria-atomic="true" hidden><span>本草宇宙已有新版本。</span><button id="appUpdateRefresh" type="button">刷新更新</button><button id="appUpdateLater" type="button">稍后</button></div>
 <div id="toast"></div>
 
-<script src="assets/vendor/echarts.min.js"></script>
-<script src="assets/js/data/food-medicine.generated.js"></script>
-<script src="assets/js/data/featured.js"></script>
-<script src="assets/js/data/expanded.generated.js"></script>
-<script src="assets/js/core/field-utils.js"></script>
+<script defer src="assets/vendor/echarts.min.js"></script>
+<script defer src="assets/js/data/food-medicine.generated.js"></script>
+<script defer src="assets/js/data/featured.js"></script>
+<script defer src="assets/js/data/expanded.generated.js"></script>
+<script defer src="assets/js/core/field-utils.js"></script>
+<script defer src="assets/js/core/runtime.js"></script>
 <script defer src="assets/js/components/stamp.browser.js"></script>
 <script defer src="assets/js/components/context-bar.browser.js"></script>
 <script defer src="assets/js/components/search.browser.js"></script>
 <script defer src="assets/js/components/saved-drawer.browser.js"></script>
-<script src="assets/js/core/runtime.js"></script>
 <!-- Source module paths retained for build/test traceability; browser copies below keep file:// direct-open support.
 assets/js/components/stamp.js assets/js/components/context-bar.js assets/js/components/search.js
 assets/js/components/saved-drawer.js assets/js/components/theme.js assets/js/pages/home.js

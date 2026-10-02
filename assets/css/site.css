@@ -147,6 +147,7 @@ h1.title{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--qin
 .filter-chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 13px;font-size:12.5px;color:var(--ink-2);transition:all .15s;}
 .filter-chip:hover{border-color:var(--cha);color:var(--cha);}
 .filter-chip.on{background:var(--qing);border-color:var(--qing);color:#F3EDDF;}
+.filter-chip-reset{border-color:var(--cinnabar);color:var(--cinnabar);}
 .table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);}
 table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px;}
 th{background:var(--paper-2);color:var(--qing);text-align:left;padding:11px 14px;font-weight:600;white-space:nowrap;font-size:13px;}

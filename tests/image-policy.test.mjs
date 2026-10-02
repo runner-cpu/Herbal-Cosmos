@@ -58,7 +58,7 @@ test('homepage herb imagery only references assets in the open-image manifest', 
   const references = [...`${css}\n${html}`.matchAll(/(?:https:\/\/[^\s\"']+\/)?(?:\.\.\/\.\.\/)?(images\/herbs\/[^)'\"\s>]+)/g)]
     .map(match => match[1]);
 
-  assert.ok(references.length >= 6, 'expected homepage module and Open Graph herb imagery');
+  assert.ok(references.length >= 5, 'expected homepage module herb imagery');
   for (const reference of new Set(references)) {
     assert.ok(reference.startsWith('images/herbs/open/'), `${reference}: legacy or unverified herb image`);
     assert.ok(approvedFiles.has(reference), `${reference}: absent from open-image manifest`);
@@ -69,4 +69,6 @@ test('homepage herb imagery only references assets in the open-image manifest', 
   }
   assert.match(html, /id="homeImageCredits"/);
   assert.match(html, /IMAGE_SOURCES_V4\.md/);
+  assert.match(html, /content="https:\/\/runner-cpu\.github\.io\/Herbal-Cosmos\/assets\/og-cover\.jpg"/, 'og:image must use the branded share cover');
+  assert.ok(fs.existsSync(path.join(root, 'assets', 'og-cover.jpg')), 'assets/og-cover.jpg is missing');
 });
