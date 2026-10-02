@@ -16,7 +16,7 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build:data
-      - run: git diff --exit-code -- data/ reports/ assets/js/data/food-medicine.generated.js assets/js/data/expanded.generated.js
+      - run: git diff --exit-code -- data/ reports/ assets/js/data
       - run: npm run validate:data
       - run: npm run validate:app
       - run: node scripts/fetch-herb-images.mjs --verify

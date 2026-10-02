@@ -31,17 +31,20 @@ test('扩展数据校验器拦截未在开放清单中的运行时图片', () =>
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'herbal-image-policy-'));
   try {
     for (const dir of ['assets/js/data', 'data/sources', 'reports']) fs.mkdirSync(path.join(temp, dir), { recursive: true });
-    for (const file of ['food-medicine.generated.js', 'featured.js', 'expanded.generated.js']) {
+    const expandedFiles = fs.readdirSync(path.join(root, 'assets/js/data')).filter(file => /^expanded\.(?:bootstrap|chunk-\d+|generated)\.js$/.test(file));
+    for (const file of ['food-medicine.generated.js', 'featured.js', ...expandedFiles]) {
       fs.copyFileSync(path.join(root, 'assets/js/data', file), path.join(temp, 'assets/js/data', file));
     }
     fs.copyFileSync(path.join(root, 'data/sources/herb-images.json'), path.join(temp, 'data/sources/herb-images.json'));
     fs.copyFileSync(path.join(root, 'reports/data-coverage.json'), path.join(temp, 'reports/data-coverage.json'));
     fs.symlinkSync(path.join(root, 'images'), path.join(temp, 'images'), process.platform === 'win32' ? 'junction' : 'dir');
 
-    const generated = path.join(temp, 'assets/js/data/expanded.generated.js');
     const approved = manifest.images['枸杞子'];
-    const source = fs.readFileSync(generated, 'utf8');
-    fs.writeFileSync(generated, source.replace(approved.file, 'images/herbs/gouqi.jpg'));
+    const chunk = expandedFiles.map(file => path.join(temp, 'assets/js/data', file))
+      .find(file => fs.readFileSync(file, 'utf8').includes(approved.file));
+    assert.ok(chunk, 'expanded runtime should contain the approved image path');
+    const source = fs.readFileSync(chunk, 'utf8');
+    fs.writeFileSync(chunk, source.replace(approved.file, 'images/herbs/gouqi.jpg'));
 
     const result = validateExpandedData({ baseDir: temp });
     assert.equal(result.ok, false);

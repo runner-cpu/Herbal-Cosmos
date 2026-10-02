@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v6-20260927-continuity';
+const CACHE_VERSION = 'herbal-cosmos-v8-20261002-evidence-chunks';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -20,6 +20,15 @@ const PRECACHE_URLS = Object.freeze([
   './assets/vendor/echarts.min.js',
   './assets/js/data/food-medicine.generated.js',
   './assets/js/data/featured.js',
+  './assets/js/data/expanded.bootstrap.js',
+  './assets/js/data/expanded.chunk-00.js',
+  './assets/js/data/expanded.chunk-01.js',
+  './assets/js/data/expanded.chunk-02.js',
+  './assets/js/data/expanded.chunk-03.js',
+  './assets/js/data/expanded.chunk-04.js',
+  './assets/js/data/expanded.chunk-05.js',
+  './assets/js/data/expanded.chunk-06.js',
+  './assets/js/data/expanded.chunk-07.js',
   './assets/js/data/expanded.generated.js',
   './assets/js/core/runtime.js',
   './assets/js/core/app-shell.js',

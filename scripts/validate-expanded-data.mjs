@@ -12,7 +12,14 @@ const readJson = (file, baseDir = root) => JSON.parse(fs.readFileSync(path.join(
 export function loadExpanded(baseDir = root) {
   const window = {};
   const context = vm.createContext({ window, console, encodeURIComponent });
-  for (const file of ['assets/js/data/food-medicine.generated.js', 'assets/js/data/featured.js', 'assets/js/data/expanded.generated.js']) {
+  const dataDir = path.join(baseDir, 'assets/js/data');
+  const expanded = fs.readdirSync(dataDir)
+    .filter(file => /^expanded\.(?:bootstrap|chunk-\d+|generated)\.js$/.test(file))
+    .sort((a, b) => a.localeCompare(b, 'en'));
+  if (!expanded.includes('expanded.bootstrap.js') || !expanded.includes('expanded.generated.js')) {
+    throw new Error('expanded runtime bootstrap/finalizer is incomplete');
+  }
+  for (const file of ['assets/js/data/food-medicine.generated.js', 'assets/js/data/featured.js', ...expanded.map(file => 'assets/js/data/' + file)]) {
     vm.runInContext(fs.readFileSync(path.join(baseDir, file), 'utf8'), context, { filename: file });
   }
   return window;
@@ -20,6 +27,13 @@ export function loadExpanded(baseDir = root) {
 
 export function validateExpandedData({ baseDir = root } = {}) {
   const issues = [];
+  const dataDir = path.join(baseDir, 'assets/js/data');
+  const chunkFiles = fs.existsSync(dataDir) ? fs.readdirSync(dataDir).filter(file => /^expanded\.chunk-\d+\.js$/.test(file)).sort() : [];
+  if (chunkFiles.length !== 8) issues.push(issue('expanded-chunk-count', 'expected 8 expanded runtime chunks, found ' + chunkFiles.length));
+  for (const file of chunkFiles) {
+    const bytes = fs.statSync(path.join(dataDir, file)).size;
+    if (bytes <= 0 || bytes > 110_000) issues.push(issue('expanded-chunk-budget', file + ' is ' + bytes + ' bytes'));
+  }
   let data;
   try { data = loadExpanded(baseDir); } catch (error) {
     issues.push(issue('generated-load', error.message));

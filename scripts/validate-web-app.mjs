@@ -14,11 +14,14 @@ const REQUIRED_FILES = [
 
 export const RESOURCE_LIMITS = Object.freeze({
   'assets/vendor/echarts.min.js': 1_100_000,
-  // The curated layer now carries 902 audited cards. The catalog index remains
-  // lazy-loaded in chunks; this budget covers the expanded evidence layer only.
-  'assets/js/data/expanded.generated.js': 850_000,
+  // The curated layer is split into bounded evidence chunks so the first paint
+  // and forge API requests never depend on one oversized generated file.
+  'assets/js/data/expanded.bootstrap.js': 20_000,
+  'assets/js/data/expanded.generated.js': 20_000,
   'assets/js/core/runtime.js': 100_000
 });
+export const EXPANDED_CHUNK_COUNT = 8;
+export const EXPANDED_CHUNK_LIMIT = 110_000;
 export const HANDWRITTEN_MODULE_LIMIT = 40_000;
 export const PRECACHE_LIMIT = 2_500_000;
 
@@ -153,6 +156,20 @@ export function validateWebApp({ baseDir = root } = {}) {
       seenFiles.add(relativePath);
       if (bytes > limit) add('resource-budget', relativePath + ' is ' + bytes + ' bytes; limit is ' + limit);
     }
+  }
+
+  const dataDirectory = path.join(baseDir, 'assets', 'js', 'data');
+  const expandedChunks = fs.existsSync(dataDirectory)
+    ? fs.readdirSync(dataDirectory).filter(file => /^expanded\.chunk-\d+\.js$/.test(file)).sort()
+    : [];
+  if (expandedChunks.length !== EXPANDED_CHUNK_COUNT) {
+    add('expanded-chunk-count', 'expected ' + EXPANDED_CHUNK_COUNT + ' expanded data chunks, found ' + expandedChunks.length);
+  }
+  for (const file of expandedChunks) {
+    const relativePath = 'assets/js/data/' + file;
+    const bytes = fileBytes(baseDir, relativePath);
+    seenFiles.add(relativePath);
+    if (bytes <= 0 || bytes > EXPANDED_CHUNK_LIMIT) add('expanded-chunk-budget', relativePath + ' is ' + bytes + ' bytes; limit is ' + EXPANDED_CHUNK_LIMIT);
   }
 
   const handwritten = walkJavaScript(path.join(baseDir, 'assets', 'js'), baseDir)

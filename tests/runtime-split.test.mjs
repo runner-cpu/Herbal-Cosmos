@@ -43,3 +43,21 @@ test('full catalog is not a first-paint script dependency', () => {
   assert.equal(html.includes('data/herb-catalog.js'), false);
   assert.ok(html.includes('assets/js/core/catalog-loader.js'));
 });
+
+test('expanded evidence is published as bounded ordered chunks', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const chunks = fs.readdirSync(path.join(root, 'assets/js/data'))
+    .filter(file => /^expanded\.chunk-\d+\.js$/.test(file))
+    .sort();
+  assert.equal(chunks.length, 8);
+  let previous = html.indexOf('assets/js/data/expanded.bootstrap.js');
+  assert.ok(previous >= 0);
+  for (const file of chunks) {
+    const marker = 'assets/js/data/' + file;
+    const index = html.indexOf(marker);
+    assert.ok(index > previous, marker + ' must load after the previous data layer');
+    assert.ok(fs.statSync(path.join(root, 'assets/js/data', file)).size < 110_000, marker + ' exceeds the bounded chunk budget');
+    previous = index;
+  }
+  assert.ok(html.indexOf('assets/js/data/expanded.generated.js') > previous);
+});

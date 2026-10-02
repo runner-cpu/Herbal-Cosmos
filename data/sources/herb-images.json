@@ -13952,6 +13952,153 @@
       "alt": "橘核的来源生物参考图：Citrus reticulata。本图不代表药材的采收部位或炮制形态。",
       "sourceRowName": "橘核",
       "sourceRowHash": "816484fbb90d027b2540b506b94c0275c7c44865c93b63843413af59e610328a"
+    },
+    "三七": {
+      "provider": "Wikimedia Commons",
+      "taxon": "Panax notoginseng",
+      "depicts": "Panax notoginseng",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Panax_notoginseng_flower.jpg",
+      "author": "Fumikas Sagisavas",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Panax_notoginseng_flower.jpg/500px-Panax_notoginseng_flower.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "matchedTitle": "File:Panax notoginseng flower.jpg",
+      "matchMethod": "exact Commons species category",
+      "matchEvidence": "https://commons.wikimedia.org/wiki/Category:Panax_notoginseng",
+      "file": "images/herbs/open/panax-notoginseng-5de566d8e28d6a.jpg",
+      "sha256": "11b85414bb257cf67f4aff8ed32eb2404974bbdfd4cf5a18a1837e5062c9331f",
+      "bytes": 163227,
+      "retrievedAt": "2026-10-02T09:07:27.311Z",
+      "sourceTaxon": "Panax notoginseng",
+      "alt": "三七的来源生物参考图：Panax notoginseng。本图不代表药材的采收部位或炮制形态。",
+      "sourceRowName": "三七",
+      "sourceRowHash": "1be743f80831756958e55af8aa726768d11a2960fa95c2d7c284530b04f6961f"
+    },
+    "青皮": {
+      "provider": "Wikimedia Commons",
+      "taxon": "Citrus reticulata",
+      "depicts": "Citrus reticulata",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Citrus_reticulata_Ogr%C3%B3d_Botaniczny_UJ_w_Krakowie_003.jpg",
+      "author": "Raphael17",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Citrus_reticulata_Ogr%C3%B3d_Botaniczny_UJ_w_Krakowie_003.jpg/500px-Citrus_reticulata_Ogr%C3%B3d_Botaniczny_UJ_w_Krakowie_003.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "matchedTitle": "File:Citrus reticulata Ogród Botaniczny UJ w Krakowie 003.jpg",
+      "matchMethod": "exact Commons species category",
+      "matchEvidence": "https://commons.wikimedia.org/wiki/Category:Citrus_reticulata",
+      "file": "images/herbs/open/citrus-reticulata-e12e79a383bc56.jpg",
+      "sha256": "7108cee2004c474c0bfa68718e1a9b375ac82d9ee0847f452fe380813dcb206a",
+      "bytes": 93094,
+      "retrievedAt": "2026-09-28T05:30:20.489Z",
+      "sourceTaxon": "Citrus reticulata",
+      "alt": "青皮的来源生物参考图：Citrus reticulata。本图不代表药材的采收部位或炮制形态。",
+      "sourceRowName": "青皮",
+      "sourceRowHash": "a0d2e275be08d515bf18a6b6580c42119818e1e627cc056d59f6778fcbd4b378"
+    },
+    "红曲": {
+      "provider": "Wikimedia Commons",
+      "taxon": "Monascus purpureus",
+      "depicts": "Monascus purpureus",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Red_rice_wine_hong_zhao.JPG",
+      "author": "Gluo88",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Red_rice_wine_hong_zhao.JPG/500px-Red_rice_wine_hong_zhao.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "matchedTitle": "File:Red rice wine hong zhao.JPG",
+      "matchMethod": "exact Commons species category",
+      "matchEvidence": "https://commons.wikimedia.org/wiki/Category:Monascus_purpureus",
+      "file": "images/herbs/open/monascus-purpureus-7103ebc376ba18.jpg",
+      "sha256": "50191a487ae2237723e42f4dd7d1b2d7e9c58709748402f276c69e06ca05f4a0",
+      "bytes": 58654,
+      "retrievedAt": "2026-10-02T09:27:03.058Z",
+      "sourceTaxon": "Monascus purpureus",
+      "alt": "红曲的来源生物参考图：Monascus purpureus。本图不代表药材的采收部位或炮制形态。",
+      "sourceRowName": "红曲",
+      "sourceRowHash": "56d19bf97cd30cb956f72aa44b944459d7480f83376ed738c8ee1bcfc9f547f2"
+    },
+    "僵蚕": {
+      "provider": "Wikimedia Commons",
+      "taxon": "Bombyx mori",
+      "depicts": "Bombyx mori",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:11_-_Svilena_buba.jpg",
+      "author": "Misa.stefanovic.07",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/11_-_Svilena_buba.jpg/500px-11_-_Svilena_buba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "matchedTitle": "File:11 - Svilena buba.jpg",
+      "matchMethod": "exact Commons species category",
+      "matchEvidence": "https://commons.wikimedia.org/wiki/Category:Bombyx_mori",
+      "file": "images/herbs/open/bombyx-mori-f3c5daaf4960be.jpg",
+      "sha256": "0fe0ada978a2876367017f1ba15144fb0636865c5884d7d20385d5bdec74b3fc",
+      "bytes": 61062,
+      "retrievedAt": "2026-10-02T09:43:01.045Z",
+      "sourceTaxon": "Bombyx mori",
+      "alt": "僵蚕的来源生物参考图：Bombyx mori。本图不代表药材的采收部位或炮制形态。",
+      "sourceRowName": "僵蚕",
+      "sourceRowHash": "a9499d9b7c7c48c10422c24c53d9c6a78a9642342c2f2c09f5fd76642d6dcb2d"
+    },
+    "蚕沙": {
+      "provider": "Wikimedia Commons",
+      "taxon": "Bombyx mori",
+      "depicts": "Bombyx mori",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:11_-_Svilena_buba.jpg",
+      "author": "Misa.stefanovic.07",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/11_-_Svilena_buba.jpg/500px-11_-_Svilena_buba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "matchedTitle": "File:11 - Svilena buba.jpg",
+      "matchMethod": "exact Commons species category",
+      "matchEvidence": "https://commons.wikimedia.org/wiki/Category:Bombyx_mori",
+      "file": "images/herbs/open/bombyx-mori-f3c5daaf4960be.jpg",
+      "sha256": "0fe0ada978a2876367017f1ba15144fb0636865c5884d7d20385d5bdec74b3fc",
+      "bytes": 61062,
+      "retrievedAt": "2026-10-02T09:43:01.045Z",
+      "sourceTaxon": "Bombyx mori",
+      "alt": "蚕沙的来源生物参考图：Bombyx mori。本图不代表药材的采收部位或炮制形态。",
+      "sourceRowName": "蚕沙",
+      "sourceRowHash": "a22fa6b1995256453b7587fed066e78f35a6ef94e973392811bf74594f417dd3"
+    },
+    "海藻": {
+      "provider": "Wikimedia Commons",
+      "taxon": "Sargassum pallidum",
+      "depicts": "Sargassum pallidum",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sargassum_pallidum_as_Fucus_pallidus_in_Turner_1808.jpg",
+      "author": "Dawson Turner (1775–1858), W.J.H. Esqr. del. (= William Jackson Hooker 1785–1865)",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Sargassum_pallidum_as_Fucus_pallidus_in_Turner_1808.jpg/330px-Sargassum_pallidum_as_Fucus_pallidus_in_Turner_1808.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "matchedTitle": "File:Sargassum pallidum as Fucus pallidus in Turner 1808.jpg",
+      "matchMethod": "exact Commons species category",
+      "matchEvidence": "https://commons.wikimedia.org/wiki/Category:Sargassum_pallidum",
+      "file": "images/herbs/open/sargassum-pallidum-06a88381cf93f7.jpg",
+      "sha256": "740a83dde341ff9fd7fb80ab0c831cb136c82a07f5b86f5732186835ef45ef21",
+      "bytes": 48196,
+      "retrievedAt": "2026-10-02T09:43:13.432Z",
+      "sourceTaxon": "Sargassum pallidum",
+      "alt": "海藻的来源生物参考图：Sargassum pallidum。本图不代表药材的采收部位或炮制形态。",
+      "sourceRowName": "海藻",
+      "sourceRowHash": "34cdf44a40a5755da9419479c34bedcfa3c95aa5b4818a7a73a0067dd5cd2730"
+    },
+    "没药": {
+      "provider": "Wikimedia Commons",
+      "taxon": "Commiphora myrrha",
+      "depicts": "Commiphora myrrha",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Commiphora_myrrha.jpg",
+      "author": "W. C. Burger",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Commiphora_myrrha.jpg/330px-Commiphora_myrrha.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "matchedTitle": "File:Commiphora myrrha.jpg",
+      "matchMethod": "exact Commons species category",
+      "matchEvidence": "https://commons.wikimedia.org/wiki/Category:Commiphora_myrrha",
+      "file": "images/herbs/open/commiphora-myrrha-bdc981ab5d85ca.jpg",
+      "sha256": "0f51c0fd5d87131859e60d6718395d38b1b7018cc4bb96f3c348008ba0dbd2a1",
+      "bytes": 48685,
+      "retrievedAt": "2026-10-02T09:43:24.188Z",
+      "sourceTaxon": "Commiphora myrrha",
+      "alt": "没药的来源生物参考图：Commiphora myrrha。本图不代表药材的采收部位或炮制形态。",
+      "sourceRowName": "没药",
+      "sourceRowHash": "1a0927238342405b29c8d91f7de6d2dd80fda6c29445dbd0396f4784cbbcc326"
     }
   },
   "exclusions": [
@@ -14006,56 +14153,14 @@
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
     },
     {
-      "name": "西青果",
-      "taxa": [
-        "Terminalia chebu"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "青叶胆",
-      "taxa": [
-        "Swertia mileensis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
       "name": "红粉",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
     },
     {
-      "name": "穿破石",
-      "taxa": [
-        "Machura cochinchinensis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "岩参",
-      "taxa": [
-        "Piper pubicatulum"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "紫草茸",
-      "taxa": [
-        "Laccifer lacca"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
       "name": "龙骨",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
-    },
-    {
-      "name": "爬山虎",
-      "taxa": [
-        "Paythenocissus tricusiordata"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
       "name": "硇砂",
@@ -14188,20 +14293,6 @@
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
     },
     {
-      "name": "青黛",
-      "taxa": [
-        "Potygonum tinctorium"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "竹沥",
-      "taxa": [
-        "Munro var"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
       "name": "苦木",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
@@ -14210,13 +14301,6 @@
       "name": "川木通",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
-    },
-    {
-      "name": "秦皮",
-      "taxa": [
-        "Fraxinus szaboana"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
       "name": "满山红",
@@ -14234,27 +14318,6 @@
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
     },
     {
-      "name": "迎春花",
-      "taxa": [
-        "Jasminum nudiforum"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "颠茄草",
-      "taxa": [
-        "Atropa belladonna"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "蛇莓",
-      "taxa": [
-        "Duchesnea indica"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
       "name": "鱼腥草",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
@@ -14265,49 +14328,14 @@
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
     },
     {
-      "name": "苦地丁",
-      "taxa": [
-        "Corydalis bungean"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "西番莲",
-      "taxa": [
-        "Passillora caerulea"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
       "name": "瓜子金",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
     },
     {
-      "name": "白花丹",
-      "taxa": [
-        "Plumbago zeyla-nica"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "长春花",
-      "taxa": [
-        "Catharathus roseus"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
       "name": "瓦松",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
-    },
-    {
-      "name": "红丝线",
-      "taxa": [
-        "Peristrophe baphica"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
       "name": "马鞭草",
@@ -14318,13 +14346,6 @@
       "name": "小驳骨",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
-    },
-    {
-      "name": "山菅兰",
-      "taxa": [
-        "Dianella ensi-"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
       "name": "苘麻子",
@@ -14340,13 +14361,6 @@
       "name": "余甘子",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
-    },
-    {
-      "name": "猪牙皂",
-      "taxa": [
-        "Gleditsia sinensisi"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
       "name": "芡实",
@@ -14614,535 +14628,6 @@
       "name": "白花银背藤",
       "taxa": [],
       "reason": "No unambiguous botanical/zoological binomial in source, or non-biological material."
-    },
-    {
-      "name": "海浮石",
-      "taxa": [
-        "Costazia aculeata"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "瓜蒌",
-      "taxa": [
-        "Trichosanthes klrllowll"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "一点血",
-      "taxa": [
-        "Begonia uilsonii"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "红参",
-      "taxa": [
-        "Panar ginseng"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "熟地黄",
-      "taxa": [
-        "Rehmannig glutinosa"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "暴马丁香",
-      "taxa": [
-        "Syringa reticulate",
-        "Hara var"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "地龙",
-      "taxa": [
-        "Pheretima aspergillum",
-        "Pheretima guillelmi",
-        "Pheretimapectini fera"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "水蛭",
-      "taxa": [
-        "Hirudo niponica"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "五灵脂",
-      "taxa": [
-        "Trogopterus xanthipes"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "僵蚕",
-      "taxa": [
-        "Bombyx mori"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "蚕沙",
-      "taxa": [
-        "Bombyx mori"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "瓦楞子",
-      "taxa": [
-        "Arca subcrenata",
-        "Arca gran",
-        "Arca injlata"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "虫白蜡",
-      "taxa": [
-        "Ericerus peta"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "九香虫",
-      "taxa": [
-        "Aspongopus chinensis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "天竺黄",
-      "taxa": [
-        "Bambus textilis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "雷丸",
-      "taxa": [
-        "Omphalia lapidescens"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "木耳",
-      "taxa": [
-        "Auricularia auricula"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "海藻",
-      "taxa": [
-        "Sargassum pallidum"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "灵芝",
-      "taxa": [
-        "Ganoderma sinense"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "乳香",
-      "taxa": [
-        "Boswellia carterli"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "血竭",
-      "taxa": [
-        "Daemonorops draco"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "安息香",
-      "taxa": [
-        "Styrax tonkinensis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "没药",
-      "taxa": [
-        "Commiphora myrrha",
-        "Commiphora molmol"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "干漆",
-      "taxa": [
-        "Toxicodendron verniciflnum"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "鸡血藤",
-      "taxa": [
-        "Spatholobus suberects"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "竹茹",
-      "taxa": [
-        "Bambusa tuldoides"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "钩藤",
-      "taxa": [
-        "Uncaria thynchophylla",
-        "Uncaria sinensis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "黄柏",
-      "taxa": [
-        "Phellodendron chinense"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "牡丹皮",
-      "taxa": [
-        "Paeonia suffruticosa"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "五加皮",
-      "taxa": [
-        "Acanthopanax gracilistylus"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "土荆皮",
-      "taxa": [
-        "Pseudolarix kaempferi"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "地枫皮",
-      "taxa": [
-        "Illicium difengpi"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "牡荆叶",
-      "taxa": [
-        "Vitei negundo"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "龙脷叶",
-      "taxa": [
-        "Sauropus rostratus"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "石楠叶",
-      "taxa": [
-        "Photinia serrulata"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "山楂叶",
-      "taxa": [
-        "Crataegus pinn",
-        "Crataegus pinnatzjida"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "款冬花",
-      "taxa": [
-        "Tussdago farfara"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "菊花",
-      "taxa": [
-        "Chrysanthemum morifolium"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "闹羊花",
-      "taxa": [
-        "Rhododendron molte"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "密蒙花",
-      "taxa": [
-        "Buddleja officinalis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "薄荷",
-      "taxa": [
-        "Mentha haplocalyx"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "菥蓂",
-      "taxa": [
-        "Thlaspi arvetse"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "淡竹叶",
-      "taxa": [
-        "Lophatherum gracite"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "甜地丁",
-      "taxa": [
-        "Gueldenstaedtia multiflora"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "景天三七",
-      "taxa": [
-        "Sedum aizoon"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "荆芥",
-      "taxa": [
-        "Schizonepeta tenuifolia"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "鸡骨草",
-      "taxa": [
-        "Abrus cantoniensis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "金钱草",
-      "taxa": [
-        "Lysimachia christinae"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "香薷",
-      "taxa": [
-        "Mosla chinensis",
-        "Jiangxi angru"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "乌蔹莓",
-      "taxa": [
-        "Cayratia japonica"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "冬凌草",
-      "taxa": [
-        "Rabdosia rubescens"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "广山药",
-      "taxa": [
-        "Dioscorea persimilis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "小蓟",
-      "taxa": [
-        "Cirsium setosum"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "山木通",
-      "taxa": [
-        "Clematis fi-"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "广藿香",
-      "taxa": [
-        "Pogostemon cablin"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "蕤仁",
-      "taxa": [
-        "Prinsepia uniflora"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "樱桃核",
-      "taxa": [
-        "Cerasus pseudocerasus"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "榧子",
-      "taxa": [
-        "Torreya grandis"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "葱子",
-      "taxa": [
-        "Allium jistulosum"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "黄荆子",
-      "taxa": [
-        "Viter negundo"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "莱菔子",
-      "taxa": [
-        "Raphanus sativus"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "益智",
-      "taxa": [
-        "Alpinia oxyphylla"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "胖大海",
-      "taxa": [
-        "Sterculia lychnophora"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "香橼",
-      "taxa": [
-        "Citrus wilsonii",
-        "Citrus medic"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "大驳骨",
-      "taxa": [
-        "Adhatoda ven-tricosa"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "南五味子",
-      "taxa": [
-        "Schisandra sphenanthera"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "枳实",
-      "taxa": [
-        "Citrus aurantium"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "枳壳",
-      "taxa": [
-        "Citrus aurantium"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "青皮",
-      "taxa": [
-        "Citrus reticulata"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "柏子仁",
-      "taxa": [
-        "Platycladus orientails"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "砂仁",
-      "taxa": [
-        "Amomum villosum",
-        "Amomum longiligulare"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "沙棘",
-      "taxa": [
-        "Hippophae thamnoides"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "苍耳子",
-      "taxa": [
-        "Xanthium sibiricum"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
-      "name": "芸薹子",
-      "taxa": [
-        "Brassica campesrtris"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
       "name": "吴茱萸",
@@ -15492,131 +14977,527 @@
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "白药子",
+      "name": "淡竹叶",
       "taxa": [
-        "Stephania cep-hurantha"
+        "Lophatherum gracite"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "三棵针",
+      "name": "甜地丁",
       "taxa": [
-        "Berbers soulieana"
+        "Gueldenstaedtia multiflora"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "三棱",
+      "name": "景天三七",
       "taxa": [
-        "Sparganium stoloniferum"
+        "Sedum aizoon"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "西洋参",
+      "name": "香薷",
       "taxa": [
-        "Panax quinquefolium"
+        "Mosla chinensis",
+        "Jiangxi angru"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "三七",
+      "name": "荆芥",
       "taxa": [
-        "Panax notoginseng"
+        "Schizonepeta tenuifolia"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "夏天无",
+      "name": "金钱草",
       "taxa": [
-        "Corydatis decumbens"
+        "Lysimachia christinae"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "透骨香",
+      "name": "苦地丁",
       "taxa": [
-        "Gaultheria yunnanenszs"
+        "Corydalis bungean"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "玄参",
+      "name": "鸡骨草",
       "taxa": [
-        "Laria ningpoensis",
-        "Scrophularia buergeriana",
-        "Scrophularia oldhami"
+        "Abrus cantoniensis"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "灵香草",
+      "name": "西番莲",
       "taxa": [
-        "Lysimachia foenum-graecum"
+        "Passillora caerulea"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "盘龙七",
+      "name": "冬凌草",
       "taxa": [
-        "Bergenia scopulosa"
+        "Rabdosia rubescens"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "六棱菊",
+      "name": "广山药",
       "taxa": [
-        "Laggta alatae"
+        "Dioscorea persimilis"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "岩椒草",
+      "name": "白花丹",
       "taxa": [
-        "Boenninghausenia albi"
+        "Plumbago zeyla-nica"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "凤凰衣",
+      "name": "乌蔹莓",
       "taxa": [
-        "Callus gallus"
+        "Cayratia japonica"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "太白米",
+      "name": "长春花",
       "taxa": [
-        "Notholiriom bulbuliferum"
+        "Catharathus roseus"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "椒目",
+      "name": "红丝线",
       "taxa": [
-        "Zanthoxylum bun-geanum"
+        "Peristrophe baphica"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "红曲",
+      "name": "广藿香",
       "taxa": [
-        "Monascus purpureus"
+        "Pogostemon cablin"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "双参",
+      "name": "小蓟",
       "taxa": [
-        "Triplostegia grandi"
+        "Cirsium setosum"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "虻虫",
+      "name": "山木通",
       "taxa": [
-        "Tabanux manda-rinus",
-        "Atylotus bivittateinus"
+        "Clematis fi-"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "蕤仁",
+      "taxa": [
+        "Prinsepia uniflora"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "樱桃核",
+      "taxa": [
+        "Cerasus pseudocerasus"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "榧子",
+      "taxa": [
+        "Torreya grandis"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "葱子",
+      "taxa": [
+        "Allium jistulosum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "山菅兰",
+      "taxa": [
+        "Dianella ensi-"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "黄荆子",
+      "taxa": [
+        "Viter negundo"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "益智",
+      "taxa": [
+        "Alpinia oxyphylla"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "莱菔子",
+      "taxa": [
+        "Raphanus sativus"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "胖大海",
+      "taxa": [
+        "Sterculia lychnophora"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "香橼",
+      "taxa": [
+        "Citrus wilsonii",
+        "Citrus medic"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "砂仁",
+      "taxa": [
+        "Amomum villosum",
+        "Amomum longiligulare"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "南五味子",
+      "taxa": [
+        "Schisandra sphenanthera"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "大驳骨",
+      "taxa": [
+        "Adhatoda ven-tricosa"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "枳实",
+      "taxa": [
+        "Citrus aurantium"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "枳壳",
+      "taxa": [
+        "Citrus aurantium"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "柏子仁",
+      "taxa": [
+        "Platycladus orientails"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "沙棘",
+      "taxa": [
+        "Hippophae thamnoides"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "猪牙皂",
+      "taxa": [
+        "Gleditsia sinensisi"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "苍耳子",
+      "taxa": [
+        "Xanthium sibiricum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "芸薹子",
+      "taxa": [
+        "Brassica campesrtris"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "瓦楞子",
+      "taxa": [
+        "Arca subcrenata",
+        "Arca gran",
+        "Arca injlata"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "五灵脂",
+      "taxa": [
+        "Trogopterus xanthipes"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "虫白蜡",
+      "taxa": [
+        "Ericerus peta"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "九香虫",
+      "taxa": [
+        "Aspongopus chinensis"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "青黛",
+      "taxa": [
+        "Potygonum tinctorium"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "天竺黄",
+      "taxa": [
+        "Bambus textilis"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "雷丸",
+      "taxa": [
+        "Omphalia lapidescens"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "灵芝",
+      "taxa": [
+        "Ganoderma sinense"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "木耳",
+      "taxa": [
+        "Auricularia auricula"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "乳香",
+      "taxa": [
+        "Boswellia carterli"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "血竭",
+      "taxa": [
+        "Daemonorops draco"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "安息香",
+      "taxa": [
+        "Styrax tonkinensis"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "竹沥",
+      "taxa": [
+        "Munro var"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "干漆",
+      "taxa": [
+        "Toxicodendron verniciflnum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "钩藤",
+      "taxa": [
+        "Uncaria thynchophylla",
+        "Uncaria sinensis"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "鸡血藤",
+      "taxa": [
+        "Spatholobus suberects"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "竹茹",
+      "taxa": [
+        "Bambusa tuldoides"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "黄柏",
+      "taxa": [
+        "Phellodendron chinense"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "秦皮",
+      "taxa": [
+        "Fraxinus szaboana"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "牡丹皮",
+      "taxa": [
+        "Paeonia suffruticosa"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "地枫皮",
+      "taxa": [
+        "Illicium difengpi"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "五加皮",
+      "taxa": [
+        "Acanthopanax gracilistylus"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "土荆皮",
+      "taxa": [
+        "Pseudolarix kaempferi"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "牡荆叶",
+      "taxa": [
+        "Vitei negundo"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "龙脷叶",
+      "taxa": [
+        "Sauropus rostratus"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "石楠叶",
+      "taxa": [
+        "Photinia serrulata"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "山楂叶",
+      "taxa": [
+        "Crataegus pinn",
+        "Crataegus pinnatzjida"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "款冬花",
+      "taxa": [
+        "Tussdago farfara"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "密蒙花",
+      "taxa": [
+        "Buddleja officinalis"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "菊花",
+      "taxa": [
+        "Chrysanthemum morifolium"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "闹羊花",
+      "taxa": [
+        "Rhododendron molte"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "迎春花",
+      "taxa": [
+        "Jasminum nudiforum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "颠茄草",
+      "taxa": [
+        "Atropa belladonna"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "薄荷",
+      "taxa": [
+        "Mentha haplocalyx"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "蛇莓",
+      "taxa": [
+        "Duchesnea indica"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "菥蓂",
+      "taxa": [
+        "Thlaspi arvetse"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
@@ -15719,6 +15600,13 @@
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
+      "name": "苦玄参",
+      "taxa": [
+        "Picria fel-terrae"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
       "name": "粉葛",
       "taxa": [
         "Pueraria thomsonii"
@@ -15740,9 +15628,14 @@
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "苦玄参",
+      "name": "雪上一枝蒿",
       "taxa": [
-        "Picria fel-terrae"
+        "Aconitum brachypodum",
+        "Diels var",
+        "Stapf var",
+        "Aconitum pendulum",
+        "Aconitum nagarum",
+        "Aconitum flavum"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
@@ -15796,14 +15689,9 @@
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "雪上一枝蒿",
+      "name": "黑种草子",
       "taxa": [
-        "Aconitum brachypodum",
-        "Diels var",
-        "Stapf var",
-        "Aconitum pendulum",
-        "Aconitum nagarum",
-        "Aconitum flavum"
+        "Nigella glandulifera"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
@@ -15830,12 +15718,222 @@
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "黑种草子",
+      "name": "青叶胆",
       "taxa": [
-        "Nigella glandulifera"
+        "Swertia mileensis"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "西青果",
+      "taxa": [
+        "Terminalia chebu"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "白药子",
+      "taxa": [
+        "Stephania cep-hurantha"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "三棵针",
+      "taxa": [
+        "Berbers soulieana"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "穿破石",
+      "taxa": [
+        "Machura cochinchinensis",
+        "Machura tricuspidata"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "三棱",
+      "taxa": [
+        "Sparganium stoloniferum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "西洋参",
+      "taxa": [
+        "Panax quinquefolium"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "玄参",
+      "taxa": [
+        "Laria ningpoensis",
+        "Scrophularia buergeriana",
+        "Scrophularia oldhami"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "夏天无",
+      "taxa": [
+        "Corydatis decumbens"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "岩参",
+      "taxa": [
+        "Piper pubicatulum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "透骨香",
+      "taxa": [
+        "Gaultheria yunnanenszs"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "紫草茸",
+      "taxa": [
+        "Laccifer lacca"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "灵香草",
+      "taxa": [
+        "Lysimachia foenum-graecum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "爬山虎",
+      "taxa": [
+        "Paythenocissus tricusiordata"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "盘龙七",
+      "taxa": [
+        "Bergenia scopulosa"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "六棱菊",
+      "taxa": [
+        "Laggta alatae"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "岩椒草",
+      "taxa": [
+        "Boenninghausenia albi"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "凤凰衣",
+      "taxa": [
+        "Callus gallus"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "太白米",
+      "taxa": [
+        "Notholiriom bulbuliferum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "椒目",
+      "taxa": [
+        "Zanthoxylum bun-geanum"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "双参",
+      "taxa": [
+        "Triplostegia grandi"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "虻虫",
+      "taxa": [
+        "Tabanux manda-rinus",
+        "Atylotus bivittateinus"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "海浮石",
+      "taxa": [
+        "Costazia aculeata"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "瓜蒌",
+      "taxa": [
+        "Trichosanthes klrllowll"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "暴马丁香",
+      "taxa": [
+        "Syringa reticulate",
+        "Hara var"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "一点血",
+      "taxa": [
+        "Begonia uilsonii"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "红参",
+      "taxa": [
+        "Panar ginseng"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "熟地黄",
+      "taxa": [
+        "Rehmannig glutinosa"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "地龙",
+      "taxa": [
+        "Pheretima aspergillum",
+        "Pheretima guillelmi",
+        "Pheretimapectini fera"
+      ],
+      "reason": "No exact-subject photograph with an accepted open license was retrieved."
+    },
+    {
+      "name": "水蛭",
+      "taxa": [
+        "Hirudo niponica"
       ],
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     }
   ],
-  "updatedAt": "2026-09-28T13:10:24.684Z"
+  "updatedAt": "2026-10-02T09:45:55.637Z"
 }
