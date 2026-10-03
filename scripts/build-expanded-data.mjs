@@ -9,7 +9,7 @@ import {collectRepeatedStrings, serializeSharedStrings} from './shared-string-co
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const DATA_VERSION=9;
 const DATA_DATE='2026-10-03';
-const EXPANDED_CHUNK_COUNT=8;
+const EXPANDED_CHUNK_COUNT=9;
 const EXPANDED_CHUNK_LIMIT=100_000;
 const EXPANDED_PAYLOAD_LIMIT=EXPANDED_CHUNK_LIMIT-512;
 const read=file=>JSON.parse(fs.readFileSync(path.join(root,file),'utf8'));

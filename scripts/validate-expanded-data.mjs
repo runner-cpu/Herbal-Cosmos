@@ -29,7 +29,7 @@ export function validateExpandedData({ baseDir = root } = {}) {
   const issues = [];
   const dataDir = path.join(baseDir, 'assets/js/data');
   const chunkFiles = fs.existsSync(dataDir) ? fs.readdirSync(dataDir).filter(file => /^expanded\.chunk-\d+\.js$/.test(file)).sort() : [];
-  if (chunkFiles.length !== 8) issues.push(issue('expanded-chunk-count', 'expected 8 expanded runtime chunks, found ' + chunkFiles.length));
+  if (chunkFiles.length !== 9) issues.push(issue('expanded-chunk-count', 'expected 9 expanded runtime chunks, found ' + chunkFiles.length));
   for (const file of chunkFiles) {
     const bytes = fs.statSync(path.join(dataDir, file)).size;
     if (bytes <= 0 || bytes > 110_000) issues.push(issue('expanded-chunk-budget', file + ' is ' + bytes + ' bytes'));

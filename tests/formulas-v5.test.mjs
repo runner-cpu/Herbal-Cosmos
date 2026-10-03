@@ -60,10 +60,15 @@ test('V5 syndromes either map onto the runtime index or stay honestly outside it
   for (const formula of v5) assert.ok(typeof formula.zheng === 'string' && formula.zheng.trim());
   const linked = v5.filter(formula => known.has(formula.zheng));
   assert.ok(linked.length >= 10, `expected at least 10 formulas mapped onto existing syndromes, got ${linked.length}`);
-  // Load the generated runtime and verify every linked syndrome actually lists its V5 formulas.
+  // Load the generated runtime (bootstrap + chunks + finalizer) and verify every linked
+  // syndrome actually lists its V5 formulas.
   const runtime = { window: {} };
   vm.createContext(runtime);
   vm.runInContext(fs.readFileSync(new URL('assets/js/data/featured.js', root), 'utf8'), runtime);
+  vm.runInContext(fs.readFileSync(new URL('assets/js/data/expanded.bootstrap.js', root), 'utf8'), runtime);
+  for (const file of fs.readdirSync(new URL('assets/js/data/', root)).filter(f => /^expanded\.chunk-\d+\.js$/.test(f)).sort()) {
+    vm.runInContext(fs.readFileSync(new URL('assets/js/data/' + file, root), 'utf8'), runtime);
+  }
   vm.runInContext(generated, runtime);
   const ZHENGS = runtime.window.ZHENGS;
   for (const formula of linked) {

@@ -4,3 +4,4 @@ node_modules/
 .tmp-v3/
 test-results/
 playwright-report/
+.mimosa/

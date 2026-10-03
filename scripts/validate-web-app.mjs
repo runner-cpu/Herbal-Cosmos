@@ -20,7 +20,7 @@ export const RESOURCE_LIMITS = Object.freeze({
   'assets/js/data/expanded.generated.js': 20_000,
   'assets/js/core/runtime.js': 100_000
 });
-export const EXPANDED_CHUNK_COUNT = 8;
+export const EXPANDED_CHUNK_COUNT = 9;
 export const EXPANDED_CHUNK_LIMIT = 110_000;
 export const HANDWRITTEN_MODULE_LIMIT = 40_000;
 export const PRECACHE_LIMIT = 2_500_000;

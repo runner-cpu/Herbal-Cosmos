@@ -28,6 +28,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/data/expanded.chunk-05.js',
   './assets/js/data/expanded.chunk-06.js',
   './assets/js/data/expanded.chunk-07.js',
+  './assets/js/data/expanded.chunk-08.js',
   './assets/js/data/expanded.generated.js',
   './assets/js/core/runtime.js',
   './assets/js/core/app-shell.js',

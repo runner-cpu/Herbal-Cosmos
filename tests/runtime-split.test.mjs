@@ -49,7 +49,7 @@ test('expanded evidence is published as bounded ordered chunks', () => {
   const chunks = fs.readdirSync(path.join(root, 'assets/js/data'))
     .filter(file => /^expanded\.chunk-\d+\.js$/.test(file))
     .sort();
-  assert.equal(chunks.length, 8);
+  assert.equal(chunks.length, 9);
   let previous = html.indexOf('assets/js/data/expanded.bootstrap.js');
   assert.ok(previous >= 0);
   for (const file of chunks) {
