@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v11-20261002-expanded-evidence-xss';
+const CACHE_VERSION = 'herbal-cosmos-v12-20261003-v5-data-merge';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';

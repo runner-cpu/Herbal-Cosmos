@@ -7,8 +7,8 @@ import {buildDataCoverage, hasCompleteFacts} from '../assets/js/lib/data-coverag
 import {collectRepeatedStrings, serializeSharedStrings} from './shared-string-codec.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const DATA_VERSION=8;
-const DATA_DATE='2026-10-02';
+const DATA_VERSION=9;
+const DATA_DATE='2026-10-03';
 const EXPANDED_CHUNK_COUNT=8;
 const EXPANDED_CHUNK_LIMIT=100_000;
 const EXPANDED_PAYLOAD_LIMIT=EXPANDED_CHUNK_LIMIT-512;
@@ -62,8 +62,11 @@ export function buildExpandedData(){
   const facts=read('data/sources/open-herb-facts.json').herbs;
   const photos=optional('data/sources/herb-images.json').images||{};
   const formulaSource=optional('data/sources/formulas-expanded.json');
+  const formulaV5Source=optional('data/sources/formulas-v5.json');
   const syndromeSource=optional('data/sources/syndromes-expanded.json');
-  const sourceFormulas=Array.isArray(formulaSource)?formulaSource:(formulaSource.formulas||formulaSource.entries||[]);
+  const v4Formulas=Array.isArray(formulaSource)?formulaSource:(formulaSource.formulas||formulaSource.entries||[]);
+  const v5Formulas=Array.isArray(formulaV5Source)?formulaV5Source:(formulaV5Source.formulas||formulaV5Source.entries||[]);
+  const sourceFormulas=[...v4Formulas,...v5Formulas];
   const sourceSyndromes=Array.isArray(syndromeSource)?syndromeSource:(syndromeSource.syndromes||syndromeSource.entries||[]);
   const foodDirectory=read('data/sources/food-medicine-106.json');
   const foodNotices=new Map((foodDirectory.notices||[]).map(notice=>[notice.id,notice]));
@@ -129,6 +132,15 @@ export function buildExpandedData(){
   const payload={herbs:additions,enrichments,formulas,syndromes:sourceSyndromes};
   const runtimeHerbs=window.HERBS.map(h=>({...h,...enrichments[h.id]})).concat(additions);
   const coverage=buildDataCoverage(runtimeHerbs);
+  // V5 经典方挂接：zheng 名匹配现有证候时，把方剂 id 追加进该证候的 formulas 索引（桑基图与证候页共用）。
+  const syndromePatches=new Map();
+  for(const formula of v5Formulas){
+    const hit=[...window.ZHENGS,...sourceSyndromes].find(z=>z.name===formula.zheng);
+    if(!hit) continue;
+    if(!syndromePatches.has(hit.id)) syndromePatches.set(hit.id,new Set(hit.formulas));
+    syndromePatches.get(hit.id).add(formula.id);
+  }
+  const syndromePatchList=[...syndromePatches].map(([id,ids])=>({id,formulas:[...ids]}));
   const dataDir=path.join(root,'assets/js/data');
   for(const file of fs.readdirSync(dataDir).filter(name=>/^expanded\.chunk-\d+\.js$/.test(name)))fs.unlinkSync(path.join(dataDir,file));
   const sharedStrings=collectRepeatedStrings(payload);
@@ -161,6 +173,8 @@ export function buildExpandedData(){
     'const byId=new Map(HERBS.map(h=>[h.id,h]));for(const [id,fields] of Object.entries(target.enrichments)){const herb=byId.get(id);if(herb)Object.assign(herb,fields);}',
     'const old=new Set(HERBS.map(h=>h.id));for(const h of target.herbs)if(!old.has(h.id)){HERBS.push(h);old.add(h.id);}',
     'for(const f of target.formulas)if(!FORMULAS.some(x=>x.id===f.id))FORMULAS.push(f);for(const z of target.syndromes)if(!ZHENGS.some(x=>x.id===z.id))ZHENGS.push(z);',
+    'const syndromePatches='+JSON.stringify(syndromePatchList)+';',
+    'for(const z of syndromePatches){const i=ZHENGS.findIndex(x=>x.id===z.id);if(i>=0&&Array.isArray(z.formulas))ZHENGS[i]=Object.assign({},ZHENGS[i],{formulas:z.formulas});}',
     "Object.assign(SOURCE_MAP,{openMateria:{label:'公开本草资料',badge:'cha'},classicalFormula:{label:'原方文献',badge:'gray'},foodDirectory:{label:'国家食药物质目录',badge:'celadon'}});",
     'Object.assign(window,{HERBS,FORMULAS,ZHENGS,SOURCE_MAP});',
     'window.HERBAL_DATA_COVERAGE='+JSON.stringify(coverage)+';',
@@ -169,7 +183,7 @@ export function buildExpandedData(){
   ].join('\n');
   fs.writeFileSync(path.join(dataDir,'expanded.generated.js'),finalizer);
   const featuredCards=runtimeHerbs.filter(h=>!['formula-material','directory-only'].includes(h.kind));
-  const summary={version:DATA_VERSION,date:DATA_DATE,featured:coverage.featuredCards,...coverage,baseCards:window.HERBS.length,additionalCards:additions.filter(h=>!['formula-material','directory-only'].includes(h.kind)).length,directoryOnlyCards:directoryOnly.length,formulas:window.FORMULAS.length+formulas.length,syndromes:window.ZHENGS.length+sourceSyndromes.length,sourcedImages:coverage.imageBacked,missingImages:featuredCards.filter(h=>!h.image).map(h=>h.name),sourcedNewImages:additions.filter(h=>!['formula-material','directory-only'].includes(h.kind)&&h.image).length,missingNewImages:featuredCards.filter(h=>!h.image).map(h=>h.name),formulaMaterials};
+  const summary={version:DATA_VERSION,date:DATA_DATE,featured:coverage.featuredCards,...coverage,baseCards:window.HERBS.length,additionalCards:additions.filter(h=>!['formula-material','directory-only'].includes(h.kind)).length,directoryOnlyCards:directoryOnly.length,formulas:window.FORMULAS.length+formulas.length,syndromes:window.ZHENGS.length+sourceSyndromes.length,v5Formulas:v5Formulas.length,v5SyndromeLinks:syndromePatchList.length,sourcedImages:coverage.imageBacked,missingImages:featuredCards.filter(h=>!h.image).map(h=>h.name),sourcedNewImages:additions.filter(h=>!['formula-material','directory-only'].includes(h.kind)&&h.image).length,missingNewImages:featuredCards.filter(h=>!h.image).map(h=>h.name),formulaMaterials};
   fs.writeFileSync(path.join(root,'reports/data-coverage.json'),JSON.stringify(summary,null,2)+'\n');
   console.log(JSON.stringify({...summary,missingNewImages:summary.missingNewImages.length}));
   return summary;

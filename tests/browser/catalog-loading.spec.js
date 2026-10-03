@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
 
+// This suite asserts the catalog-loader's own retry semantics. The Service
+// Worker's fetch handler serves chunk requests from its runtime cache and
+// bypasses page.route interception, so keep it disabled here for determinism;
+// PWA behaviour is covered separately in pwa.spec.js.
+test.use({ serviceWorkers: 'block' });
+
 test('catalog chunks are lazy and load only when index mode is entered', async ({ page }) => {
   const requested=new Set();page.on('request',request=>{if(request.url().includes('/data/catalog/chunk-'))requested.add(request.url());});
   await page.goto('/#/home');

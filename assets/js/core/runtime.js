@@ -1107,13 +1107,7 @@ function renderCulture(){
     </div>`).join('');
 }
 
-const QUIZ = [
-  {q:'枸杞子在四气五味中的组合是？', options:['温 · 辛','平 · 甘','寒 · 苦','凉 · 酸'], answer:1, note:'枸杞子性平、味甘，归肝肾经，是代表性的药食同源本草。'},
-  {q:'“血中圣药”通常指哪一味药材？', options:['黄芪','当归','陈皮','薄荷'], answer:1, note:'当归补血活血、调经止痛，常被称为“血中圣药”。'},
-  {q:'君臣佐使中的“君药”主要承担什么角色？', options:['调和诸药','针对主病或主证','消除副作用','引药归经'], answer:1, note:'君药针对主病或主证，是方剂的核心药物。'},
-  {q:'下列哪项属于药食同源的日常场景？', options:['枸杞泡水','自行替代处方药','长期超量服用','忽略过敏史'], answer:0, note:'药食同源强调在合适边界内融入日常，不能替代诊疗。'},
-  {q:'《本草纲目》的作者是？', options:['张仲景','李时珍','孙思邈','陶弘景'], answer:1, note:'明代李时珍历时多年编成《本草纲目》，是本草学的重要典籍。'}
-];
+const QUIZ = (typeof window !== 'undefined' && Array.isArray(window.QUIZ)) ? window.QUIZ : [];
 const learnState = {index:0, answered:false, correct:0, total:0};
 function getLearnStats(){try{const value=JSON.parse(storageRead('herbal_learn_stats','{"total":0,"correct":0}'));return {total:Number.isFinite(value?.total)?value.total:0,correct:Number.isFinite(value?.correct)?value.correct:0};}catch(e){return {total:0,correct:0}}}
 function saveLearnStats(){storageWrite('herbal_learn_stats',JSON.stringify({total:learnState.total,correct:learnState.correct}));}

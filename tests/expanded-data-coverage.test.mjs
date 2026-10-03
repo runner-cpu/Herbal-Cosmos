@@ -22,7 +22,9 @@ test('expanded runtime and generated coverage agree at the staged target', () =>
   assert.equal(measured.completeFacts, 803);
   assert.equal(measured.partialFacts, 96);
   assert.equal(measured.legacyFacts, 3);
-  assert.equal(measured.formulaMaterialCount, 5);
+  // V5 classical formulas added 38 original-prescription materials (5 base + 38 = 43).
+  assert.equal(measured.formulaMaterialCount, 43);
+  assert.equal(data.HERBAL_DATA_VERSION.formulas, 100);
   assert.equal(measured.completeFacts + measured.partialFacts + measured.legacyFacts, measured.featuredCards);
   assert.equal(measured.imageBacked + measured.placeholder, measured.featuredCards);
   for (const [key,value] of Object.entries(measured)) assert.equal(report[key], value, key);
