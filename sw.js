@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v13-20261003-syndrome-58';
+const CACHE_VERSION = 'herbal-cosmos-v14-20261003-image-623';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';

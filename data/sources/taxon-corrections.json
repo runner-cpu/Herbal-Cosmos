@@ -1,0 +1,656 @@
+{
+  "generatedAt": "2026-10-04T11:12:02.961Z",
+  "authority": "iNaturalist taxa API (machine-verifiable, unique active species within edit distance 2)",
+  "stats": {
+    "exact": 69,
+    "corrected": 7,
+    "needsReview": 0,
+    "noCandidate": 147
+  },
+  "corrections": [
+    {
+      "status": "corrected",
+      "from": "Swertia davidi",
+      "to": "Swertia davidii",
+      "taxonId": 934864,
+      "distance": 1,
+      "evidence": "https://www.inaturalist.org/taxa/934864"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Garcinia hanburii"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Eilia sonchifolia"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Epimeredi indica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Momordica grosvenori"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Erycibe obtusfolia"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Phaseolus calcaratus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Ostrea gigas"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Cleistocalyx opercutatus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Reinecka carnea"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Buthus martensii"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Zingiber offcinale"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Pueraria thomsonii"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Dioscorea hypoglauca"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Aconitum brachypodum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Diels var"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Stapf var"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Terminalia billerica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Melilotus suaveotens"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Michetia alba"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Selaginella doederlerinii"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Nigella glandulifera"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Erigeron brevisca"
+    },
+    {
+      "status": "corrected",
+      "from": "Terminalia chebu",
+      "to": "Terminalia chebula",
+      "taxonId": 68671,
+      "distance": 2,
+      "evidence": "https://www.inaturalist.org/taxa/68671"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Stephania cep-hurantha"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Berbers soulieana"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Machura cochinchinensis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Machura tricuspidata"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Panax quinquefolium"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Laria ningpoensis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Scrophularia oldhami"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Corydatis decumbens"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Piper pubicatulum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Gaultheria yunnanenszs"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Laccifer lacca"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Paythenocissus tricusiordata"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Laggta alatae"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Boenninghausenia albi"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Callus gallus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Notholiriom bulbuliferum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Zanthoxylum bun-geanum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Triplostegia grandi"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Tabanux manda-rinus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Costazia aculeata"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Trichosanthes klrllowll"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Syringa reticulate"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Hara var"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Begonia uilsonii"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Panar ginseng"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Rehmannig glutinosa"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Pheretima aspergillum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Pheretima guillelmi"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Pheretimapectini fera"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Hirudo niponica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Arca subcrenata"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Arca gran"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Arca injlata"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Ericerus peta"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Aspongopus chinensis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Potygonum tinctorium"
+    },
+    {
+      "status": "corrected",
+      "from": "Bambus textilis",
+      "to": "Bambusa textilis",
+      "taxonId": 479670,
+      "distance": 1,
+      "evidence": "https://www.inaturalist.org/taxa/479670"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Omphalia lapidescens"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Auricularia auricula"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Boswellia carterli"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Munro var"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Toxicodendron verniciflnum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Uncaria thynchophylla"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Spatholobus suberects"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Fraxinus szaboana"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Paeonia suffruticosa"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Acanthopanax gracilistylus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Pseudolarix kaempferi"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Vitei negundo"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Sauropus rostratus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Crataegus pinn"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Crataegus pinnatzjida"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Tussdago farfara"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Chrysanthemum morifolium"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Rhododendron molte"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Jasminum nudiforum"
+    },
+    {
+      "status": "corrected",
+      "from": "Atropa belladonna",
+      "to": "Atropa bella-donna",
+      "taxonId": 159098,
+      "distance": 1,
+      "evidence": "https://www.inaturalist.org/taxa/159098"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Mentha haplocalyx"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Duchesnea indica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Thlaspi arvetse"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Lophatherum gracite"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Gueldenstaedtia multiflora"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Sedum aizoon"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Jiangxi angru"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Schizonepeta tenuifolia"
+    },
+    {
+      "status": "corrected",
+      "from": "Corydalis bungean",
+      "to": "Corydalis bungeana",
+      "taxonId": 774024,
+      "distance": 1,
+      "evidence": "https://www.inaturalist.org/taxa/774024"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Abrus cantoniensis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Passillora caerulea"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Plumbago zeyla-nica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Cayratia japonica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Catharathus roseus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Peristrophe baphica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Cirsium setosum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Clematis fi-"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Allium jistulosum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Dianella ensi-"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Viter negundo"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Raphanus sativus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Citrus wilsonii"
+    },
+    {
+      "status": "corrected",
+      "from": "Citrus medic",
+      "to": "Citrus medica",
+      "taxonId": 123356,
+      "distance": 1,
+      "evidence": "https://www.inaturalist.org/taxa/123356"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Adhatoda ven-tricosa"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Citrus aurantium"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Platycladus orientails"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Hippophae thamnoides"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Gleditsia sinensisi"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Xanthium sibiricum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Brassica campesrtris"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Evodia rutaecarpa"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Kochia scoparia"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Potylgonum orientale"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Paris poly-phylla"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Vaccaria segetalis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Forniculum vulgare"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Cornus oj-j"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Oryza sativea"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Veratum nigrum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Dispsacus japonicus"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Pueraria lobata"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Polygonum bistorta"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Paris polyphytla"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Smith var"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Tinospora capillipes"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Cordalis ambigua"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Stemona tuberose"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Cynanchum glaucescens"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Acorus tatarionwii"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Morinda ojj"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Cimici uga"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Vladimiria souliei"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Cyathula officinatis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Ligusticum chuam"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Peucedanum decusivum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Pteria martensii"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Hyriopsis cumingii"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Fritillaria pallidijlora"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Callicarpa macroph"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Inula helianthuds-aquatica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Penellia pedatisecta"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Schefflera kwangsiensis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Isodon iophanthoides"
+    },
+    {
+      "status": "corrected",
+      "from": "Zanthoxylum avicenn",
+      "to": "Zanthoxylum avicennae",
+      "taxonId": 484955,
+      "distance": 2,
+      "evidence": "https://www.inaturalist.org/taxa/484955"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Mesona chinese"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Polygala aureocauda"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Fritillaria hupehensis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Knoxia valerian"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Diplazium lanceum"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Rhamnus dahurica"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Peperomia dindigulensis"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Syneilesis aconitifotia"
+    },
+    {
+      "status": "noCandidate",
+      "from": "Hemerocallis middendorjii"
+    }
+  ]
+}
