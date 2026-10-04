@@ -1,154 +1,385 @@
 [
-  {
-    "id": "yang-ming-fu-shi",
-    "name": "阳明腑实证",
-    "desc": "古籍方证索引：不大便、腹满，兼日晡潮热等；三承气汤的具体方证有别。",
-    "formulas": [
-      "dachengqi-tang",
-      "xiaochengqi-tang",
-      "tiaowei-chengqi-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json"
-    ]
-  },
-  {
-    "id": "yang-xu-shui-fan",
-    "name": "阳虚水泛证",
-    "desc": "古籍方证索引：腹痛、小便不利、四肢沉重疼痛；真武汤条文称“此为有水气”。",
-    "formulas": [
-      "zhenwu-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json"
-    ]
-  },
-  {
-    "id": "pangguang-qi-hua-bu-li",
-    "name": "膀胱气化不利证",
-    "desc": "古籍方证索引：脉浮、小便不利、微热消渴，见五苓散相关条文。",
-    "formulas": [
-      "wuling-san"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-water-lung-batch.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-water-lung-evidence.json"
-    ]
-  },
-  {
-    "id": "shui-re-hu-jie",
-    "name": "水热互结证",
-    "desc": "古籍方证索引：下利，兼咳、呕、口渴、心烦不得眠，见猪苓汤相关条文。",
-    "formulas": [
-      "zhuling-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-water-lung-batch.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-water-lung-evidence.json"
-    ]
-  },
-  {
-    "id": "shao-yin-li-han",
-    "name": "少阴里寒证",
-    "desc": "古籍方证索引：少阴病脉沉，或手足寒、干呕等寒逆表现；四逆汤为相关古方。",
-    "formulas": [
-      "sini-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-diarrhea-evidence.json"
-    ]
-  },
-  {
-    "id": "shi-re-fa-huang",
-    "name": "湿热发黄证",
-    "desc": "古籍方证索引：身黄、小便不利，或但头汗出、渴引水浆，见茵陈蒿汤条文。",
-    "formulas": [
-      "yinchenhao-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-fang-batch.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-evidence-batch.json"
-    ]
-  },
-  {
-    "id": "xin-yang-bu-zu",
-    "name": "心阳不足证",
-    "desc": "古籍方证索引：发汗过多后心下悸、欲得按，见桂枝甘草汤条文。",
-    "formulas": [
-      "guizhi-gancao-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-palpitations-formulas.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-palpitations-evidence.json"
-    ]
-  },
-  {
-    "id": "wei-han-shang-ni",
-    "name": "胃寒上逆证",
-    "desc": "古籍方证索引：食谷欲呕，或呕吐、谷不得下；吴茱萸汤与小半夏汤各有适用语境。",
-    "formulas": [
-      "wuzhuyu-tang",
-      "xiaobanxia-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-vomiting-formulas.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-vomiting-evidence.json"
-    ]
-  },
-  {
-    "id": "qi-jin-liang-shang",
-    "name": "气津两伤证",
-    "desc": "古籍方证索引：大汗后大烦渴不解、脉洪大，或口干舌燥，见白虎加人参汤条文。",
-    "formulas": [
-      "baihu-renshen-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-thirst-formulas.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-thirst-evidence.json"
-    ]
-  },
-  {
-    "id": "tan-yin-nei-ting",
-    "name": "痰饮内停证",
-    "desc": "古籍方证索引：水饮可见胸胁支满、目眩、心下悸、脐下悸或咳而上气；所列各方所治部位与证候不同。",
-    "formulas": [
-      "linggui-zhugan-tang",
-      "zexie-tang",
-      "fuling-gancao-tang",
-      "linggui-ganzao-tang",
-      "shegan-mahuang-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-palpitations-evidence.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json"
-    ]
-  },
-  {
-    "id": "fei-wei-yin-xu",
-    "name": "肺胃阴虚证",
-    "desc": "古籍方证索引：上气、咽喉不利，见麦门冬汤条文；“肺胃阴虚”为所引资料的传统方义归纳。",
-    "formulas": [
-      "maimendong-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
-    ]
-  },
-  {
-    "id": "shao-yin-yin-xu",
-    "name": "少阴阴虚证",
-    "desc": "古籍方证索引：少阴病心中烦、不得卧，见黄连阿胶汤条文；“阴虚”为所引资料的传统方义归纳。",
-    "formulas": [
-      "huanglian-ejiao-tang"
-    ],
-    "sourceRefs": [
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase4-insomnia-formulas.json",
-      "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase4-insomnia-evidence.json"
-    ]
-  }
+ {
+  "id": "yang-ming-fu-shi",
+  "name": "阳明腑实证",
+  "desc": "古籍方证索引：不大便、腹满，兼日晡潮热等；三承气汤的具体方证有别。",
+  "formulas": [
+   "dachengqi-tang",
+   "xiaochengqi-tang",
+   "tiaowei-chengqi-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json"
+  ]
+ },
+ {
+  "id": "yang-xu-shui-fan",
+  "name": "阳虚水泛证",
+  "desc": "古籍方证索引：腹痛、小便不利、四肢沉重疼痛；真武汤条文称“此为有水气”。",
+  "formulas": [
+   "zhenwu-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence-more.json"
+  ]
+ },
+ {
+  "id": "pangguang-qi-hua-bu-li",
+  "name": "膀胱气化不利证",
+  "desc": "古籍方证索引：脉浮、小便不利、微热消渴，见五苓散相关条文。",
+  "formulas": [
+   "wuling-san"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-water-lung-batch.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-water-lung-evidence.json"
+  ]
+ },
+ {
+  "id": "shui-re-hu-jie",
+  "name": "水热互结证",
+  "desc": "古籍方证索引：下利，兼咳、呕、口渴、心烦不得眠，见猪苓汤相关条文。",
+  "formulas": [
+   "zhuling-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-water-lung-batch.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-water-lung-evidence.json"
+  ]
+ },
+ {
+  "id": "shao-yin-li-han",
+  "name": "少阴里寒证",
+  "desc": "古籍方证索引：少阴病脉沉，或手足寒、干呕等寒逆表现；四逆汤为相关古方。",
+  "formulas": [
+   "sini-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/shanghan-fang.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-diarrhea-evidence.json"
+  ]
+ },
+ {
+  "id": "shi-re-fa-huang",
+  "name": "湿热发黄证",
+  "desc": "古籍方证索引：身黄、小便不利，或但头汗出、渴引水浆，见茵陈蒿汤条文。",
+  "formulas": [
+   "yinchenhao-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase2-fang-batch.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase2-evidence-batch.json"
+  ]
+ },
+ {
+  "id": "xin-yang-bu-zu",
+  "name": "心阳不足证",
+  "desc": "古籍方证索引：发汗过多后心下悸、欲得按，见桂枝甘草汤条文。",
+  "formulas": [
+   "guizhi-gancao-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-palpitations-formulas.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-palpitations-evidence.json"
+  ]
+ },
+ {
+  "id": "wei-han-shang-ni",
+  "name": "胃寒上逆证",
+  "desc": "古籍方证索引：食谷欲呕，或呕吐、谷不得下；吴茱萸汤与小半夏汤各有适用语境。",
+  "formulas": [
+   "wuzhuyu-tang",
+   "xiaobanxia-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-vomiting-formulas.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-vomiting-evidence.json"
+  ]
+ },
+ {
+  "id": "qi-jin-liang-shang",
+  "name": "气津两伤证",
+  "desc": "古籍方证索引：大汗后大烦渴不解、脉洪大，或口干舌燥，见白虎加人参汤条文。",
+  "formulas": [
+   "baihu-renshen-tang",
+   "zhuye-shigao-tang",
+   "shengmai-san"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase3-thirst-formulas.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-thirst-evidence.json"
+  ]
+ },
+ {
+  "id": "tan-yin-nei-ting",
+  "name": "痰饮内停证",
+  "desc": "古籍方证索引：水饮可见胸胁支满、目眩、心下悸、脐下悸或咳而上气；所列各方所治部位与证候不同。",
+  "formulas": [
+   "linggui-zhugan-tang",
+   "zexie-tang",
+   "fuling-gancao-tang",
+   "linggui-ganzao-tang",
+   "shegan-mahuang-tang",
+   "erchen-tang",
+   "shizao-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase3-palpitations-evidence.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json"
+  ]
+ },
+ {
+  "id": "fei-wei-yin-xu",
+  "name": "肺胃阴虚证",
+  "desc": "古籍方证索引：上气、咽喉不利，见麦门冬汤条文；“肺胃阴虚”为所引资料的传统方义归纳。",
+  "formulas": [
+   "maimendong-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/jinkui-fang.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/classic-evidence.json"
+  ]
+ },
+ {
+  "id": "shao-yin-yin-xu",
+  "name": "少阴阴虚证",
+  "desc": "古籍方证索引：少阴病心中烦、不得卧，见黄连阿胶汤条文；“阴虚”为所引资料的传统方义归纳。",
+  "formulas": [
+   "huanglian-ejiao-tang"
+  ],
+  "sourceRefs": [
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/formulas/phase4-insomnia-formulas.json",
+   "https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/evidence/phase4-insomnia-evidence.json"
+  ]
+ },
+ {
+  "id": "fei-re-yong-sheng",
+  "name": "肺热壅盛证",
+  "desc": "邪热壅肺，肺失宣降：身热、喘咳气急、鼻扇；麻黄杏仁甘草石膏汤主之。",
+  "formulas": [
+   "maxing-shigan-tang"
+  ]
+ },
+ {
+  "id": "liang-zao-xi-fei",
+  "name": "凉燥袭肺证",
+  "desc": "秋凉燥邪犯肺，肺失宣降：恶寒头痛、咳嗽痰稀、咽干；杏苏散主之。",
+  "formulas": [
+   "xingsu-san"
+  ]
+ },
+ {
+  "id": "wen-zao-xi-fei",
+  "name": "温燥袭肺证",
+  "desc": "秋温燥邪灼肺，燥热伤津：发热头痛、干咳无痰或痰少而黏、咽干鼻燥；桑杏汤、清燥救肺汤主之。",
+  "formulas": [
+   "sangxing-tang",
+   "qingzao-jiufei-tang"
+  ]
+ },
+ {
+  "id": "san-jiao-huo-du",
+  "name": "三焦火毒证",
+  "desc": "火毒炽盛，充斥三焦：大热烦躁、错语不眠、吐衄发斑；黄连解毒汤主之。",
+  "formulas": [
+   "huanglian-jiedu-tang"
+  ]
+ },
+ {
+  "id": "feng-re-yi-du",
+  "name": "风热疫毒证",
+  "desc": "风热疫毒上攻头面：恶寒发热、头面红肿焮痛、咽喉不利；普济消毒饮主之。",
+  "formulas": [
+   "pujie-xiaodu-yin"
+  ]
+ },
+ {
+  "id": "gan-dan-shi-re",
+  "name": "肝胆湿热证",
+  "desc": "肝胆实火循经上炎，肝经湿热下注：头痛目赤、胁痛口苦、阴肿阴痒、小便淋浊；龙胆泻肝汤主之。",
+  "formulas": [
+   "longdan-xiegan-tang"
+  ]
+ },
+ {
+  "id": "shi-re-li",
+  "name": "湿热痢证",
+  "desc": "湿热蕴结大肠，气血凝滞：下痢脓血、腹痛里急后重、肛门灼热；白头翁汤主之。",
+  "formulas": [
+   "baitouweng-tang"
+  ]
+ },
+ {
+  "id": "wen-bing-hou-qi-yin-xu",
+  "name": "温病后期阴虚证",
+  "desc": "温病后期，邪伏阴分：夜热早凉、热退无汗、舌红少苔；青蒿鳖甲汤主之。",
+  "formulas": [
+   "qinghao-biejia-tang"
+  ]
+ },
+ {
+  "id": "wei-huo-shang-yan",
+  "name": "胃火上炎证",
+  "desc": "胃火循经上攻：牙痛牵引头脑、面颊发热、牙龈肿痛或宣出血；清胃散主之。",
+  "formulas": [
+   "qingwei-san"
+  ]
+ },
+ {
+  "id": "xin-huo-shang-yan",
+  "name": "心火上炎证",
+  "desc": "心经热盛，下移小肠：心胸烦热、口舌生疮、小便短赤涩痛；导赤散主之。",
+  "formulas": [
+   "daochi-san"
+  ]
+ },
+ {
+  "id": "xue-xu-han-ning",
+  "name": "血虚寒凝证",
+  "desc": "血虚脉道失充，寒凝经脉：手足厥寒、脉细欲绝、肢体酸痛；当归四逆汤主之。",
+  "formulas": [
+   "danggui-sini-tang"
+  ]
+ },
+ {
+  "id": "yang-xu-han-ning",
+  "name": "阳虚寒凝证",
+  "desc": "阳虚血弱，寒凝痰滞筋骨（阴疽）：漫肿无头、皮色不变、酸痛无热；阳和汤主之。",
+  "formulas": [
+   "yanghe-tang"
+  ]
+ },
+ {
+  "id": "gan-yu-pi-xu",
+  "name": "肝郁脾虚证",
+  "desc": "肝旺乘脾，肝脾不和：肠鸣腹痛、痛则泄泻、泻后痛减；痛泻要方主之。",
+  "formulas": [
+   "tongxie-yaofang"
+  ]
+ },
+ {
+  "id": "liu-yu",
+  "name": "六郁证",
+  "desc": "气、血、痰、火、湿、食诸郁互结：胸膈痞闷、脘腹胀痛、吞酸呕吐；越鞠丸主之。",
+  "formulas": [
+   "yueju-wan"
+  ]
+ },
+ {
+  "id": "tan-qi-yu-jie",
+  "name": "痰气郁结证",
+  "desc": "痰气互结于咽喉（梅核气）：咽中如有物阻、咯吐不出、吞咽不下、胸胁满闷；半夏厚朴汤主之。",
+  "formulas": [
+   "banxia-houpo-tang"
+  ]
+ },
+ {
+  "id": "xiong-yang-bu-zhen",
+  "name": "胸阳不振证",
+  "desc": "胸阳不振，痰浊气滞痹阻（胸痹）：胸满而痛、甚或胸痛彻背、喘息咳唾；枳实薤白桂枝汤主之。",
+  "formulas": [
+   "zhishi-xiebai-guizhi-tang"
+  ]
+ },
+ {
+  "id": "feng-xie-tou-tong",
+  "name": "风邪头痛证",
+  "desc": "风邪上犯头目：头痛偏侧或全头、时发时止；川芎茶调散主之。",
+  "formulas": [
+   "chuanxiong-chatiao-san"
+  ]
+ },
+ {
+  "id": "gan-feng-nei-dong",
+  "name": "肝风内动证",
+  "desc": "肝肾阴亏，肝阳偏亢，化风上扰：头目眩晕、目胀耳鸣、或肢体渐觉不利；镇肝息风汤、天麻钩藤饮主之。",
+  "formulas": [
+   "zhen-gan-xifeng-tang",
+   "tianma-gouteng-yin"
+  ]
+ },
+ {
+  "id": "yin-xu-feng-dong",
+  "name": "阴虚风动证",
+  "desc": "温病后期真阴大亏，虚风内动：手足瘛疭、形消神倦、舌绛少苔；大定风珠主之。",
+  "formulas": [
+   "dading-fengzhu"
+  ]
+ },
+ {
+  "id": "shi-zhi-pi-wei",
+  "name": "湿滞脾胃证",
+  "desc": "湿浊内盛，困阻脾胃：脘腹胀满、不思饮食、口淡无味、呕吐恶心、嗳气吞酸；平胃散、藿香正气散主之。",
+  "formulas": [
+   "pingwei-san",
+   "huoxiang-zhengqi-san"
+  ]
+ },
+ {
+  "id": "shi-wen-chu-qi",
+  "name": "湿温初起证",
+  "desc": "湿温初起，邪在气分，湿重于热：头痛恶寒、身重疼痛、午后身热、胸闷不饥；三仁汤主之。",
+  "formulas": [
+   "sanren-tang"
+  ]
+ },
+ {
+  "id": "pang-guang-shi-re",
+  "name": "膀胱湿热证",
+  "desc": "湿热蕴结膀胱，水道不利：尿频尿急、溺时涩痛、淋沥不畅；八正散主之。",
+  "formulas": [
+   "bazheng-san"
+  ]
+ },
+ {
+  "id": "feng-han-shi-bi",
+  "name": "风寒湿痹证",
+  "desc": "风寒湿邪痹阻日久，肝肾两虚、气血不足：腰膝冷痛、肢节屈伸不利、麻木不仁；独活寄生汤主之。",
+  "formulas": [
+   "duhuo-jisheng-tang"
+  ]
+ },
+ {
+  "id": "tan-re-hu-jie",
+  "name": "痰热互结证",
+  "desc": "痰热互结心下（小结胸病）：胸脘痞闷、按之则痛、咳吐黄黏痰；小陷胸汤主之。",
+  "formulas": [
+   "xiaoxianxiong-tang"
+  ]
+ },
+ {
+  "id": "han-yan-ke-sou",
+  "name": "寒饮咳嗽证",
+  "desc": "寒饮停肺，肺失宣降：咳嗽痰多清稀色白、胸膈不快；苓甘五味姜辛汤主之。",
+  "formulas": [
+   "linggan-wuwei-jiangxin-tang"
+  ]
+ },
+ {
+  "id": "han-ji-li-shi",
+  "name": "寒积里实证",
+  "desc": "脾阳不足，冷积阻结：便秘腹痛、脐下绞结、手足不温；温脾汤主之。",
+  "formulas": [
+   "wenpi-tang"
+  ]
+ },
+ {
+  "id": "chang-yong-chu-qi",
+  "name": "肠痈初起证",
+  "desc": "湿热瘀滞肠腑，酿成肠痈：右少腹疼痛拒按、或足屈伸不便；大黄牡丹汤主之。",
+  "formulas": [
+   "dahuang-mudan-tang"
+  ]
+ },
+ {
+  "id": "shang-re-xia-han",
+  "name": "寒热错杂证",
+  "desc": "上热下寒，寒热错杂（蛔厥、久利）：烦闷呕吐、时发时止、得食即呕；乌梅丸主之。",
+  "formulas": [
+   "wumei-wan"
+  ]
+ }
 ]

@@ -6,6 +6,7 @@ import vm from 'node:vm';
 const root = new URL('../', import.meta.url);
 const readJson = path => JSON.parse(fs.readFileSync(new URL(path, root), 'utf8'));
 const formulas = readJson('data/sources/formulas-expanded.json');
+const v5Formulas = readJson('data/sources/formulas-v5.json');
 const syndromes = readJson('data/sources/syndromes-expanded.json');
 const context = { window: {} };
 vm.createContext(context);
@@ -14,11 +15,11 @@ const base = context.window;
 const sourcePrefix = 'https://github.com/hongge168/huatuo-tcm-dictionary/blob/4bf9786f5191dd17f8ee0f2b4183d9d1f7bbb679/server/data/knowledge/';
 const unknownDose = '所引资料未载剂量';
 
-test('V4 source additions reach exactly 50 formulas and 30 syndrome indexes', () => {
+test('V4 source additions reach exactly 50 formulas and the syndrome index grows with V5', () => {
   assert.equal(formulas.length, 29);
-  assert.equal(syndromes.length, 12);
+  assert.equal(syndromes.length, 40);
   assert.equal(base.FORMULAS.length + formulas.length, 50);
-  assert.equal(base.ZHENGS.length + syndromes.length, 30);
+  assert.equal(base.ZHENGS.length + syndromes.length, 58);
   for (const group of [[...base.FORMULAS, ...formulas], [...base.ZHENGS, ...syndromes]]) {
     assert.equal(new Set(group.map(row => row.id)).size, group.length);
     assert.equal(new Set(group.map(row => row.name)).size, group.length);
@@ -64,13 +65,19 @@ test('historical units are retained and missing doses remain explicit', () => {
 });
 
 test('all added syndrome references resolve to sourced formulas', () => {
-  const ids = new Set([...base.FORMULAS, ...formulas].map(row => row.id));
+  const ids = new Set([...base.FORMULAS, ...formulas, ...v5Formulas].map(row => row.id));
   for (const syndrome of syndromes) {
     assert.ok(syndrome.name && syndrome.desc && syndrome.id);
-    assert.ok(syndrome.formulas.length > 0);
+    assert.ok(syndrome.formulas.length > 0, syndrome.id + ': empty syndrome index');
     assert.equal(new Set(syndrome.formulas).size, syndrome.formulas.length);
     assert.ok(syndrome.formulas.every(id => ids.has(id)), syndrome.id);
-    assert.ok(syndrome.sourceRefs.length > 0);
-    assert.ok(syndrome.sourceRefs.every(url => url.startsWith(sourcePrefix)));
+    if (syndrome.sourceRefs && syndrome.sourceRefs.length) {
+      // V4 (huatuo) syndromes keep their third-party row URLs.
+      assert.ok(syndrome.sourceRefs.every(url => url.startsWith(sourcePrefix)));
+    } else {
+      // V5-classical syndromes carry no third-party row URLs; their formula
+      // links live in formulas-v5.json and the generated runtime index.
+      assert.ok(syndrome.formulas.every(id => v5Formulas.some(row => row.id === id)), syndrome.id + ': V5 syndrome must cite V5 formulas');
+    }
   }
 });
