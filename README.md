@@ -133,7 +133,7 @@
 | 路由 | Hash 路由（`#/route?param=value`） | 无需服务器，支持刷新、前进后退 |
 | 状态 | 单一 `store` + 发布订阅（`notify`/`setSelected`） | 全局联动的事实源 |
 | 图表管理 | `chartManager`（Map 实例池） | 路由切换时主动 `dispose` 旧实例与 `ResizeObserver`，防内存泄漏 |
-| 外部资源 | 运行时无图表 CDN 依赖；ECharts 随仓库自托管 | 首次联网后外壳可离线重开、来源可追踪 |
+| 外部资源 | 运行时无图表 CDN 依赖；ECharts 随仓库自托管，经 `echarts-loader.js` 按需加载 | 首屏渲染不等待 1MB 图表库（行为矩阵验证：人为延迟加载时 hero 与 KPI 卡仍即时出现，图表就绪后自动补齐）；首次联网后外壳可离线重开、来源可追踪 |
 | 离线与更新 | 原生 Service Worker + Web App Manifest | 首次联网缓存应用外壳；新版本等待用户确认后刷新 |
 | 本机状态 | `localStorage` + 内存回退 | 收藏、足迹、主题不上传；隐私模式或禁用存储时保留当前会话 |
 

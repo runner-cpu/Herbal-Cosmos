@@ -146,10 +146,14 @@ window.HerbalChartManager = chartManager;
 window.__HERBAL_DEBUG__.chartCounts = () => chartManager._instances.size;
 window.__HERBAL_DEBUG__.observerCounts = () => chartManager._observers.size;
 
-if(typeof echarts === 'undefined'){
+function showEchartsFailure(){
   document.querySelectorAll('.chart-box, #zhengSankey, #formulaGraph').forEach(el=>{
     el.innerHTML = '<div style="padding:26px;text-align:center;color:var(--ink-2);font-size:13.5px;line-height:1.8;">图表组件未能加载（可能网络受限）。<br>页面其余内容不受影响，请检查网络后刷新。</div>';
   });
+}
+function renderWhenEchartsReady(render){
+  if(typeof window.ensureEcharts !== 'function'){ showEchartsFailure(); return; }
+  window.ensureEcharts().then(()=>{ try{ render(); }catch(err){ console.error('[herbal-cosmos] chart render after load failed:', err); } }).catch(showEchartsFailure);
 }
 function setSelected(herbId, opts){
   store.selectedHerb = herbId ? HERBS.find(h=>h.id===herbId) || null : null;
@@ -313,7 +317,11 @@ function render(){
   }
   const views = { home:renderHome, herbs:renderHerbs, herb:()=>renderHerb(params.id), qiwei:renderQiwei,
     formula:renderFormula, 'not-found':()=>renderNotFound(unknownPath) };
-  try{ (views[route]||views.home)(); }catch(err){ console.error('[herbal-cosmos] render error:', err); }
+  const invokeView=()=>{ try{ (views[route]||views.home)(); }catch(err){ console.error('[herbal-cosmos] render error:', err); } };
+  if(typeof echarts==='undefined' && typeof window.ensureEcharts==='function'){
+    // 按需加载图表库：页面骨架先渲染，视图在 ECharts 就绪后补齐；加载失败时视图仍会渲染并显示各图表的占位提示。
+    window.ensureEcharts().then(invokeView).catch(invokeView);
+  } else invokeView();
   applyLanguage();
   window.dispatchEvent(new CustomEvent('herbal:route',{detail:{route,params,unknownPath}}));
   if(route==='home' && params.focus==='star' && params.id){ setSelected(params.id,{source:'context-bar'}); setTimeout(()=>window.HerbalCosmos?.focusHerb?.(params.id,{animate:true}),80); }
@@ -701,7 +709,8 @@ function toggleCompareHerb(id){
 }
 function renderCompareChart(){
   const herbs=store.compareHerbs.map(byId).filter(Boolean), el=$('#herbCompareChart');
-  if(!el || herbs.length<2 || typeof echarts==='undefined') return;
+  if(!el || herbs.length<2) return;
+  if(typeof echarts==='undefined'){ renderWhenEchartsReady(renderCompareChart); return; }
   const p=chartPalette();
   const qiScore={'大寒':1,'寒':2,'微寒':3,'凉':4,'平':5,'微温':6,'温':7,'热':8,'大热':9};
   const weiScore={'酸':1,'苦':2,'甘':3,'辛':4,'咸':5};
@@ -807,7 +816,7 @@ function renderHerb(id){
 }
 
 function renderQiwei(){
-  if(typeof echarts === 'undefined'){ return; }
+  if(typeof echarts === 'undefined'){ renderWhenEchartsReady(renderQiwei); return; }
   const routeQuery=parseHash().params;
   if(routeQuery.herb) setSelected(routeQuery.herb,{source:'context-bar'});
   const p=chartPalette();
@@ -912,7 +921,7 @@ function renderQiwei(){
 }
 
 function renderFormula(){
-  if(typeof echarts === 'undefined'){ return; }
+  if(typeof echarts === 'undefined'){ renderWhenEchartsReady(renderFormula); return; }
   const q = parseHash().params;
   const view = q.view === 'zheng' ? 'zheng' : 'network';
   document.querySelectorAll('[data-formula-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.formulaView===view)));
@@ -1001,7 +1010,7 @@ function renderFormula(){
 }
 
 function renderZheng(){
-  if(typeof echarts === 'undefined'){ return; }
+  if(typeof echarts === 'undefined'){ renderWhenEchartsReady(renderZheng); return; }
   const routeQuery=parseHash().params;
   if(routeQuery.z && ZHENGS.some(item=>item.id===routeQuery.z)) store.selectedZheng=routeQuery.z;
   const p=chartPalette();
@@ -1055,7 +1064,7 @@ document.addEventListener('click', e=>{
 document.addEventListener('input', e=>{const state=parseHash();if(e.target.id==='syndromeSearch'&&state.route==='formula'&&state.params.view==='zheng')renderZheng();});
 
 function renderHomeClassics(){
-  if(typeof echarts === 'undefined'){ return; }
+  if(typeof echarts === 'undefined'){ renderWhenEchartsReady(renderHomeClassics); return; }
   const p=chartPalette();
   const el=document.getElementById('homeClassicBarChart');
   if(!el) return;
@@ -1306,9 +1315,4 @@ document.addEventListener('error', e=>{
 render();
 
 // ECharts 加载兜底：CDN 异常时全站提示，避免图表区静默空白
-if(typeof echarts === 'undefined'){
-  const tip = document.createElement('div');
-  tip.style.cssText = 'position:fixed;top:64px;left:0;right:0;z-index:99;background:#B23A2E;color:#F6EFE3;text-align:center;font-size:13px;padding:8px 14px;';
-  tip.textContent = '图表库（ECharts）加载失败，可能是网络受限。请检查网络后刷新页面。';
-  document.body.prepend(tip);
-}
+

@@ -84,10 +84,14 @@ export function validateWebApp({ baseDir = root } = {}) {
 
   const html = read(baseDir, 'index.html');
   const headEnd = html.search(/<\/head\s*>/i);
-  const echartsIndex = html.indexOf('assets/vendor/echarts.min.js');
+  const echartsLoaderIndex = html.indexOf('assets/js/lib/echarts-loader.js');
+  const echartsTagIndex = html.indexOf('assets/vendor/echarts.min.js');
   const runtimeIndex = html.indexOf('assets/js/core/runtime.js');
-  if (echartsIndex < 0 || runtimeIndex < 0 || headEnd < 0 || echartsIndex < headEnd || echartsIndex > runtimeIndex) {
-    add('echarts-order', 'ECharts must load after </head> and before assets/js/core/runtime.js');
+  if (echartsLoaderIndex < 0 || runtimeIndex < 0 || headEnd < 0 || echartsLoaderIndex < headEnd || echartsLoaderIndex > runtimeIndex) {
+    add('echarts-order', 'ECharts loader must load after </head> and before assets/js/core/runtime.js');
+  }
+  if (echartsTagIndex >= 0) {
+    add('echarts-blocking-tag', 'index.html must not load assets/vendor/echarts.min.js directly; use the on-demand loader');
   }
 
   const metadata = [

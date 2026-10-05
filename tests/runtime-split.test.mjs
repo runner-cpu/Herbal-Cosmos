@@ -13,8 +13,9 @@ test('refactored page references external CSS and runtime modules in order', () 
   assert.equal(result.ok, true, result.issues.join('\n'));
   assert.ok(result.references.indexOf('assets/css/site.css') < result.references.indexOf('assets/js/data/featured.js'));
   assert.ok(result.references.indexOf('assets/js/data/featured.js') < result.references.indexOf('assets/js/core/runtime.js'));
-  assert.ok(html.indexOf('assets/vendor/echarts.min.js') > html.indexOf('</main>'));
-  assert.ok(html.indexOf('assets/vendor/echarts.min.js') < html.indexOf('assets/js/core/runtime.js'));
+  assert.ok(html.indexOf('assets/js/lib/echarts-loader.js') > html.indexOf('</main>'));
+  assert.ok(html.indexOf('assets/js/lib/echarts-loader.js') < html.indexOf('assets/js/core/runtime.js'));
+  assert.equal(html.includes('assets/vendor/echarts.min.js'), false, 'ECharts bundle must be loaded on demand, not via a script tag');
   assert.ok(result.references.indexOf('assets/js/core/catalog-loader.js') < result.references.indexOf('assets/js/core/app-shell.js'));
 });
 
