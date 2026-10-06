@@ -44,10 +44,10 @@ test('syndrome filtering exposes an explicit accessible name', async ({ page }) 
   await expect(page.getByLabel('搜索证候', { exact: true })).toBeVisible();
 });
 
-test('the learning journey opens favorites as a drawer without changing routes', async ({ page }) => {
+test('the favorites toggle opens the drawer without changing routes', async ({ page }) => {
   await page.goto('/#/home');
   const locationBefore = page.url();
-  await page.getByRole('button', { name: '查看收藏' }).click();
+  await page.locator('#savedDrawerToggle').click();
   await expect(page.locator('#savedDrawer')).toHaveClass(/is-open/);
   await expect(page).toHaveURL(locationBefore);
   await expect(page.locator('[data-route="saved"]')).toHaveCount(0);
@@ -57,8 +57,7 @@ test('home route actions remain native keyboard links', async ({ page }) => {
   await page.goto('/#/home');
   const destinations = new Map([
     ['探索星图', '#/herbs'],
-    ['进入配伍网络', '#/formula'],
-    ['开始今日学习', '#/home?anchor=home-learning']
+    ['进入配伍网络', '#/formula']
   ]);
   for (const [name, href] of destinations) {
     await expect(page.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
@@ -81,7 +80,7 @@ test('home chapter rail follows the consolidated reading path', async ({ page })
   await page.locator('[data-home-chapter="home-food"]').click();
   await expect(page).toHaveURL(/#\/home\?anchor=home-food$/);
   await expect(page.locator('[data-home-chapter-current]')).toHaveText('食养同源');
-  await expect(page.locator('[data-home-chapter-progress]')).toHaveText('4 / 7');
+  await expect(page.locator('[data-home-chapter-progress]')).toHaveText('3 / 5');
   await expect(page.locator('[data-home-chapter="home-food"]')).toHaveAttribute('aria-current', 'location');
 });
 

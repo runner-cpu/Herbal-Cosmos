@@ -1,4 +1,4 @@
-export const THEMES = ['day', 'night', 'classic'];
+export const THEMES = ['day', 'night'];
 
 export function normalizeTheme(value) {
   return THEMES.includes(value) ? value : 'day';

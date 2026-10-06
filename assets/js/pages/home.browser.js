@@ -70,11 +70,9 @@ function updateFoodToggle() {
 
 const HOME_CHAPTERS = [
   { id: 'home-overview', label: '本草档案', target: 'home-overview' },
-  { id: 'home-learning', label: '学习路径', target: 'home-learning' },
   { id: 'home-featured', label: '精选本草', target: 'home-featured' },
   { id: 'home-food', label: '食养同源', target: 'homeFood' },
   { id: 'home-classics', label: '典籍时光', target: 'home-classics' },
-  { id: 'home-culture', label: '文化非遗', target: 'homeCulture' },
   { id: 'home-sources', label: '项目来源', target: 'home-sources' }
 ];
 

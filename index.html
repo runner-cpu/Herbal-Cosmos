@@ -50,7 +50,7 @@
         <details class="nav-more">
           <summary aria-label="更多入口">更多</summary>
           <div class="nav-popover">
-            <a href="#/home?anchor=home-learning" data-i18n="nav.learn">学习舱</a>
+            <a href="#/learn" data-i18n="nav.learn">学习舱</a>
             <a href="#/formula?view=zheng" data-i18n="nav.zheng">病证药链</a>
           </div>
         </details>
@@ -61,7 +61,7 @@
         <div class="search-results" id="searchResults" role="listbox" aria-label="搜索建议"></div>
         <div class="sr-only" id="searchStatus" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
-      <button class="saved-drawer-toggle" id="savedDrawerToggle" type="button" data-saved-open aria-label="打开收藏" aria-controls="savedDrawer"><span aria-hidden="true">藏</span><b data-saved-count>0</b></button>
+      <button class="saved-drawer-toggle" id="savedDrawerToggle" type="button" data-saved-open aria-label="打开收藏" aria-controls="savedDrawer"><svg class="heart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20.3 4.9 13a4.9 4.9 0 0 1 0-6.9 4.7 4.7 0 0 1 6.8 0l.3.3.3-.3a4.7 4.7 0 0 1 6.8 0 4.9 4.9 0 0 1 0 6.9Z" fill="currentColor"/></svg><b data-saved-count>0</b></button>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题" aria-describedby="themeToggleHint"><span class="theme-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2.1M12 19.4v2.1M4.86 4.86l1.49 1.49M17.65 17.65l1.49 1.49M2.5 12h2.1M19.4 12h2.1M4.86 19.14l1.49-1.49M17.65 6.35l1.49-1.49"></path></svg></span><span data-theme-label>夜读</span><span id="themeToggleHint" class="sr-only">按顺序切换日间、夜读与古籍主题</span></button>
       <button class="hamburger" id="hamburger" type="button" aria-label="菜单" aria-controls="mainNav" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -86,6 +86,7 @@
           </div>
         </div>
         <div class="hero-hint" data-i18n="hero.hint">拖动旋转星云 · 滚轮缩放 · 点击星辰查看一味药</div>
+        <button class="hero-scroll" type="button" data-scroll-down><span aria-hidden="true">↓</span>向下探索</button>
       </div>
 
       <div class="stats evidence-rail">
@@ -102,11 +103,9 @@
           <div class="home-chapter-meta"><span>READING PATH</span><strong data-home-chapter-current>本草档案</strong><small data-home-chapter-progress>1 / 7</small></div>
           <div class="home-chapter-links" role="list">
             <a role="listitem" href="#/home?anchor=home-overview" data-home-chapter="home-overview" aria-current="location">档案</a>
-            <a role="listitem" href="#/home?anchor=home-learning" data-home-chapter="home-learning">学习</a>
             <a role="listitem" href="#/home?anchor=home-featured" data-home-chapter="home-featured">精选</a>
             <a role="listitem" href="#/home?anchor=home-food" data-home-chapter="home-food">食养</a>
             <a role="listitem" href="#/home?anchor=home-classics" data-home-chapter="home-classics">典籍</a>
-            <a role="listitem" href="#/home?anchor=home-culture" data-home-chapter="home-culture">文化</a>
             <a role="listitem" href="#/home?anchor=home-sources" data-home-chapter="home-sources">来源</a>
           </div>
           <div class="home-chapter-meter" aria-hidden="true"><i data-home-chapter-meter></i></div>
@@ -120,35 +119,7 @@
           </div>
           <div class="home-category-row"><div class="home-subhead"><span>HERB CATEGORIES</span><strong>按功效分类速览</strong></div><div class="home-categories" id="homeCategories"></div></div>
         </section>
-        <section class="home-modules" aria-labelledby="homeModulesTitle">
-          <div class="home-board-head"><div><span>EXPLORE THE COLLECTION</span><h2 id="homeModulesTitle">从不同角度进入本草</h2></div><p>每个入口都对应一类真实数据与交互方式。</p></div>
-          <div class="home-module-grid">
-            <a class="home-module module-atlas" href="#/herbs"><b>01</b><strong>本草星图</strong><span><span data-catalog-count>—</span> 条文献名称索引与 <span data-featured-count>—</span> 味精品知识卡</span><i>↗</i></a>
-            <a class="home-module module-qiwei" href="#/qiwei"><b>02</b><strong>性味归经</strong><span>从四气、五味和十二经反查本草</span><i>↗</i></a>
-            <a class="home-module module-formula" href="#/formula"><b>03</b><strong>配伍网络</strong><span>看一首方如何组织君臣佐使</span><i>↗</i></a>
-            <a class="home-module module-pattern" href="#/formula?view=zheng"><b>04</b><strong>病证药链</strong><span>从证候走到方剂与核心药材</span><i>↗</i></a>
-            <a class="home-module module-food" href="#home-food"><b>05</b><strong>药食同源</strong><span>把传统知识带回日常饮食</span><i>↗</i></a>
-            <a class="home-module module-culture" href="#home-culture"><b>06</b><strong>文化与非遗</strong><span>看见本草背后的工艺与地方记忆</span><i>↗</i></a>
-          </div>
-        </section>
         <p class="data-note" data-i18n="data.note">图表展示代表性数据集中的关系与分布，不表示药效强弱或临床推荐。</p>
-        <section class="learning-path home-learning" id="home-learning" data-home-section="home-learning" aria-labelledby="homeLearningTitle">
-          <div class="home-learning-journey">
-            <div class="path-intro"><span>LEARNING JOURNEY</span><h2 id="homeLearningTitle" data-i18n="home.journey">从一味药，走进本草世界</h2><p data-i18n="home.journeyDesc">五步完成认识、理解、关联与复习。进度仅保存在本机。</p><a href="#/home?anchor=home-learning" data-i18n="home.start">开始今日学习</a></div>
-            <div class="path-steps">
-              <a href="#/herbs"><b>01</b><strong>认识本草</strong><span>检索药材与来源</span></a>
-              <a href="#/qiwei"><b>02</b><strong>性味归经</strong><span>理解基础属性</span></a>
-              <a href="#/formula"><b>03</b><strong>配伍应用</strong><span>探索君臣佐使</span></a>
-              <a href="#/home?anchor=home-classics"><b>04</b><strong>典籍研读</strong><span>回到历史证据</span></a>
-              <a href="#/home?anchor=home-food"><b>05</b><strong>食养同源</strong><span>连接日常生活</span></a>
-            </div>
-            <div class="path-progress"><span data-i18n="home.progress">今日进度</span><strong id="homeProgress">0 / 5</strong><button type="button" data-saved-open data-i18n="home.saved" aria-controls="savedDrawer">查看收藏</button></div>
-          </div>
-          <div class="home-learning-workbench">
-            <div class="quiz-card" id="quizCard"></div>
-            <div class="learn-list"><div class="learning-note"><h3 data-i18n="learn.method">学习方法</h3><p>先观察四气、五味与归经，再把功效放回到方剂和生活场景中理解。</p></div><div class="learning-note"><h3 data-i18n="learn.today">今日提示</h3><p>药食同源不等于人人适用；这里的内容用于文化学习，具体使用请遵医嘱。</p></div><div class="learning-note"><h3 data-i18n="learn.footprint">你的足迹</h3><p id="learnStats">已完成 0 题 · 正确 0 题</p></div></div>
-          </div>
-        </section>
 
         <div class="section-heading-row home-featured-heading" id="home-featured" data-home-section="home-featured"><div><span>FEATURED HERB CABINET</span><h2 data-i18n="home.discover">精选本草图鉴</h2></div><a href="#/herbs" data-i18n="home.viewAll">查看全部代表药材 →</a></div>
         <div class="grid g4" id="homeFeatured"></div>
@@ -159,7 +130,6 @@
           <div class="section-heading-row"><div><span>FOOD &amp; MEDICINE</span><h2 id="homeFoodTitle">食养同源</h2></div><button type="button" id="homeFoodExpand">查看全部样本</button></div>
           <p class="home-section-note">把药食同源放回日常场景：横滑查看性味与用法；索引层仅名称可检索，药性字段以精品卡为准。</p>
           <div class="home-food-strip" id="homeFoodStrip"></div>
-          <div class="food-matrix" id="homeFoodMatrix" aria-label="性味与用法矩阵"></div>
         </section>
 
         <section class="home-classics" id="home-classics" data-home-section="home-classics" aria-labelledby="homeClassicsTitle">
@@ -170,15 +140,9 @@
           </div>
         </section>
 
-        <span id="home-culture" class="home-anchor" aria-hidden="true"></span>
-        <section class="home-culture" id="homeCulture" data-home-section="home-culture" aria-labelledby="homeCultureTitle">
-          <div class="section-heading-row"><div><span>CULTURE &amp; HERITAGE</span><h2 id="homeCultureTitle">文化非遗</h2></div><button type="button" id="homeCultureExpand">查看全部</button></div>
-          <p class="home-section-note">从诊法、炮制到地方记忆，精选三张卡片先看见本草背后的技艺。</p>
-          <div class="home-culture-grid" id="homeCultureGrid"></div>
-        </section>
 
         <section class="home-source-band" id="home-sources" data-home-section="home-sources" aria-labelledby="homeSourceTitle">
-          <div class="home-source-copy"><span>ABOUT THE PROJECT</span><h2 id="homeSourceTitle">让本草知识可以被看见、被点击、被继续学习</h2><p>本草宇宙以公开的资源普查、药典、经典本草与方剂资料为底座，把“认识一味药”拆成图像、属性、关系、典籍和生活五个可以互相跳转的入口。</p><div class="home-source-actions"><a href="#/home?anchor=home-learning">进入学习工作台</a><a href="#home-culture">查看文化与非遗</a></div></div>
+          <div class="home-source-copy"><span>ABOUT THE PROJECT</span><h2 id="homeSourceTitle">让本草知识可以被看见、被点击、被继续学习</h2><p>本草宇宙以公开的资源普查、药典、经典本草与方剂资料为底座，把“认识一味药”拆成图像、属性、关系、典籍和生活四个可以互相跳转的入口。</p><div class="home-source-actions"><a href="#/learn">进入学习舱</a><a href="#/learn?anchor=learn-culture">查看文化阅读</a></div></div>
           <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委食药物质目录</span></div><div><strong>当前版本</strong><span><span data-featured-count>—</span> 味精品知识卡 · <span data-catalog-count>—</span> 条文献名称索引 · <span data-formula-count>—</span> 首代表方剂 · <span data-zheng-count>—</span> 个证候链路 · <span data-review-count>—</span> 条待审候选</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div><details id="homeImageCredits"><summary>首页图像署名与许可</summary><p><a href="https://www.inaturalist.org/observations/93914221" target="_blank" rel="noopener noreferrer">人参 · Nina Filippova</a>（<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer license">CC BY 4.0</a>） · <a href="https://www.inaturalist.org/observations/41439227" target="_blank" rel="noopener noreferrer">野菊花 · Cheng-Tao Lin</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/photos/142691899" target="_blank" rel="noopener noreferrer">甘草 · Nina Filippova</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/observations/371467034" target="_blank" rel="noopener noreferrer">黄芩 · Urgamal Magsar</a>（CC BY 4.0） · <a href="https://commons.wikimedia.org/wiki/File:Lycium_barbarum_Habitus_Miguelturra_CampodeCalatrava.jpg" target="_blank" rel="noopener noreferrer">枸杞子 · javier martin</a>（<a href="https://creativecommons.org/publicdomain/mark/1.0/" target="_blank" rel="noopener noreferrer license">Public domain</a>）。照片仅按版面缩放与裁切；文化卡背景为项目自有 AI 概念图。<a href="IMAGE_SOURCES_V4.md">查看完整图像来源与许可清单</a>。</p></details></div>
           <p class="home-source-dynamic-note" data-directory-only-note hidden></p>
         </section>
@@ -209,7 +173,7 @@
       </div>
       <div class="herb-mobile-grid" id="herbMobileGrid"></div>
       <div class="catalog-pagination" id="featuredPagination" aria-label="知识卡分页"></div>
-      <section class="compare-panel" id="comparePanel" hidden><div class="section-heading-row"><div><span>ATTRIBUTE COMPARISON</span><h2>本草属性对比</h2></div><button id="closeCompare" type="button">关闭</button></div><p class="compare-disclaimer">图中分值只用于当前代表数据集的属性对照，不表示药效强弱或临床推荐。</p><div class="chart-box" id="herbCompareChart"></div></section>
+      <section class="compare-panel" id="comparePanel" hidden><div class="section-heading-row"><div><span>ATTRIBUTE COMPARISON</span><h2>本草属性对比</h2></div><button id="closeCompare" type="button">关闭</button></div><p class="compare-disclaimer">图中分值只用于当前代表数据集的属性对照，不表示药效强弱或临床推荐。</p><div class="chart-box" id="herbCompareChart"></div><div class="compare-table-wrap"><table class="compare-table"><thead id="compareTableHead"></thead><tbody id="compareTableBody"></tbody></table></div></section>
       </div>
       <div id="catalogAtlasPanel" hidden>
         <div class="catalog-summary"><div><strong id="catalogVisibleCount">—</strong><span>文献名称索引</span></div><p>名称来自公开研究资料、历史索引与逐项核验记录；名称收录不表示药典收载或药性事实齐全。每行保留来源层级，可继续查找知识卡。</p></div>
@@ -267,6 +231,35 @@
       <section id="formulaZhengView" class="formula-zheng-view" hidden aria-labelledby="formulaZhengTitle">
         <div class="section-heading-row"><div><span>PATTERN · FORMULA · HERB</span><h2 id="formulaZhengTitle">病证 · 方剂 · 药材</h2></div><span class="home-section-note">从证候逐级查看文献关联方剂与核心药物。</span></div>
         <div class="focus-workspace"><aside class="syndrome-index"><div class="workspace-label">证候索引 · <span data-zheng-count>—</span></div><label class="sr-only" for="syndromeSearch">搜索证候</label><input class="syndrome-search" id="syndromeSearch" type="search" placeholder="搜索证候"><div class="syndrome-list" id="zhengIndex"></div></aside><section class="syndrome-flow"><div class="syndrome-flow-head"><div><h2 id="zhengFocusTitle">选择一个证候</h2><p id="zhengFocusDesc">从左侧选择证候，查看证—方—药的最短阅读路径。</p></div><span class="badge celadon" id="zhengFocusCount">—</span></div><div class="chart-box" id="zhengSankey"></div></section><aside class="syndrome-evidence" id="zhengEvidence"><span>证据检查器</span><h2>从证候开始</h2><p>选中证候后，这里会展示出处、方剂数量与核心药材。点击药材名称可进入本草知识卡。</p></aside></div>
+      </section>
+    </section>
+
+    <!-- ============ 学习舱 ============ -->
+    <section class="page" data-route="learn">
+      <div class="eyebrow">Learning Lab</div>
+      <h1 class="title">学习舱</h1>
+      <p class="page-intro">用三种方式巩固本草认知：知识问答、看图识药与文化阅读。答题进度仅保存在本机。</p>
+      <div class="learn-shell">
+        <div class="learn-main">
+          <div class="learn-mode-row" role="tablist" aria-label="学习方式">
+            <button type="button" class="learn-mode-tab on" data-learn-mode="text" role="tab" aria-selected="true">知识问答</button>
+            <button type="button" class="learn-mode-tab" data-learn-mode="picture" role="tab" aria-selected="false">看图识药</button>
+          </div>
+          <div class="quiz-card" id="quizCard"></div>
+          <div class="quiz-card" id="pictureQuizCard" hidden></div>
+        </div>
+        <div class="learn-list">
+          <div class="learning-note"><h3 data-i18n="learn.method">学习方法</h3><p>先观察四气、五味与归经，再把功效放回到方剂和生活场景中理解。</p></div>
+          <div class="learning-note"><h3 data-i18n="learn.today">今日提示</h3><p>药食同源不等于人人适用；这里的内容用于文化学习，具体使用请遵医嘱。</p></div>
+          <div class="learning-note"><h3 data-i18n="learn.footprint">你的足迹</h3><p id="learnStats">已完成 0 题 · 正确 0 题</p></div>
+          <a class="learning-note learning-link" href="#/herbs">去探索本草，边看边学 →</a>
+        </div>
+      </div>
+      <span id="learn-culture" class="home-anchor" aria-hidden="true"></span>
+      <section class="home-culture learn-culture" id="learnCulture" aria-labelledby="learnCultureTitle">
+        <div class="section-heading-row"><div><span>CULTURE &amp; HERITAGE</span><h2 id="learnCultureTitle">文化阅读</h2></div><button type="button" id="learnCultureExpand">查看全部</button></div>
+        <p class="home-section-note">从诊法、炮制到地方记忆，理解本草背后的技艺与传承，也是学习的一部分。</p>
+        <div class="home-culture-grid" id="learnCultureGrid"></div>
       </section>
     </section>
 
@@ -334,6 +327,7 @@ assets/js/pages/cross-navigation.js assets/js/pages/cosmos.js assets/js/core/cat
 <script defer src="assets/js/components/theme.browser.js"></script>
 <script defer src="assets/js/pages/home.browser.js"></script>
 <script defer src="assets/js/lib/insight-aggregates.browser.js"></script>
+<script defer src="assets/js/lib/learn-modules.js"></script>
 <script defer src="assets/js/lib/data-coverage.browser.js"></script>
 <script defer src="assets/js/charts/insights.js"></script>
 <script defer src="assets/js/pages/cross-navigation.browser.js"></script>

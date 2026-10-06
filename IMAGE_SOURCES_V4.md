@@ -4,7 +4,7 @@ Source snapshot: TCM_KG b0c619683f7263811e6027e1f5dff73be6362284; original descr
 
 These are searched, openly licensed photographs of a source organism. They do not establish the identity of a harvested medicinal part, processing state, clinical indication or safety. Species aliases are accepted only when indexed by the image provider. Minerals and records without an unambiguous source taxon remain excluded. Runtime cards reference only entries in this manifest; earlier images without complete open-license metadata are excluded from runtime and replaced by placeholders.
 
-Coverage: 618 source records; 558 local image files. Remaining exclusions: 281.
+Coverage: 623 source records; 561 local image files. Remaining exclusions: 276.
 
 Reproduce: `node scripts/fetch-herb-images.mjs --input .tmp-v3/tcmData.json`; Windows uses PowerShell HTTP and other platforms use Node fetch. Limit concurrency to three; the importer caches API responses, retries once with backoff and resumes from the manifest. `--limit 30` creates a small working batch. `--verify` checks attribution fields, local files and SHA-256 hashes.
 
@@ -124,6 +124,7 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 | 地稔根 | Melastoma dodecandrum | W Rao | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/159766172) |
 | 地桃花 | Urena lobata | Ong Jyh Seng | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/150110792) |
 | 灯心草 | Juncus effusus | Douglas Goldman | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/122973477) |
+| 颠茄草 | Atropa bella-donna | Daniel Cahen | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/91333938) |
 | 丁香 | Syzygium aromaticum | Eric Knight | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/246963050) |
 | 丁香罗勒油 | Ocimum gratissimum | rosshawkins (iNaturalist uploader) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/observations/368534473) |
 | 东风橘 | Atalantia buxifolia | 葉子 | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/photos/104222833) |
@@ -295,6 +296,7 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 | 决明子 | Senna obtusifolia | Ben Mowbray | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/31930089) |
 | 榼藤子 | Entada phaseoloides | catchwords | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/189545322) |
 | 苦参 | Sophora flavescens | WATANABE Hitoshi 渡辺仁 | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/182649491) |
+| 苦地丁 | Corydalis bungeana | Jane Charlen | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/359420094) |
 | 苦丁茶 | Ilex latifolia | Matthieu Sontag | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [iNaturalist](https://www.inaturalist.org/photos/9652042) |
 | 苦瓜 | Momordica charantia | Douglas Goldman | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [iNaturalist](https://www.inaturalist.org/photos/269347188) |
 | 苦楝皮 | Melia azedarach | 葉子 | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/photos/33351307) |
@@ -532,6 +534,7 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 | 五指毛 | Ficus simplicissima | chaos_fungoriun (iNaturalist uploader) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/observations/365436768) |
 | 西河柳 | Tamarix chinensis | Dominic Gentilcore | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/63860768) |
 | 西红花 | Crocus sativus | Meneerke bloem | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Crocus_sativus_leaves.jpg) |
+| 西青果 | Terminalia chebula | Dinesh Valke | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/138510039) |
 | 豨莶草 | Sigesbeckia orientalis | Richard Fuller (iNaturalist uploader) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/observations/111893130) |
 | 喜树果 | Camptotheca acuminata | Alan Weakley (iNaturalist uploader) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/observations/319974952) |
 | 细辛 | Asarum sieboldii | Tatyana Petrenko | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/214334281) |
@@ -543,6 +546,7 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 | 相思子 | Abrus precatorius | Diogo Luiz | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/32802086) |
 | 香附 | Cyperus rotundus | 葉子 | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/photos/60471960) |
 | 香加皮 | Periploca sepium | Zinogre | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/97859955) |
+| 香橼 | Citrus medica |  Johann Werfring | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [iNaturalist](https://www.inaturalist.org/photos/356738692) |
 | 小檗皮 | Berberis amurensis | Salicyna | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Berberis_amurensis_2016-04-28_9492.jpg) |
 | 小飞扬草 | Euphorbia thymifolia | portioid | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/108479020) |
 | 小通草 | Stachyurus himalaicus | 葉子 (iNaturalist uploader) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/observations/160551222) |
@@ -583,6 +587,7 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 | 银耳 | Tremella fuciformis | Alex Abair | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/photos/99916366) |
 | 银杏叶 | Ginkgo biloba | Douglas Goldman | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/195302048) |
 | 罂粟壳 | Papaver somniferum | David Perez | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/photos/106990501) |
+| 鹰不泊 | Zanthoxylum avicennae | 葉子 | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/photos/105876737) |
 | 油松节 | Pinus massoniana | Denys Vynokurov | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/350043048) |
 | 禹州漏芦 | Echinops davuricus | Святослав Власенко | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/304204572) |
 | 玉米须 | Zea mays | Rudolphous | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20210806_Hortus_Botanicus_Leiden_-_Zea_mays.jpg) |
@@ -691,36 +696,18 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 - 西瓜皮: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 亚麻子: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 粤丝瓜络: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 七叶一枝花: Paris poly-phylla — No exact-subject photograph with an accepted open license was retrieved.
-- 八角茴香: Illicium verum — No exact-subject photograph with an accepted open license was retrieved.
-- 重楼: Paris polyphytla; Smith var — No exact-subject photograph with an accepted open license was retrieved.
-- 金果榄: Tinospora capillipes — No exact-subject photograph with an accepted open license was retrieved.
-- 白附子: Typhonium giganteum — No exact-subject photograph with an accepted open license was retrieved.
-- 白蔹: Ampelopsis japonica — No exact-subject photograph with an accepted open license was retrieved.
 - 虫牙药: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 金礞石: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 蓼大青叶: Polygonum tinctorium — No exact-subject photograph with an accepted open license was retrieved.
 - 伏龙肝: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 龙齿: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 青牛胆: Tinospora sagittata — No exact-subject photograph with an accepted open license was retrieved.
-- 水朝阳: Inula helianthuds-aquatica — No exact-subject photograph with an accepted open license was retrieved.
 - 红天葵: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 金沸草: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 掌叶半夏: Penellia pedatisecta — No exact-subject photograph with an accepted open license was retrieved.
-- 汉桃叶: Schefflera kwangsiensis — No exact-subject photograph with an accepted open license was retrieved.
 - 蝉花: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 青天葵: Nervilia fordii — No exact-subject photograph with an accepted open license was retrieved.
-- 凉粉草: Mesona chinese — No exact-subject photograph with an accepted open license was retrieved.
 - 火炭母: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 胆南星: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 辣蓼: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 水河剑: Diplazium lanceum — No exact-subject photograph with an accepted open license was retrieved.
 - 倒扣草: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 鼠李: Rhamnus dahurica — No exact-subject photograph with an accepted open license was retrieved.
-- 石蝉草: Peperomia dindigulensis — No exact-subject photograph with an accepted open license was retrieved.
-- 兔儿伞: Syneilesis aconitifotia — No exact-subject photograph with an accepted open license was retrieved.
 - 博落回: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 日草根: Hemerocallis middendorjii — No exact-subject photograph with an accepted open license was retrieved.
 - 广东紫荆皮: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 广东土牛膝: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 广东海风藤: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
@@ -731,130 +718,6 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 - 阴香根: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 野棉花: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
 - 白花银背藤: no exact source taxon — No unambiguous botanical/zoological binomial in source, or non-biological material.
-- 吴茱萸: Evodia rutaecarpa — No exact-subject photograph with an accepted open license was retrieved.
-- 地肤子: Kochia scoparia — No exact-subject photograph with an accepted open license was retrieved.
-- 水红花子: Potylgonum orientale — No exact-subject photograph with an accepted open license was retrieved.
-- 王不留行: Vaccaria segetalis — No exact-subject photograph with an accepted open license was retrieved.
-- 小茴香: Forniculum vulgare — No exact-subject photograph with an accepted open license was retrieved.
-- 藜芦: Veratum nigrum — No exact-subject photograph with an accepted open license was retrieved.
-- 糯稻根: Oryza sativea — No exact-subject photograph with an accepted open license was retrieved.
-- 葱白: Allium jistulosum — No exact-subject photograph with an accepted open license was retrieved.
-- 山茱萸: Cornus oj-j — No exact-subject photograph with an accepted open license was retrieved.
-- 续断: Dispsacus japonicus — No exact-subject photograph with an accepted open license was retrieved.
-- 葛根: Pueraria lobata — No exact-subject photograph with an accepted open license was retrieved.
-- 藁本: Ligusticum sinense — No exact-subject photograph with an accepted open license was retrieved.
-- 拳参: Polygonum bistorta — No exact-subject photograph with an accepted open license was retrieved.
-- 黄连: Coptis chinensis — No exact-subject photograph with an accepted open license was retrieved.
-- 前胡: Peucedanum praeruptorum — No exact-subject photograph with an accepted open license was retrieved.
-- 明党参: Changium smyrnioides — No exact-subject photograph with an accepted open license was retrieved.
-- 羌活: Notopterygium incisum — No exact-subject photograph with an accepted open license was retrieved.
-- 延胡索: Cordalis ambigua — No exact-subject photograph with an accepted open license was retrieved.
-- 红芪: Hedysarum polybotrys — No exact-subject photograph with an accepted open license was retrieved.
-- 白前: Cynanchum glaucescens — No exact-subject photograph with an accepted open license was retrieved.
-- 百部: Stemona sessilifolia; Stemona tuberose — No exact-subject photograph with an accepted open license was retrieved.
-- 石菖蒲: Acorus tatarionwii — No exact-subject photograph with an accepted open license was retrieved.
-- 白术: Atractylodes macrocephala — No exact-subject photograph with an accepted open license was retrieved.
-- 巴戟天: Morinda ojj — No exact-subject photograph with an accepted open license was retrieved.
-- 山豆根: Sophora tonkinensis — No exact-subject photograph with an accepted open license was retrieved.
-- 甘遂: Euphorbia kansui — No exact-subject photograph with an accepted open license was retrieved.
-- 川木香: Vladimiria souliei — No exact-subject photograph with an accepted open license was retrieved.
-- 木香: Aucklandia lappa — No exact-subject photograph with an accepted open license was retrieved.
-- 川牛膝: Cyathula officinatis — No exact-subject photograph with an accepted open license was retrieved.
-- 升麻: Cimici uga; Cimicifuga foetida — No exact-subject photograph with an accepted open license was retrieved.
-- 川芎: Ligusticum chuam — No exact-subject photograph with an accepted open license was retrieved.
-- 紫花前胡: Peucedanum decusivum — No exact-subject photograph with an accepted open license was retrieved.
-- 千年健: Homalomena occulta — No exact-subject photograph with an accepted open license was retrieved.
-- 珍珠母: Pteria martensii — No exact-subject photograph with an accepted open license was retrieved.
-- 千斤拔: Flemingia prostrata — No exact-subject photograph with an accepted open license was retrieved.
-- 珍珠: Pteria martensii; Hyriopsis cumingii — No exact-subject photograph with an accepted open license was retrieved.
-- 伊贝母: Fritillaria pallidijlora — No exact-subject photograph with an accepted open license was retrieved.
-- 南山楂: Crataegus hupehensis — No exact-subject photograph with an accepted open license was retrieved.
-- 大叶紫珠: Callicarpa macroph — No exact-subject photograph with an accepted open license was retrieved.
-- 溪黄草: Isodon iophanthoides — No exact-subject photograph with an accepted open license was retrieved.
-- 走马胎: Ardisia gigantifolia — No exact-subject photograph with an accepted open license was retrieved.
-- 鹰不泊: Zanthoxylum avicenn — No exact-subject photograph with an accepted open license was retrieved.
-- 黄花倒水莲: Polygala aureocauda — No exact-subject photograph with an accepted open license was retrieved.
-- 广昆布: Ulva pertusa — No exact-subject photograph with an accepted open license was retrieved.
-- 地不容: Stephania dielsiana; Stephania epigaea — No exact-subject photograph with an accepted open license was retrieved.
-- 红大戟: Knoxia valerian — No exact-subject photograph with an accepted open license was retrieved.
-- 湖北贝母: Fritillaria hupehensis — No exact-subject photograph with an accepted open license was retrieved.
-- 广升麻: Serratula chinensis — No exact-subject photograph with an accepted open license was retrieved.
-- 寻骨风: Aristolochia mollissima — No exact-subject photograph with an accepted open license was retrieved.
-- 淡竹叶: Lophatherum gracite — No exact-subject photograph with an accepted open license was retrieved.
-- 甜地丁: Gueldenstaedtia multiflora — No exact-subject photograph with an accepted open license was retrieved.
-- 景天三七: Sedum aizoon — No exact-subject photograph with an accepted open license was retrieved.
-- 香薷: Mosla chinensis; Jiangxi angru — No exact-subject photograph with an accepted open license was retrieved.
-- 荆芥: Schizonepeta tenuifolia — No exact-subject photograph with an accepted open license was retrieved.
-- 金钱草: Lysimachia christinae — No exact-subject photograph with an accepted open license was retrieved.
-- 苦地丁: Corydalis bungean — No exact-subject photograph with an accepted open license was retrieved.
-- 鸡骨草: Abrus cantoniensis — No exact-subject photograph with an accepted open license was retrieved.
-- 西番莲: Passillora caerulea — No exact-subject photograph with an accepted open license was retrieved.
-- 冬凌草: Rabdosia rubescens — No exact-subject photograph with an accepted open license was retrieved.
-- 广山药: Dioscorea persimilis — No exact-subject photograph with an accepted open license was retrieved.
-- 白花丹: Plumbago zeyla-nica — No exact-subject photograph with an accepted open license was retrieved.
-- 乌蔹莓: Cayratia japonica — No exact-subject photograph with an accepted open license was retrieved.
-- 长春花: Catharathus roseus — No exact-subject photograph with an accepted open license was retrieved.
-- 红丝线: Peristrophe baphica — No exact-subject photograph with an accepted open license was retrieved.
-- 广藿香: Pogostemon cablin — No exact-subject photograph with an accepted open license was retrieved.
-- 小蓟: Cirsium setosum — No exact-subject photograph with an accepted open license was retrieved.
-- 山木通: Clematis fi- — No exact-subject photograph with an accepted open license was retrieved.
-- 蕤仁: Prinsepia uniflora — No exact-subject photograph with an accepted open license was retrieved.
-- 樱桃核: Cerasus pseudocerasus — No exact-subject photograph with an accepted open license was retrieved.
-- 榧子: Torreya grandis — No exact-subject photograph with an accepted open license was retrieved.
-- 葱子: Allium jistulosum — No exact-subject photograph with an accepted open license was retrieved.
-- 山菅兰: Dianella ensi- — No exact-subject photograph with an accepted open license was retrieved.
-- 黄荆子: Viter negundo — No exact-subject photograph with an accepted open license was retrieved.
-- 益智: Alpinia oxyphylla — No exact-subject photograph with an accepted open license was retrieved.
-- 莱菔子: Raphanus sativus — No exact-subject photograph with an accepted open license was retrieved.
-- 胖大海: Sterculia lychnophora — No exact-subject photograph with an accepted open license was retrieved.
-- 香橼: Citrus wilsonii; Citrus medic — No exact-subject photograph with an accepted open license was retrieved.
-- 砂仁: Amomum villosum; Amomum longiligulare — No exact-subject photograph with an accepted open license was retrieved.
-- 南五味子: Schisandra sphenanthera — No exact-subject photograph with an accepted open license was retrieved.
-- 大驳骨: Adhatoda ven-tricosa — No exact-subject photograph with an accepted open license was retrieved.
-- 枳实: Citrus aurantium — No exact-subject photograph with an accepted open license was retrieved.
-- 枳壳: Citrus aurantium — No exact-subject photograph with an accepted open license was retrieved.
-- 柏子仁: Platycladus orientails — No exact-subject photograph with an accepted open license was retrieved.
-- 沙棘: Hippophae thamnoides — No exact-subject photograph with an accepted open license was retrieved.
-- 猪牙皂: Gleditsia sinensisi — No exact-subject photograph with an accepted open license was retrieved.
-- 苍耳子: Xanthium sibiricum — No exact-subject photograph with an accepted open license was retrieved.
-- 芸薹子: Brassica campesrtris — No exact-subject photograph with an accepted open license was retrieved.
-- 瓦楞子: Arca subcrenata; Arca gran; Arca injlata — No exact-subject photograph with an accepted open license was retrieved.
-- 五灵脂: Trogopterus xanthipes — No exact-subject photograph with an accepted open license was retrieved.
-- 虫白蜡: Ericerus peta — No exact-subject photograph with an accepted open license was retrieved.
-- 九香虫: Aspongopus chinensis — No exact-subject photograph with an accepted open license was retrieved.
-- 青黛: Potygonum tinctorium — No exact-subject photograph with an accepted open license was retrieved.
-- 天竺黄: Bambus textilis — No exact-subject photograph with an accepted open license was retrieved.
-- 雷丸: Omphalia lapidescens — No exact-subject photograph with an accepted open license was retrieved.
-- 灵芝: Ganoderma sinense — No exact-subject photograph with an accepted open license was retrieved.
-- 木耳: Auricularia auricula — No exact-subject photograph with an accepted open license was retrieved.
-- 乳香: Boswellia carterli — No exact-subject photograph with an accepted open license was retrieved.
-- 血竭: Daemonorops draco — No exact-subject photograph with an accepted open license was retrieved.
-- 安息香: Styrax tonkinensis — No exact-subject photograph with an accepted open license was retrieved.
-- 竹沥: Munro var — No exact-subject photograph with an accepted open license was retrieved.
-- 干漆: Toxicodendron verniciflnum — No exact-subject photograph with an accepted open license was retrieved.
-- 钩藤: Uncaria thynchophylla; Uncaria sinensis — No exact-subject photograph with an accepted open license was retrieved.
-- 鸡血藤: Spatholobus suberects — No exact-subject photograph with an accepted open license was retrieved.
-- 竹茹: Bambusa tuldoides — No exact-subject photograph with an accepted open license was retrieved.
-- 黄柏: Phellodendron chinense — No exact-subject photograph with an accepted open license was retrieved.
-- 秦皮: Fraxinus szaboana — No exact-subject photograph with an accepted open license was retrieved.
-- 牡丹皮: Paeonia suffruticosa — No exact-subject photograph with an accepted open license was retrieved.
-- 地枫皮: Illicium difengpi — No exact-subject photograph with an accepted open license was retrieved.
-- 五加皮: Acanthopanax gracilistylus — No exact-subject photograph with an accepted open license was retrieved.
-- 土荆皮: Pseudolarix kaempferi — No exact-subject photograph with an accepted open license was retrieved.
-- 牡荆叶: Vitei negundo — No exact-subject photograph with an accepted open license was retrieved.
-- 龙脷叶: Sauropus rostratus — No exact-subject photograph with an accepted open license was retrieved.
-- 石楠叶: Photinia serrulata — No exact-subject photograph with an accepted open license was retrieved.
-- 山楂叶: Crataegus pinn; Crataegus pinnatzjida — No exact-subject photograph with an accepted open license was retrieved.
-- 款冬花: Tussdago farfara — No exact-subject photograph with an accepted open license was retrieved.
-- 密蒙花: Buddleja officinalis — No exact-subject photograph with an accepted open license was retrieved.
-- 菊花: Chrysanthemum morifolium — No exact-subject photograph with an accepted open license was retrieved.
-- 闹羊花: Rhododendron molte — No exact-subject photograph with an accepted open license was retrieved.
-- 迎春花: Jasminum nudiforum — No exact-subject photograph with an accepted open license was retrieved.
-- 颠茄草: Atropa belladonna — No exact-subject photograph with an accepted open license was retrieved.
-- 薄荷: Mentha haplocalyx — No exact-subject photograph with an accepted open license was retrieved.
-- 蛇莓: Duchesnea indica — No exact-subject photograph with an accepted open license was retrieved.
-- 菥蓂: Thlaspi arvetse — No exact-subject photograph with an accepted open license was retrieved.
-- 鱼胆草: Swertia davidi — No exact-subject photograph with an accepted open license was retrieved.
 - 胆木: Nauclea officinalis — No exact-subject photograph with an accepted open license was retrieved.
 - 藤黄: Garcinia hanburii — No exact-subject photograph with an accepted open license was retrieved.
 - 一点红: Eilia sonchifolia — No exact-subject photograph with an accepted open license was retrieved.
@@ -866,6 +729,7 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 - 水翁花: Cleistocalyx opercutatus — No exact-subject photograph with an accepted open license was retrieved.
 - 吉祥草: Reinecka carnea — No exact-subject photograph with an accepted open license was retrieved.
 - 全蝎: Buthus martensii — No exact-subject photograph with an accepted open license was retrieved.
+- 鱼胆草: Swertia davidii — No exact-subject photograph with an accepted open license was retrieved.
 - 生姜: Zingiber offcinale — No exact-subject photograph with an accepted open license was retrieved.
 - 川续断: Dipsacus asperoides — No exact-subject photograph with an accepted open license was retrieved.
 - 苦玄参: Picria fel-terrae — No exact-subject photograph with an accepted open license was retrieved.
@@ -885,7 +749,6 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 - 金铁锁: Psammosilene tunicoides — No exact-subject photograph with an accepted open license was retrieved.
 - 阿魏: Ferula sinkiangensis; Ferula fukanensis — No exact-subject photograph with an accepted open license was retrieved.
 - 青叶胆: Swertia mileensis — No exact-subject photograph with an accepted open license was retrieved.
-- 西青果: Terminalia chebu — No exact-subject photograph with an accepted open license was retrieved.
 - 白药子: Stephania cep-hurantha — No exact-subject photograph with an accepted open license was retrieved.
 - 三棵针: Berbers soulieana — No exact-subject photograph with an accepted open license was retrieved.
 - 穿破石: Machura cochinchinensis; Machura tricuspidata — No exact-subject photograph with an accepted open license was retrieved.
@@ -914,3 +777,140 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 - 熟地黄: Rehmannig glutinosa — No exact-subject photograph with an accepted open license was retrieved.
 - 地龙: Pheretima aspergillum; Pheretima guillelmi; Pheretimapectini fera — No exact-subject photograph with an accepted open license was retrieved.
 - 水蛭: Hirudo niponica — No exact-subject photograph with an accepted open license was retrieved.
+- 瓦楞子: Arca subcrenata; Arca gran; Arca injlata — No exact-subject photograph with an accepted open license was retrieved.
+- 五灵脂: Trogopterus xanthipes — No exact-subject photograph with an accepted open license was retrieved.
+- 虫白蜡: Ericerus peta — No exact-subject photograph with an accepted open license was retrieved.
+- 九香虫: Aspongopus chinensis — No exact-subject photograph with an accepted open license was retrieved.
+- 青黛: Potygonum tinctorium — No exact-subject photograph with an accepted open license was retrieved.
+- 雷丸: Omphalia lapidescens — No exact-subject photograph with an accepted open license was retrieved.
+- 灵芝: Ganoderma sinense — No exact-subject photograph with an accepted open license was retrieved.
+- 木耳: Auricularia auricula — No exact-subject photograph with an accepted open license was retrieved.
+- 乳香: Boswellia carterli — No exact-subject photograph with an accepted open license was retrieved.
+- 血竭: Daemonorops draco — No exact-subject photograph with an accepted open license was retrieved.
+- 安息香: Styrax tonkinensis — No exact-subject photograph with an accepted open license was retrieved.
+- 竹沥: Munro var — No exact-subject photograph with an accepted open license was retrieved.
+- 干漆: Toxicodendron verniciflnum — No exact-subject photograph with an accepted open license was retrieved.
+- 钩藤: Uncaria thynchophylla; Uncaria sinensis — No exact-subject photograph with an accepted open license was retrieved.
+- 天竺黄: Bambusa textilis — No exact-subject photograph with an accepted open license was retrieved.
+- 鸡血藤: Spatholobus suberects — No exact-subject photograph with an accepted open license was retrieved.
+- 竹茹: Bambusa tuldoides — No exact-subject photograph with an accepted open license was retrieved.
+- 黄柏: Phellodendron chinense — No exact-subject photograph with an accepted open license was retrieved.
+- 秦皮: Fraxinus szaboana — No exact-subject photograph with an accepted open license was retrieved.
+- 牡丹皮: Paeonia suffruticosa — No exact-subject photograph with an accepted open license was retrieved.
+- 地枫皮: Illicium difengpi — No exact-subject photograph with an accepted open license was retrieved.
+- 五加皮: Acanthopanax gracilistylus — No exact-subject photograph with an accepted open license was retrieved.
+- 土荆皮: Pseudolarix kaempferi — No exact-subject photograph with an accepted open license was retrieved.
+- 牡荆叶: Vitei negundo — No exact-subject photograph with an accepted open license was retrieved.
+- 龙脷叶: Sauropus rostratus — No exact-subject photograph with an accepted open license was retrieved.
+- 石楠叶: Photinia serrulata — No exact-subject photograph with an accepted open license was retrieved.
+- 山楂叶: Crataegus pinn; Crataegus pinnatzjida — No exact-subject photograph with an accepted open license was retrieved.
+- 款冬花: Tussdago farfara — No exact-subject photograph with an accepted open license was retrieved.
+- 密蒙花: Buddleja officinalis — No exact-subject photograph with an accepted open license was retrieved.
+- 菊花: Chrysanthemum morifolium — No exact-subject photograph with an accepted open license was retrieved.
+- 闹羊花: Rhododendron molte — No exact-subject photograph with an accepted open license was retrieved.
+- 迎春花: Jasminum nudiforum — No exact-subject photograph with an accepted open license was retrieved.
+- 薄荷: Mentha haplocalyx — No exact-subject photograph with an accepted open license was retrieved.
+- 蛇莓: Duchesnea indica — No exact-subject photograph with an accepted open license was retrieved.
+- 菥蓂: Thlaspi arvetse — No exact-subject photograph with an accepted open license was retrieved.
+- 淡竹叶: Lophatherum gracite — No exact-subject photograph with an accepted open license was retrieved.
+- 甜地丁: Gueldenstaedtia multiflora — No exact-subject photograph with an accepted open license was retrieved.
+- 景天三七: Sedum aizoon — No exact-subject photograph with an accepted open license was retrieved.
+- 香薷: Mosla chinensis; Jiangxi angru — No exact-subject photograph with an accepted open license was retrieved.
+- 荆芥: Schizonepeta tenuifolia — No exact-subject photograph with an accepted open license was retrieved.
+- 金钱草: Lysimachia christinae — No exact-subject photograph with an accepted open license was retrieved.
+- 鸡骨草: Abrus cantoniensis — No exact-subject photograph with an accepted open license was retrieved.
+- 西番莲: Passillora caerulea — No exact-subject photograph with an accepted open license was retrieved.
+- 冬凌草: Rabdosia rubescens — No exact-subject photograph with an accepted open license was retrieved.
+- 广山药: Dioscorea persimilis — No exact-subject photograph with an accepted open license was retrieved.
+- 白花丹: Plumbago zeyla-nica — No exact-subject photograph with an accepted open license was retrieved.
+- 乌蔹莓: Cayratia japonica — No exact-subject photograph with an accepted open license was retrieved.
+- 长春花: Catharathus roseus — No exact-subject photograph with an accepted open license was retrieved.
+- 红丝线: Peristrophe baphica — No exact-subject photograph with an accepted open license was retrieved.
+- 广藿香: Pogostemon cablin — No exact-subject photograph with an accepted open license was retrieved.
+- 小蓟: Cirsium setosum — No exact-subject photograph with an accepted open license was retrieved.
+- 山木通: Clematis fi- — No exact-subject photograph with an accepted open license was retrieved.
+- 蕤仁: Prinsepia uniflora — No exact-subject photograph with an accepted open license was retrieved.
+- 樱桃核: Cerasus pseudocerasus — No exact-subject photograph with an accepted open license was retrieved.
+- 榧子: Torreya grandis — No exact-subject photograph with an accepted open license was retrieved.
+- 葱子: Allium jistulosum — No exact-subject photograph with an accepted open license was retrieved.
+- 山菅兰: Dianella ensi- — No exact-subject photograph with an accepted open license was retrieved.
+- 黄荆子: Viter negundo — No exact-subject photograph with an accepted open license was retrieved.
+- 益智: Alpinia oxyphylla — No exact-subject photograph with an accepted open license was retrieved.
+- 莱菔子: Raphanus sativus — No exact-subject photograph with an accepted open license was retrieved.
+- 胖大海: Sterculia lychnophora — No exact-subject photograph with an accepted open license was retrieved.
+- 砂仁: Amomum villosum; Amomum longiligulare — No exact-subject photograph with an accepted open license was retrieved.
+- 南五味子: Schisandra sphenanthera — No exact-subject photograph with an accepted open license was retrieved.
+- 大驳骨: Adhatoda ven-tricosa — No exact-subject photograph with an accepted open license was retrieved.
+- 枳实: Citrus aurantium — No exact-subject photograph with an accepted open license was retrieved.
+- 枳壳: Citrus aurantium — No exact-subject photograph with an accepted open license was retrieved.
+- 柏子仁: Platycladus orientails — No exact-subject photograph with an accepted open license was retrieved.
+- 沙棘: Hippophae thamnoides — No exact-subject photograph with an accepted open license was retrieved.
+- 猪牙皂: Gleditsia sinensisi — No exact-subject photograph with an accepted open license was retrieved.
+- 苍耳子: Xanthium sibiricum — No exact-subject photograph with an accepted open license was retrieved.
+- 芸薹子: Brassica campesrtris — No exact-subject photograph with an accepted open license was retrieved.
+- 吴茱萸: Evodia rutaecarpa — No exact-subject photograph with an accepted open license was retrieved.
+- 地肤子: Kochia scoparia — No exact-subject photograph with an accepted open license was retrieved.
+- 水红花子: Potylgonum orientale — No exact-subject photograph with an accepted open license was retrieved.
+- 七叶一枝花: Paris poly-phylla — No exact-subject photograph with an accepted open license was retrieved.
+- 王不留行: Vaccaria segetalis — No exact-subject photograph with an accepted open license was retrieved.
+- 小茴香: Forniculum vulgare — No exact-subject photograph with an accepted open license was retrieved.
+- 山茱萸: Cornus oj-j — No exact-subject photograph with an accepted open license was retrieved.
+- 糯稻根: Oryza sativea — No exact-subject photograph with an accepted open license was retrieved.
+- 八角茴香: Illicium verum — No exact-subject photograph with an accepted open license was retrieved.
+- 藜芦: Veratum nigrum — No exact-subject photograph with an accepted open license was retrieved.
+- 藁本: Ligusticum sinense — No exact-subject photograph with an accepted open license was retrieved.
+- 葱白: Allium jistulosum — No exact-subject photograph with an accepted open license was retrieved.
+- 续断: Dispsacus japonicus — No exact-subject photograph with an accepted open license was retrieved.
+- 葛根: Pueraria lobata — No exact-subject photograph with an accepted open license was retrieved.
+- 黄连: Coptis chinensis — No exact-subject photograph with an accepted open license was retrieved.
+- 拳参: Polygonum bistorta — No exact-subject photograph with an accepted open license was retrieved.
+- 前胡: Peucedanum praeruptorum — No exact-subject photograph with an accepted open license was retrieved.
+- 重楼: Paris polyphytla; Smith var — No exact-subject photograph with an accepted open license was retrieved.
+- 金果榄: Tinospora capillipes — No exact-subject photograph with an accepted open license was retrieved.
+- 明党参: Changium smyrnioides — No exact-subject photograph with an accepted open license was retrieved.
+- 羌活: Notopterygium incisum — No exact-subject photograph with an accepted open license was retrieved.
+- 延胡索: Cordalis ambigua — No exact-subject photograph with an accepted open license was retrieved.
+- 红芪: Hedysarum polybotrys — No exact-subject photograph with an accepted open license was retrieved.
+- 百部: Stemona sessilifolia; Stemona tuberose — No exact-subject photograph with an accepted open license was retrieved.
+- 白附子: Typhonium giganteum — No exact-subject photograph with an accepted open license was retrieved.
+- 白蔹: Ampelopsis japonica — No exact-subject photograph with an accepted open license was retrieved.
+- 白前: Cynanchum glaucescens — No exact-subject photograph with an accepted open license was retrieved.
+- 白术: Atractylodes macrocephala — No exact-subject photograph with an accepted open license was retrieved.
+- 石菖蒲: Acorus tatarionwii — No exact-subject photograph with an accepted open license was retrieved.
+- 山豆根: Sophora tonkinensis — No exact-subject photograph with an accepted open license was retrieved.
+- 甘遂: Euphorbia kansui — No exact-subject photograph with an accepted open license was retrieved.
+- 巴戟天: Morinda ojj — No exact-subject photograph with an accepted open license was retrieved.
+- 升麻: Cimici uga; Cimicifuga foetida — No exact-subject photograph with an accepted open license was retrieved.
+- 木香: Aucklandia lappa — No exact-subject photograph with an accepted open license was retrieved.
+- 川木香: Vladimiria souliei — No exact-subject photograph with an accepted open license was retrieved.
+- 川牛膝: Cyathula officinatis — No exact-subject photograph with an accepted open license was retrieved.
+- 川芎: Ligusticum chuam — No exact-subject photograph with an accepted open license was retrieved.
+- 千年健: Homalomena occulta — No exact-subject photograph with an accepted open license was retrieved.
+- 千斤拔: Flemingia prostrata — No exact-subject photograph with an accepted open license was retrieved.
+- 蓼大青叶: Polygonum tinctorium — No exact-subject photograph with an accepted open license was retrieved.
+- 紫花前胡: Peucedanum decusivum — No exact-subject photograph with an accepted open license was retrieved.
+- 珍珠母: Pteria martensii — No exact-subject photograph with an accepted open license was retrieved.
+- 珍珠: Pteria martensii; Hyriopsis cumingii — No exact-subject photograph with an accepted open license was retrieved.
+- 南山楂: Crataegus hupehensis — No exact-subject photograph with an accepted open license was retrieved.
+- 青牛胆: Tinospora sagittata — No exact-subject photograph with an accepted open license was retrieved.
+- 伊贝母: Fritillaria pallidijlora — No exact-subject photograph with an accepted open license was retrieved.
+- 大叶紫珠: Callicarpa macroph — No exact-subject photograph with an accepted open license was retrieved.
+- 水朝阳: Inula helianthuds-aquatica — No exact-subject photograph with an accepted open license was retrieved.
+- 走马胎: Ardisia gigantifolia — No exact-subject photograph with an accepted open license was retrieved.
+- 掌叶半夏: Penellia pedatisecta — No exact-subject photograph with an accepted open license was retrieved.
+- 汉桃叶: Schefflera kwangsiensis — No exact-subject photograph with an accepted open license was retrieved.
+- 地不容: Stephania dielsiana; Stephania epigaea — No exact-subject photograph with an accepted open license was retrieved.
+- 溪黄草: Isodon iophanthoides — No exact-subject photograph with an accepted open license was retrieved.
+- 青天葵: Nervilia fordii — No exact-subject photograph with an accepted open license was retrieved.
+- 凉粉草: Mesona chinese — No exact-subject photograph with an accepted open license was retrieved.
+- 广昆布: Ulva pertusa — No exact-subject photograph with an accepted open license was retrieved.
+- 黄花倒水莲: Polygala aureocauda — No exact-subject photograph with an accepted open license was retrieved.
+- 湖北贝母: Fritillaria hupehensis — No exact-subject photograph with an accepted open license was retrieved.
+- 红大戟: Knoxia valerian — No exact-subject photograph with an accepted open license was retrieved.
+- 广升麻: Serratula chinensis — No exact-subject photograph with an accepted open license was retrieved.
+- 水河剑: Diplazium lanceum — No exact-subject photograph with an accepted open license was retrieved.
+- 寻骨风: Aristolochia mollissima — No exact-subject photograph with an accepted open license was retrieved.
+- 鼠李: Rhamnus dahurica — No exact-subject photograph with an accepted open license was retrieved.
+- 石蝉草: Peperomia dindigulensis — No exact-subject photograph with an accepted open license was retrieved.
+- 兔儿伞: Syneilesis aconitifotia — No exact-subject photograph with an accepted open license was retrieved.
+- 日草根: Hemerocallis middendorjii — No exact-subject photograph with an accepted open license was retrieved.

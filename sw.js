@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v15-20261003-echarts-on-demand';
+const CACHE_VERSION = 'herbal-cosmos-v16-20261003-home-learn-restructure';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -18,6 +18,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/lib/insight-aggregates.browser.js',
   './assets/vendor/echarts.min.js',
   './assets/js/lib/echarts-loader.js',
+  './assets/js/lib/learn-modules.js',
   './assets/js/data/food-medicine.generated.js',
   './assets/js/data/featured.js',
   './assets/js/data/expanded.bootstrap.js',

@@ -327,3 +327,48 @@ body.night .atlas-mode-tab:hover,body.night .classic-timeline.compact .cl-item:h
 @media(max-width:600px){.hero:has(#cosmosControls){min-height:710px}.hero #cosmosControls{left:16px;right:16px;bottom:18px;width:auto}.hero:has(#cosmosControls) .hero-overlay{padding-bottom:220px}.insight-chart-panel{padding:15px}.insight-chart-panel #formulaCooccurrenceChart{height:465px}.insight-chart-panel #formulaDoseChart{min-height:310px}.insight-chart-panel h2{font-size:23px}.evidence-links a{min-height:44px}.chart-evidence{max-height:320px}.chart-access select{font-size:14px}.dose-records>div{gap:6px}.source-links a{min-height:36px;display:inline-flex;align-items:center}.composition-row{grid-template-columns:40px 1fr auto}.herb-provenance{padding-top:18px}.cosmos-search input{font-size:16px}}
 .filter-bar .filter-control{margin-left:0}.filter-bar .filter-control select{appearance:auto}.filter-bar .filter-summary{flex:1 1 190px;text-align:right}
 @media(max-width:640px){.filter-bar{align-items:stretch;gap:8px}.filter-bar .filter-control{flex:1 1 calc(50% - 8px);display:grid;gap:4px}.filter-bar .filter-control select{width:100%;min-width:0}.filter-bar #resetFilters{flex:1 1 100%}.filter-bar .filter-summary{flex-basis:100%;text-align:left;max-width:none;white-space:normal}.analysis-dashboard{grid-template-columns:1fr}.analysis-primary,.analysis-wide{grid-column:1;grid-row:auto}.analysis-dashboard .wide-chart{height:360px;min-height:360px}}
+
+/* ===== 星图面板收起 + hero 下滑引导 ===== */
+.hero #cosmosControls{transition:opacity .25s ease}
+.cosmos-collapse{position:absolute;right:8px;top:8px;width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(204,224,212,.32);background:#19372B;color:#CFDED4;border-radius:6px;font-size:13px;cursor:pointer;line-height:1}
+.cosmos-collapse:hover{border-color:#D0A24C;color:#F2D38D}
+.hero #cosmosControls[data-collapsed="true"]>*:not(.cosmos-collapse){display:none}
+.hero #cosmosControls[data-collapsed="true"]{width:auto;min-width:0;padding:8px 12px}
+.hero-scroll{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(243,237,223,.4);background:rgba(10,45,37,.65);color:#F3EDDF;border-radius:999px;padding:10px 20px;font-size:13px;letter-spacing:2px;cursor:pointer;transition:.2s;backdrop-filter:blur(2px)}
+.hero-scroll:hover{background:rgba(208,162,76,.32);border-color:var(--jin)}
+.hero-scroll i{font-style:normal;display:inline-block;animation:heroScrollNudge 2.2s ease-in-out infinite}
+@keyframes heroScrollNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@media (prefers-reduced-motion: reduce){.hero-scroll i{animation:none}}
+@media (max-width:600px){.hero:has(#cosmosControls){min-height:640px}.hero-scroll{bottom:14px;padding:8px 14px;font-size:12px}}
+
+/* ===== 收藏爱心 + 学习舱模式 + 对比明细表 ===== */
+.saved-drawer-toggle .heart-icon,.fav-btn .heart-icon{width:16px;height:16px;display:block}
+.saved-drawer-toggle .heart-icon{width:18px;height:18px}
+.saved-drawer-toggle{display:inline-flex;align-items:center;gap:6px}
+.fav-btn{display:inline-flex;align-items:center;gap:6px}
+.fav-btn.on .heart-icon path,.saved-drawer-toggle .heart-icon path{fill:#F6EFE3}
+.fav-btn:not(.on) .heart-icon path{fill:none;stroke:var(--ink-2);stroke-width:1.8}
+.fav-btn.on{background:var(--cinnabar);border-color:var(--cinnabar);color:#F6EFE3}
+.learn-mode-row{display:flex;gap:2px;margin:0 0 -1px;border-bottom:1px solid var(--line)}
+.learn-mode-tab{border:0;border-bottom:2px solid transparent;background:transparent;color:var(--ink-2);padding:11px 16px;font-size:13.5px;cursor:pointer;transition:.2s}
+.learn-mode-tab:hover{color:var(--qing);background:var(--paper-2)}
+.learn-mode-tab.on{color:var(--qing);border-bottom-color:var(--cinnabar);font-weight:700}
+.learn-main{min-width:0}
+.picture-quiz-figure{max-width:420px;margin:0 auto;border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;background:var(--paper-2)}
+.picture-quiz-figure img,.picture-quiz-figure .herb-image-empty{width:100%;height:100%;object-fit:cover;display:block}
+.learning-link{display:block;border-left:3px solid var(--celadon)}
+.learning-link:hover{background:var(--paper-2)}
+.compare-table-wrap{overflow-x:auto;margin-top:22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--card)}
+.compare-table{min-width:560px;width:100%;border-collapse:collapse;font-size:13px}
+.compare-table th,.compare-table td{border-top:1px solid var(--line);padding:10px 14px;text-align:left;vertical-align:top}
+.compare-table thead th{border-top:0;background:var(--paper-2);color:var(--qing);font-family:var(--serif)}
+.compare-table td:first-child{color:var(--ink-2);white-space:nowrap}
+body.night .compare-table thead th{background:var(--paper-2);color:var(--ink)}
+
+/* ===== 详情来源折叠 ===== */
+details.herb-provenance{border-top:1px solid var(--line);margin-top:22px;padding:14px 4px 6px}
+details.herb-provenance summary{cursor:pointer;font:600 15px var(--serif);color:var(--qing);list-style:none;display:flex;align-items:center;gap:8px}
+details.herb-provenance summary::-webkit-details-marker{display:none}
+details.herb-provenance summary::before{content:'＋';color:var(--cha);font-family:var(--sans)}
+details.herb-provenance[open] summary::before{content:'－'}
+details.herb-provenance[open]{padding-bottom:14px}

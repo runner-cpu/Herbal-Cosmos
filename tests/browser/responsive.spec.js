@@ -8,17 +8,13 @@ test('mobile atlas keeps touch canvas and context controls reachable', async ({ 
   await expect(page.locator('#globalSearch')).toBeVisible();
 });
 
-test('theme control names the next theme in the three-theme cycle', async ({ page }) => {
+test('theme control toggles between day and night', async ({ page }) => {
   await page.goto('/#/home');
   const button = page.locator('#themeToggle');
   await expect(button).toBeVisible();
   await expect(button.locator('[data-theme-label]')).toHaveText('夜读');
   await button.click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'night');
-  await expect(button.locator('[data-theme-label]')).toHaveText('古籍');
-  await expect(button).toHaveAttribute('aria-label', '切换到古籍主题');
-  await button.click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'classic');
   await expect(button.locator('[data-theme-label]')).toHaveText('日间');
   await expect(button).toHaveAttribute('aria-label', '切换到日间主题');
   await button.click();

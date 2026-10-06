@@ -15,10 +15,10 @@ test('primary navigation has four substantial entries', async ({ page }) => {
   await expect(page.locator('#navMore')).toHaveCount(0);
 });
 
-test('legacy learning and syndrome routes open their consolidated views', async ({ page }) => {
+test('learning lab is a standalone route and legacy syndrome routes stay consolidated', async ({ page }) => {
   await page.goto('/#/learn?step=2');
-  await expect(page.locator('[data-route="home"]')).toBeVisible();
-  await expect(page.locator('#home-learning')).toBeVisible();
+  await expect(page.locator('[data-route="learn"]')).toBeVisible();
+  await expect(page.locator('#quizCard .quiz-q')).toBeVisible();
   await page.goto('/#/zheng?z=feng-han&f=guizhitang');
   await expect(page.locator('[data-route="formula"]')).toBeVisible();
   await expect(page.locator('#formulaZhengView')).toBeVisible();

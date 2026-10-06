@@ -12,12 +12,12 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-test('theme state is limited to day, night and classic', () => {
-  assert.equal(normalizeTheme('classic'), 'classic');
+test('theme state is a two-mode day / night cycle with legacy migration', () => {
+  assert.equal(normalizeTheme('night'), 'night');
+  assert.equal(normalizeTheme('classic'), 'day', 'legacy values migrate to day');
   assert.equal(normalizeTheme('unknown'), 'day');
   assert.equal(nextTheme('day'), 'night');
-  assert.equal(nextTheme('night'), 'classic');
-  assert.equal(nextTheme('classic'), 'day');
+  assert.equal(nextTheme('night'), 'day');
 });
 
 test('context links expose four real navigation targets', () => {
@@ -54,12 +54,12 @@ test('shell exposes four substantial routes and keeps shallow content on the hom
   assert.equal(html.includes('<a href="#/saved" data-route-link="saved"'), false);
   assert.equal(html.includes('id="navMore"'), false);
   for (const route of ['home', 'herbs', 'qiwei', 'formula']) assert.match(html, new RegExp('href="#/'+route+'" data-route-link="'+route+'"'));
-  assert.equal(html.includes('data-route="learn"'), false);
+  assert.ok(html.includes('data-route="learn"'), 'learning lab is a standalone page');
   assert.equal(html.includes('data-route="zheng"'), false);
-  assert.match(html, /id="home-learning"/);
   assert.match(html, /id="formulaZhengView"/);
   assert.match(html, /href="#home-food"/);
-  assert.match(html, /href="#home-culture"/);
+  assert.ok(!html.includes('id="home-learning"'), 'home no longer hosts the learning workbench');
+  assert.ok(html.includes('href="#/learn"'), 'nav exposes the learning lab');
 });
 
 test('home food matrix aggregates flavor and use dimensions', () => {
