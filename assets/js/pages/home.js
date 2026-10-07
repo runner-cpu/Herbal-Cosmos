@@ -70,11 +70,9 @@ function updateFoodToggle() {
 
 const HOME_CHAPTERS = [
   { id: 'home-overview', label: '本草档案', target: 'home-overview' },
-  { id: 'home-learning', label: '学习路径', target: 'home-learning' },
   { id: 'home-featured', label: '精选本草', target: 'home-featured' },
   { id: 'home-food', label: '食养同源', target: 'homeFood' },
   { id: 'home-classics', label: '典籍时光', target: 'home-classics' },
-  { id: 'home-culture', label: '文化非遗', target: 'homeCulture' },
   { id: 'home-sources', label: '项目来源', target: 'home-sources' }
 ];
 
@@ -188,6 +186,7 @@ function showClassicDetail(item) {
   }
   dialog.innerHTML = '<button type="button" class="classic-detail-close" aria-label="关闭典籍详情">×</button><span>COLLECTION NOTE</span><h2>' + escapeHtml(classic.name) + '</h2><p class="classic-detail-era">' + escapeHtml(classic.era) + ' · ' + escapeHtml(classic.author) + '</p><div class="classic-detail-stats"><b>' + classic.num + '</b><span>收载数量</span></div><p>' + escapeHtml(classic.desc) + '</p>';
   dialog.showModal?.();
+  dialog.querySelector('.classic-detail-close')?.focus();
   dialog.querySelector('.classic-detail-close')?.addEventListener('click', () => dialog.close());
 }
 
@@ -208,6 +207,13 @@ function initHomeModules() {
   document.addEventListener('click', event => {
     const item = event.target.closest('.classic-timeline .cl-item');
     if (item) showClassicDetail(item);
+  });
+  document.addEventListener('keydown', event => {
+    if (!['Enter', ' '].includes(event.key)) return;
+    const item = event.target.closest('.classic-timeline .cl-item');
+    if (!item) return;
+    event.preventDefault();
+    showClassicDetail(item);
   });
   window.addEventListener('hashchange', () => {
     const route = location.hash.replace(/^#\/?/, '').split('?')[0] || 'home';

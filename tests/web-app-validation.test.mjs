@@ -13,6 +13,13 @@ test('production shell satisfies metadata, ordering, and budget gates', () => {
   assert.ok(result.summary.checkedFiles > 0);
 });
 
+test('production shell includes print and two-theme boundaries', () => {
+  const css = fs.readFileSync(new URL('../assets/css/components.css', import.meta.url), 'utf8');
+  assert.match(css, /@media\s+print/);
+  assert.match(css, /#heroCanvas/);
+  assert.equal(css.includes('html[data-theme="classic"]'), false);
+});
+
 test('validator rejects a direct or misordered ECharts reference', () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'herbal-app-'));
   try {

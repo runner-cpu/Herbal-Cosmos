@@ -44,6 +44,35 @@ test('favorite action keeps navigation badge and drawer in sync', async ({ page 
   await expect(page.locator('[data-saved-count]')).toHaveText('0');
 });
 
+test('320px shell and core routes stay within the viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  for (const route of ['home', 'herbs', 'qiwei', 'formula', 'learn']) {
+    await page.goto('/#/' + route);
+    await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth), route + ' overflow').toBeLessThanOrEqual(321);
+  }
+});
+
+test('herb context bar stays a horizontal rail on small screens', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/#/herb?id=gancao');
+  await expect(page.locator('#herbContext .context-links a')).toHaveCount(4);
+  await page.goto('/#/home');
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'home');
+  const layout = await page.evaluate(() => {
+    const links = document.querySelector('#herbContext .context-links');
+    const [a, b] = links.querySelectorAll('a');
+    return {
+      direction: getComputedStyle(links).flexDirection,
+      sameRow: Math.abs(a.getBoundingClientRect().top - b.getBoundingClientRect().top) < 2,
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth
+    };
+  });
+  expect(layout.direction).toBe('row');
+  expect(layout.sameRow).toBe(true);
+  expect(layout.overflow).toBeLessThanOrEqual(1);
+});
+
 test('375px routes do not create document or chart overflow', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   for (const route of ['home', 'herbs', 'qiwei', 'formula']) {

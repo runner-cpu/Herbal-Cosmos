@@ -14,6 +14,18 @@ const EFFECT_COLORS = {
   '止血药': '#D7A4A3'
 };
 
+const DEFAULT_COLOR_MODE = 'effect';
+
+function effectLegendMarkup() {
+  return Object.entries(EFFECT_COLORS)
+    .map(([name, color]) => '<span><i style="background:' + color + '"></i>' + name.replace(/药$/, '') + '</span>')
+    .join('') + '<span><i style="background:#D8C9A8"></i>其他／未录类别</span>';
+}
+
+function cosmosControlsMarkup() {
+  return '<button type="button" class="cosmos-collapse" data-cosmos-collapse aria-expanded="true" aria-label="收起星图控制面板">⌄</button><form class="cosmos-search"><label for="cosmosSearch">定位一味本草</label><div><input id="cosmosSearch" type="search" list="cosmosNames" placeholder="输入药名或拼音" autocomplete="off"><button type="submit">飞向本草</button></div><datalist id="cosmosNames"></datalist></form><div class="cosmos-actions"><button type="button" data-cosmos-color aria-pressed="false">统一色</button><button type="button" data-cosmos-motion aria-pressed="true">动效开</button><button type="button" data-cosmos-zoom="-.2" aria-label="缩小星图">−</button><button type="button" data-cosmos-zoom=".2" aria-label="放大星图">＋</button></div><p class="cosmos-legend" data-cosmos-legend>每一颗可选星辰对应一张本草知识卡。</p><div class="cosmos-selection" aria-live="polite"><span>点选星辰；双击聚焦。</span><a data-cosmos-detail hidden>打开知识卡 →</a></div>';
+}
+
 function colorForEffect(category = '') {
   return EFFECT_COLORS[category] || '#D8C9A8';
 }
@@ -82,8 +94,8 @@ function initCosmos() {
   let preference = true;
   try { preference = localStorage.getItem('herbal_motion') !== 'off'; } catch { /* optional */ }
   const animate = motionEnabled({ reducedMotion: reduced, preference });
-  let storedColor = 'effect';
-  try { storedColor = localStorage.getItem('herbal_cosmos_color') === 'uniform' ? 'uniform' : 'effect'; } catch { /* optional */ }
+  let storedColor = DEFAULT_COLOR_MODE;
+  try { storedColor = localStorage.getItem('herbal_cosmos_color') === 'uniform' ? 'uniform' : DEFAULT_COLOR_MODE; } catch { /* optional */ }
   document.documentElement.dataset.cosmosColor = storedColor;
   window.HerbalCosmos = { selectVisibleLabels, colorForEffect, motionEnabled, focusHerb, setCosmosColorMode, setMotionEnabled, animate };
   window.dispatchEvent(new CustomEvent('herbal:motion', { detail: { enabled: animate } }));
@@ -92,12 +104,12 @@ function initCosmos() {
     const controls = document.createElement('div');
     controls.id = 'cosmosControls';
     controls.className = 'cosmos-controls';
-    controls.innerHTML = '<button type="button" class="cosmos-collapse" data-cosmos-collapse aria-expanded="true" aria-label="收起星图控制面板">⌄</button><form class="cosmos-search"><label for="cosmosSearch">定位一味本草</label><div><input id="cosmosSearch" type="search" list="cosmosNames" placeholder="输入药名或拼音" autocomplete="off"><button type="submit">飞向本草</button></div><datalist id="cosmosNames"></datalist></form><div class="cosmos-actions"><button type="button" data-cosmos-color aria-pressed="false">统一色</button><button type="button" data-cosmos-motion aria-pressed="true">动效开</button><button type="button" data-cosmos-zoom="-.2" aria-label="缩小星图">−</button><button type="button" data-cosmos-zoom=".2" aria-label="放大星图">＋</button></div><p class="cosmos-legend" data-cosmos-legend>每一颗可选星辰对应一张本草知识卡。</p><div class="cosmos-selection" aria-live="polite"><span>点选星辰；双击聚焦。</span><a data-cosmos-detail hidden>打开知识卡 →</a></div>';
+    controls.innerHTML = cosmosControlsMarkup();
     hero.append(controls);
     const datalist=controls.querySelector('#cosmosNames');
     (window.HERBS||[]).forEach(herb=>{const option=document.createElement('option');option.value=herb.name;option.label=herb.pinyin||'';datalist.append(option);});
     const colorButton=controls.querySelector('[data-cosmos-color]'),motionButton=controls.querySelector('[data-cosmos-motion]'),legend=controls.querySelector('[data-cosmos-legend]');
-    const syncColor=()=>{const effect=document.documentElement.dataset.cosmosColor==='effect';colorButton.textContent=effect?'功效色':'统一色';colorButton.setAttribute('aria-pressed',String(effect));legend.innerHTML=effect?Object.entries(EFFECT_COLORS).map(([name,color])=>'<span><i style="background:'+color+'"></i>'+name.replace(/药$/,'')+'</span>').join('')+'<span><i style="background:#D8C9A8"></i>其他／未录类别</span>':'每一颗可选星辰对应一张本草知识卡。';};
+    const syncColor=()=>{const effect=document.documentElement.dataset.cosmosColor==='effect';colorButton.textContent=effect?'功效色':'统一色';colorButton.setAttribute('aria-pressed',String(effect));legend.innerHTML=effect?effectLegendMarkup():'每一颗可选星辰对应一张本草知识卡。';};
     const syncMotion=()=>{motionButton.textContent=window.HerbalCosmos.animate?'动效开':'动效关';motionButton.setAttribute('aria-pressed',String(window.HerbalCosmos.animate));};
     colorButton.addEventListener('click',()=>{setCosmosColorMode(document.documentElement.dataset.cosmosColor==='effect'?'uniform':'effect');syncColor();});
     motionButton.addEventListener('click',()=>{window.HerbalCosmos.animate=setMotionEnabled(!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches&&!window.HerbalCosmos.animate);syncMotion();});

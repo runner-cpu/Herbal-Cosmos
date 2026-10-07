@@ -1,0 +1,43 @@
+name: Pages smoke
+
+on:
+  push:
+    branches: [gh-pages]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  public-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Wait for the branch-based Pages deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          site='https://runner-cpu.github.io/Herbal-Cosmos/'
+          for attempt in $(seq 1 30); do
+            html=$(curl --fail --silent --show-error --location --max-time 20 "${site}?sha=${GITHUB_SHA}" || true)
+            runtime=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/core/runtime.js?sha=${GITHUB_SHA}" || true)
+            data=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/data/expanded.generated.js?sha=${GITHUB_SHA}" || true)
+            worker=$(curl --fail --silent --show-error --location --max-time 20 "${site}sw.js?sha=${GITHUB_SHA}" || true)
+            missing=$(curl --silent --show-error --location --max-time 20 --write-out '%{http_code}' --output /tmp/herbal-404.html "${site}definitely-not-a-page-${GITHUB_SHA}" || true)
+            if grep -q '本草宇宙' <<<"$html" \
+              && grep -q 'function render' <<<"$runtime" \
+              && grep -q 'HERBAL_DATA_VERSION' <<<"$data" \
+              && grep -q 'herbal-cosmos-v17-20261007-multi-angle-hardening' <<<"$worker" \
+              && grep -q '此页未入卷' /tmp/herbal-404.html \
+              && [[ "$missing" == '404' ]]; then
+              echo "Public Pages smoke passed on attempt ${attempt}."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo 'Public Pages did not converge to the expected version in time.' >&2
+          exit 1

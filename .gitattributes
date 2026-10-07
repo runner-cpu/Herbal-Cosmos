@@ -1,0 +1,2 @@
+# Generated browser runtime copies stay byte-stable across platforms.
+*.browser.js text eol=lf

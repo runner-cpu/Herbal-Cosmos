@@ -5,9 +5,17 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: catalog-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   catalog-quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,6 +25,9 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run build:data
       - run: git diff --exit-code -- data/ reports/ assets/js/data
+      - run: npm run build:browser
+      - run: git diff --exit-code -- assets/js/components/*.browser.js assets/js/pages/*.browser.js assets/js/core/catalog-loader.browser.js
+      - run: npm run check:browser-copies
       - run: npm run validate:data
       - run: npm run validate:app
       - run: node scripts/fetch-herb-images.mjs --verify
@@ -27,12 +38,17 @@ jobs:
         run: |
           test -s workers/catalog-search.js
           test -s assets/icons/favicon.svg
+          test -s assets/icons/apple-touch-icon-180.png
+          test -s assets/icons/app-icon-192.png
+          test -s assets/icons/app-icon-512.png
           test -s data/sources/herb-images.json
           test $(find images/herbs/open -type f | wc -l) -ge 400
-          find assets/js workers -type f -name '*.js' -print0 | xargs -0 -n1 node --check
-          find assets/js workers -type f -name '*.mjs' -print0 | xargs -0 -r -n1 node --check
+          find assets/js workers scripts -type f -name '*.js' -print0 | xargs -0 -n1 node --check
+          find assets/js workers scripts -type f -name '*.mjs' -print0 | xargs -0 -r -n1 node --check
+
   browser-quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,5 +56,6 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:browser:ci
+      - run: npm run test:browser:compat

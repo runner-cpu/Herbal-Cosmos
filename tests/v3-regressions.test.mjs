@@ -17,6 +17,7 @@ test('shell ships complete metadata without external font or partial EN toggle',
   assert.match(html, /<meta property="og:title"/);
   assert.match(html, /<meta property="og:image"/);
   assert.match(html, /<link rel="icon"[^>]+assets\/icons\/favicon\.svg/);
+  assert.match(html, /<link rel="apple-touch-icon"[^>]+assets\/icons\/apple-touch-icon-180\.png/);
   assert.equal(/miaoda\.feishu\.cn|fonts\.googleapis\.com/.test(html), false);
   assert.equal(html.includes('id="languageToggle"'), false);
   assert.match(html, /id="searchResults"[^>]+role="listbox"/);
@@ -41,6 +42,11 @@ test('manifest and branded 404 retain project-relative navigation', () => {
   assert.equal(manifest.start_url, './#/home');
   assert.equal(manifest.scope, './');
   assert.equal(manifest.display, 'standalone');
+  assert.ok(manifest.icons.some(icon => icon.src === 'assets/icons/app-icon-192.png' && icon.sizes === '192x192'));
+  assert.ok(manifest.icons.some(icon => icon.src === 'assets/icons/app-icon-512.png' && icon.sizes === '512x512'));
+  for (const file of ['apple-touch-icon-180.png', 'app-icon-192.png', 'app-icon-512.png']) {
+    assert.ok(fs.statSync(path.join(root, 'assets', 'icons', file)).size > 0, file + ' must exist');
+  }
   const notFound = fs.readFileSync(path.join(root, '404.html'), 'utf8');
   assert.match(notFound, /\.\/#\/home/);
   assert.match(notFound, /\.\/#\/herbs/);

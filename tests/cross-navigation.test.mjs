@@ -7,8 +7,8 @@ test('formula and pattern links preserve the navigation context', () => {
   assert.equal(zhengHref('feng-han', 'guizhitang'), '#/formula?view=zheng&z=feng-han&f=guizhitang');
 });
 
-test('legacy thin routes resolve into the consolidated home and formula views', () => {
-  assert.deepEqual(normalizeLegacyRoute('learn', { step: '3' }), { route: 'home', params: { step: '3', anchor: 'home-learning' } });
+test('learning stays independent while the legacy pattern route joins formula', () => {
+  assert.deepEqual(normalizeLegacyRoute('learn', { step: '3' }), { route: 'learn', params: { step: '3' } });
   assert.deepEqual(normalizeLegacyRoute('zheng', { z: 'feng-han', f: 'guizhitang' }), { route: 'formula', params: { z: 'feng-han', f: 'guizhitang', view: 'zheng' } });
   assert.deepEqual(normalizeLegacyRoute('herbs', { q: '甘草' }), { route: 'herbs', params: { q: '甘草' } });
 });

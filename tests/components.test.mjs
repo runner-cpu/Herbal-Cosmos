@@ -20,13 +20,13 @@ test('theme state is a two-mode day / night cycle with legacy migration', () => 
   assert.equal(nextTheme('night'), 'day');
 });
 
-test('context links expose four real navigation targets', () => {
+test('context links expose four distinct navigation targets', () => {
   const links = contextLinks({ id: 'gancao' });
-  assert.deepEqual(links.map(link => link.href), [
-    '#/home?focus=star&id=gancao',
-    '#/qiwei?herb=gancao',
-    '#/formula?herb=gancao',
-    '#/formula?herb=gancao'
+  assert.deepEqual(links, [
+    { href: '#/home?focus=star&id=gancao', label: '星图定位' },
+    { href: '#/qiwei?herb=gancao', label: '性味归经' },
+    { href: '#/formula?herb=gancao', label: '配伍网络' },
+    { href: '#/herb?id=gancao', label: '知识卡' }
   ]);
 });
 
@@ -81,8 +81,8 @@ test('food overview keeps unaudited properties out of the matrix and never borro
   ]), { name: '丁香', detail: '目录收载 · 属性未录入', href: null, image: null, herb: null });
 });
 
-test('home chapter state exposes a bounded reading path', () => {
-  assert.deepEqual(homeChapterState(0), { index: 0, label: '本草档案', progress: '1 / 7', ratio: 14.29 });
-  assert.deepEqual(homeChapterState(99), { index: 6, label: '项目来源', progress: '7 / 7', ratio: 100 });
-  assert.deepEqual(homeChapterState(-4), { index: 0, label: '本草档案', progress: '1 / 7', ratio: 14.29 });
+test('home chapter state exposes the five-section reading path', () => {
+  assert.deepEqual(homeChapterState(0), { index: 0, label: '本草档案', progress: '1 / 5', ratio: 20 });
+  assert.deepEqual(homeChapterState(99), { index: 4, label: '项目来源', progress: '5 / 5', ratio: 100 });
+  assert.deepEqual(homeChapterState(-4), { index: 0, label: '本草档案', progress: '1 / 5', ratio: 20 });
 });

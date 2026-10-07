@@ -4,13 +4,12 @@ function viewedIds(previous = [], id) {
 
 function contextLinks({ id }) {
   const value = encodeURIComponent(id || '');
-  const result = [
+  return [
     { href: '#/home?focus=star&id=' + value, label: '星图定位' },
     { href: '#/qiwei?herb=' + value, label: '性味归经' },
     { href: '#/formula?herb=' + value, label: '配伍网络' },
-    { href: '#/herb?id=' + value, label: '相关方剂' }
+    { href: '#/herb?id=' + value, label: '知识卡' }
   ];
-  return result.map(link => link.href.startsWith('#/herb?id=') ? { ...link, href: '#/formula?herb=' + value } : link);
 }
 
 let memoryViewedIds = [];

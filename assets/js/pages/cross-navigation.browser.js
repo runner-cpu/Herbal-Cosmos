@@ -12,7 +12,6 @@ function zhengHref(zhengId, formulaId = '') {
 }
 
 function normalizeLegacyRoute(route, params = {}) {
-  if (route === 'learn') return { route: 'home', params: { ...params, anchor: 'home-learning' } };
   if (route === 'zheng') return { route: 'formula', params: { ...params, view: 'zheng' } };
   return { route, params: { ...params } };
 }

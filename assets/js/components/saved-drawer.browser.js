@@ -35,7 +35,13 @@ function escapeHtml(value) {
 }
 
 let drawer;
+let backdrop;
 let lastTrigger = null;
+
+function focusableElements() {
+  return [...(drawer?.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])') || [])]
+    .filter(element => !element.hidden && element.getClientRects().length);
+}
 
 function setDrawerStatus(message = '') {
   const status = drawer?.querySelector('[data-saved-status]');
@@ -68,15 +74,19 @@ function openSavedDrawer() {
   if (!drawer) return;
   if (!lastTrigger && document.activeElement?.matches?.('[data-saved-open]')) lastTrigger = document.activeElement;
   drawer.hidden = false;
+  backdrop.hidden = false;
   drawer.classList.add('is-open');
+  document.body.classList.add('saved-drawer-open');
   syncDrawerA11y(true);
-  drawer.querySelector('[data-saved-close]')?.focus();
   renderDrawer();
+  drawer.querySelector('[data-saved-close]')?.focus();
 }
 function closeSavedDrawer() {
   if (!drawer) return;
   drawer.classList.remove('is-open');
   drawer.hidden = true;
+  backdrop.hidden = true;
+  document.body.classList.remove('saved-drawer-open');
   syncDrawerA11y(false);
   const trigger = lastTrigger;
   lastTrigger = null;
@@ -105,13 +115,26 @@ function initDrawer() {
     drawer.id = 'savedDrawer';
     drawer.className = 'saved-drawer';
     drawer.hidden = true;
-    drawer.setAttribute('role', 'complementary');
-    drawer.setAttribute('aria-label', '本机收藏');
+    drawer.setAttribute('role', 'dialog');
+    drawer.setAttribute('aria-modal', 'true');
     drawer.setAttribute('aria-hidden', 'true');
     drawer.setAttribute('aria-labelledby', 'savedDrawerTitle');
     drawer.innerHTML = '<div class="saved-drawer-head"><div><span>LOCAL HERBARIUM</span><h2 id="savedDrawerTitle">本机收藏</h2></div><button type="button" data-saved-close aria-label="关闭收藏">×</button></div><div class="saved-drawer-actions"><button type="button" data-saved-export>导出 JSON</button><span>仅保存在本机</span></div><p class="saved-drawer-status" data-saved-status role="status" aria-live="polite"></p><div data-saved-list></div>';
     document.body.append(drawer);
   }
+  backdrop = document.getElementById('savedDrawerBackdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('button');
+    backdrop.id = 'savedDrawerBackdrop';
+    backdrop.className = 'saved-drawer-backdrop';
+    backdrop.type = 'button';
+    backdrop.hidden = true;
+    backdrop.tabIndex = -1;
+    backdrop.setAttribute('aria-label', '关闭本机收藏');
+    document.body.insertBefore(backdrop, drawer);
+  }
+  drawer.setAttribute('role', 'dialog');
+  drawer.setAttribute('aria-modal', 'true');
   document.addEventListener('click', event => {
     const trigger = event.target.closest('[data-saved-open]');
     if (!trigger) return;
@@ -119,6 +142,7 @@ function initDrawer() {
     lastTrigger = trigger;
     openSavedDrawer();
   });
+  backdrop.addEventListener('click', closeSavedDrawer);
   drawer.addEventListener('click', event => {
     if (event.target.matches('[data-saved-close]')) closeSavedDrawer();
     if (event.target.matches('[data-saved-export]')) exportSavedJson();
@@ -133,9 +157,23 @@ function initDrawer() {
     }
   });
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && drawer.classList.contains('is-open')) {
+    if (!drawer.classList.contains('is-open')) return;
+    if (event.key === 'Escape') {
       event.preventDefault();
       closeSavedDrawer();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = focusableElements();
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
     }
   });
   window.openSavedDrawer = openSavedDrawer; window.closeSavedDrawer = closeSavedDrawer; window.exportSavedJson = exportSavedJson;

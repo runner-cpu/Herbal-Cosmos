@@ -51,7 +51,7 @@
 
 本轮设计审计与取舍记录见 [`DESIGN_AUDIT.md`](DESIGN_AUDIT.md)。审计重点是降低同质卡片密度、建立首页学习路径、让图表点击可以回到证据条目，并补齐移动端和键盘路径。
 
-本次发布前的最新多维验收记录见 [`reports/2026-10-02-multi-angle-audit.md`](reports/2026-10-02-multi-angle-audit.md)，其中列出真实覆盖数字、图片缺口、交互风险和后续路线；[`reports/2026-09-29-multi-angle-audit.md`](reports/2026-09-29-multi-angle-audit.md) 与更早报告作为历史快照保留。
+本次发布前的最新多维验收记录见 [`reports/2026-10-07-multi-angle-hardening.md`](reports/2026-10-07-multi-angle-hardening.md)，其中列出真实覆盖数字、运行时/测试一致性、无障碍、PWA 与发布闭环；[`reports/2026-10-02-multi-angle-audit.md`](reports/2026-10-02-multi-angle-audit.md) 与更早报告作为历史快照保留。
 
 首页定位是项目导览：首屏星云之后依次是馆藏规模带、资料覆盖进度、功效分类速览、精选本草、食养同源横览、典籍时光与项目来源，通过页内“本草档案”章节导航条（档案 / 精选 / 食养 / 典籍 / 来源）连续阅读，并提供“向下探索”引导按钮；星图控制面板可一键收起；学习与文化的完整内容收敛到独立的学习舱页面。顶栏为首页、探索本草、性味归经、配伍网络四个主入口；“更多”下拉收录学习舱与病证药链。
 
@@ -63,7 +63,7 @@
 ### 2. 页面与首页内嵌模块
 | 模块 | 内容 | 可视化形态 |
 |---|---|---|
-| 首页 | 全宽星云 + 数据证据栏 + 五步学习路径 + 精选本草 | 3D 星云粒子引擎 |
+| 首页 | 全宽星云 + 数据证据栏 + 五段章节导航 + 精选本草 | 3D 星云粒子引擎 |
 | 药材星图 | 精品知识卡与全量本草名称索引双层切换；精品层支持筛选、多选对比，索引层支持来源筛选、搜索和分页 | 筛选芯片 + 桌面表格 / 移动卡片 + 索引表 |
 | 药材详情 | 知识卡属性（四气/五味/归经/功效）、归经画像、性味定位、相关方剂 | 环形图 + 坐标散点 + 卡片 |
 | 性味归经 | 四气×五味热力矩阵 + 十二经归经分布，点击可反查药材 | ECharts 热力图 + 柱状图 + 反查检查器 |
@@ -103,15 +103,15 @@
 
 ```
 ┌────────────────────────────────────────────────────┐
-│ 五主入口：首页/探索本草/性味归经/配伍网络/学习舱             │
-│ “更多”：病证药链（食养/文化/来源并入首页）；收藏为全局抽屉    │
+│ 四主入口：首页 / 探索本草 / 性味归经 / 配伍网络              │
+│ “更多”：学习舱 / 病证药链；收藏为全局抽屉                   │
 ├────────────────────────────────────────────────────┤
 │  #/home      3D 星云 + 五统计卡 + 三叙事 + 精选本草 │
 │  #/herbs     精品知识卡 / 全量名称索引 + 筛选分页     │
 │  #/herb?id=x 药材详情（归经环形图 + 性味定位 + 方剂）│
 │  #/qiwei     四气×五味热力矩阵 + 归经柱状图         │
 │  #/formula   方剂—药材二部图 + 100 方剂卡片与配伍洞察 │
-│  #/zheng     证→方→药桑基图 + 30 证候卡片           │
+│  #/zheng     兼容迁移至配伍页的证→方→药视图（58 证候） │
 │  #home-food  首页食养同源展开区                     │
 │  #home-culture 首页文化非遗展开区                   │
 │  #/learn     学习舱（问答 + 看图识药 + 文化阅读）  │
@@ -152,10 +152,9 @@
 ## 数据层设计
 
 ### 数据结构
-- **HERBS（药材）**：902 张精品知识卡（运行时数组另含 17 条 `directory-only` 官方目录待补记录与 43 条 `formula-material` 原方 关系物料），字段含 `id / name / pinyin / qi（四气）/ wei（五味）/ meridian（归经）/ eff（功效）/ cat（分类）/ source（来源）/ food（药食同源）/ origin（资料记录地区）`。
-- **FORMULAS（方剂）**：50 首公开文献索引方，字段含 `id / name / source（出处）/ eff / note / monarch-minister（君臣佐使）/ herbs（组成）/ zheng（主治证型）`；古方剂量保留原始单位，不擅自换算为克。
-- **FORMULAS（方剂）**：100 首代表方，分三层——基础精选 21 首、V4 数字化来源 29 首（`formulas-expanded.json`，行级来源链接）、V5 经典原文整理 50 首（`formulas-v5.json`，按典籍通行本原文整理并注明整理方式，不引用第三方数字化行号）；字段含 `id / name / from（出处）/ eff / sourceNote / herbs（组成）/ zheng（主治证型）`；古方剂量保留原始单位，未载剂量明确标注，不擅自换算为克。芍药、栝楼实等古名与灶心黄土等原方物料按“原方物料”层保留，不推断为现代药材。
-- **ZHENGS（证候）**：30 个中医证候索引，映射“证 → 方 → 药”链路。
+- **HERBS（药材）**：902 张精品知识卡（运行时数组另含 17 条 `directory-only` 官方目录待补记录与 42 条 `formula-material` 原方关系物料，共 961 条运行时记录），字段含 `id / name / pinyin / qi（四气）/ wei（五味）/ meridian（归经）/ eff（资料摘要）/ cat（分类）/ source（来源）/ food（药食同源）/ origin（资料记录地区）`。
+- **FORMULAS（方剂）**：100 首代表方，分三层——基础精选 21 首、V4 数字化来源 29 首（`formulas-expanded.json`，行级来源链接）、V5 经典原文整理 50 首（`formulas-v5.json`，按典籍通行本原文整理并注明整理方式，不引用第三方数字化行号）；字段含 `id / name / from（出处）/ eff / sourceNote / herbs（组成）/ zheng（主治证型）`。古方剂量保留原始单位，未载剂量明确标注，不擅自换算为克；芍药、栝楼实、灶心黄土等按“原方物料”层保留，不推断为现代药材。
+- **ZHENGS（证候）**：58 个中医证候索引，映射“证 → 方 → 药”链路；只有存在对应方剂关系的证候进入交互视图。
 - **CLASSICS（典籍）**：从《神农本草经》到《中国药典》的历代典籍规模数据。
 - **HERB_CATALOG（名称索引）**：由 `scripts/build-herb-catalog.mjs` 从受版本控制的公开名称表与历史候选确定性生成；只有带公开行级来源且通过噪声规则的 `approved` 条目进入默认检索，`review` 隐藏且不参与性味归经统计。`approved` 不等于药典核验。
 - **FOODS（食药物质）**：国家卫生健康部门 2002—2024 公告中的 106 个唯一目录项；未独立补录的属性保持“未录入”。
@@ -233,6 +232,8 @@ npm ci --ignore-scripts
 
 # 确定性重建与基础质检
 npm run build:data
+npm run build:browser
+npm run check:browser-copies
 npm run validate:data
 npm run validate:app
 npm test
@@ -248,7 +249,9 @@ npm run test:browser:ci
 ```powershell
 npm ci --ignore-scripts
 npm run build:data
-git diff --exit-code -- data reports assets/js/data/food-medicine.generated.js assets/js/data/expanded.generated.js
+npm run build:browser
+git diff --exit-code -- data reports assets/js/data assets/js/components/*.browser.js assets/js/pages/*.browser.js assets/js/core/catalog-loader.browser.js
+npm run check:browser-copies
 npm run validate:data
 npm run validate:app
 node scripts/fetch-herb-images.mjs --verify

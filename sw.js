@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v16-20261003-home-learn-restructure';
+const CACHE_VERSION = 'herbal-cosmos-v17-20261007-multi-angle-hardening';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -11,6 +11,9 @@ const PRECACHE_URLS = Object.freeze([
   './404.html',
   './manifest.webmanifest',
   './assets/icons/favicon.svg',
+  './assets/icons/apple-touch-icon-180.png',
+  './assets/icons/app-icon-192.png',
+  './assets/icons/app-icon-512.png',
   './assets/css/site.css',
   './assets/css/components.css',
   './assets/css/home.css',

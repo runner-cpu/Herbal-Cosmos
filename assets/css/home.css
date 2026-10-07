@@ -1,4 +1,4 @@
-/* A continuous paper surface; colors follow day, night and classic tokens. */
+/* A continuous paper surface; colors follow day and night tokens. */
 .page[data-route="home"]{--section-space:clamp(42px,6vw,80px);background:var(--paper)}
 .page[data-route="home"] .hero::after{inset:auto 0 0;height:150px;background:linear-gradient(180deg,transparent,var(--paper));z-index:2}
 .page[data-route="home"] .hero{height:min(78vh,760px);min-height:610px}

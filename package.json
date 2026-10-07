@@ -7,6 +7,8 @@
     "build:food": "node scripts/build-food-medicine.mjs",
     "build:expanded": "node scripts/build-expanded-data.mjs",
     "build:data": "npm run build:catalog && npm run build:food && npm run build:expanded",
+    "build:browser": "node scripts/build-browser-copies.mjs",
+    "check:browser-copies": "node scripts/build-browser-copies.mjs --check",
     "restore:catalog-candidates": "node scripts/restore-legacy-candidates.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:unit": "node --test tests/*.test.mjs",
@@ -16,9 +18,10 @@
     "validate:app": "node scripts/validate-web-app.mjs",
     "check:inline": "node scripts/check-inline-runtime.mjs",
     "test:browser": "playwright test",
-    "test:browser:ci": "playwright test --project=chromium --project=mobile"
+    "test:browser:ci": "playwright test --project=chromium --project=mobile",
+    "test:browser:compat": "playwright test tests/browser/navigation.spec.js tests/browser/progressive-rendering.spec.js --project=firefox --project=webkit"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0"
+    "@playwright/test": "1.63.0"
   }
 }

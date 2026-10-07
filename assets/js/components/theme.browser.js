@@ -1,9 +1,7 @@
 const THEMES = ['day', 'night'];
 
 function normalizeTheme(value) {
-  if (THEMES.includes(value)) return value;
-  // Legacy stored values (e.g. the removed 'classic') fall back to day.
-  return 'day';
+  return THEMES.includes(value) ? value : 'day';
 }
 
 function nextTheme(value) {

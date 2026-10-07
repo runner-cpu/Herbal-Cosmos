@@ -37,6 +37,23 @@ test('formula views preserve syndrome and formula context in both directions', a
   await expect(page).toHaveURL(/f=guizhitang/);
 });
 
+test('route titles describe the active Chinese view', async ({ page }) => {
+  const cases = [
+    ['home', '本草宇宙 · HERBAL COSMOS'],
+    ['herbs', '探索本草 · 本草宇宙'],
+    ['herb?id=gancao', '甘草 · 本草宇宙'],
+    ['qiwei', '性味归经 · 本草宇宙'],
+    ['formula', '配伍网络 · 本草宇宙'],
+    ['formula?view=zheng', '病证药链 · 本草宇宙'],
+    ['learn', '学习舱 · 本草宇宙'],
+    ['route-that-does-not-exist', '路径未收录 · 本草宇宙']
+  ];
+  for (const [hash, title] of cases) {
+    await page.goto('/#/' + hash);
+    await expect(page).toHaveTitle(title);
+  }
+});
+
 test('unknown hash renders a safe recoverable in-app 404', async ({ page }) => {
   await page.goto('/#/route-that-does-not-exist?x=%3Cscript%3E');
   await expect(page.locator('[data-route="not-found"]')).toBeVisible();
@@ -59,6 +76,35 @@ test('malformed query encoding cannot stop route rendering', async ({ page }) =>
   await page.goto('/#/home?focus=%E0%A4%A');
   await expect(page.locator('[data-route="home"]')).toBeVisible();
   expect(pageErrors).toEqual([]);
+});
+
+test('more menu closes accessibly and reflects its child route', async ({ page }) => {
+  await page.goto('/#/home');
+  const hamburger = page.locator('#hamburger');
+  if (await hamburger.isVisible()) {
+    await hamburger.click();
+    await expect(page.locator('#mainNav')).toHaveClass(/open/);
+  }
+  const menu = page.locator('.nav-more');
+  const summary = menu.locator('summary');
+
+  await summary.click();
+  await expect(menu).toHaveAttribute('open', '');
+  await page.keyboard.press('Escape');
+  await expect(menu).not.toHaveAttribute('open', '');
+  await expect(summary).toBeFocused();
+
+  await summary.click();
+  await page.locator('.brand').click();
+  await expect(menu).not.toHaveAttribute('open', '');
+
+  await page.goto('/#/learn');
+  await expect(menu).toHaveClass(/active/);
+  await expect(summary).toHaveAttribute('aria-current', 'page');
+
+  await page.goto('/#/formula?view=zheng');
+  await expect(menu).toHaveClass(/active/);
+  await expect(summary).toHaveAttribute('aria-current', 'page');
 });
 
 test('mobile menu exposes its state and Escape returns focus to the trigger', async ({ page }, testInfo) => {

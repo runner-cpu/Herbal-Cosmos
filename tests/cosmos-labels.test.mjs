@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { selectVisibleLabels, colorForEffect, motionEnabled } from '../assets/js/pages/cosmos.js';
+import * as cosmos from '../assets/js/pages/cosmos.js';
+
+const { selectVisibleLabels, colorForEffect, motionEnabled } = cosmos;
 
 function stars() {
   return Array.from({ length: 40 }, (_, index) => ({
@@ -28,4 +30,11 @@ test('effect colors are deterministic and motion preference is explicit', () => 
   assert.notEqual(colorForEffect('清热药'), colorForEffect('补虚药'));
   assert.equal(motionEnabled({ reducedMotion: true, preference: true }), false);
   assert.equal(motionEnabled({ reducedMotion: false, preference: false }), false);
+});
+
+test('cosmos defaults and controls keep the live effect-color experience', () => {
+  assert.equal(cosmos.DEFAULT_COLOR_MODE, 'effect');
+  assert.match(cosmos.cosmosControlsMarkup(), /data-cosmos-collapse/);
+  assert.match(cosmos.effectLegendMarkup(), /background:#D0A24C/);
+  assert.match(cosmos.effectLegendMarkup(), /其他／未录类别/);
 });

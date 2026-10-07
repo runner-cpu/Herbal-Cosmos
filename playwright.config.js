@@ -12,7 +12,9 @@ export default defineConfig({
   use: { baseURL: origin, trace: 'retain-on-failure', serviceWorkers: 'allow' },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'mobile', use: { ...devices['Pixel 5'], viewport: { width: 375, height: 812 } } }
+    { name: 'mobile', use: { ...devices['Pixel 5'], viewport: { width: 375, height: 812 } } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] } }
   ],
   webServer: { command: `node scripts/serve-local.mjs ${port}`, url: origin, reuseExistingServer: false, timeout: 15_000 }
 });

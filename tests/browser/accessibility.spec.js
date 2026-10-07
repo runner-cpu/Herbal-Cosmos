@@ -84,6 +84,35 @@ test('home chapter rail follows the consolidated reading path', async ({ page })
   await expect(page.locator('[data-home-chapter="home-food"]')).toHaveAttribute('aria-current', 'location');
 });
 
+test('favorites drawer is modal and traps focus', async ({ page }, testInfo) => {
+  await page.goto('/#/home');
+  const trigger = page.locator('#savedDrawerToggle');
+  await trigger.click();
+  const drawer = page.locator('#savedDrawer');
+  await expect(drawer).toHaveAttribute('role', 'dialog');
+  await expect(drawer).toHaveAttribute('aria-modal', 'true');
+  await expect(page.locator('#savedDrawerBackdrop')).toBeVisible();
+  await expect(page.locator('body')).toHaveClass(/saved-drawer-open/);
+
+  const focusable = drawer.locator('a[href],button:not([disabled])');
+  await page.keyboard.press('Shift+Tab');
+  await expect(focusable.last()).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(focusable.first()).toBeFocused();
+
+  if (testInfo.project.name !== 'mobile') {
+    // 移动端抽屉全宽铺开，背景层不可指针到达；Escape 路径已单独覆盖。
+    await page.locator('#savedDrawerBackdrop').click({ position: { x: 4, y: 4 } });
+    await expect(drawer).toHaveAttribute('aria-hidden', 'true');
+    await expect(page.locator('#savedDrawerBackdrop')).toBeHidden();
+    await expect(trigger).toBeFocused();
+  }
+  await page.keyboard.press('Escape');
+  await expect(drawer).toHaveAttribute('aria-hidden', 'true');
+  await expect(page.locator('body')).not.toHaveClass(/saved-drawer-open/);
+  if (testInfo.project.name !== 'mobile') await expect(trigger).toBeFocused();
+});
+
 test('favorites drawer closes with Escape and returns focus', async ({ page }) => {
   await page.goto('/#/home');
   const trigger = page.locator('#savedDrawerToggle');
@@ -92,6 +121,20 @@ test('favorites drawer closes with Escape and returns focus', async ({ page }) =
   await page.keyboard.press('Escape');
   await expect(page.locator('#savedDrawer')).toHaveAttribute('aria-hidden', 'true');
   await expect(trigger).toBeFocused();
+});
+
+test('classic timeline entries open their native dialog from the keyboard', async ({ page }) => {
+  await page.goto('/#/home');
+  const entry = page.locator('#homeClassicTimeline .cl-item').first();
+  await expect(entry).toHaveAttribute('tabindex', '0');
+  await entry.focus();
+  await page.keyboard.press('Enter');
+  const dialog = page.locator('#classicDetail');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('.classic-detail-close')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(entry).toBeFocused();
 });
 
 test('related formulas expose a native keyboard link to the network view', async ({ page }) => {

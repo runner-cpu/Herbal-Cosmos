@@ -16,7 +16,10 @@ test('refactored page references external CSS and runtime modules in order', () 
   assert.ok(html.indexOf('assets/js/lib/echarts-loader.js') > html.indexOf('</main>'));
   assert.ok(html.indexOf('assets/js/lib/echarts-loader.js') < html.indexOf('assets/js/core/runtime.js'));
   assert.equal(html.includes('assets/vendor/echarts.min.js'), false, 'ECharts bundle must be loaded on demand, not via a script tag');
-  assert.ok(result.references.indexOf('assets/js/core/catalog-loader.js') < result.references.indexOf('assets/js/core/app-shell.js'));
+  assert.ok(result.references.indexOf('assets/js/core/catalog-loader.browser.js') < result.references.indexOf('assets/js/core/app-shell.js'));
+  for (const reference of result.references.filter(asset => /^assets\/js\/(?:components|pages|core\/catalog-loader)/.test(asset))) {
+    assert.match(reference, /\.browser\.js$/, reference + ' must be a browser runtime copy');
+  }
 });
 
 test('checker rejects a large inline runtime block', () => {
@@ -42,7 +45,34 @@ test('extracted CSS keeps root-relative image references reachable', () => {
 test('full catalog is not a first-paint script dependency', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.equal(html.includes('data/herb-catalog.js'), false);
-  assert.ok(html.includes('assets/js/core/catalog-loader.js'));
+  assert.ok(html.includes('assets/js/core/catalog-loader.browser.js'));
+});
+
+test('runtime discovery ignores source-module paths mentioned outside script tags', () => {
+  const html = '<link rel="stylesheet" href="assets/css/site.css">' +
+    '<link rel="stylesheet" href="assets/css/components.css">' +
+    '<!-- assets/js/components/theme.js -->' +
+    '<script src="assets/js/components/theme.browser.js"></script>';
+  const result = checkInlineRuntime({ baseDir: root, html });
+  assert.ok(result.references.includes('assets/js/components/theme.browser.js'));
+  assert.equal(result.references.includes('assets/js/components/theme.js'), false);
+});
+
+test('runtime discovery ignores commented tags, data-src, and non-stylesheet links', () => {
+  const html = '<!-- <script src="package.json"></script> -->' +
+    '<script data-src="package.json"></script>' +
+    '<link rel="preload" href="package.json">' +
+    '<script src = "assets/js/components/theme.browser.js" ></script>';
+  const result = checkInlineRuntime({ baseDir: root, html });
+  assert.deepEqual(result.references, ['assets/js/components/theme.browser.js']);
+  assert.equal(result.ok, false, 'fixture omits the other required assets on purpose');
+});
+
+test('runtime discovery reports reversed document order', () => {
+  const html = '<script defer src="assets/js/core/app-shell.js"></script>' +
+    '<script defer src="assets/js/core/runtime.js"></script>';
+  const result = checkInlineRuntime({ baseDir: root, html });
+  assert.ok(result.issues.some(issue => issue.startsWith('external asset order must be')));
 });
 
 test('expanded evidence is published as bounded ordered chunks', () => {
