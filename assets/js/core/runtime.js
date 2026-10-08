@@ -265,14 +265,7 @@ function render(options={}){
     if(active) a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
-  const more=document.querySelector('.nav-more');
-  const moreSummary=more?.querySelector('summary');
-  const moreActive=route==='learn';
-  more?.classList.toggle('active',moreActive);
-  if(moreActive) moreSummary?.setAttribute('aria-current','page');
-  else moreSummary?.removeAttribute('aria-current');
-  if(more) more.open=false;
-  if(typeof closeSearch==='function') closeSearch();
+  if(!options.preserveSearch&&typeof closeSearch==='function') closeSearch();
   if(savedScroll===null) window.scrollTo(0,0);
   if(route==='herbs'){
     if(params.mode==='catalog') store._atlasMode='catalog';
@@ -308,7 +301,7 @@ function render(options={}){
     syncDatasetCounts();
     const visible=document.getElementById('catalogVisibleCount');
     if(visible && (store._catalogKw||store._catalogSource)) visible.textContent=displayCount(HERB_CATALOG.length);
-    if(parseHash().route==='home' || parseHash().route==='herbs') render();
+    if(parseHash().route==='home' || parseHash().route==='herbs') render({preserveScroll:true,preserveSearch:true});
   });
   window.addEventListener('hashchange',()=>{
     setNavigationOpen(false);
@@ -485,7 +478,7 @@ function renderHomeMuseum(){
   const palette=['#D0A24C','#8FC1A8','#B84B3E','#7C9DB3','#C48B62','#9D86AF','#6B9E8A','#D49A5B'];
   const categories=countBy('cat').slice(0,8);
   const catEl=$('#homeCategories');
-  if(catEl) catEl.innerHTML=categories.map(([name,count],i)=>`<button type="button" class="home-category" data-home-category="${esc(name)}" style="--cat-color:${palette[i%palette.length]}"><b>${esc(name.replace(/药$/,''))}</b><span>${count} 味精品卡 · 查看 →</span></button>`).join('');
+  if(catEl) catEl.innerHTML=categories.map(([name,count],i)=>`<button type="button" class="home-category" data-home-category="${esc(name)}" title="${count} / ${KNOWLEDGE_HERBS.length} 张知识卡；按资料分类计数" style="--cat-color:${palette[i%palette.length]}"><b>${esc(name.replace(/药$/,''))}</b><span>${count} 味知识卡 · 查看 →</span></button>`).join('');
   catEl?.querySelectorAll('[data-home-category]').forEach(btn=>btn.addEventListener('click',()=>{store.filters={qi:'',wei:'',cat:btn.dataset.homeCategory};store._kw='';location.hash='#/herbs';}));
   const directoryCount=window.HERBAL_DATA_COVERAGE?.directoryOnlyCount||0;
   const boundary=document.querySelector('[data-directory-only-note]');
@@ -1158,6 +1151,10 @@ function renderFavButtons(){
     b.title = on?'取消收藏':'收藏';
   });
 }
+window.addEventListener('herbal:favorites',event=>{
+  if(Array.isArray(event.detail?.ids)) storageWrite(favKey,JSON.stringify([...new Set(event.detail.ids.filter(id=>typeof id==='string'&&id.trim()))]));
+  renderFavButtons();
+});
 const searchInput = document.getElementById('globalSearch');
 const searchResults = document.getElementById('searchResults');
 const searchStatus = document.getElementById('searchStatus');
@@ -1184,7 +1181,7 @@ function setActiveSearchOption(options,index){
 }
 function announceSearchResults(count,keyword){
   if(!searchStatus || searchInput.getAttribute('aria-busy')==='true') return;
-  const scopeNote=catalogSearchUnavailable?'；名称索引暂时不可用，结果来自精品卡与方剂':'';
+  const scopeNote=catalogSearchUnavailable?'；名称索引暂时不可用，结果来自知识卡与方剂':'';
   searchStatus.textContent=(count?'“'+keyword+'”有 '+count+' 条结果':'没有找到“'+keyword+'”')+scopeNote;
 }
 function updateSearchSuggestions(){
@@ -1192,11 +1189,17 @@ function updateSearchSuggestions(){
   const kw=keyword.toLowerCase();
   setActiveSearchOption([], -1);
   if(!kw){ searchResults.classList.remove('open'); searchResults.innerHTML=''; searchInput.setAttribute('aria-expanded','false'); if(searchStatus) searchStatus.textContent=''; return; }
-  const herbs=HERBS.filter(h=>h.name.toLowerCase().includes(kw)||h.pinyin.includes(kw)||h.eff.toLowerCase().includes(kw)||(h.aliases||[]).some(alias=>String(alias).toLowerCase().includes(kw))).slice(0,6);
-  const approvedCatalog=(window.HerbalSearch?.filterApproved||((entries)=>entries.filter(item=>item?.status!=='review')))(HERB_CATALOG);
-  const catalog=approvedCatalog.filter(item=>!byName(item.name)&&[item.name,...(item.aliases||[])].some(value=>String(value).toLowerCase().includes(kw))).slice(0,4);
+  const herbs=KNOWLEDGE_HERBS.filter(h=>h.name.toLowerCase().includes(kw)||h.pinyin.includes(kw)||h.eff.toLowerCase().includes(kw)||(h.aliases||[]).some(alias=>String(alias).toLowerCase().includes(kw))).slice(0,6);
+  const approvedCatalog=(window.HerbalSearch?.filterApproved||((entries)=>entries.filter(item=>item&& !['review','rejected'].includes(item.status))))(HERB_CATALOG);
+  const cardNames=new Set(KNOWLEDGE_HERBS.map(h=>h.name));
+  const catalog=approvedCatalog.filter(item=>!cardNames.has(item.name)&&[item.name,...(item.aliases||[])].some(value=>String(value).toLowerCase().includes(kw))).slice(0,4);
   const formulas=FORMULAS.filter(f=>f.name.toLowerCase().includes(kw)||f.eff.toLowerCase().includes(kw)).slice(0,4);
-  searchResults.innerHTML=herbs.map(h=>`<a class="search-result" role="option" href="#/herb?id=${esc(h.id)}">${herbImage(h,"herb-thumb")}<strong>${esc(h.name)}</strong><span>药材 · ${esc(fact(h.qi))} · ${esc(fact(h.wei))}</span></a>`).concat(catalog.map(item=>`<a class="search-result catalog-result" role="option" href="#/herbs?mode=catalog&q=${encodeURIComponent(item.name)}"><span class="catalog-result-mark">索引</span><strong>${esc(item.name)}</strong><span>仅名称索引</span></a>`), formulas.map(f=>`<a class="search-result" role="option" href="#/formula?f=${esc(f.id)}"><strong>${esc(f.name)}</strong><span>方剂 · ${esc(f.zheng)}</span></a>`)).join('')||'<div class="search-empty">没有匹配，试试“人参”或“六味地黄丸”</div>';
+  const group=(label,rows)=>rows.length?`<div class="search-group" role="group" aria-label="${label}"><div class="search-group-label" role="presentation">${label}</div>${rows.join('')}</div>`:'';
+  searchResults.innerHTML=[
+    group('知识卡',herbs.map(h=>`<a class="search-result herb-result" role="option" href="#/herb?id=${esc(h.id)}">${herbImage(h,"herb-thumb")}<strong>${esc(h.name)}</strong><span class="search-result-meta">知识卡 · ${esc(fact(h.qi))} · ${esc(fact(h.wei))}</span></a>`)),
+    group('方剂',formulas.map(f=>`<a class="search-result formula-result" role="option" href="#/formula?f=${esc(f.id)}"><span class="catalog-result-mark" aria-hidden="true">方</span><strong>${esc(f.name)}</strong><span class="search-result-meta">方剂 · ${esc(f.zheng)}</span></a>`)),
+    group('名称索引',catalog.map(item=>`<a class="search-result catalog-result" role="option" href="#/herbs?mode=catalog&q=${encodeURIComponent(item.name)}"><span class="catalog-result-mark" aria-hidden="true">索引</span><strong>${esc(item.name)}</strong><span class="search-result-meta">仅名称 · 无药性</span></a>`))
+  ].join('')||'<div class="search-empty">没有匹配，试试“人参”或“六味地黄丸”</div>';
   const options=Array.from(searchResults.querySelectorAll('[role="option"]'));
   options.forEach((option,index)=>{
     const href=option.getAttribute('href')||'';
@@ -1212,6 +1215,9 @@ function closeSearch(){
   searchInput.setAttribute('aria-expanded','false');
   setActiveSearchOption(Array.from(searchResults.querySelectorAll('[role="option"]')),-1);
 }
+function searchSuggestionsVisible(){
+  return document.activeElement===searchInput&&searchResults.classList.contains('open')&&Boolean(searchInput.value.trim());
+}
 window.addEventListener('herbal:catalog-loading',()=>{
   store._catalogLoading=true; store._catalogError='';
   catalogSearchUnavailable=false;
@@ -1222,7 +1228,7 @@ window.addEventListener('herbal:catalog-ready',()=>{
   catalogSearchUnavailable=false;
   setSearchBusy(false);
   setTimeout(()=>{
-    if(searchInput.value.trim()) updateSearchSuggestions();
+    if(searchSuggestionsVisible()) updateSearchSuggestions();
     else if(searchStatus) searchStatus.textContent='名称索引已就绪';
   },0);
 });
@@ -1231,8 +1237,8 @@ window.addEventListener('herbal:catalog-error',()=>{
   if(parseHash().route==='herbs'&&store._atlasMode==='catalog')renderCatalog();
   catalogSearchUnavailable=true;
   setSearchBusy(false);
-  if(searchInput.value.trim()) updateSearchSuggestions();
-  else if(searchStatus) searchStatus.textContent='名称索引暂时不可用，仍可搜索精品卡与方剂';
+  if(searchSuggestionsVisible()) updateSearchSuggestions();
+  else if(searchStatus) searchStatus.textContent='名称索引暂时不可用，仍可搜索知识卡与方剂';
 });
 setSearchBusy(false);
 // 输入过程提供建议，也在药材星图页同步过滤
@@ -1273,9 +1279,10 @@ searchInput.addEventListener('keydown', e=>{
   const kw = searchInput.value.trim();
   if(!kw) return;
   if(options[store._searchIndex]){ options[store._searchIndex].click(); closeSearch(); return; }
-  const herbHit = HERBS.filter(h=>h.name.includes(kw)||h.pinyin.includes(kw.toLowerCase())||(h.aliases||[]).some(alias=>String(alias).includes(kw)));
-  const catalogHit = HERB_CATALOG.filter(item=>[item.name,...(item.aliases||[])].some(value=>String(value).includes(kw)));
+  const herbHit = KNOWLEDGE_HERBS.filter(h=>h.name.includes(kw)||h.pinyin.includes(kw.toLowerCase())||(h.aliases||[]).some(alias=>String(alias).includes(kw)));
+  const catalogHit = HERB_CATALOG.filter(item=>item&&!['review','rejected'].includes(item.status)&&[item.name,...(item.aliases||[])].some(value=>String(value).includes(kw)));
   const formHit = FORMULAS.filter(f=>f.name.includes(kw));
+  closeSearch();
   if(herbHit.length===1){ setSelected(herbHit[0].id); location.hash = '#/herb?id='+herbHit[0].id; }
   else if(formHit.length===1){ location.hash = '#/formula?f='+formHit[0].id; }
   else if(herbHit.length>1){ store._kw = kw; location.hash = '#/herbs'; }

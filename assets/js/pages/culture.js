@@ -44,13 +44,28 @@
     return '<a class="culture-source ' + escapeHtml(className) + '" href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(label) + '<span aria-hidden="true"> ↗</span><span class="culture-sr-only">（新窗口）</span></a>';
   }
   function classicEntries() {
-    const names = (window.CLASSICS || []).map(item => item.name).filter(name => classicNotes[name]);
-    return (names.length ? [...new Set(names)] : Object.keys(classicNotes)).map(name => ({ name, ...classicNotes[name] }));
+    const byName = new Map((window.CLASSICS || []).filter(item => classicNotes[item.name]).map(item => [item.name, item]));
+    const names = byName.size ? [...byName.keys()] : Object.keys(classicNotes);
+    return names.map(name => ({ author: byName.get(name)?.author || '', name, ...classicNotes[name] }));
   }
   function classicReference(item) {
     if (item.name === '本草纲目') return '<div class="culture-classic-reference">' + externalLink(sources.bencaoBibliography, '初刊年份 · 二级书目参考') + '</div>';
     if (item.name === '中国药典 2020') return '<div class="culture-classic-reference">' + externalLink(sources.pharmacopoeia2020, '2020 年版药典颁布公告 · 官方出处') + '</div>';
     return '';
+  }
+  function classicSourceDisclosure(item) {
+    let level = '项目典籍导读 · 原典页码待补';
+    let description = '这段文字是依据馆内典籍资料整理的文化导读，不作原文引语。目前尚未提供可核对的影印本、馆藏版次与页码，资料状态见来源说明。';
+    if (item.name === '本草纲目') {
+      level = '二级书目参考 · 版本待补';
+      description = '初刊年份采用二级书目参考中的 1596 年，区别于成稿与作序时间。具体古籍馆藏版次及影印本页码尚待补齐，不标为官方古籍书目核验。';
+    } else if (item.name === '中国药典 2020') {
+      level = '官方公告出处 · 历史版本';
+      description = '2020 年第 78 号公告提供该版药典的发布出处。5,911 为四部合计品种，2,711 为一部中药品种，统计口径与古代本草药物数量不同；2020 年版是历史阅读节点，不代指现行药典。公告与规模统计的来源层级分别列在资料说明中。';
+    }
+    return '<details class="culture-classic-source" data-classic-name="' + escapeHtml(item.name) + '"><summary aria-label="《' + escapeHtml(item.name) + '》出处与资料说明"><span class="culture-source-collapsed">展开出处</span><span class="culture-source-expanded">收起出处</span></summary><div class="culture-classic-source-content"><p class="culture-source-level">' + escapeHtml(level) + '</p>'
+      + (item.author ? '<p>馆内资料署名：' + escapeHtml(item.author) + '</p>' : '') + '<p>' + escapeHtml(description) + '</p>' + classicReference(item)
+      + '<a class="culture-source" href="docs/competition-framework.md">查看文化资料来源说明<span aria-hidden="true"> ↗</span></a></div></details>';
   }
   function starsIllustration() {
     const dots = Array.from({ length: 48 }, (_, index) => {
@@ -65,13 +80,15 @@
   function renderIntro() {
     const root = document.getElementById('introExhibit');
     if (!root) return;
+    const expandedSources = new Set([...root.querySelectorAll('.culture-classic-source[open]')].map(note => note.dataset.classicName));
     root.innerHTML = '<div class="culture-exhibit culture-intro"><div class="culture-door"><div class="culture-door-copy"><p class="culture-kicker">序章 · 民族医药文化数字展馆</p><h1>本草<span>千年</span></h1><p class="culture-door-deck">从草木走向天地，<br>从一页本草走向一段传承。</p><p class="culture-door-description">这是一段由“源、道、术、传”组成的文化旅程。以典籍与名录为线索，以星图、属性与关系为表达，一起读懂本草背后的人与生活。</p><a class="culture-enter" href="#/home"><span>叩门 · 进入本草宇宙</span><span aria-hidden="true">→</span></a><a class="culture-skip" href="#/herbs">直接查一味本草 ↗</a></div>' + starsIllustration() + '</div>'
       + '<aside class="culture-legend"><span class="culture-small-seal" aria-hidden="true">起源</span><div><h2>神农尝百草：一个起源故事</h2><p>传说把人们认识草木、积累药物经验的漫长过程，凝成神农尝百草的形象。《神农本草经》托名神农，传说与文献成书史需要分开阅读。</p><span>文化传说 · 不作为历史事件或用药依据</span></div></aside>'
       + '<section class="culture-section" id="intro-timeline">' + sectionHeading('一', '把时间翻成书页', '每一部本草，都是一次观察、整理与传递。时间线展示知识组织方式的变化。')
-      + '<ol class="culture-chronicle">' + classicEntries().map((item, index) => '<li><span class="culture-chronicle-index">' + String(index + 1).padStart(2, '0') + '</span><div><p class="culture-era">' + escapeHtml(item.era) + '</p><h3>《' + escapeHtml(item.name) + '》</h3><strong>' + escapeHtml(item.focus) + '</strong><p>' + escapeHtml(item.note) + '</p>' + (item.figure ? '<div class="culture-classic-figure"><b>' + item.figure + '</b><span>' + escapeHtml(item.unit) + '</span></div>' : '') + classicReference(item) + '</div></li>').join('') + '</ol><p class="culture-method-note">阅读提示：古代典籍的药物、现代药典的品种标准与资源普查的物种，统计对象各不相同。此处按年代排列，不作收载量增长比较。</p></section>'
+      + '<ol class="culture-chronicle">' + classicEntries().map((item, index) => '<li><span class="culture-chronicle-index">' + String(index + 1).padStart(2, '0') + '</span><div><p class="culture-era">' + escapeHtml(item.era) + '</p><h3>《' + escapeHtml(item.name) + '》</h3><strong>' + escapeHtml(item.focus) + '</strong><p>' + escapeHtml(item.note) + '</p>' + (item.figure ? '<div class="culture-classic-figure"><b>' + item.figure + '</b><span>' + escapeHtml(item.unit) + '</span></div>' : '') + classicSourceDisclosure(item) + '</div></li>').join('') + '</ol><p class="culture-method-note">阅读提示：古代典籍的药物、现代药典的品种标准与资源普查的物种，统计对象各不相同。此处按年代排列，不作收载量增长比较。每个节点可展开出处，区分正式公告、二级书目与馆内导读。</p></section>'
       + '<section class="culture-section">' + sectionHeading('二', '三条线索，读进四幕', '先问一个文化问题，再进入数据表达。')
       + '<div class="culture-narrative-lines"><a href="#/qiwei"><span>天人合一</span><h3>草木怎样被理解？</h3><p>在“道”中读四气、五味与归经，分清传统文化解释与现代统计。</p><b>进入第二幕 · 道 →</b></a><a href="#/formula"><span>生生之道</span><h3>一味药怎样成为一首方？</h3><p>在“术”中读君臣佐使，看相互关系如何成为配伍的表达。</p><b>进入第三幕 · 术 →</b></a><a href="#/heritage"><span>薪火相传</span><h3>知识怎样回到人的生活？</h3><p>在“传”中读非遗、食养与典籍，再用收藏与传习留下自己的足迹。</p><b>进入第四幕 · 传 →</b></a></div></section>'
       + '<div class="culture-next"><p>故事从这里开始</p><h2>一草一木，皆有来处。</h2><a class="culture-enter" href="#/home"><span>第一幕 · 源 · 本草宇宙</span><span aria-hidden="true">→</span></a></div></div>';
+    for (const note of root.querySelectorAll('.culture-classic-source')) note.open = expandedSources.has(note.dataset.classicName);
     bindRoot(root);
   }
   function renderHeritageCard(item, index) {

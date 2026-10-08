@@ -43,11 +43,23 @@ body.night footer{background:#09110d;color:var(--ink-2)}
 @media(max-width:768px){.formula-directory-toolbar{flex-wrap:wrap;gap:8px}.formula-directory-toolbar label{width:100%}}
 html[data-theme="night"] .theme-icon svg { transform:rotate(30deg); }
 
+.fav-btn { display:inline-flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; scroll-margin-block-start:calc(var(--shell-height,64px) + 12px); }
 .saved-drawer-toggle { position:relative; border:1px solid rgba(243,237,223,.28); background:rgba(255,255,255,.08); color:#F3EDDF; border-radius:7px; min-width:34px; height:32px; padding:0 8px; }
 .saved-drawer-toggle span { font-family:var(--serif); font-size:15px; }
 .saved-drawer-toggle b { position:absolute; top:-6px; right:-6px; min-width:17px; height:17px; padding:0 4px; border-radius:99px; background:var(--cinnabar); color:#fff; font-size:10px; line-height:17px; }
 .search-scope-hint { display:block; position:absolute; top:100%; right:0; margin-top:4px; width:max-content; max-width:280px; color:rgba(243,237,223,.72); font-size:10px; line-height:1.4; pointer-events:none; }
 .searchbox:focus-within .search-scope-hint { color:#F0CA77; }
+.search-results{background:var(--card)}
+.search-group + .search-group{margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.search-group-label{padding:5px 10px;color:var(--ink-2);font-size:11px;letter-spacing:1px}
+.search-group .search-result{grid-template-columns:32px minmax(0,1fr);column-gap:10px;row-gap:3px;min-height:56px}
+.search-group .search-result > .herb-thumb,.search-group .search-result > .catalog-result-mark,.search-group .search-result > .search-stamp{grid-column:1;grid-row:1 / 3}
+.search-group .search-result strong{grid-column:2;grid-row:1;overflow-wrap:anywhere}
+.search-group .search-result .search-result-meta{grid-column:2;grid-row:2;white-space:normal;line-height:1.5}
+.search-group .catalog-result-mark{display:grid;place-items:center;width:32px;min-height:32px;border:1px solid var(--line);border-radius:4px;font-size:10px;color:var(--ink-2)}
+.catalog-scroll-hint{display:none}
+.catalog-table-wrap:focus-visible{outline:2px solid var(--jin);outline-offset:3px}
+@media(max-width:768px){.searchbox .search-results{top:calc(var(--header-height,105px) + 4px);max-height:min(360px,calc(100dvh - var(--header-height,105px) - 16px))}.catalog-scroll-hint{display:block}.detail-visual{grid-template-columns:minmax(0,1fr);min-width:0}.detail-visual .image-frame{min-width:0}}
 
 .herb-context { position:sticky; top:var(--header-height,64px); z-index:44; background:var(--card); border-bottom:1px solid var(--line); box-shadow:0 2px 10px rgba(0,0,0,.08); }
 .context-inner { max-width:1180px; min-height:52px; margin:0 auto; padding:7px 20px; display:flex; align-items:center; gap:18px; }
@@ -236,6 +248,9 @@ body.saved-drawer-open { overflow:hidden; }
 .page[data-route="qiwei"] .chart-panel + .chart-panel,
 .page[data-route="formula"] .insight-chart-panel + .insight-chart-panel { margin-top:0; }
 .page[data-route="formula"] .graph-workspace { border-radius:0; }
+.filter-chip-reset { min-height:44px; }
+body.night .filter-chip-reset { color:color-mix(in srgb,var(--cinnabar) 55%,var(--ink)); }
+.graph-heading button { white-space:nowrap; flex-shrink:0; min-height:44px; }
 .formula-view-switch { display:flex; flex-wrap:wrap; gap:4px; margin:18px 0 0; padding:4px; width:max-content; max-width:100%; border:1px solid var(--line); background:var(--paper-2); }
 .formula-view-switch button { min-height:44px; padding:8px 16px; border:0; background:transparent; color:var(--ink-2); font:600 12px var(--sans); }
 .formula-view-switch button:hover,.formula-view-switch button:focus-visible { color:var(--qing); background:var(--card); outline:2px solid var(--jin); outline-offset:-2px; }
@@ -245,8 +260,8 @@ body.saved-drawer-open { overflow:hidden; }
 .completeness-insight .chart-box { min-height:380px; }
 
 @media (max-width:768px) {
-  .formula-view-switch { width:100%; }
-  .formula-view-switch button { flex:1; min-width:0; }
+  .formula-view-switch { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; }
+  .formula-view-switch button { min-width:0; white-space:nowrap; }
   .page[data-route="herbs"] .insight-chart-panel,
   .page[data-route="qiwei"] .chart-panel,
   .page[data-route="formula"] .insight-chart-panel { padding-top:24px; padding-bottom:24px; }

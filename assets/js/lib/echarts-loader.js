@@ -1,6 +1,6 @@
 /* ECharts on-demand loader: the homepage nebula does not use ECharts, so the
- * 1MB bundle is fetched only when a chart view is first rendered. The file
- * stays in the Service Worker precache for offline availability. */
+ * 1MB bundle is fetched only when a chart view is first rendered. After use,
+ * the Service Worker keeps it in a release-specific cache for offline reading. */
 (function(){
   var pending = null;
   window.ensureEcharts = function(){
@@ -11,7 +11,10 @@
       script.src = 'assets/vendor/echarts.min.js';
       script.async = true;
       script.onload = function(){
-        if (window.echarts) resolve(window.echarts);
+        if (window.echarts) {
+          window.dispatchEvent(new CustomEvent('herbal:charts-loaded'));
+          resolve(window.echarts);
+        }
         else { pending = null; reject(new Error('echarts global missing after load')); }
       };
       script.onerror = function(){ pending = null; reject(new Error('echarts load failed')); };

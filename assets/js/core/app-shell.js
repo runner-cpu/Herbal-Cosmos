@@ -38,12 +38,21 @@ function watchInstalling(registration) {
   });
 }
 
+function cacheLoadedCharts() {
+  // A direct chart deep link can load the library before the first worker
+  // claims this page. Warm only the library already used, never the intro.
+  if (!supported || !window.echarts || !navigator.serviceWorker.controller) return;
+  try { navigator.serviceWorker.controller.postMessage({ type: 'CACHE_VENDOR' }); }
+  catch { /* Offline caching must not block an already rendered chart. */ }
+}
+
 async function registerAppShell() {
   if (!supported) return null;
   try {
     const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
     if (registration.waiting) offerUpdate(registration.waiting);
     registration.addEventListener('updatefound', () => watchInstalling(registration));
+    cacheLoadedCharts();
     return registration;
   } catch (error) {
     if (!warned) {
@@ -62,7 +71,9 @@ window.addEventListener('online', () => {
 });
 
 if (supported) {
+  window.addEventListener('herbal:charts-loaded', cacheLoadedCharts);
   navigator.serviceWorker.addEventListener('controllerchange', () => {
+    cacheLoadedCharts();
     if (!refreshApproved || refreshing) return;
     refreshing = true;
     window.location.reload();

@@ -63,8 +63,6 @@ test('herb context bar stays a horizontal rail on small screens', async ({ page 
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/#/herb?id=gancao');
   await expect(page.locator('#herbContext .context-links a')).toHaveCount(4);
-  await page.goto('/#/home');
-  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'home');
   const layout = await page.evaluate(() => {
     const links = document.querySelector('#herbContext .context-links');
     const [a, b] = links.querySelectorAll('a');
@@ -77,6 +75,10 @@ test('herb context bar stays a horizontal rail on small screens', async ({ page 
   expect(layout.direction).toBe('row');
   expect(layout.sameRow).toBe(true);
   expect(layout.overflow).toBeLessThanOrEqual(1);
+  await page.goto('/#/home');
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'home');
+  await expect(page.locator('#herbContext')).toBeHidden();
+  await expect(page.locator('#herbContext .context-links a')).toHaveCount(0);
 });
 
 test('375px routes do not create document or chart overflow', async ({ page }) => {

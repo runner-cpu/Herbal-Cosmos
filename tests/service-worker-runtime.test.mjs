@@ -16,6 +16,7 @@ function loadWorker({ cacheOpenError = null, cachePutError = null } = {}) {
   };
   const networkResponse = {
     ok: true,
+    headers: new Headers({ 'Content-Type': 'text/html; charset=utf-8' }),
     source: 'network',
     clone() { return this; }
   };

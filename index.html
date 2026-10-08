@@ -121,7 +121,7 @@
         <section class="collection-ledger" id="home-collection" data-home-section="home-collection" aria-labelledby="collectionTitle">
           <div class="section-heading-row"><div><span>馆藏账本 · 当前可浏览的资料</span><h2 id="collectionTitle">文化意象背后，有据可查</h2></div></div>
           <div class="home-kpis" id="homeKpis"></div>
-          <details class="collection-detail" id="collectionCoverage"><summary>展开资料覆盖与分类 · 查看已收录和待补充的边界</summary><div class="home-coverage insight-chart-panel" aria-labelledby="coverageTitle"><div class="coverage-intro"><span class="section-kicker">已收录 · 可追溯 · 持续补全</span><h3 id="coverageTitle">这一册，整理到哪里？</h3><p id="homeCoverageNote" class="chart-method">按当前知识卡计算图片、来源与分布字段覆盖情况。</p><a href="#/home-sources">查看来源与收录边界 ↗</a></div><div><div id="homeCoverageChart" class="chart-box"></div><div id="homeCoverageControls" class="coverage-controls" aria-label="按资料覆盖情况浏览"></div><p id="homeCoverageSummary" class="chart-method"></p></div></div><div class="home-category-row"><div class="home-subhead"><span>分类目录</span><strong>按功效分类检索</strong></div><div class="home-categories" id="homeCategories"></div></div></details>
+          <details class="collection-detail" id="collectionCoverage"><summary>展开资料覆盖与分类 · 查看已收录和待补充的边界</summary><div class="home-coverage insight-chart-panel" aria-labelledby="coverageTitle"><div class="coverage-intro"><span class="section-kicker">已收录 · 可追溯 · 持续补全</span><h3 id="coverageTitle">这一册，整理到哪里？</h3><p id="homeCoverageNote" class="chart-method">按当前知识卡计算图片、来源与分布字段覆盖情况。</p><a href="#/home-sources">查看来源与收录边界 ↗</a></div><div><div id="homeCoverageChart" class="chart-box"></div><div id="homeCoverageControls" class="coverage-controls" aria-label="按资料覆盖情况浏览"></div><p id="homeCoverageSummary" class="chart-method"></p></div></div><div class="home-category-row"><div class="home-subhead"><span>分类目录</span><strong>按资料分类检索</strong></div><p class="chart-method">数量按当前知识卡的资料分类统计；不含名称索引或原方物料，不代表药效强弱与全部中药资源分布。</p><div class="home-categories" id="homeCategories"></div></div></details>
         </section>
 
 
@@ -162,7 +162,7 @@
       <div id="catalogAtlasPanel" hidden>
         <div class="catalog-summary"><div><strong id="catalogVisibleCount">—</strong><span>文献名称索引</span></div><p>名称来自公开研究资料、历史索引与逐项核验记录；名称收录不表示药典收载或药性事实齐全。每行保留来源层级，可继续查找知识卡。</p></div>
         <div class="catalog-toolbar"><label for="catalogSearch">检索名称<input id="catalogSearch" type="search" placeholder="输入本草名称"></label><label for="catalogSource">来源<select id="catalogSource"><option value="">全部来源</option></select></label></div>
-        <div class="catalog-table-wrap"><table><thead><tr><th>名称</th><th>来源</th><th>数据状态</th><th>下一步</th></tr></thead><tbody id="catalogTableBody"></tbody></table></div>
+        <p class="chart-method catalog-scroll-hint">小屏可左右滑动表格，查看来源、数据状态和“下一步”入口。</p><div class="catalog-table-wrap" tabindex="0" role="region" aria-label="名称索引明细，可横向滚动"><table><thead><tr><th>名称</th><th>来源</th><th>数据状态</th><th>下一步</th></tr></thead><tbody id="catalogTableBody"></tbody></table></div>
         <div class="catalog-pagination" id="catalogPagination"></div>
       </div>
       <section class="insight-chart-panel province-insight" aria-labelledby="provinceTitle"><h2 id="provinceTitle">文献中的省级分布</h2><p class="chart-method" id="provinceCoverage">正在汇总有分布记录的药材…</p><div class="insight-detail-layout"><div><div class="chart-box" id="provinceDistributionChart"></div><div class="chart-access" id="provinceAccess"></div></div><div class="chart-evidence" id="provinceEvidence" aria-live="polite"></div></div></section>

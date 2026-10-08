@@ -13,6 +13,7 @@ function contextLinks({ id }) {
 }
 
 let memoryViewedIds = [];
+let dismissedContextRoute = null;
 function storageIds() {
   try {
     const stored = localStorage.getItem('herbal_viewed');
@@ -39,22 +40,48 @@ function setSelectedHerb(herbId, source = 'unknown') {
   return herb;
 }
 
+function knowledgeCardId() {
+  const [route, query = ''] = location.hash.replace(/^#\/?/, '').split('?');
+  return route === 'herb' ? new URLSearchParams(query).get('id') : null;
+}
+
+function clearContext() {
+  const bar = document.getElementById('herbContext');
+  if (!bar) return;
+  bar.hidden = true;
+  bar.replaceChildren();
+  delete bar.dataset.herbId;
+}
+
 function renderContext(detail) {
   const herb = detail?.herb;
   const bar = document.getElementById('herbContext');
   if (!bar || !herb) return;
+  if (knowledgeCardId() !== herb.id || dismissedContextRoute === location.hash) {
+    clearContext();
+    return;
+  }
   const stamp = window.HerbalStamp?.renderStamp?.(herb, 'context-stamp') || '<span class="herb-stamp context-stamp"><span class="herb-stamp-seal">' + escapeHtml(herb.name.slice(0, 2)) + '</span></span>';
   const links = contextLinks({ id: herb.id });
   bar.innerHTML = '<div class="context-inner"><div class="context-identity">' + stamp + '<strong>' + escapeHtml(herb.name) + '</strong><span>' + escapeHtml((herb.meridian || []).join('、')) + '归经</span></div><nav class="context-links" aria-label="药材联动">' + links.map(link => '<a href="' + link.href + '">' + link.label + '</a>').join('') + '</nav><button type="button" class="context-close" aria-label="关闭药材上下文">×</button></div>';
+  bar.dataset.herbId = herb.id;
   bar.hidden = false;
-  bar.querySelector('.context-close')?.addEventListener('click', () => { bar.hidden = true; });
+  bar.querySelector('.context-close')?.addEventListener('click', () => {
+    dismissedContextRoute = location.hash;
+    clearContext();
+  });
 }
 
 function initContext() {
   window.setSelectedHerb = setSelectedHerb;
   window.addEventListener('herbal:selected', event => renderContext(event.detail));
-  const match = location.hash.match(/[?&]id=([^&]+)/);
-  if (match) setSelectedHerb(decodeURIComponent(match[1]), 'initial-route');
+  window.addEventListener('herbal:route', () => {
+    if (dismissedContextRoute !== location.hash) dismissedContextRoute = null;
+    const bar = document.getElementById('herbContext');
+    if (!knowledgeCardId() || bar?.dataset.herbId !== knowledgeCardId()) clearContext();
+  });
+  const id = knowledgeCardId();
+  if (id) setSelectedHerb(id, 'initial-route');
 }
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {

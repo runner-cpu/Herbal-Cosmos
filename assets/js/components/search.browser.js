@@ -11,7 +11,7 @@ function initSearchShell() {
     hint = document.createElement('span');
     hint.id = 'searchScopeHint';
     hint.className = 'search-scope-hint';
-    hint.textContent = '索引层仅名称可检索，药性字段以精品卡为准';
+    hint.textContent = '知识卡与名称索引分层展示；索引无药性';
     box.append(hint);
   }
   input.setAttribute('aria-describedby', 'searchScopeHint');
@@ -19,8 +19,8 @@ function initSearchShell() {
   const results = document.getElementById('searchResults');
   const decorate = () => {
     const herbs = window.HERBS || [];
-    results?.querySelectorAll('.search-result:not(.catalog-result)').forEach(item => {
-      if (item.querySelector('.search-stamp')) return;
+    results?.querySelectorAll('.herb-result').forEach(item => {
+      if (item.querySelector('.search-stamp,img,.herb-image-empty')) return;
       const name = item.querySelector('strong')?.textContent;
       const herb = herbs.find(entry => entry.name === name);
       if (!herb || !window.HerbalStamp?.renderStamp) return;

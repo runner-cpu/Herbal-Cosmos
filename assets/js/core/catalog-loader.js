@@ -103,7 +103,7 @@ function initLoader() {
   const ensure = () => { const route = location.hash.replace(/^#\/?/, '').split('?')[0]; if (route === 'herbs' && location.hash.includes('mode=catalog')) loadCatalog().catch(() => {}); };
   window.addEventListener('hashchange', ensure);
   window.addEventListener('herbal:catalog-ready', () => {
-    window.render?.();
+    window.render?.({ preserveScroll: true, preserveSearch: true });
   });
   const searchInput=document.getElementById('globalSearch');
   searchInput?.addEventListener('input', event => { if(event.target.value.trim() && !window.HERB_CATALOG.length) loadCatalog().catch(()=>{}); });

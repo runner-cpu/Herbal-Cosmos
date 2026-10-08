@@ -1,7 +1,8 @@
-const CACHE_VERSION = 'herbal-cosmos-v19-20261008-cultural-journey';
+const CACHE_VERSION = 'herbal-cosmos-v20-20261008-polish';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
+const VENDOR_CACHE = CACHE_VERSION + '-vendor';
 const MAX_IMAGE_ENTRIES = 120;
 const MAX_CATALOG_ENTRIES = 45;
 
@@ -25,7 +26,6 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/pages/culture.js',
   './assets/js/lib/data-coverage.browser.js',
   './assets/js/lib/insight-aggregates.browser.js',
-  './assets/vendor/echarts.min.js',
   './assets/js/lib/echarts-loader.js',
   './assets/js/lib/learn-modules.js',
   './assets/js/data/food-medicine.generated.js',
@@ -41,6 +41,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/data/expanded.chunk-07.js',
   './assets/js/data/expanded.chunk-08.js',
   './assets/js/data/expanded.generated.js',
+  './assets/js/core/field-utils.js',
   './assets/js/core/runtime.js',
   './assets/js/core/app-shell.js',
   './assets/js/core/catalog-loader.browser.js',
@@ -59,8 +60,12 @@ const PRECACHE_URLS = Object.freeze([
   './data/catalog/manifest.js'
 ]);
 
-const CURRENT_CACHES = new Set([PRECACHE, IMAGE_CACHE, CATALOG_CACHE]);
+const CURRENT_CACHES = new Set([PRECACHE, IMAGE_CACHE, CATALOG_CACHE, VENDOR_CACHE]);
 const PRECACHE_REQUESTS = new Set(PRECACHE_URLS.map(value => new URL(value, self.registration.scope).href.split('#')[0]));
+const APP_ENTRY_PATHS = new Set(['./', './index.html'].map(value => new URL(value, self.registration.scope).pathname));
+const ECHARTS_URL = new URL('./assets/vendor/echarts.min.js', self.registration.scope).href;
+const ECHARTS_PATH = new URL(ECHARTS_URL).pathname;
+const VENDOR_INFLIGHT = new Map();
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(PRECACHE).then(cache => cache.addAll(PRECACHE_URLS)));
@@ -76,6 +81,10 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('message', event => {
   if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data?.type === 'CACHE_VENDOR') {
+    // Never accept a URL from a client message: this is one pinned local asset.
+    event.waitUntil(cacheVisitedVendor(ECHARTS_URL).catch(() => undefined));
+  }
 });
 
 async function trimCache(cacheName, maximum) {
@@ -107,11 +116,19 @@ async function storeResponse(cacheName, request, response, maximum) {
 }
 
 async function networkFirstNavigation(request) {
+  const isAppEntry = APP_ENTRY_PATHS.has(new URL(request.url).pathname);
   try {
     const response = await fetch(request);
-    await storeResponse(PRECACHE, './index.html', response);
+    // Markdown, image, and other document navigations must never replace the
+    // exhibition entry. Query strings and hash routes still share that entry.
+    if (isAppEntry && /^text\/html(?:;|\s|$)/i.test(response.headers.get('Content-Type') || '')) {
+      await storeResponse(PRECACHE, './index.html', response);
+    }
     return response;
   } catch (error) {
+    // Non-entry files remain network-only; do not disguise a missing document
+    // as a successful exhibition page when the visitor is offline.
+    if (!isAppEntry) throw error;
     const fallback = await matchCache(PRECACHE, './index.html') || await matchCache(PRECACHE, './');
     if (fallback) return fallback;
     throw error;
@@ -144,6 +161,23 @@ async function cacheFirstWithRefresh(request, event) {
   return update;
 }
 
+async function cacheVisitedVendor(request) {
+  // The library is pinned in the repository and this cache is release-specific.
+  // Download it on first use; a hit needs no background megabyte-sized refresh.
+  const cached = await matchCache(VENDOR_CACHE, request, { ignoreSearch: true });
+  if (cached) return cached;
+  if (!VENDOR_INFLIGHT.has(ECHARTS_PATH)) {
+    const download = (async () => {
+      const response = await fetch(request);
+      await storeResponse(VENDOR_CACHE, request, response);
+      return response;
+    })().finally(() => VENDOR_INFLIGHT.delete(ECHARTS_PATH));
+    VENDOR_INFLIGHT.set(ECHARTS_PATH, download);
+  }
+  // Concurrent message/fetch consumers need independent response bodies.
+  return (await VENDOR_INFLIGHT.get(ECHARTS_PATH)).clone();
+}
+
 self.addEventListener('fetch', event => {
   const { request } = event;
   if (request.method !== 'GET') return;
@@ -152,6 +186,10 @@ self.addEventListener('fetch', event => {
 
   if (request.mode === 'navigate') {
     event.respondWith(networkFirstNavigation(request));
+    return;
+  }
+  if (url.pathname === ECHARTS_PATH) {
+    event.respondWith(cacheVisitedVendor(request));
     return;
   }
   if (url.pathname.includes('/images/herbs/')) {

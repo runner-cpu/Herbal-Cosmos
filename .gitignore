@@ -8,3 +8,10 @@ playwright-report/
 .tmp-*.png
 .tmp-*.mjs
 scripts/tmp-*.mjs
+output/context-tests/
+output/context-tests-affected/
+output/search-tests/
+output/mobile-review/
+output/context-dismiss-review/
+output/mobile-polish-tests/
+output/mobile-polish-crossbrowser/
