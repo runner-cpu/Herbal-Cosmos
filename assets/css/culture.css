@@ -1,0 +1,164 @@
+/* The culture exhibition uses the shared day / night / manuscript tokens. */
+.culture-exhibit { max-width: 1140px; margin: 0 auto; color: var(--ink); }
+.culture-exhibit a, .culture-exhibit button, .culture-exhibit input, .culture-exhibit select, .culture-exhibit summary { transition: color .18s, background-color .18s, border-color .18s, transform .18s; }
+.culture-exhibit a:focus-visible, .culture-exhibit button:focus-visible, .culture-exhibit input:focus-visible, .culture-exhibit select:focus-visible, .culture-exhibit summary:focus-visible { outline: 2px solid var(--cinnabar); outline-offset: 4px; }
+.culture-exhibit p { text-wrap: pretty; }
+.culture-exhibit h1, .culture-exhibit h2, .culture-exhibit h3, .culture-exhibit h4 { font-family: var(--serif); text-wrap: balance; }
+.culture-kicker { font-size: 12px; letter-spacing: .2em; color: var(--cha); }
+.culture-door { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; min-height: 580px; padding: 40px 0 56px; gap: 28px; }
+.culture-door-copy { padding-left: clamp(0px, 2vw, 28px); }
+.culture-door h1 { font-size: clamp(58px, 7vw, 92px); line-height: 1.18; letter-spacing: .06em; color: var(--qing); margin: 18px 0 25px; font-weight: 700; }
+.culture-door h1 span { display: block; margin-left: 1.08em; }
+.culture-door-deck { font-family: var(--serif); font-size: clamp(19px, 2.2vw, 26px); line-height: 1.7; letter-spacing: .035em; }
+.culture-door-description { color: var(--ink-2); font-size: 13px; line-height: 1.95; max-width: 41ch; margin: 18px 0 25px; }
+.culture-enter { display: inline-flex; gap: 26px; align-items: center; justify-content: space-between; background: var(--qing); color: var(--on-accent, var(--paper)); border: 1px solid var(--qing); padding: 12px 18px; font-size: 13px; border-radius: 3px; }
+.culture-enter:hover { background: var(--qing-2); transform: translateY(-2px); }
+.culture-enter:active { transform: translateY(1px); }
+.culture-skip { display: block; width: fit-content; color: var(--ink-2); font-size: 12px; padding: 13px 0; text-decoration: underline; text-underline-offset: 4px; }
+.culture-orbit { position: relative; width: 100%; max-width: 490px; justify-self: end; aspect-ratio: 1; }
+.culture-orbit svg { width: 100%; height: 100%; }
+.culture-orbit-rings { stroke: var(--celadon); opacity: .35; stroke-width: .6; }
+.culture-orbit-rings circle:nth-child(2) { stroke-dasharray: 2 7; }
+.culture-orbit-stars { fill: var(--cha); transform-origin: 220px 220px; animation: culture-stars-settle 1.8s ease-out both; }
+.culture-leaf { stroke: var(--qing); stroke-width: 1.1; opacity: .7; }
+.culture-orbit-core { fill: var(--cinnabar); }
+.culture-orbit-label { position: absolute; left: 50%; transform: translateX(-50%); font-family: var(--serif); letter-spacing: .28em; color: var(--ink-2); font-size: 12px; background: var(--paper); padding: 0 10px; }
+.culture-orbit-north { top: 3%; }.culture-orbit-south { bottom: 3%; }
+.culture-orbit-caption { position: absolute; left: 0; right: 0; bottom: -34px; text-align: center; font-size: 11px; color: var(--ink-2); letter-spacing: .06em; }
+@keyframes culture-stars-settle { from { transform: scale(1.16) rotate(-12deg); opacity: .1; } to { transform: scale(1) rotate(0); opacity: 1; } }
+.culture-legend { display: flex; align-items: flex-start; gap: 20px; padding: 25px 28px; background: var(--paper-2); border-left: 2px solid var(--cinnabar); border-radius: 0 4px 4px 0; }
+.culture-small-seal { display: grid; place-items: center; flex: none; width: 43px; height: 47px; color: var(--cinnabar); border: 1px solid currentColor; font-family: var(--serif); font-size: 15px; letter-spacing: .1em; writing-mode: vertical-rl; }
+.culture-legend h2 { font-size: 19px; margin-bottom: 8px; font-weight: 600; color: var(--qing); }
+.culture-legend p { max-width: 82ch; color: var(--ink-2); font-size: 13px; line-height: 1.95; }
+.culture-legend div > span { display: inline-block; font-size: 11px; color: var(--cha); margin-top: 10px; }
+.culture-section { margin-top: 60px; scroll-margin-top: calc(var(--shell-height, 100px) + 25px); }
+.culture-section-head { display: grid; grid-template-columns: 50px minmax(0, 1fr); align-items: start; gap: 16px; margin-bottom: 25px; }
+.culture-section-number { color: var(--cinnabar); font: 600 21px/1.8 var(--serif); border-top: 1px solid var(--cinnabar); text-align: center; padding-top: 3px; }
+.culture-section-head h2 { font-size: clamp(23px, 3vw, 30px); line-height: 1.4; color: var(--qing); letter-spacing: .02em; font-weight: 600; }
+.culture-section-head p { font-size: 13px; color: var(--ink-2); margin-top: 8px; max-width: 73ch; line-height: 1.8; }
+.culture-chronicle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; list-style: none; padding: 0; }
+.culture-chronicle li { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 15px; border-top: 1px solid var(--line); padding: 20px 0 24px; min-width: 0; }
+.culture-chronicle li:last-child { grid-column: 1 / -1; padding: 25px 0 20px; }
+.culture-chronicle-index { font: 12px/1.8 Georgia, serif; color: var(--cha); padding-top: 1px; }
+.culture-era { font-size: 11px; color: var(--ink-2); line-height: 1.65; }
+.culture-chronicle h3 { font-size: 20px; color: var(--qing); margin: 3px 0 10px; }
+.culture-chronicle strong { font-size: 12px; color: var(--cha); font-weight: 500; }
+.culture-chronicle li > div > p:not(.culture-era) { font-size: 12px; color: var(--ink-2); line-height: 1.9; margin-top: 8px; max-width: 90ch; }
+.culture-classic-figure { display: flex; gap: 10px; align-items: baseline; margin-top: 15px; color: var(--ink-2); font-size: 10px; }
+.culture-classic-figure b { font: 28px/1.1 Georgia, serif; color: var(--qing); font-variant-numeric: tabular-nums; }
+.culture-method-note { font-size: 11px; color: var(--ink-2); line-height: 1.9; border-top: 1px solid var(--line); padding-top: 14px; margin-top: 18px; }
+.culture-method-note a { text-decoration: underline; text-underline-offset: 4px; color: var(--qing); }
+.culture-narrative-lines { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; }
+.culture-narrative-lines a { padding: 0 0 20px; display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
+.culture-narrative-lines a > span { font: 500 13px var(--serif); color: var(--cha); letter-spacing: .12em; }
+.culture-narrative-lines h3 { font-size: 20px; line-height: 1.6; margin: 14px 0 10px; color: var(--qing); }
+.culture-narrative-lines p { font-size: 12px; line-height: 1.9; color: var(--ink-2); margin-bottom: 20px; }
+.culture-narrative-lines b { margin-top: auto; font-size: 12px; color: var(--qing); font-weight: 500; }
+.culture-narrative-lines a:hover { border-color: var(--cinnabar); transform: translateY(-3px); }
+.culture-next { margin-top: 65px; padding: 40px 0 20px; border-top: 1px solid var(--line); text-align: center; }
+.culture-next > p { font-size: 11px; color: var(--cha); letter-spacing: .18em; }
+.culture-next > h2 { font-size: 28px; font-weight: 500; margin: 12px 0 22px; color: var(--qing); }
+.culture-act-head { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 35px 0 30px; }
+.culture-act-head h1 { font-size: clamp(38px, 5vw, 58px); color: var(--qing); letter-spacing: .1em; line-height: 1.45; margin: 12px 0 20px; }
+.culture-act-deck { font-family: var(--serif); font-size: 17px; line-height: 1.9; color: var(--ink-2); }
+.culture-act-glyph { font: 500 clamp(120px, 16vw, 190px)/1 var(--serif); opacity: .12; color: var(--qing); user-select: none; flex: none; }
+.culture-local-nav { display: flex; flex-wrap: wrap; gap: 4px 28px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.culture-local-nav a { display: inline-flex; align-items: center; min-height: 35px; color: var(--ink-2); font-size: 12px; }
+.culture-local-nav a:hover { color: var(--cinnabar); }
+.culture-heritage-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 28px; }
+.culture-heritage-card { min-width: 0; background: var(--card); border-bottom: 1px solid var(--line); }
+.culture-heritage-card figure { position: relative; aspect-ratio: 16 / 9; background: var(--paper-2); overflow: hidden; margin: 0; }
+.culture-heritage-card img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.culture-heritage-card figcaption { position: absolute; bottom: 9px; right: 10px; padding: 3px 7px; font-size: 9px; background: rgba(20, 32, 25, .8); color: #f1eee3; border-radius: 2px; }
+.culture-heritage-copy { padding: 22px 23px 24px; }
+.culture-card-eyebrow { font-size: 10px; color: var(--cha); letter-spacing: .04em; }
+.culture-heritage-copy h3 { font-size: 24px; color: var(--qing); margin: 5px 0 12px; font-weight: 600; }
+.culture-heritage-copy h4 { font-size: 14px; font-weight: 500; margin: 0 0 7px; color: var(--ink); }
+.culture-heritage-copy > p { font-size: 12px; color: var(--ink-2); line-height: 1.9; }
+.culture-heritage-copy details { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 12px; }
+.culture-heritage-copy summary { cursor: pointer; font-size: 12px; color: var(--qing); min-height: 30px; }
+.culture-heritage-copy details p { font-size: 12px; color: var(--ink-2); margin: 8px 0; line-height: 1.9; }
+.culture-reference-label { font-weight: 500; }
+.culture-source { font-size: 10px; color: var(--qing); text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 32px; overflow-wrap: anywhere; }
+.culture-source:hover { color: var(--cinnabar); }
+.culture-art-empty { display: grid; height: 100%; place-items: center; padding: 25px; font-family: var(--serif); color: var(--ink-2); font-size: 19px; }
+.culture-food-intro { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 25px; background: var(--paper-2); padding: 21px 24px; align-items: center; }
+.culture-food-intro > div { display: flex; align-items: baseline; gap: 8px; }
+.culture-food-intro strong { font: 40px/1.2 Georgia, serif; color: var(--qing); font-variant-numeric: tabular-nums; }
+.culture-food-intro span { font-size: 11px; color: var(--ink-2); }
+.culture-food-intro p { font-size: 12px; color: var(--ink-2); max-width: 85ch; line-height: 1.9; }
+.culture-food-controls { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 18px; margin: 23px 0 9px; }
+.culture-food-controls label { display: grid; gap: 7px; font-size: 11px; color: var(--ink-2); }
+.culture-food-controls input, .culture-food-controls select { background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 3px; font: inherit; padding: 10px 12px; width: 100%; min-width: 0; min-height: 44px; }
+.culture-food-controls input { font-size: 14px; }
+.culture-food-controls input::placeholder { color: var(--ink-2); }
+.culture-food-status { font-size: 11px; color: var(--ink-2); margin: 13px 0 15px; min-height: 19px; }
+.culture-food-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 18px; }
+.culture-food-card { min-width: 0; background: var(--card); padding: 14px 14px 7px; border-bottom: 1px solid var(--line); }
+.culture-food-identity { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 10px; }
+.culture-food-identity h3 { font-size: 16px; line-height: 1.5; color: var(--qing); }
+.culture-food-identity .culture-era { display: block; font-size: 10px; margin-top: 3px; }
+.culture-food-name { display: flex; align-items: center; justify-content: space-between; gap: 5px; }
+.culture-food-name > span { font-size: 11px; color: var(--cha); flex: none; }
+.culture-food-visual { width: 42px; height: 48px; background: var(--paper-2); overflow: hidden; border-radius: 2px; }
+.culture-food-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.culture-food-initial { display: grid; place-items: center; width: 100%; height: 100%; font: 24px var(--serif); color: var(--qing); }
+.culture-food-visual .herb-image-empty { width: 100%; height: 100%; min-height: 0; }
+.culture-food-visual .herb-image-empty b { font-size: 15px; padding: 0; }.culture-food-visual .herb-image-empty small { display: none; }
+.culture-food-directory-name { color: var(--ink-2); font-size: 9px; margin-top: 8px; }
+.culture-food-source { margin-top: 6px; }.culture-food-source .culture-source { font-size: 9px; }
+.culture-food-pages { display: flex; align-items: center; justify-content: center; gap: 19px; margin-top: 20px; }
+.culture-food-pages button, .culture-food-empty button { background: var(--card); border: 1px solid var(--line); border-radius: 3px; color: var(--qing); font-size: 12px; min-height: 42px; padding: 8px 15px; }
+.culture-food-pages button:hover:not(:disabled), .culture-food-empty button:hover { border-color: var(--cha); }
+.culture-food-pages button:disabled { cursor: default; color: var(--ink-2); opacity: .5; }
+.culture-food-pages span { font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.culture-food-empty { grid-column: 1 / -1; text-align: center; background: var(--paper-2); color: var(--ink-2); padding: 34px 20px; font-family: var(--serif); }.culture-food-empty button { margin-top: 15px; font-family: var(--sans); }
+.culture-reading-list details { border-top: 1px solid var(--line); }.culture-reading-list details:last-child { border-bottom: 1px solid var(--line); }
+.culture-reading-list summary { display: grid; grid-template-columns: 30px minmax(0, 1fr) 150px; align-items: center; gap: 15px; padding: 18px 5px; cursor: pointer; list-style: none; }
+.culture-reading-list summary::-webkit-details-marker { display: none; }.culture-reading-list summary > span { font-size: 11px; color: var(--cha); font-variant-numeric: tabular-nums; }
+.culture-reading-list h3 { font-size: 18px; color: var(--qing); font-weight: 500; }.culture-reading-list summary b { font-size: 11px; font-weight: 400; color: var(--ink-2); text-align: right; }
+.culture-reading-list summary b::after { content: ' ＋'; color: var(--cha); }.culture-reading-list details[open] summary b::after { content: ' −'; }
+.culture-reading-list details > div { margin: 0 0 22px 50px; padding-left: 15px; border-left: 1px solid var(--cha); max-width: 84ch; }
+.culture-reading-list details > div > p:not(.culture-era) { color: var(--ink-2); line-height: 1.95; font-size: 12px; margin-top: 7px; }
+.culture-journey-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.culture-journey-stats > a, .culture-journey-stats > button { display: flex; flex-direction: column; align-items: flex-start; background: var(--paper-2); color: var(--ink); border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 22px 24px; text-align: left; }
+.culture-journey-stats strong { font: 42px/1.2 Georgia, serif; color: var(--qing); font-variant-numeric: tabular-nums; }
+.culture-journey-stats span { font-size: 11px; color: var(--ink-2); margin: 5px 0 20px; }.culture-journey-stats b { font-weight: 500; font-size: 11px; color: var(--qing); margin-top: auto; }
+.culture-journey-stats > a:hover, .culture-journey-stats > button:hover { transform: translateY(-2px); }
+.culture-journey-recent { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 22px; margin-top: 21px; font-size: 12px; }.culture-journey-recent > span { color: var(--ink-2); }.culture-journey-recent a { color: var(--qing); text-decoration: underline; text-underline-offset: 4px; }
+.culture-journey-empty { color: var(--ink-2); font-size: 12px; line-height: 1.9; padding: 18px 0 5px; }
+.culture-local-note { font-size: 10px; color: var(--ink-2); margin-top: 15px; }
+.culture-next-compact { padding-bottom: 0; }.culture-next-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 20px; }.culture-next-links a { display: flex; flex-direction: column; gap: 7px; font-size: 12px; padding: 15px; color: var(--qing); }.culture-next-links span { color: var(--cha); font-family: var(--serif); }.culture-next-links b { font-weight: 500; }.culture-next-links a:hover { background: var(--paper-2); }
+.culture-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 800px) {
+  .culture-door { min-height: 0; grid-template-columns: 1.1fr .9fr; padding-top: 20px; gap: 16px; }
+  .culture-door h1 { font-size: 64px; }.culture-orbit-caption { font-size: 9px; bottom: -24px; }
+  .culture-heritage-copy { padding: 18px; }.culture-heritage-copy h3 { font-size: 21px; }
+  .culture-food-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.culture-food-intro { grid-template-columns: 135px minmax(0, 1fr); }
+  .culture-narrative-lines { gap: 18px; }.culture-narrative-lines h3 { font-size: 18px; }
+  .culture-journey-stats { gap: 12px; }.culture-journey-stats > a, .culture-journey-stats > button { padding: 18px; }
+}
+@media (max-width: 600px) {
+  .culture-door { display: flex; flex-direction: column; align-items: stretch; padding: 15px 0 44px; gap: 0; }.culture-door-copy { padding: 0; }
+  .culture-door h1 { font-size: clamp(58px, 16vw, 72px); margin: 15px 0 18px; }.culture-door h1 span { display: inline; margin: 0; }
+  .culture-door-description { max-width: none; font-size: 12px; margin: 16px 0 22px; }.culture-door-deck { font-size: 20px; }
+  .culture-enter { font-size: 12px; min-height: 46px; gap: 15px; }.culture-skip { min-height: 42px; }
+  .culture-orbit { align-self: center; max-width: 300px; margin-top: 15px; }.culture-orbit-caption { font-size: 10px; }
+  .culture-legend { gap: 12px; padding: 18px 15px; }.culture-small-seal { width: 30px; height: 44px; font-size: 13px; }.culture-legend h2 { font-size: 17px; }.culture-legend p { font-size: 12px; }
+  .culture-section { margin-top: 42px; }.culture-section-head { grid-template-columns: 32px minmax(0, 1fr); gap: 12px; margin-bottom: 22px; }.culture-section-number { font-size: 17px; }.culture-section-head h2 { font-size: 23px; }.culture-section-head p { font-size: 12px; }
+  .culture-chronicle { grid-template-columns: 1fr; gap: 0; }.culture-chronicle li { grid-template-columns: 25px minmax(0, 1fr); gap: 10px; padding: 18px 0; }.culture-chronicle h3 { font-size: 18px; }.culture-chronicle li:last-child { padding: 18px 0; }.culture-classic-figure { flex-wrap: wrap; }
+  .culture-narrative-lines { grid-template-columns: 1fr; gap: 22px; }.culture-narrative-lines h3 { margin: 8px 0; font-size: 21px; }.culture-narrative-lines p { margin-bottom: 12px; }
+  .culture-next { margin-top: 42px; padding-top: 30px; }.culture-next > h2 { font-size: 23px; }
+  .culture-act-head { padding: 18px 0 26px; gap: 10px; }.culture-act-head h1 { font-size: clamp(33px, 9vw, 42px); letter-spacing: .05em; margin-bottom: 13px; }.culture-act-deck { font-size: 14px; }.culture-act-glyph { font-size: 100px; }
+  .culture-local-nav { gap: 0 19px; }.culture-local-nav a { min-height: 40px; font-size: 11px; }
+  .culture-heritage-grid { grid-template-columns: 1fr; gap: 24px; }.culture-heritage-copy { padding: 18px 16px 20px; }.culture-heritage-copy h3 { font-size: 23px; }.culture-heritage-copy summary { min-height: 38px; display: list-item; }
+  .culture-food-intro { grid-template-columns: 1fr; gap: 10px; padding: 17px; }.culture-food-intro strong { font-size: 35px; }
+  .culture-food-controls { grid-template-columns: 1fr; gap: 12px; }.culture-food-controls input { font-size: 16px; }.culture-food-controls select { font-size: 14px; }
+  .culture-food-grid { grid-template-columns: 1fr; gap: 9px; }.culture-food-card { padding: 13px 13px 6px; }.culture-food-identity h3 { font-size: 17px; }.culture-food-identity .culture-era { font-size: 11px; }.culture-food-source .culture-source { font-size: 10px; }.culture-food-visual { height: 43px; }
+  .culture-food-pages { gap: 12px; }.culture-food-pages button { min-height: 44px; }
+  .culture-reading-list summary { grid-template-columns: 22px minmax(0, 1fr); gap: 5px 9px; padding: 15px 0; }.culture-reading-list summary h3 { font-size: 17px; }.culture-reading-list summary b { grid-column: 2; text-align: left; }.culture-reading-list details > div { margin-left: 30px; padding-left: 10px; }
+  .culture-journey-stats { grid-template-columns: 1fr; gap: 10px; }.culture-journey-stats > a, .culture-journey-stats > button { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 4px 12px; padding: 16px; align-items: center; }.culture-journey-stats strong { grid-row: 1 / 3; font-size: 36px; }.culture-journey-stats span { margin: 0; }.culture-journey-stats b { margin: 0; }
+  .culture-next-links { grid-template-columns: 1fr; gap: 5px; }.culture-next-links a { flex-direction: row; justify-content: space-between; align-items: center; padding: 13px; }
+}
+@media (max-width: 360px) { .culture-act-glyph { display: none; }.culture-door h1 { font-size: 56px; }.culture-kicker { font-size: 10px; letter-spacing: .14em; } }
+@media (prefers-reduced-motion: reduce) { .culture-orbit-stars { animation: none; }.culture-exhibit a, .culture-exhibit button, .culture-exhibit input, .culture-exhibit select, .culture-exhibit summary { transition: none; }.culture-exhibit a:hover, .culture-exhibit button:hover, .culture-exhibit a:active { transform: none; } }

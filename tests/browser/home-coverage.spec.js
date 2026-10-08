@@ -2,6 +2,8 @@ import {test,expect} from '@playwright/test';
 
 test('coverage chart links to bounded, correctly filtered knowledge-card pages',async({page})=>{
  await page.goto('/#/home');
+ await expect(page.locator('#collectionCoverage')).not.toHaveAttribute('open','');
+ await page.locator('#collectionCoverage > summary').click();
  await expect(page.locator('#homeCoverageChart canvas')).toBeVisible();
  const expected=await page.evaluate(()=>window.HERBAL_DATA_COVERAGE);
  const summary=page.locator('#homeCoverageSummary');
@@ -23,12 +25,12 @@ test('coverage chart links to bounded, correctly filtered knowledge-card pages',
  await expect(page.locator('#herbResultCount')).toContainText(expected.featuredCards+' 味');
 });
 
-test('homepage sections share the theme surface and secondary navigation is reduced',async({page})=>{
+test('homepage guide and source sections keep coherent theme surfaces without duplicate navigation',async({page})=>{
  await page.goto('/#/home');
- await expect(page.locator('#mainNav > a')).toHaveCount(4);
+ await expect(page.locator('#mainNav > a')).toHaveCount(7);
  await expect(page.locator('#navMore')).toHaveCount(0);
  for(let i=0;i<3;i++){
-  const colors=await page.locator('.home-dashboard,.home-modules,.home-food,.home-culture,.home-classics').evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));
+  const colors=await page.locator('.home-dashboard,.home-source-band').evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));
   expect(new Set(colors).size).toBe(1);
   expect(colors[0]).toBe('rgba(0, 0, 0, 0)');
   await page.locator('#themeToggle').click();

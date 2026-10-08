@@ -33,10 +33,11 @@
     targets.forEach(node => {
       if (!node || node.dataset.blurDone) return;
       node.dataset.blurDone = '1';
-      const chars = (node.textContent || '').trim().split('');
+      const chars = Array.from(node.childNodes).flatMap(child => child.nodeName === 'BR' ? ['\n'] : Array.from(child.textContent || ''));
       if (reduce || chars.length < 2) return;
       node.textContent = '';
       chars.forEach((ch, i) => {
+        if (ch === '\n') { node.append(document.createElement('br')); return; }
         const span = document.createElement('span');
         span.className = 'blur-char';
         span.textContent = ch;

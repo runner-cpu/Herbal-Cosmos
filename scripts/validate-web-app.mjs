@@ -141,7 +141,7 @@ export function validateWebApp({ baseDir = root } = {}) {
     catch (error) { add('manifest-json', 'manifest.webmanifest is invalid JSON: ' + error.message); }
   }
   if (manifest) {
-    if (manifest.start_url !== './#/home') add('manifest-start', 'manifest start_url must be ./#/home');
+    if (manifest.start_url !== './#/intro') add('manifest-start', 'manifest start_url must be ./#/intro');
     if (manifest.scope !== './') add('manifest-scope', 'manifest scope must be ./');
     if (manifest.display !== 'standalone') add('manifest-display', 'manifest display must be standalone');
     if (!/^#[0-9a-f]{6}$/i.test(manifest.theme_color || '') || !/^#[0-9a-f]{6}$/i.test(manifest.background_color || '')) add('manifest-color', 'manifest colors must be six-digit hex values');

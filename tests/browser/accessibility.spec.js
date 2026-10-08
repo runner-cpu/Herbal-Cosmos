@@ -56,14 +56,14 @@ test('the favorites toggle opens the drawer without changing routes', async ({ p
 test('home route actions remain native keyboard links', async ({ page }) => {
   await page.goto('/#/home');
   const destinations = new Map([
-    ['探索本草', '#/herbs'],
-    ['进入配伍网络', '#/formula']
+    ['打开本草图鉴', '#/herbs'],
+    ['续读第二幕 · 道', '#/qiwei']
   ]);
   const hero = page.locator('.hero-overlay');
   for (const [name, href] of destinations) {
     await expect(hero.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
-  await hero.getByRole('link', { name: '探索本草', exact: true }).focus();
+  await hero.getByRole('link', { name: '打开本草图鉴', exact: true }).focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(new RegExp('#/herbs$'));
 });
@@ -77,12 +77,12 @@ test('legacy saved links recover to the home route and open the drawer', async (
 
 test('home chapter rail follows the consolidated reading path', async ({ page }) => {
   await page.goto('/#/home');
-  await expect(page.locator('[data-home-chapter-current]')).toHaveText('本草档案');
-  await page.locator('[data-home-chapter="home-food"]').click();
-  await expect(page).toHaveURL(/#\/home\?anchor=home-food$/);
-  await expect(page.locator('[data-home-chapter-current]')).toHaveText('食养同源');
-  await expect(page.locator('[data-home-chapter-progress]')).toHaveText('3 / 5');
-  await expect(page.locator('[data-home-chapter="home-food"]')).toHaveAttribute('aria-current', 'location');
+  await expect(page.locator('[data-home-chapter-current]')).toHaveText('文化导览');
+  await page.locator('[data-home-chapter="home-collection"]').click();
+  await expect(page).toHaveURL(/#\/home\?anchor=home-collection$/);
+  await expect(page.locator('[data-home-chapter-current]')).toHaveText('馆藏账本');
+  await expect(page.locator('[data-home-chapter-progress]')).toHaveText('3 / 4');
+  await expect(page.locator('[data-home-chapter="home-collection"]')).toHaveAttribute('aria-current', 'location');
 });
 
 test('favorites drawer is modal and traps focus', async ({ page }, testInfo) => {
@@ -124,18 +124,19 @@ test('favorites drawer closes with Escape and returns focus', async ({ page }) =
   await expect(trigger).toBeFocused();
 });
 
-test('classic timeline entries open their native dialog from the keyboard', async ({ page }) => {
-  await page.goto('/#/home');
-  const entry = page.locator('#homeClassicTimeline .cl-item').first();
-  await expect(entry).toHaveAttribute('tabindex', '0');
-  await entry.focus();
+test('heritage classic reading notes open and close with the native keyboard disclosure', async ({ page }) => {
+  await page.goto('/#/heritage?anchor=heritage-classics');
+  const entry = page.locator('#heritage-classics .culture-reading-list details').nth(1);
+  const summary = entry.locator('summary');
+  await expect(entry).not.toHaveAttribute('open', '');
+  await summary.focus();
   await page.keyboard.press('Enter');
-  const dialog = page.locator('#classicDetail');
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('.classic-detail-close')).toBeFocused();
-  await page.keyboard.press('Escape');
-  await expect(dialog).toBeHidden();
-  await expect(entry).toBeFocused();
+  await expect(entry).toHaveAttribute('open', '');
+  await expect(entry.locator('.culture-era')).toBeVisible();
+  await expect(summary).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(entry).not.toHaveAttribute('open', '');
+  await expect(summary).toBeFocused();
 });
 
 test('related formulas expose a native keyboard link to the network view', async ({ page }) => {

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import vm from 'node:vm';
 import { favoriteCount } from '../assets/js/components/saved-drawer.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -39,7 +40,7 @@ test('shell publishes install, sharing, structured-data, and privacy metadata', 
 
 test('manifest and branded 404 retain project-relative navigation', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
-  assert.equal(manifest.start_url, './#/home');
+  assert.equal(manifest.start_url, './#/intro');
   assert.equal(manifest.scope, './');
   assert.equal(manifest.display, 'standalone');
   assert.ok(manifest.icons.some(icon => icon.src === 'assets/icons/app-icon-192.png' && icon.sizes === '192x192'));
@@ -58,7 +59,18 @@ test('dynamic collection counts start in a loading state instead of zero', () =>
   assert.match(html, /data-catalog-count[^>]*>—</);
   assert.match(html, /id="catalogAtlasCount"[^>]*>—</);
   assert.match(html, /data-featured-count[^>]*>—</);
-  assert.match(html, /data-food-count[^>]*>—</);
+});
+
+test('heritage directory displays its actual collection size instead of a zero placeholder', () => {
+  const host = { innerHTML: '', addEventListener() {} };
+  const sandbox = {
+    window: { FOODS: [{ name: '山药' }, { name: '丁香' }, { name: '莲子' }], addEventListener() {} },
+    document: { getElementById: id => id === 'heritageExhibit' ? host : null, addEventListener() {} }
+  };
+  vm.runInNewContext(fs.readFileSync(path.join(root, 'assets/js/pages/culture.js'), 'utf8'), sandbox);
+  sandbox.window.HerbalCulture.renderHeritage();
+  assert.match(host.innerHTML, /<strong>3<\/strong><span>种目录物质<\/span>/);
+  assert.doesNotMatch(host.innerHTML, /<strong>0<\/strong><span>种目录物质<\/span>/);
 });
 
 test('catalog and saved empty states provide a real next action', () => {

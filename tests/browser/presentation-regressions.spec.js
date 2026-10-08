@@ -10,7 +10,7 @@ test('collection counts survive theme changes during and after count animation',
   await page.evaluate(() => window.HerbalTheme.setTheme('day'));
   await expect(page.locator('#homeKpis strong')).toHaveText(expected);
   await page.goto('/#/herbs');
-  await page.locator('.brand').click();
+  await page.goto('/#/home');
   await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'home');
   await expect(page.locator('#homeKpis strong')).toHaveText(expected);
   await page.evaluate(() => window.scrollTo(0, 1000));
@@ -22,7 +22,8 @@ test('collection counts survive theme changes during and after count animation',
 test('night panels use dark surfaces and readable text', async ({ page }) => {
   await page.goto('/#/home');
   await page.evaluate(() => window.HerbalTheme.setTheme('night'));
-  const surfaces = await page.locator('.home-kpis,.home-coverage,.classic-timeline.compact,footer').evaluateAll(elements => elements.map(el => {
+  await page.locator('#collectionCoverage > summary').click();
+  const surfaces = await page.locator('.home-kpis,.home-coverage,footer').evaluateAll(elements => elements.map(el => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     context.fillStyle = getComputedStyle(el).backgroundColor;
@@ -68,7 +69,7 @@ test('a failed licensed image recovers to a named placeholder', async ({ page })
 });
 
 test('formula directory is bounded, searchable and keeps every formula reachable', async ({ page }) => {
-  await page.goto('/#/formula');
+  await page.goto('/#/formula?view=directory');
   await expect(page.locator('#formulaCards .formula-card')).toHaveCount(12);
   await expect(page.locator('#formulaDirectoryCount')).toContainText('100 / 100');
   const first = await page.locator('#formulaCards .formula-card').first().textContent();
@@ -78,6 +79,8 @@ test('formula directory is bounded, searchable and keeps every formula reachable
   await expect(page.locator('#formulaCards .formula-card')).toHaveCount(1);
   await page.locator('#formulaCards .formula-card').click();
   await expect(page.locator('#formulaInspector h2')).toHaveText('六味地黄丸');
+  await expect(page.locator('#formulaGraphView')).toBeVisible();
+  await page.locator('[data-formula-view="directory"]').click();
   await page.locator('#formulaDirectorySearch').fill('不存在的方剂');
   await expect(page.locator('#formulaCards .empty')).toBeVisible();
   await page.locator('#formulaDirectorySearch').fill('');
@@ -88,13 +91,13 @@ test('syndrome view has one navigation owner and anchors clear both sticky rails
   await page.goto('/#/formula?view=zheng');
   await expect(page.locator('.nav-more a[href*="view=zheng"]')).toHaveCount(0);
   await expect(page.locator('[data-route-link="formula"]')).toHaveAttribute('aria-current', 'page');
-  await expect(page.locator('.nav-more summary')).not.toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('#mainNav [aria-current="page"]')).toHaveCount(1);
   await expect(page.locator('#formulaZhengView')).toBeVisible();
   await page.goto('/#/herb?id=gancao');
-  await page.locator('.brand').click();
-  await page.locator('[data-home-chapter="home-classics"]').click();
+  await page.goto('/#/home');
+  await page.locator('[data-home-chapter="home-sources"]').click();
   await expect.poll(() => page.evaluate(() => {
-    const target = document.getElementById('home-classics').getBoundingClientRect();
+    const target = document.getElementById('home-sources').getBoundingClientRect();
     const nav = document.querySelector('.home-chapter-nav').getBoundingClientRect();
     return target.top - nav.bottom;
   })).toBeGreaterThanOrEqual(10);

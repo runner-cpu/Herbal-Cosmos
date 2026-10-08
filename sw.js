@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v18-20261008-layout-and-framework';
+const CACHE_VERSION = 'herbal-cosmos-v19-20261008-cultural-journey';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -17,6 +17,12 @@ const PRECACHE_URLS = Object.freeze([
   './assets/css/site.css',
   './assets/css/components.css',
   './assets/css/home.css',
+  './assets/css/culture.css',
+  './assets/css/cultural-charts.css',
+  './assets/css/journey.css',
+  './assets/js/lib/culture-semantics.js',
+  './assets/js/lib/culture-learning.js',
+  './assets/js/pages/culture.js',
   './assets/js/lib/data-coverage.browser.js',
   './assets/js/lib/insight-aggregates.browser.js',
   './assets/vendor/echarts.min.js',

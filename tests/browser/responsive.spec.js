@@ -8,13 +8,17 @@ test('mobile atlas keeps touch canvas and context controls reachable', async ({ 
   await expect(page.locator('#globalSearch')).toBeVisible();
 });
 
-test('theme control toggles between day and night', async ({ page }) => {
+test('theme control cycles day, night and ink with an accessible next-action label', async ({ page }) => {
   await page.goto('/#/home');
   const button = page.locator('#themeToggle');
   await expect(button).toBeVisible();
   await expect(button.locator('[data-theme-label]')).toHaveText('夜读');
   await button.click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'night');
+  await expect(button.locator('[data-theme-label]')).toHaveText('古籍');
+  await expect(button).toHaveAttribute('aria-label', '切换到古籍主题');
+  await button.click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'ink');
   await expect(button.locator('[data-theme-label]')).toHaveText('日间');
   await expect(button).toHaveAttribute('aria-label', '切换到日间主题');
   await button.click();
@@ -22,15 +26,17 @@ test('theme control toggles between day and night', async ({ page }) => {
   await expect(button.locator('[data-theme-label]')).toHaveText('夜读');
 });
 
-test('homepage exposes audited dataset counts and all official food-directory entries', async ({ page }) => {
+test('collection ledger exposes audited counts and the heritage directory keeps all food entries reachable', async ({ page }) => {
   await page.goto('/#/home');
-  await expect(page.locator('[data-food-count]').first()).toHaveText('106');
   const cards=await page.evaluate(()=>window.HERBS.filter(h=>!['formula-material','directory-only'].includes(h.kind)).length);
   expect(cards).toBe(902);
   await expect(page.locator('[data-featured-count]').first()).toHaveText(cards.toLocaleString('zh-CN'));
   await expect(page.locator('[data-catalog-count]').first()).toHaveText(/^8,818$/);
-  await page.locator('#homeFoodExpand').click();
-  await expect(page.locator('#homeFoodStrip .home-food-card')).toHaveCount(106);
+  await page.goto('/#/heritage?anchor=heritage-food');
+  await expect(page.locator('[data-route="heritage"]')).toBeVisible();
+  await expect(page.locator('#heritage-food')).toContainText('106');
+  await expect(page.locator('#heritageFoodStatus')).toContainText('找到 106 条');
+  await expect(page.locator('#heritageFoodGrid .culture-food-card')).toHaveCount(12);
 });
 
 test('favorite action keeps navigation badge and drawer in sync', async ({ page }) => {
@@ -46,7 +52,7 @@ test('favorite action keeps navigation badge and drawer in sync', async ({ page 
 
 test('320px shell and core routes stay within the viewport', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });
-  for (const route of ['home', 'herbs', 'qiwei', 'formula', 'learn']) {
+  for (const route of ['intro', 'home', 'herbs', 'qiwei', 'formula', 'heritage', 'learn']) {
     await page.goto('/#/' + route);
     await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
     expect(await page.evaluate(() => document.documentElement.scrollWidth), route + ' overflow').toBeLessThanOrEqual(321);
@@ -75,7 +81,7 @@ test('herb context bar stays a horizontal rail on small screens', async ({ page 
 
 test('375px routes do not create document or chart overflow', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
-  for (const route of ['home', 'herbs', 'qiwei', 'formula']) {
+  for (const route of ['intro', 'home', 'herbs', 'qiwei', 'formula', 'heritage']) {
     await page.goto('/#/' + route);
     await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
     const widths = await page.evaluate(() => ({
@@ -115,7 +121,7 @@ test('desktop homepage keeps the featured grid within the viewport', async ({ pa
 test('375px shell controls meet the minimum touch target', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/#/home');
-  for (const selector of ['#savedDrawerToggle', '#hamburger']) {
+  for (const selector of ['#savedDrawerToggle', '#themeToggle', '#hamburger']) {
     const box = await page.locator(selector).boundingBox();
     expect(box?.width, selector + ' width').toBeGreaterThanOrEqual(44);
     expect(box?.height, selector + ' height').toBeGreaterThanOrEqual(44);
@@ -126,13 +132,13 @@ test('375px consolidated formula views keep the switch usable and within the vie
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/#/formula');
   const buttons = page.locator('.formula-view-switch button');
-  await expect(buttons).toHaveCount(2);
+  await expect(buttons).toHaveCount(4);
   for (let index = 0; index < await buttons.count(); index += 1) {
     const box = await buttons.nth(index).boundingBox();
     expect(box?.width).toBeGreaterThanOrEqual(44);
     expect(box?.height).toBeGreaterThanOrEqual(44);
   }
-  await buttons.nth(1).click();
+  await page.locator('[data-formula-view="zheng"]').click();
   await expect(page.locator('#formulaZhengView')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(376);
 });

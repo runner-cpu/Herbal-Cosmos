@@ -12,12 +12,14 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-test('theme state is a two-mode day / night cycle with legacy migration', () => {
+test('theme state cycles through day, night and ink and migrates the former classic theme', () => {
   assert.equal(normalizeTheme('night'), 'night');
-  assert.equal(normalizeTheme('classic'), 'day', 'legacy values migrate to day');
+  assert.equal(normalizeTheme('classic'), 'ink', 'legacy classic values preserve the古籍 theme');
+  assert.equal(normalizeTheme('ink'), 'ink');
   assert.equal(normalizeTheme('unknown'), 'day');
   assert.equal(nextTheme('day'), 'night');
-  assert.equal(nextTheme('night'), 'day');
+  assert.equal(nextTheme('night'), 'ink');
+  assert.equal(nextTheme('ink'), 'day');
 });
 
 test('context links expose four distinct navigation targets', () => {
@@ -48,16 +50,18 @@ test('stamp text uses the canonical name and qi/wei pair', () => {
   assert.deepEqual(stampText({ name: '甘草', qi: '平', wei: '甘' }), { seal: '甘草', meta: '平·甘' });
 });
 
-test('shell exposes four substantial routes and keeps shallow content on the home page', () => {
+test('shell gives each cultural act a route and consolidates secondary collections', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   for (const asset of ['assets/css/components.css', 'assets/js/components/theme.js', 'assets/js/components/context-bar.js', 'assets/js/components/saved-drawer.js']) assert.ok(html.includes(asset));
   assert.equal(html.includes('<a href="#/saved" data-route-link="saved"'), false);
   assert.equal(html.includes('id="navMore"'), false);
-  for (const route of ['home', 'herbs', 'qiwei', 'formula']) assert.match(html, new RegExp('href="#/'+route+'" data-route-link="'+route+'"'));
+  for (const route of ['intro', 'home', 'herbs', 'qiwei', 'formula', 'heritage', 'learn']) assert.match(html, new RegExp('href="#/'+route+'" data-route-link="'+route+'"'));
   assert.ok(html.includes('data-route="learn"'), 'learning lab is a standalone page');
   assert.equal(html.includes('data-route="zheng"'), false);
   assert.match(html, /id="formulaZhengView"/);
-  assert.match(html, /href="#home-food"/);
+  assert.ok(html.includes('data-route="heritage"'), 'heritage has its own collection route');
+  assert.equal(html.includes('id="homeFoodStrip"'), false, 'food content belongs to heritage');
+  assert.ok(html.includes('id="collectionCoverage"'), 'collection boundaries remain accessible on demand');
   assert.ok(!html.includes('id="home-learning"'), 'home no longer hosts the learning workbench');
   assert.ok(html.includes('href="#/learn"'), 'nav exposes the learning lab');
 });
@@ -81,8 +85,8 @@ test('food overview keeps unaudited properties out of the matrix and never borro
   ]), { name: '丁香', detail: '目录收载 · 生活用法待补充', href: null, image: null, herb: null });
 });
 
-test('home chapter state exposes the five-section reading path', () => {
-  assert.deepEqual(homeChapterState(0), { index: 0, label: '本草档案', progress: '1 / 5', ratio: 20 });
-  assert.deepEqual(homeChapterState(99), { index: 4, label: '项目来源', progress: '5 / 5', ratio: 100 });
-  assert.deepEqual(homeChapterState(-4), { index: 0, label: '本草档案', progress: '1 / 5', ratio: 20 });
+test('home chapter state exposes the concise four-section reading path', () => {
+  assert.deepEqual(homeChapterState(0), { index: 0, label: '文化导览', progress: '1 / 4', ratio: 25 });
+  assert.deepEqual(homeChapterState(99), { index: 3, label: '项目来源', progress: '4 / 4', ratio: 100 });
+  assert.deepEqual(homeChapterState(-4), { index: 0, label: '文化导览', progress: '1 / 4', ratio: 25 });
 });

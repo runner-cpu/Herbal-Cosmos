@@ -16,7 +16,7 @@ test('rendered charts have readable names and generated evidence summaries', asy
     }
   }
 
-  await page.goto('/#/formula');
+  await page.goto('/#/formula?view=stats');
   const summaries = page.locator('.page.active .chart-summary');
   await expect.poll(() => summaries.count()).toBeGreaterThanOrEqual(4);
   await expect(summaries.first()).toContainText(/样本|方剂|药材/);

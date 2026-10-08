@@ -1,9 +1,9 @@
 {
   "name": "本草宇宙 · HERBAL COSMOS",
   "short_name": "本草宇宙",
-  "description": "中药名称索引、本草知识卡、方剂配伍与文化资料的可视化学习应用。",
+  "description": "沿源、道、术、传四幕阅读民族医药文化的数字展馆。",
   "lang": "zh-CN",
-  "start_url": "./#/home",
+  "start_url": "./#/intro",
   "scope": "./",
   "display": "standalone",
   "background_color": "#F6F1E7",

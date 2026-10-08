@@ -1,0 +1,42 @@
+/* 五行的语义色保留文字、边界与数量，避免只靠颜色传递信息。 */
+body {
+  --phase-wood: #3A7861; --phase-wood-border: #315F4D;
+  --phase-fire: #AD453A; --phase-fire-border: #873C33;
+  --phase-earth: #C4A243; --phase-earth-border: #8A722D;
+  --phase-metal: #F1EEE7; --phase-metal-border: #75827A;
+  --phase-water: #26383D; --phase-water-border: #60737A;
+  --phase-bland: #8D9688; --phase-bland-border: #62715E;
+  --phase-astringent: #89725A; --phase-astringent-border: #695846;
+  --phase-compound: #8B9394; --phase-compound-border: #657476;
+}
+body.night {
+  --phase-wood: #80B79B; --phase-wood-border: #649D80;
+  --phase-fire: #DE9B8E; --phase-fire-border: #C98376;
+  --phase-earth: #D8BE73; --phase-earth-border: #BCA154;
+  --phase-metal: #EFECE3; --phase-metal-border: #A3AEA5;
+  --phase-water: #40545B; --phase-water-border: #70888D;
+  --phase-bland: #A6B0A0; --phase-bland-border: #819879;
+  --phase-astringent: #BFA283; --phase-astringent-border: #A28C74;
+  --phase-compound: #A1ADAD; --phase-compound-border: #819899;
+}
+body.ink {
+  --phase-wood: #4C7960; --phase-wood-border: #365A47;
+  --phase-fire: #AA4A3D; --phase-fire-border: #853B31;
+  --phase-earth: #BE9F53; --phase-earth-border: #867036;
+  --phase-metal: #F2EBDD; --phase-metal-border: #8D897D;
+  --phase-water: #303C3D; --phase-water-border: #697978;
+}
+.five-phase-legend { display: flex; flex-wrap: wrap; gap: 9px 18px; list-style: none; padding: 0; margin: 14px 0 8px; }
+.five-phase-legend li { display: inline-flex; align-items: center; gap: 7px; color: var(--ink); font-size: 12px; line-height: 1.7; }
+.five-phase-legend i { width: 12px; height: 12px; flex: none; border: 1px solid var(--phase-border); background: var(--phase-color); border-radius: 2px; }
+.five-phase-legend [data-phase="wood"] { --phase-color: var(--phase-wood); --phase-border: var(--phase-wood-border); }
+.five-phase-legend [data-phase="fire"] { --phase-color: var(--phase-fire); --phase-border: var(--phase-fire-border); }
+.five-phase-legend [data-phase="earth"] { --phase-color: var(--phase-earth); --phase-border: var(--phase-earth-border); }
+.five-phase-legend [data-phase="metal"] { --phase-color: var(--phase-metal); --phase-border: var(--phase-metal-border); }
+.five-phase-legend [data-phase="water"] { --phase-color: var(--phase-water); --phase-border: var(--phase-water-border); }
+.five-phase-legend [data-phase="bland"] { --phase-color: var(--phase-bland); --phase-border: var(--phase-bland-border); }
+.five-phase-legend [data-phase="astringent"] { --phase-color: var(--phase-astringent); --phase-border: var(--phase-astringent-border); }
+.five-phase-note, .chart-cultural-note { font-size: 12px; line-height: 1.85; color: var(--ink-2); max-width: 76ch; margin: 8px 0 16px; }
+.chart-cultural-note { padding-left: 12px; border-left: 2px solid var(--cinnabar); }
+.chart-semantic-legend { margin: 8px 0 0; }
+@media (max-width: 600px) { .five-phase-legend { gap: 8px 12px; } .five-phase-legend li { font-size: 11px; } }

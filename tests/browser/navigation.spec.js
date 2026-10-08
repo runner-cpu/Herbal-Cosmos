@@ -8,11 +8,14 @@ async function openPrimaryNavigation(page) {
   }
 }
 
-test('primary navigation has four substantial entries', async ({ page }) => {
+test('primary navigation exposes the cultural journey and its two utilities directly', async ({ page }) => {
   await page.goto('/#/home');
-  await expect(page.locator('#mainNav > a')).toHaveCount(4);
+  await expect(page.locator('#mainNav > a')).toHaveCount(7);
   await openPrimaryNavigation(page);
-  await expect(page.locator('#navMore')).toHaveCount(0);
+  await expect(page.locator('.nav-more')).toHaveCount(0);
+  for (const route of ['intro', 'home', 'qiwei', 'formula', 'heritage', 'learn', 'herbs']) {
+    await expect(page.locator('#mainNav [data-route-link="' + route + '"]')).toBeVisible();
+  }
 });
 
 test('learning lab is a standalone route and legacy syndrome routes stay consolidated', async ({ page }) => {
@@ -39,13 +42,15 @@ test('formula views preserve syndrome and formula context in both directions', a
 
 test('route titles describe the active Chinese view', async ({ page }) => {
   const cases = [
-    ['home', '本草宇宙 · HERBAL COSMOS'],
+    ['intro', '序章 · 本草千年 · 本草宇宙'],
+    ['home', '源 · 本草宇宙'],
     ['herbs', '探索本草 · 本草宇宙'],
     ['herb?id=gancao', '甘草 · 本草宇宙'],
-    ['qiwei', '性味归经 · 本草宇宙'],
-    ['formula', '配伍网络 · 本草宇宙'],
-    ['formula?view=zheng', '病证药链 · 本草宇宙'],
-    ['learn', '学习舱 · 本草宇宙'],
+    ['qiwei', '道 · 性味归经 · 本草宇宙'],
+    ['formula', '术 · 配伍成方 · 本草宇宙'],
+    ['formula?view=zheng', '术 · 证候药链 · 本草宇宙'],
+    ['heritage', '传 · 薪火相传 · 本草宇宙'],
+    ['learn', '文化传习 · 本草宇宙'],
     ['route-that-does-not-exist', '路径未收录 · 本草宇宙']
   ];
   for (const [hash, title] of cases) {
@@ -78,33 +83,19 @@ test('malformed query encoding cannot stop route rendering', async ({ page }) =>
   expect(pageErrors).toEqual([]);
 });
 
-test('more menu closes accessibly and reflects its child route', async ({ page }) => {
+test('each cultural view has one navigation owner and the brand returns to the prologue', async ({ page }) => {
   await page.goto('/#/home');
-  const hamburger = page.locator('#hamburger');
-  if (await hamburger.isVisible()) {
-    await hamburger.click();
-    await expect(page.locator('#mainNav')).toHaveClass(/open/);
-  }
-  const menu = page.locator('.nav-more');
-  const summary = menu.locator('summary');
-
-  await summary.click();
-  await expect(menu).toHaveAttribute('open', '');
-  await page.keyboard.press('Escape');
-  await expect(menu).not.toHaveAttribute('open', '');
-  await expect(summary).toBeFocused();
-
-  await summary.click();
+  await openPrimaryNavigation(page);
   await page.locator('.brand').click();
-  await expect(menu).not.toHaveAttribute('open', '');
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'intro');
+  await expect(page.locator('#mainNav [aria-current="page"]')).toHaveCount(1);
+  await expect(page.locator('[data-route-link="intro"]')).toHaveAttribute('aria-current', 'page');
 
   await page.goto('/#/learn');
-  await expect(menu).toHaveClass(/active/);
-  await expect(summary).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('[data-route-link="learn"]')).toHaveAttribute('aria-current', 'page');
 
   await page.goto('/#/formula?view=zheng');
-  await expect(menu).not.toHaveClass(/active/);
-  await expect(summary).not.toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('#mainNav [aria-current="page"]')).toHaveCount(1);
   await expect(page.locator('[data-route-link="formula"]')).toHaveAttribute('aria-current', 'page');
 });
 

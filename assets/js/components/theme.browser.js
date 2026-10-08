@@ -1,7 +1,7 @@
-const THEMES = ['day', 'night'];
+const THEMES = ['day', 'night', 'ink'];
 
 function normalizeTheme(value) {
-  return THEMES.includes(value) ? value : 'day';
+  return value === 'classic' ? 'ink' : (THEMES.includes(value) ? value : 'day');
 }
 
 function nextTheme(value) {
@@ -16,7 +16,10 @@ function readStorage(key, fallback) {
 function setTheme(theme, target = typeof document !== 'undefined' ? document.documentElement : null) {
   const value = normalizeTheme(theme);
   if (target) target.dataset.theme = value;
-  if (typeof document !== 'undefined') document.body?.classList.toggle('night', value === 'night');
+  if (typeof document !== 'undefined') {
+    document.body?.classList.toggle('night', value === 'night');
+    document.body?.classList.toggle('ink', value === 'ink');
+  }
   try { localStorage.setItem('herbal_theme', value); } catch { /* storage is optional */ }
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('herbal:theme', { detail: { theme: value } }));
   return value;
