@@ -6,14 +6,14 @@ const colors=['#B23A2E','#C8A24A','#6B9E8A','#4A6A80'];
 const chartMap=new Map(), observers=new Map();
 const escHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const knownValue=value=>typeof value==='string'&&value.trim()&&!/^(?:未录入|未分类|暂无|未知)$/.test(value.trim());
-const herbs=()=>(window.HERBS||[]).filter(h=>h.kind!=='formula-material'), formulas=()=>window.FORMULAS||[];
+const herbs=()=>(window.HERBS||[]).filter(h=>!['formula-material','directory-only'].includes(h.kind)), formulas=()=>window.FORMULAS||[];
 const herbNameOf=id=>{
   const match=(window.HERBS||[]).find(item=>item.id===id);
   if(match?.name) return match.name;
   const catalog=(window.HERB_CATALOG||[]).find(entry=>entry.id===id||entry.name===id);
   return catalog?.name||id;
 };
-const link=(kind,id)=>'<a href="#/'+kind+'?'+(kind==='herb'?'id':'f')+'='+encodeURIComponent(id)+'">'+escHtml((kind==='herb'?herbs():formulas()).find(item=>item.id===id)?.name||id)+'</a>';
+const link=(kind,id)=>'<a href="#/'+kind+'?'+(kind==='herb'?'id':'f')+'='+encodeURIComponent(id)+'">'+escHtml((kind==='herb'?(window.HERBS||[]):formulas()).find(item=>item.id===id)?.name||'名称待考')+'</a>';
 function disposeInsights(){chartMap.forEach(instance=>instance.dispose());chartMap.clear();observers.forEach(observer=>observer.disconnect());observers.clear();}
 function chart(id,hasData=true){
  const el=document.getElementById(id);if(!el)return null;
@@ -36,14 +36,14 @@ function renderChartSummary(id,title,rows){
 function access(id,label,rows,select){const el=document.getElementById(id);if(!el)return;el.innerHTML='<label>'+escHtml(label)+'<select><option value="">选择一项查看记录</option>'+rows.map((row,i)=>'<option value="'+i+'">'+escHtml(row.label)+'</option>').join('')+'</select></label>';el.querySelector('select').onchange=e=>{if(e.target.value!=='')select(rows[Number(e.target.value)]);};}
 function bars(id,rows,select){const p=palette(),c=chart(id,rows.length>0);c?.setOption({tooltip:{trigger:'axis',confine:true},grid:{left:82,right:35,top:14,bottom:28},xAxis:{type:'value',minInterval:1,axisLabel:{color:p.muted},splitLine:{lineStyle:{color:p.line}}},yAxis:{type:'category',data:rows.map(r=>r.name||herbNameOf(r.id)),axisLabel:{color:p.text,fontSize:11}},dataZoom:rows.length>18?[{type:'slider',yAxisIndex:0,right:0,start:Math.max(0,100-1800/rows.length),end:100,width:12}]:[],series:[{type:'bar',data:rows.map(r=>r.count),itemStyle:{color:colors[2]},label:{show:true,position:'right',color:p.text}}]});c?.on('click',e=>select(rows[e.dataIndex]));return c;}
 function renderFormulaInsights(){
- const p=palette(),rankedTop=rankFormulaHerbs(formulas(),herbs()).slice(0,12),ranked=[...rankedTop].reverse();
+ const p=palette(),rankedTop=rankFormulaHerbs(formulas(),window.HERBS||[]).slice(0,12),ranked=[...rankedTop].reverse();
  bars('formulaFrequencyChart',ranked,r=>{location.hash='#/formula?herb='+encodeURIComponent(r.id);});
  renderChartSummary('formulaFrequencyChart','文字摘要：'+formulas().length+' 首方剂中的高频药材',rankedTop.map(row=>(row.name||row.id)+'：出现于 '+row.count+' 首方剂'));
  const roles=countFormulaRoles(formulas()),roleChart=chart('formulaRolesChart',roles.formulas.length>0);
  roleChart?.setOption({tooltip:{trigger:'axis',confine:true},legend:{textStyle:{color:p.muted}},grid:{left:40,right:18,top:42,bottom:100},dataZoom:[{type:'slider',bottom:4,height:18,start:0,end:Math.min(100,1200/Math.max(1,formulas().length))}],xAxis:{type:'category',data:roles.formulas.map(f=>f.name),axisLabel:{color:p.muted,rotate:45,fontSize:10}},yAxis:{type:'value',minInterval:1,axisLabel:{color:p.muted},splitLine:{lineStyle:{color:p.line}}},series:roles.roles.map((role,i)=>({name:role,type:'bar',stack:'roles',data:roles.formulas.map(f=>f[role]),itemStyle:{color:colors[i]}}))});
  renderChartSummary('formulaRolesChart','文字摘要：'+roles.formulas.length+' 首方剂的角色标注',roles.roles.map(role=>role+'药：'+roles.formulas.reduce((sum,formula)=>sum+(formula[role]||0),0)+' 条组成记录'));
  roleChart?.on('click',e=>{location.hash='#/formula?f='+encodeURIComponent(roles.formulas[e.dataIndex].id);});
- const matrix=buildCooccurrenceMatrix(formulas(),herbs());
+ const matrix=buildCooccurrenceMatrix(formulas(),window.HERBS||[]);
  const name=id=>matrix.items.find(item=>item.id===id)?.name||id;
  const pairName=cell=>name(cell.a)+(cell.a===cell.b?'':' × '+name(cell.b));
  const showPair=cell=>inspect('cooccurrenceEvidence',pairName(cell),'<p>共同出现于 '+cell.count+' 首方剂；同方重复只计一次。共现不代表配伍推荐。</p><div class="evidence-links">'+cell.formulaIds.map(id=>link('formula',id)).join('')+'</div>');

@@ -56,13 +56,14 @@ test('the favorites toggle opens the drawer without changing routes', async ({ p
 test('home route actions remain native keyboard links', async ({ page }) => {
   await page.goto('/#/home');
   const destinations = new Map([
-    ['探索星图', '#/herbs'],
+    ['探索本草', '#/herbs'],
     ['进入配伍网络', '#/formula']
   ]);
+  const hero = page.locator('.hero-overlay');
   for (const [name, href] of destinations) {
-    await expect(page.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+    await expect(hero.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
-  await page.getByRole('link', { name: '探索星图', exact: true }).focus();
+  await hero.getByRole('link', { name: '探索本草', exact: true }).focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(new RegExp('#/herbs$'));
 });

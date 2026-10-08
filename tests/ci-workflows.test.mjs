@@ -24,5 +24,7 @@ test('pages smoke waits for gh-pages and verifies the public versioned shell', (
   assert.match(smoke, /https:\/\/runner-cpu\.github\.io\/Herbal-Cosmos\//);
   assert.match(smoke, /expanded\.generated\.js/);
   assert.match(smoke, /HERBAL_DATA_VERSION/);
-  assert.match(smoke, /herbal-cosmos-v17-20261007-multi-angle-hardening/);
+  const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  const version = worker.match(/const CACHE_VERSION = '([^']+)'/)[1];
+  assert.ok(smoke.includes(version), 'Pages smoke must verify the current shell version');
 });

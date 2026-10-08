@@ -7,8 +7,8 @@ import {buildDataCoverage, hasCompleteFacts} from '../assets/js/lib/data-coverag
 import {collectRepeatedStrings, serializeSharedStrings} from './shared-string-codec.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const DATA_VERSION=9;
-const DATA_DATE='2026-10-03';
+const DATA_VERSION=10;
+const DATA_DATE='2026-10-08';
 const EXPANDED_CHUNK_COUNT=9;
 const EXPANDED_CHUNK_LIMIT=100_000;
 const EXPANDED_PAYLOAD_LIMIT=EXPANDED_CHUNK_LIMIT-512;

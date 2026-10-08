@@ -133,15 +133,16 @@ async function verify(manifest) {
 }
 
 async function main() {
-  if (args.includes('--help')) { console.log('Usage: node scripts/fetch-herb-images.mjs [--missing-runtime] [--limit N] [--provider inat|all] [--concurrency 1..3] [--input PATH] [--cache PATH] [--transport powershell|fetch] [--dry-run] [--verify]. --help never fetches or writes files.'); return; }
-  const known = new Set(['--missing-runtime','--limit','--provider','--concurrency','--input','--cache','--transport','--dry-run','--verify']);
+  if (args.includes('--help')) { console.log('Usage: node scripts/fetch-herb-images.mjs [--names NAME,NAME] [--missing-runtime] [--limit N] [--provider inat|all] [--concurrency 1..3] [--input PATH] [--cache PATH] [--transport powershell|fetch] [--dry-run] [--verify]. --help never fetches or writes files.'); return; }
+  const known = new Set(['--names','--missing-runtime','--limit','--provider','--concurrency','--input','--cache','--transport','--dry-run','--verify']);
   for (const arg of args) if (arg.startsWith('--') && !known.has(arg)) throw new Error('Unknown option: '+arg);
   if (args.includes('--verify')) return verify(JSON.parse(await fs.readFile(manifestPath, 'utf8')));
   const inputRaw = await fs.readFile(input, 'utf8');
   const inputData = JSON.parse(inputRaw);
   const rows = inputData.data || inputData;
   const missing = new Set(loadExpanded(root).HERBS.filter(h => !h.image && h.kind !== 'formula-material').map(h => h.name));
-  const candidates = args.includes('--missing-runtime') ? rows.filter(r => missing.has(r['中药名']) && extractTaxa(r).length) : rows;
+  const names = new Set(option('--names', '').split(',').map(name => name.trim()).filter(Boolean));
+  const candidates = rows.filter(row => (!names.size || names.has(row['中药名'])) && (!args.includes('--missing-runtime') || (missing.has(row['中药名']) && extractTaxa(row).length)));
   const sourceRows = maxRows ? candidates.slice(0, maxRows) : candidates;
   if (args.includes('--dry-run')) { console.log(JSON.stringify({ sourceRecords: rows.length, recordsWithTaxa: rows.filter(r => extractTaxa(r).length).length, uniqueTaxa: new Set(rows.flatMap(extractTaxa)).size, candidates: sourceRows.map(r => ({ name: r['中药名'], taxa: extractTaxa(r) })) }, null, 2)); return; }
   await fs.mkdir(cacheDir, { recursive: true });

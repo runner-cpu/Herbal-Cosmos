@@ -11,6 +11,7 @@ export const BROWSER_COPY_PAIRS = Object.freeze([
   ['assets/js/components/saved-drawer.js', 'assets/js/components/saved-drawer.browser.js'],
   ['assets/js/components/theme.js', 'assets/js/components/theme.browser.js'],
   ['assets/js/pages/home.js', 'assets/js/pages/home.browser.js'],
+  ['assets/js/pages/formula-directory.js', 'assets/js/pages/formula-directory.browser.js'],
   ['assets/js/pages/cross-navigation.js', 'assets/js/pages/cross-navigation.browser.js'],
   ['assets/js/pages/cosmos.js', 'assets/js/pages/cosmos.browser.js'],
   ['assets/js/core/catalog-loader.js', 'assets/js/core/catalog-loader.browser.js']
@@ -40,7 +41,7 @@ export function buildBrowserCopies({ baseDir = root, check = false, pairs = BROW
       errors.push(sourceRelative + ': ' + error.message);
       continue;
     }
-    const current = fs.existsSync(browserPath) ? fs.readFileSync(browserPath, 'utf8').replace(/\r\n?/g, '\n') : '';
+    const current = fs.existsSync(browserPath) ? fs.readFileSync(browserPath, 'utf8') : '';
     if (current === generated) continue;
     drifted.push(browserRelative.replaceAll('\\', '/'));
     if (!check) {

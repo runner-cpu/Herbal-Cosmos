@@ -4,7 +4,7 @@
   "source": {
     "upstream": "https://github.com/owlet0605/TCM_KG/blob/b0c619683f7263811e6027e1f5dff73be6362284/TCM_KG-DataBuilder/originData/data/tcmData.json",
     "commit": "b0c619683f7263811e6027e1f5dff73be6362284",
-    "sha256": "b93c6e4d814597a62fab574a49795806eb582a1ba0a27e1b2fb0592ced54e36c",
+    "sha256": "fdf6157284fd27276331215599249494836f2fae5fdce8bd0b65d6b6bc77f295",
     "origin": "zhongyoo.com records mirrored by TCM_KG"
   },
   "images": {
@@ -14214,6 +14214,27 @@
       "alt": "鹰不泊的来源生物参考图：Zanthoxylum avicennae。本图不代表药材的采收部位或炮制形态。",
       "sourceRowName": "鹰不泊",
       "sourceRowHash": "8a0e3cdb895fee58df1f184026be6cce4c942341a6aaae686519246f57d950da"
+    },
+    "八角茴香": {
+      "provider": "Wikimedia Commons",
+      "taxon": "Illicium verum",
+      "depicts": "Illicium verum",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Illicium_verum_-_Palmengarten_Frankfurt_-_DSC01885.JPG",
+      "author": "Daderot",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Illicium_verum_-_Palmengarten_Frankfurt_-_DSC01885.JPG/330px-Illicium_verum_-_Palmengarten_Frankfurt_-_DSC01885.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "matchedTitle": "File:Illicium verum - Palmengarten Frankfurt - DSC01885.JPG",
+      "matchMethod": "exact Commons species category",
+      "matchEvidence": "https://commons.wikimedia.org/wiki/Category:Illicium_verum",
+      "file": "images/herbs/open/illicium-verum-2ca9e7eab02cc2.jpg",
+      "sha256": "bd62fab7c17bf15b3a2ae0ebb034eeaba75a0a42619358302048e5e38fb7ba89",
+      "bytes": 84005,
+      "retrievedAt": "2026-10-08T04:22:16.490Z",
+      "sourceTaxon": "Illicium verum",
+      "alt": "八角茴香的来源生物参考图：Illicium verum。本图不代表药材的采收部位或炮制形态。",
+      "sourceRowName": "八角茴香",
+      "sourceRowHash": "bed1f20ba41117dfddb8237e96265291b8bb75204f7e1d5ca4e545e4b324e3c9"
     }
   },
   "exclusions": [
@@ -15603,13 +15624,6 @@
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     },
     {
-      "name": "八角茴香",
-      "taxa": [
-        "Illicium verum"
-      ],
-      "reason": "No exact-subject photograph with an accepted open license was retrieved."
-    },
-    {
       "name": "藜芦",
       "taxa": [
         "Veratum nigrum"
@@ -16014,5 +16028,5 @@
       "reason": "No exact-subject photograph with an accepted open license was retrieved."
     }
   ],
-  "updatedAt": "2026-10-04T11:19:15.826Z"
+  "updatedAt": "2026-10-08T04:22:16.599Z"
 }

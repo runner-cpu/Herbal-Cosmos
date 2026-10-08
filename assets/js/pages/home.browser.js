@@ -15,7 +15,7 @@ function foodCardModel(food = {}, herbs = []) {
   const enriched = food.enriched !== false;
   return {
     name: food.name || '',
-    detail: enriched ? `${food.flavor || '未录入'} · ${food.use || '目录收载'}` : '目录收载 · 属性未录入',
+    detail: enriched ? `${food.flavor || '待补充'} · ${food.use || '目录收载'}` : '目录收载 · 生活用法待补充',
     href: herb ? '#/herb?id=' + (herb.id || '') : null,
     image: herb?.image || null,
     herb
@@ -37,9 +37,7 @@ function renderFood() {
   if (strip) strip.innerHTML = foods.slice(0, window.__HERBAL_FOOD_EXPANDED__ ? foods.length : 12).map(food => {
     const model = foodCardModel(food, herbs);
     const stamp = model.herb ? (window.HerbalStamp?.renderStamp?.(model.herb, 'home-food-stamp') || '') : '';
-    const visual = model.image
-      ? '<div class="home-food-image"><img src="' + escapeHtml(model.image) + '" alt="' + escapeHtml(model.herb.imageAlt || model.name+'的来源生物参考图') + '" loading="lazy"></div>'
-      : '<div class="home-food-image home-food-directory-mark" aria-hidden="true"><span>录</span></div>';
+    const visual = '<div class="home-food-image">' + (window.herbImage?.(model.herb || { name: model.name }) || '') + '</div>';
     const content = visual + stamp + '<strong>' + escapeHtml(model.name) + '</strong><span>' + escapeHtml(model.detail) + '</span>';
     return model.href
       ? '<a class="home-food-card" href="' + escapeHtml(model.href) + '">' + content + '</a>'
@@ -121,7 +119,7 @@ function initHomeChapterNav() {
     if (document.querySelector('.page.active')?.dataset.route !== 'home') return;
     if (lockedAnchor && performance.now() < anchorLockUntil) return;
     lockedAnchor = '';
-    const threshold = window.scrollY + 132;
+    const threshold = window.scrollY + shellHeight() + nav.getBoundingClientRect().height + 24;
     let next = 0;
     sections.forEach((section, index) => {
       if (section.element.getBoundingClientRect().top + window.scrollY <= threshold) next = index;
@@ -164,13 +162,31 @@ function initHomeChapterNav() {
   updateFromScroll();
 }
 
+function shellHeight() {
+  return (document.querySelector('header')?.getBoundingClientRect().height || 0)
+    + (document.getElementById('herbContext')?.getBoundingClientRect().height || 0);
+}
+
+function initShellLayout() {
+  const update = () => {
+    const root = document.documentElement;
+    root.style.setProperty('--header-height', (document.querySelector('header')?.getBoundingClientRect().height || 0) + 'px');
+    root.style.setProperty('--shell-height', shellHeight() + 'px');
+  };
+  const observer = new ResizeObserver(update);
+  [document.querySelector('header'), document.getElementById('herbContext')].filter(Boolean).forEach(el => observer.observe(el));
+  window.addEventListener('resize', update);
+  update();
+}
+
 function scrollHomeAnchor(anchor) {
   if (!anchor) return;
   setTimeout(() => {
     const target = document.getElementById(anchor);
     if (!target) return;
-    window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - 84), behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  }, 260);
+    const rail = document.querySelector('.home-chapter-nav')?.getBoundingClientRect().height || 0;
+    window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - shellHeight() - rail - 18), behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }, 0);
 }
 
 function showClassicDetail(item) {
@@ -191,6 +207,8 @@ function showClassicDetail(item) {
 }
 
 function initHomeModules() {
+  initShellLayout();
+  window.HerbalHome = { scrollToAnchor: scrollHomeAnchor };
   let recent=[];
   try{const saved=JSON.parse(localStorage.getItem('herbal_viewed')||'[]');if(Array.isArray(saved))recent=saved;}catch{}
   const renderRecent=()=>{const el=document.getElementById('homeRecent');if(!el)return;const cards=recent.slice(-6).reverse().map(id=>(window.HERBS||[]).find(h=>h.id===id)).filter(Boolean);el.hidden=!cards.length;el.innerHTML='<strong>继续上次探索</strong>'+cards.map(h=>'<a href="#/herb?id='+encodeURIComponent(h.id)+'">'+escapeHtml(h.name)+' ↗</a>').join('');};

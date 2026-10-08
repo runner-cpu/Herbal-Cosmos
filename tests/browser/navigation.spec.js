@@ -103,8 +103,9 @@ test('more menu closes accessibly and reflects its child route', async ({ page }
   await expect(summary).toHaveAttribute('aria-current', 'page');
 
   await page.goto('/#/formula?view=zheng');
-  await expect(menu).toHaveClass(/active/);
-  await expect(summary).toHaveAttribute('aria-current', 'page');
+  await expect(menu).not.toHaveClass(/active/);
+  await expect(summary).not.toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('[data-route-link="formula"]')).toHaveAttribute('aria-current', 'page');
 });
 
 test('mobile menu exposes its state and Escape returns focus to the trigger', async ({ page }, testInfo) => {

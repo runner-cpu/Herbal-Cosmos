@@ -78,7 +78,7 @@ test('food overview keeps unaudited properties out of the matrix and never borro
   ]), [{ flavor: '甘平', use: '滋补', count: 1 }]);
   assert.deepEqual(foodCardModel({ name: '丁香', flavor: '未录入', use: '目录收载', enriched: false }, [
     { id: 'renshen', name: '人参', image: 'images/herbs/renshen.jpg' }
-  ]), { name: '丁香', detail: '目录收载 · 属性未录入', href: null, image: null, herb: null });
+  ]), { name: '丁香', detail: '目录收载 · 生活用法待补充', href: null, image: null, herb: null });
 });
 
 test('home chapter state exposes the five-section reading path', () => {

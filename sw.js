@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v17-20261007-multi-angle-hardening';
+const CACHE_VERSION = 'herbal-cosmos-v18-20261008-layout-and-framework';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -44,6 +44,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/components/saved-drawer.browser.js',
   './assets/js/components/theme.browser.js',
   './assets/js/pages/home.browser.js',
+  './assets/js/pages/formula-directory.browser.js',
   './assets/js/pages/cross-navigation.browser.js',
   './assets/js/pages/cosmos.browser.js',
   './assets/js/charts/insights.js',

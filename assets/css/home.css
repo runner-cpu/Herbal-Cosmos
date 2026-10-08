@@ -18,7 +18,7 @@
 .page[data-route="home"] .home-board-head p{color:var(--ink-2);text-align:left;max-width:34ch;font-size:14px;padding-top:10px}
 .page[data-route="home"] .home-kpis{border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:28px}
 .page[data-route="home"] .home-kpi{border-color:var(--line);padding:24px 18px;display:block;min-height:0}
-.page[data-route="home"] .home-kpi:first-child{padding-left:0}
+.page[data-route="home"] .home-kpi:first-child{padding-left:18px}
 .page[data-route="home"] .home-kpi:hover{background:var(--paper-2);transform:none}
 .page[data-route="home"] .home-kpi strong{color:var(--qing);font-size:clamp(30px,3.2vw,42px);font-variant-numeric:tabular-nums}
 .page[data-route="home"] .home-kpi span{font-size:13px;color:var(--ink)}
@@ -27,7 +27,7 @@
 .coverage-intro{padding-top:14px;max-width:36ch}
 .coverage-intro h3{font:600 clamp(22px,2.4vw,28px)/1.5 var(--serif);color:var(--qing);margin:9px 0}
 .coverage-intro a{font-size:12px;color:var(--qing);text-decoration:underline;text-underline-offset:4px;display:inline-flex;min-height:44px;align-items:center}
-#homeCoverageChart{height:220px;width:100%}
+#homeCoverageChart{height:240px;min-height:240px;width:100%}
 .coverage-controls{display:flex;flex-wrap:wrap;gap:6px 12px}
 .coverage-controls a{font-size:12px;min-height:40px;display:inline-flex;align-items:center;border-bottom:1px solid var(--line);color:var(--qing)}
 .coverage-controls a:hover{border-color:var(--qing)}
@@ -98,6 +98,16 @@
   border-color:var(--line);
 }
 .page[data-route="home"] .home-coverage { padding-left:18px; padding-right:18px; }
+.home-task-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}
+.home-task-links a{display:grid;gap:4px;padding:15px 18px;border:1px solid var(--line);border-radius:4px;color:var(--qing);background:var(--paper-2)}
+.home-task-links b{font:600 17px var(--serif)}
+.home-task-links span{font-size:12px;color:var(--ink-2)}
+.home-task-links a:hover{border-color:var(--celadon)}
+.home-kpi:focus-visible,.home-task-links a:focus-visible{outline:2px solid var(--jin);outline-offset:3px}
+.home-coverage>div{min-width:0}
+.page[data-route="home"] .home-kpi:nth-child(3){padding-left:18px}
+.home-dashboard,.home-featured-heading,.home-food,.home-classics,.home-source-band{scroll-margin-top:calc(var(--shell-height,64px) + 110px)}
+@media(max-width:768px){.home-task-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.home-task-links a{padding:14px 12px}.home-task-links b{font-size:16px}.page[data-route="home"] .home-coverage{padding:22px 14px}}
 .page[data-route="home"] .home-learning-workbench { padding:18px; }
 .page[data-route="home"] .home-food-card,
 .page[data-route="home"] .home-culture-card { border:1px solid var(--line); }

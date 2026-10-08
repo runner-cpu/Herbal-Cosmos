@@ -4,7 +4,7 @@ Source snapshot: TCM_KG b0c619683f7263811e6027e1f5dff73be6362284; original descr
 
 These are searched, openly licensed photographs of a source organism. They do not establish the identity of a harvested medicinal part, processing state, clinical indication or safety. Species aliases are accepted only when indexed by the image provider. Minerals and records without an unambiguous source taxon remain excluded. Runtime cards reference only entries in this manifest; earlier images without complete open-license metadata are excluded from runtime and replaced by placeholders.
 
-Coverage: 623 source records; 561 local image files. Remaining exclusions: 276.
+Coverage: 624 source records; 562 local image files. Remaining exclusions: 275.
 
 Reproduce: `node scripts/fetch-herb-images.mjs --input .tmp-v3/tcmData.json`; Windows uses PowerShell HTTP and other platforms use Node fetch. Limit concurrency to three; the importer caches API responses, retries once with backoff and resumes from the manifest. `--limit 30` creates a small working batch. `--verify` checks attribution fields, local files and SHA-256 hashes.
 
@@ -17,6 +17,7 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 | 艾叶 | Artemisia argyi | Dmitriy Bochkov | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/91087632) |
 | 桉叶油 | Eucalyptus globulus | Yoav Daniel Bar-Ness | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/30525680) |
 | 八角枫 | Alangium chinense | Zihao Wang | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/224029425) |
+| 八角茴香 | Illicium verum | Daderot | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Illicium_verum_-_Palmengarten_Frankfurt_-_DSC01885.JPG) |
 | 八角莲 | Dysosma pleiantha | teresa lo | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [iNaturalist](https://www.inaturalist.org/observations/41021171) |
 | 八楞木 | Saussurea japonica | Mason Brock (iNaturalist uploader) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/observations/262481517) |
 | 巴豆 | Croton tiglium | 葉子 | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [iNaturalist](https://www.inaturalist.org/photos/71607328) |
@@ -856,7 +857,6 @@ License terms are linked per image. CC BY-SA files retain their share-alike lice
 - 小茴香: Forniculum vulgare — No exact-subject photograph with an accepted open license was retrieved.
 - 山茱萸: Cornus oj-j — No exact-subject photograph with an accepted open license was retrieved.
 - 糯稻根: Oryza sativea — No exact-subject photograph with an accepted open license was retrieved.
-- 八角茴香: Illicium verum — No exact-subject photograph with an accepted open license was retrieved.
 - 藜芦: Veratum nigrum — No exact-subject photograph with an accepted open license was retrieved.
 - 藁本: Ligusticum sinense — No exact-subject photograph with an accepted open license was retrieved.
 - 葱白: Allium jistulosum — No exact-subject photograph with an accepted open license was retrieved.

@@ -8,7 +8,7 @@ const syndromePatches=[{"id":"feng-han","formulas":["mahuangtang","guizhitang","
 for(const z of syndromePatches){const i=ZHENGS.findIndex(x=>x.id===z.id);if(i>=0&&Array.isArray(z.formulas))ZHENGS[i]=Object.assign({},ZHENGS[i],{formulas:z.formulas});}
 Object.assign(SOURCE_MAP,{openMateria:{label:'公开本草资料',badge:'cha'},classicalFormula:{label:'原方文献',badge:'gray'},foodDirectory:{label:'国家食药物质目录',badge:'celadon'}});
 Object.assign(window,{HERBS,FORMULAS,ZHENGS,SOURCE_MAP});
-window.HERBAL_DATA_COVERAGE={"records":961,"featuredCards":902,"directoryOnlyCount":17,"completeFacts":803,"partialFacts":96,"legacyFacts":3,"formulaMaterialCount":42,"imageBacked":623,"placeholder":279,"sourceCovered":899,"originCovered":614,"meridianCovered":814,"taxonomyCovered":819,"imageCoverageRatio":0.6906873614190687,"factCoverageRatio":0.8902439024390244};
-window.HERBAL_DATA_VERSION={version:9,date:'2026-10-03',records:HERBS.length,featured:902,featuredCards:902,directoryOnly:17,formulas:FORMULAS.length,syndromes:ZHENGS.length};
+window.HERBAL_DATA_COVERAGE={"records":961,"featuredCards":902,"directoryOnlyCount":17,"completeFacts":803,"partialFacts":96,"legacyFacts":3,"formulaMaterialCount":42,"imageBacked":624,"placeholder":278,"sourceCovered":899,"originCovered":614,"meridianCovered":814,"taxonomyCovered":819,"imageCoverageRatio":0.6917960088691796,"factCoverageRatio":0.8902439024390244};
+window.HERBAL_DATA_VERSION={version:10,date:'2026-10-08',records:HERBS.length,featured:902,featuredCards:902,directoryOnly:17,formulas:FORMULAS.length,syndromes:ZHENGS.length};
 delete window.__HERBAL_EXPANDED__;
 })();

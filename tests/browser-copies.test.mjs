@@ -15,6 +15,7 @@ const pairs = [
   'components/saved-drawer',
   'components/theme',
   'pages/home',
+  'pages/formula-directory',
   'pages/cross-navigation',
   'pages/cosmos',
   'core/catalog-loader'

@@ -1,12 +1,46 @@
 /* Global shell components: context, stamp, saved drawer and two themes. */
-:root {
+:root, body {
   --surface-soft: color-mix(in srgb,var(--paper) 88%,var(--paper-2));
   --surface-raised: color-mix(in srgb,var(--card) 92%,var(--paper-2));
   --control-focus: var(--jin);
+  --on-accent: var(--paper);
 }
 
 .theme-icon { display:inline-grid; place-items:center; width:15px; height:15px; vertical-align:-3px; margin-right:4px; }
 .theme-icon svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; }
+#mainNav .nav-popover a{color:var(--ink)}
+#mainNav .nav-popover a:hover,#mainNav .nav-popover a.active{background:var(--paper-2);color:var(--qing)}
+.nav-more:not([open]) .nav-popover{display:none}
+.nav-more .nav-popover{background:var(--card)}
+
+/* Foreground follows the accent surface in both themes. */
+.atlas-toolbar button,.quiz-next,.app-update button,.catalog-pagination button.on,
+.filter-chip.on,.path-steps b,#toast{color:var(--on-accent)}
+body.night .filter-chip.on{background:var(--qing)}
+.home-source-actions a:hover,.saved-empty a:hover,.empty [data-switch-featured]:hover,
+#homeCultureExpand:hover,#homeFoodExpand:hover{color:var(--on-accent)}
+body.night .quiz-option.correct{background:#193b2b;color:#c2f1d2}
+body.night .quiz-option.wrong{background:#44241f;color:#ffd0c6}
+body.night footer{background:#09110d;color:var(--ink-2)}
+.herb-image-empty{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;background:var(--paper-2);color:var(--qing)}
+.herb-image-empty b{padding:0;font:600 clamp(24px,4vw,46px)/1.2 var(--serif)}
+.herb-image-empty small{display:block;font-size:12px;color:var(--ink-2)}
+.herb-image-empty.herb-thumb{display:flex;width:54px;height:54px;gap:2px}
+.herb-image-empty.herb-thumb b{padding:0;font-size:16px;letter-spacing:0}
+.herb-image-empty.herb-thumb small{display:block;font-size:9px;line-height:1.4}
+.herb-mobile-card .herb-image-empty.herb-thumb{width:64px;height:64px}
+.search-result .herb-image-empty.herb-thumb{width:32px;height:32px}
+.search-result .herb-image-empty.herb-thumb b{font-size:12px}
+.search-result .herb-image-empty.herb-thumb small{display:none}
+.formula-directory-toolbar{display:flex;align-items:end;gap:18px;margin:16px 0;color:var(--ink-2);font-size:12px;scroll-margin-top:calc(var(--shell-height,64px) + 18px)}
+.formula-directory-toolbar label{display:grid;gap:6px;width:min(100%,420px)}
+.formula-directory-toolbar input{min-height:44px;width:100%;border:1px solid var(--line);border-radius:4px;padding:9px 12px;color:var(--ink);background:var(--card);font:inherit}
+#formulaCards .formula-card{display:flex;flex-direction:column;align-items:start;text-align:left;gap:8px}
+#formulaCards .formula-card h3{font:600 19px var(--serif);color:var(--qing)}
+#formulaCards .formula-card p{font-size:12px;color:var(--ink-2);line-height:1.8}
+#formulaCards .formula-card small{font-size:12px;color:var(--ink-2)}
+#formulaCards .formula-card .formula-card-action{margin-top:auto;padding-top:8px;font-size:12px;color:var(--qing)}
+@media(max-width:768px){.formula-directory-toolbar{flex-wrap:wrap;gap:8px}.formula-directory-toolbar label{width:100%}}
 html[data-theme="night"] .theme-icon svg { transform:rotate(30deg); }
 
 .saved-drawer-toggle { position:relative; border:1px solid rgba(243,237,223,.28); background:rgba(255,255,255,.08); color:#F3EDDF; border-radius:7px; min-width:34px; height:32px; padding:0 8px; }
@@ -15,7 +49,7 @@ html[data-theme="night"] .theme-icon svg { transform:rotate(30deg); }
 .search-scope-hint { display:block; position:absolute; top:100%; right:0; margin-top:4px; width:max-content; max-width:280px; color:rgba(243,237,223,.72); font-size:10px; line-height:1.4; pointer-events:none; }
 .searchbox:focus-within .search-scope-hint { color:#F0CA77; }
 
-.herb-context { position:sticky; top:58px; z-index:44; background:var(--card); border-bottom:1px solid var(--line); box-shadow:0 2px 10px rgba(0,0,0,.08); }
+.herb-context { position:sticky; top:var(--header-height,64px); z-index:44; background:var(--card); border-bottom:1px solid var(--line); box-shadow:0 2px 10px rgba(0,0,0,.08); }
 .context-inner { max-width:1180px; min-height:52px; margin:0 auto; padding:7px 20px; display:flex; align-items:center; gap:18px; }
 .context-identity { display:flex; align-items:center; gap:10px; min-width:0; }
 .context-identity strong { font-family:var(--serif); color:var(--qing); font-size:15px; white-space:nowrap; }
@@ -61,7 +95,7 @@ body.saved-drawer-open { overflow:hidden; }
 
 .home-food,.home-culture { margin-top:42px; padding-top:28px; border-top:1px solid var(--line); }
 .home-anchor { display:block; height:0; scroll-margin-top:72px; }
-.home-chapter-nav { position:sticky; top:64px; z-index:20; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:20px; padding:11px 0 10px; border-bottom:1px solid var(--line); background:color-mix(in srgb,var(--paper) 94%,transparent); backdrop-filter:blur(12px); }
+.home-chapter-nav { position:sticky; top:var(--shell-height,64px); z-index:20; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:20px; padding:11px 0 10px; border-bottom:1px solid var(--line); background:var(--paper); }
 .home-chapter-meta { display:flex; align-items:baseline; gap:9px; min-width:166px; }
 .home-chapter-meta span { color:var(--celadon); font-size:10px; letter-spacing:1.4px; font-weight:700; }
 .home-chapter-meta strong { color:var(--qing); font:600 14px var(--serif); white-space:nowrap; }
@@ -140,7 +174,7 @@ body.saved-drawer-open { overflow:hidden; }
 .home-culture-copy h3 { margin:5px 0; color:var(--qing); font:600 16px var(--serif); }
 .home-culture-copy p { color:var(--ink-2); font-size:11px; line-height:1.6; }
 #homeCultureExpand,#homeFoodExpand { border:1px solid var(--qing); background:transparent; color:var(--qing); padding:6px 10px; font-size:12px; cursor:pointer; }
-#homeCultureExpand:hover,#homeFoodExpand:hover { background:var(--qing); color:#fff; }
+#homeCultureExpand:hover,#homeFoodExpand:hover { background:var(--qing); color:var(--on-accent); }
 .classic-timeline .cl-item { cursor:pointer; }
 .classic-timeline .cl-item:focus-visible,.classic-timeline .cl-item:hover { outline:2px solid var(--jin); outline-offset:-2px; }
 .classic-detail { width:min(480px,calc(100vw - 32px)); border:1px solid var(--line); background:var(--card); color:var(--ink); padding:26px; box-shadow:var(--shadow); }
@@ -167,7 +201,7 @@ body.saved-drawer-open { overflow:hidden; }
 .chart-summary summary:focus-visible { outline:2px solid var(--jin); outline-offset:3px; }
 
 @media (max-width:768px) {
-  .home-chapter-nav { top:58px; grid-template-columns:1fr auto; gap:8px 12px; padding:9px 0 8px; }
+  .home-chapter-nav { grid-template-columns:1fr auto; gap:8px 12px; padding:9px 0 8px; }
   .home-chapter-meta { min-width:0; }
   .home-chapter-links { grid-column:1/-1; grid-row:2; margin:0 -2px; }
   .home-chapter-meter { width:54px; }
@@ -240,7 +274,7 @@ body.saved-drawer-open { overflow:hidden; }
 .app-update { display:flex; width:min(620px,calc(100vw - 32px)); align-items:center; gap:10px; }
 .app-update[hidden],.app-status[hidden] { display:none; }
 .app-update span { flex:1; }
-.app-update button { min-height:40px; border:1px solid var(--qing); background:var(--qing); color:#fff; padding:7px 12px; border-radius:4px; }
+.app-update button { min-height:40px; border:1px solid var(--qing); background:var(--qing); color:var(--on-accent); padding:7px 12px; border-radius:4px; }
 .app-update button:last-child { background:transparent; color:var(--qing); }
 .app-update button:focus-visible { outline:2px solid var(--jin); outline-offset:2px; }
 .privacy-note { margin-top:10px; padding-top:9px; border-top:1px solid rgba(216,205,182,.28); color:#D8CDB6; line-height:1.7; }
@@ -334,7 +368,7 @@ body.night { background-image:radial-gradient(rgba(220,234,225,.05) 1px, transpa
 }
 
 /* —— 首页口径说明 —— */
-.evidence-note { max-width:1260px; margin:-8px auto 0; padding:0 24px 10px; font-size:12px; color:var(--ink-2); text-align:center; letter-spacing:.02em; }
+.evidence-note { max-width:1260px; margin:16px auto 24px; padding:0 24px; font-size:12px; line-height:1.85; color:var(--ink-2); text-align:center; letter-spacing:.02em; }
 
 /* —— 标题逐字模糊入场（BlurText）—— */
 .blur-title .blur-char { display:inline-block; opacity:0; filter:blur(10px); transform:translateY(10px); animation:blur-in .9s cubic-bezier(.2,.7,.3,1) forwards; }
