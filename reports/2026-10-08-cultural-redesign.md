@@ -1,6 +1,6 @@
 # 本草宇宙 · 文化赛道改版报告
 
-日期：2026-10-08。状态：文化架构、页面实施与本地总检已完成；远程结果将在发布后记录。
+日期：2026-10-08。状态：文化架构、页面实施、本地总检与GitHub Pages代码发布均已完成。
 
 ## 本轮目的
 
@@ -78,7 +78,17 @@ UNESCO针灸与藏医药浴条目读取返回HTTP200且标题对应。中国非�
 | 图表文字对比度 | 2,121个语义颜色组合与300个实际共现色块组合达到4.5 |
 | 版面实测 | 最终320、375、768、1001、1151、1440px × 三主题无横向溢出；顶栏按钮至少44px，标题保留换行；序章、首页、文化页与待补矩阵截图目视检查通过 |
 
-发布目标为GitHub `main`与`gh-pages`；Pages使用`gh-pages`根目录发布。远程工作流、提交与线上文件核对记录在发布完成后补充。
+代码发布提交为 [`e7cfb96ffeff1380fba670ccc76fc8da19ad5d43`](https://github.com/runner-cpu/Herbal-Cosmos/commit/e7cfb96ffeff1380fba670ccc76fc8da19ad5d43)，已以普通快进原子推送更新 `main`和`gh-pages`。本报告随后以独立文档提交归档，前端运行资产与该代码提交相同。
+
+| 远程验收 | 实际证据 |
+|---|---|
+| 完整质量门禁 | [Catalog quality](https://github.com/runner-cpu/Herbal-Cosmos/actions/runs/37742577144)成功，含确定性构建、数据、图片许可、Node与浏览器检查 |
+| Pages部署 | [pages build and deployment](https://github.com/runner-cpu/Herbal-Cosmos/actions/runs/37742576481)成功；Pages API记录该代码提交为`built` |
+| 线上冒烟 | [Pages smoke](https://github.com/runner-cpu/Herbal-Cosmos/actions/runs/37742577124)成功 |
+| 发布字节 | HTML、运行时、文化页、主题、五行语义、学习题、图表、CSS、manifest、SW、README、框架与报告等16个文件均HTTP200，SHA-256与提交字节一致 |
+| 实际线上浏览 | 序章、源、道、术的样本视图、传、传习、图鉴七入口均正确渲染；矩阵与角色图加载，水墨主题可切换，0页面JS异常 |
+
+在线展馆：[runner-cpu.github.io/Herbal-Cosmos/](https://runner-cpu.github.io/Herbal-Cosmos/)。
 
 ## 仍然存在的边界
 
