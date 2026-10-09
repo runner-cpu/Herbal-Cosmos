@@ -1,7 +1,7 @@
 # Third-party notices
 
 The optional, locally bundled `assets/vendor/cosmos-webgl.js` contains Three.js
-0.186.1. It is built reproducibly with esbuild 0.28.2 using `npm ci` followed by
+0.186.1. It is built reproducibly with esbuild 0.28.2 using `npm ci --ignore-scripts` followed by
 `npm run build:cosmos`. The bundle is requested only on HTTP(S) when the home
 scene needs an animated renderer; Canvas remains available without it. There
 are no CDN imports, React, GSAP or postprocessing dependencies.
