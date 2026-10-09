@@ -121,7 +121,7 @@
     let W = 0, H = 0, DPR = 1;
     let stars = [], dust = [];
     let rotY = 0, targetRotY = 0, scale = 1, targetScale = 1;
-    let dragging = false, lastX = 0, moved = 0;
+    let dragging = false, lastX = 0, lastY = 0, moved = 0;
     let hoverId = null, focusedId = null, panY = 0, targetPanY = 0;
     let running = true, animationFrame = 0, lastFrameAt = 0;
     let reading = DEFAULT_READING;
@@ -373,9 +373,11 @@
 
     canvas.addEventListener('pointerdown', event => {
       activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-      dragging = true; moved = 0; lastX = event.clientX;
+      if (activePointers.size === 1) moved = 0;
+      dragging = true; lastX = event.clientX; lastY = event.clientY;
       canvas.setPointerCapture(event.pointerId);
       if (activePointers.size === 2) {
+        moved = 20;
         const [a, b] = [...activePointers.values()];
         pinchDistance = Math.hypot(a.x - b.x, a.y - b.y);
       }
@@ -392,7 +394,7 @@
       if (dragging) {
         moved += Math.hypot(event.clientX - lastX, event.clientY - lastY);
         targetRotY += (event.clientX - lastX) * 0.006;
-        lastX = event.clientX;
+        lastX = event.clientX; lastY = event.clientY;
         if (moved > 5) { focusedId = null; targetPanY = 0; }
       } else {
         const rect = canvas.getBoundingClientRect();
@@ -405,10 +407,19 @@
       activePointers.delete(event.pointerId);
       dragging = activePointers.size > 0;
       if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
-      if (activePointers.size === 1) { const [point] = activePointers.values(); lastX = point.x; }
+      pinchDistance = 0;
+      if (activePointers.size === 1) { const [point] = activePointers.values(); lastX = point.x; lastY = point.y; }
     };
     canvas.addEventListener('pointerup', release);
-    canvas.addEventListener('pointercancel', release);
+    const cancel = event => {
+      moved = 20;
+      activePointers.clear(); dragging = false; pinchDistance = 0;
+      if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+    };
+    canvas.addEventListener('pointercancel', cancel);
+    canvas.addEventListener('lostpointercapture', event => {
+      if (activePointers.has(event.pointerId)) cancel(event);
+    });
     canvas.addEventListener('click', event => {
       if (moved > 5) return;
       const rect = canvas.getBoundingClientRect();
@@ -469,6 +480,9 @@
           particleCount: stars.length + dust.length,
           degradeLevel,
           reading,
+          rotation: rotY,
+          targetRotation: targetRotY,
+          dragging,
           spriteReadyMs
         };
       },

@@ -6,8 +6,8 @@ function contextLinks({ id }) {
   const value = encodeURIComponent(id || '');
   return [
     { href: '#/home?focus=star&id=' + value, label: '星图定位' },
-    { href: '#/qiwei?herb=' + value, label: '性味归经' },
-    { href: '#/formula?herb=' + value, label: '配伍网络' },
+    { href: '#/herbs?view=attributes&herb=' + value, label: '性味归经' },
+    { href: '#/herbs?section=formulas&herb=' + value, label: '配伍网络' },
     { href: '#/herb?id=' + value, label: '知识卡' }
   ];
 }

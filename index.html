@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="本草宇宙是一座民族医药文化数字展馆。沿源、道、术、传四幕，读典籍、看性味、解配伍、访非遗，参与本草文化传习。">
+<meta name="description" content="漫游星海、阅读文化长卷、检索本草图鉴。在本草宇宙认识草木、配伍与传承，保留可核对的资料来源。">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0C3028">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09110D">
 <meta property="og:title" content="本草宇宙 · HERBAL COSMOS">
-<meta property="og:description" content="一扇门、四幕文化旅程：源·本草宇宙，道·性味归经，术·配伍成方，传·薪火相传。">
+<meta property="og:description" content="漫游星海 · 文化长卷 · 本草图鉴。认识本草、理解配伍、追访传承，阅读有出处的文化展览。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://runner-cpu.github.io/Herbal-Cosmos/">
 <meta property="og:image" content="https://runner-cpu.github.io/Herbal-Cosmos/assets/og-cover.jpg">
@@ -20,7 +20,7 @@
 <meta property="og:image:alt" content="本草宇宙品牌横幅：朱砂印章与「本草宇宙」标题，数据可视化漫游中医药文化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="本草宇宙 · HERBAL COSMOS">
-<meta name="twitter:description" content="以星图、五行矩阵与方剂网络，打开民族医药文化的源、道、术、传。">
+<meta name="twitter:description" content="漫游星海、阅读文化长卷、查阅完整本草档案与来源。">
 <meta name="twitter:image" content="https://runner-cpu.github.io/Herbal-Cosmos/assets/og-cover.jpg">
 <title>本草宇宙 · HERBAL COSMOS</title>
 <link rel="canonical" href="https://runner-cpu.github.io/Herbal-Cosmos/">
@@ -33,7 +33,8 @@
 <link rel="stylesheet" href="assets/css/culture.css">
 <link rel="stylesheet" href="assets/css/cultural-charts.css">
 <link rel="stylesheet" href="assets/css/journey.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalApplication","name":"本草宇宙","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://runner-cpu.github.io/Herbal-Cosmos/","inLanguage":"zh-CN","description":"源、道、术、传四幕民族医药文化数字展馆。内容仅供文化科普与学习，不构成医疗建议。"}</script>
+<link rel="stylesheet" href="assets/css/exhibition.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalApplication","name":"本草宇宙","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://runner-cpu.github.io/Herbal-Cosmos/","inLanguage":"zh-CN","description":"漫游星海、文化长卷与本草图鉴组成的数字展馆。内容仅供文化科普与学习，不构成医疗建议。"}</script>
 </head>
 <body>
 <a class="skip-link" href="#mainContent">跳到主要内容</a>
@@ -41,19 +42,16 @@
   <!-- ============ 顶部导航 ============ -->
   <header>
     <div class="nav-inner">
-      <a href="#/intro" class="brand" aria-label="本草宇宙 · 返回文化之门">
+      <a href="#/home" class="brand" aria-label="本草宇宙 · 返回漫游星海">
         <span class="brand-mark exhibit-brand-seal" aria-hidden="true">本草</span>
         <span><span class="t">本草宇宙</span><span class="s">HERBAL COSMOS</span></span>
       </a>
-      <nav id="mainNav" aria-label="文化旅程">
-        <a href="#/intro" data-route-link="intro">序章</a>
-        <a href="#/home" data-route-link="home"><b>源</b><span>本草宇宙</span></a>
-        <a href="#/qiwei" data-route-link="qiwei"><b>道</b><span>性味归经</span></a>
-        <a href="#/formula" data-route-link="formula"><b>术</b><span>配伍成方</span></a>
-        <a href="#/heritage" data-route-link="heritage"><b>传</b><span>薪火相传</span></a>
-        <a href="#/learn" data-route-link="learn">传习</a>
-        <a href="#/herbs" data-route-link="herbs" class="nav-atlas">图鉴</a>
+      <nav id="mainNav" aria-label="主要导航">
+        <a href="#/home" data-route-link="home">漫游星海</a>
+        <a href="#/exhibit" data-route-link="exhibit">文化长卷</a>
+        <a href="#/herbs" data-route-link="herbs">本草图鉴</a>
       </nav>
+      <a href="#/learn" class="my-herbal-link" data-route-link="learn">我的本草</a>
       <div class="searchbox">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
         <input id="globalSearch" role="combobox" aria-label="搜索药材、名称索引或方剂" aria-autocomplete="list" aria-controls="searchResults" aria-expanded="false" aria-busy="false" placeholder="搜索药材 / 方剂" data-i18n-placeholder="search.placeholder" autocomplete="off">
@@ -70,19 +68,28 @@
   <div id="herbContext" class="herb-context" data-testid="herb-context" hidden></div>
 
   <main id="mainContent">
-    <section class="page" data-route="intro" aria-label="序章 · 本草千年"><div id="introExhibit"></div></section>
+    <nav id="archiveNav" class="archive-nav" aria-label="本草图鉴档案" hidden>
+      <a href="#/herbs" data-archive-view="herbs">药材档案</a>
+      <a href="#/herbs?view=attributes" data-archive-view="qiwei">属性统计</a>
+      <a href="#/herbs?section=formulas&view=directory" data-archive-view="formula">方剂档案</a>
+      <a href="#/herbs?section=culture" data-archive-view="heritage">文化档案</a>
+      <a href="#/herbs?section=classics" data-archive-view="intro">典籍时间线</a>
+      <a href="#/herbs?anchor=home-sources" data-archive-view="sources">馆藏与来源</a>
+    </nav>
+    <section class="page" data-route="exhibit" aria-label="文化长卷"><div id="exhibitionRoot"></div></section>
+    <section class="page" data-route="intro" aria-label="典籍档案 · 本草千年"><div id="introExhibit"></div></section>
     <!-- ============ 首页 ============ -->
     <section class="page" data-route="home">
       <div class="hero">
         <canvas id="heroCanvas"></canvas>
         <div class="hero-aurora" aria-hidden="true"></div>
         <div class="hero-overlay">
-          <div class="exhibit-kicker">第一幕 · 源 / 文化之根</div>
+          <div class="exhibit-kicker">漫游星海 / 从一味本草开始</div>
           <h1>一草一木<br>皆有来处</h1>
           <div class="en">本草宇宙 · 民族医药文化数字展馆</div>
           <p class="tagline">从山野走进典籍，从经验成为知识。把每一味本草看作星辰，读它的名字、性味与流传。</p>
           <div class="cta-row">
-            <a class="cta solid" href="#/qiwei">续读第二幕 · 道</a>
+            <a class="cta solid" href="#/exhibit">阅读文化长卷</a>
             <a class="cta" href="#/herbs">打开本草图鉴</a>
           </div>
         </div>
@@ -90,54 +97,21 @@
         <button class="hero-scroll" type="button" data-scroll-down><span aria-hidden="true">↓</span>向下探索</button>
       </div>
 
-      <div class="stats evidence-rail cultural-numbers" aria-label="三段本草记忆">
-        <a class="stat" href="#/intro?anchor=intro-timeline"><div class="v">365<small> 味</small></div><div class="l">《神农本草经》</div><div class="source-mini">传统收载量 · 周天的文化象征</div></a>
-        <a class="stat" href="#/heritage?anchor=heritage-classics"><div class="v">1,892<small> 药</small></div><div class="l">《本草纲目》</div><div class="source-mini">分类、考辨与本草知识的汇集</div></a>
-        <a class="stat" href="#/intro?anchor=intro-timeline"><div class="v">5,911<small> 项标准</small></div><div class="l">《中国药典》2020</div><div class="source-mini">四部合计 · 含化学药与生物制品</div></a>
-      </div>
-      <p class="evidence-note">三组数字的范围不同，展示知识编纂方式的变化。全国普查确认 18,817 种中药资源；本馆实际可浏览规模见下方馆藏账本。</p>
-
       <div class="hero-bottom">
-        <nav class="home-chapter-nav" aria-label="首页章节导航" data-home-chapters>
-          <div class="home-chapter-meta"><span>第一幕 · 源</span><strong data-home-chapter-current>文化导览</strong><small data-home-chapter-progress>1 / 4</small></div>
-          <div class="home-chapter-links" role="list">
-            <a role="listitem" href="#/home?anchor=home-overview" data-home-chapter="home-overview" aria-current="location">导览</a>
-            <a role="listitem" href="#/home?anchor=home-featured" data-home-chapter="home-featured">精选</a>
-            <a role="listitem" href="#/home?anchor=home-collection" data-home-chapter="home-collection">馆藏</a>
-            <a role="listitem" href="#/home?anchor=home-sources" data-home-chapter="home-sources">来源</a>
-          </div>
-          <div class="home-chapter-meter" aria-hidden="true"><i data-home-chapter-meter></i></div>
-        </nav>
-        <section class="home-dashboard" id="home-overview" data-home-section="home-overview" aria-labelledby="homeDashboardTitle">
-          <div class="home-board-head"><div><span>文化是主线 · 数据是读法</span><h2 id="homeDashboardTitle">从自然之物，读到传承之人</h2></div><p>你已来到“源”。循序进入道、术、传，也可以从感兴趣的一幕开始。</p></div>
-          <nav class="act-portals" aria-label="继续文化旅程"><a href="#/qiwei"><span class="act-seal">道</span><div><small>第二幕 · 天人合一</small><h3>古人如何理解药性？</h3><p>以四气、五味、归经读传统的身体与自然观。</p><b>看五行矩阵 ↗</b></div></a><a href="#/formula"><span class="act-seal">术</span><div><small>第三幕 · 生生之道</small><h3>一味药如何成为一首方？</h3><p>从君臣佐使的分工，读组方与协同的智慧。</p><b>进入配伍成方 ↗</b></div></a><a href="#/heritage"><span class="act-seal">传</span><div><small>第四幕 · 薪火相传</small><h3>本草怎样留在今日生活？</h3><p>从医药技艺与典籍，走到厨房和当代传习。</p><b>走进活态传承 ↗</b></div></a></nav>
-        </section>
-        <p class="data-note" data-i18n="data.note">图表展示代表性数据集中的关系与分布，不表示药效强弱或临床推荐。</p>
-
-        <div class="section-heading-row home-featured-heading" id="home-featured" data-home-section="home-featured"><div><span>从六味熟悉的本草开始</span><h2>一味本草，一份档案</h2></div><a href="#/herbs">打开完整图鉴 →</a></div>
+        <div class="section-heading-row home-featured-heading" id="home-featured" data-home-section="home-featured"><div><span>从熟悉的本草开始</span><h2>一味本草，一份档案</h2></div><a href="#/herbs">打开完整图鉴 →</a></div>
         <div class="grid g4" id="homeFeatured"></div>
         <aside id="homeRecent" class="home-recent" aria-label="最近探索" hidden></aside>
-
-        <section class="collection-ledger" id="home-collection" data-home-section="home-collection" aria-labelledby="collectionTitle">
-          <div class="section-heading-row"><div><span>馆藏账本 · 当前可浏览的资料</span><h2 id="collectionTitle">文化意象背后，有据可查</h2></div></div>
-          <div class="home-kpis" id="homeKpis"></div>
-          <details class="collection-detail" id="collectionCoverage"><summary>展开资料覆盖与分类 · 查看已收录和待补充的边界</summary><div class="home-coverage insight-chart-panel" aria-labelledby="coverageTitle"><div class="coverage-intro"><span class="section-kicker">已收录 · 可追溯 · 持续补全</span><h3 id="coverageTitle">这一册，整理到哪里？</h3><p id="homeCoverageNote" class="chart-method">按当前知识卡计算图片、来源与分布字段覆盖情况。</p><a href="#/home-sources">查看来源与收录边界 ↗</a></div><div><div id="homeCoverageChart" class="chart-box"></div><div id="homeCoverageControls" class="coverage-controls" aria-label="按资料覆盖情况浏览"></div><p id="homeCoverageSummary" class="chart-method"></p></div></div><div class="home-category-row"><div class="home-subhead"><span>分类目录</span><strong>按资料分类检索</strong></div><p class="chart-method">数量按当前知识卡的资料分类统计；不含名称索引或原方物料，不代表药效强弱与全部中药资源分布。</p><div class="home-categories" id="homeCategories"></div></div></details>
-        </section>
-
-
-        <section class="home-source-band" id="home-sources" data-home-section="home-sources" aria-labelledby="homeSourceTitle">
-          <div class="home-source-copy"><span>从观看，走向参与</span><h2 id="homeSourceTitle">把一味本草，留在你的旅程里</h2><p>本馆以中医药本草知识为主体，在传承展区介绍藏医药浴等文化实践。不同医药体系各有知识语境，不混同药性和诊疗规则。资源普查、典籍与非遗名录提供文化背景，馆藏字段逐条保留资料来源。</p><div class="home-source-actions"><a href="#/heritage">续读薪火相传</a><a href="#/learn">参与文化传习</a><button type="button" data-saved-open>查看我的收藏</button></div></div>
-          <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委食药物质目录</span></div><div><strong>当前版本</strong><span><span data-featured-count>—</span> 味精品知识卡 · <span data-catalog-count>—</span> 条文献名称索引 · <span data-formula-count>—</span> 首代表方剂 · <span data-zheng-count>—</span> 个证候链路 · <span data-review-count>—</span> 条待审候选</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div><details id="homeImageCredits"><summary>首页图像署名与许可</summary><p><a href="https://www.inaturalist.org/observations/93914221" target="_blank" rel="noopener noreferrer">人参 · Nina Filippova</a>（<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer license">CC BY 4.0</a>） · <a href="https://www.inaturalist.org/observations/41439227" target="_blank" rel="noopener noreferrer">野菊花 · Cheng-Tao Lin</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/photos/142691899" target="_blank" rel="noopener noreferrer">甘草 · Nina Filippova</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/observations/371467034" target="_blank" rel="noopener noreferrer">黄芩 · Urgamal Magsar</a>（CC BY 4.0） · <a href="https://commons.wikimedia.org/wiki/File:Lycium_barbarum_Habitus_Miguelturra_CampodeCalatrava.jpg" target="_blank" rel="noopener noreferrer">枸杞子 · javier martin</a>（<a href="https://creativecommons.org/publicdomain/mark/1.0/" target="_blank" rel="noopener noreferrer license">Public domain</a>）。照片仅按版面缩放与裁切；文化卡背景为项目自有 AI 概念图。<a href="IMAGE_SOURCES_V4.md">查看完整图像来源与许可清单</a>。</p></details></div>
-          <p class="home-source-dynamic-note" data-directory-only-note hidden></p>
-        </section>
+        <p class="home-archive-entry"><a href="#/herbs?section=classics">沿七部典籍读本草千年 →</a> <a href="#/herbs?anchor=home-collection">查看馆藏账本与资料来源 →</a></p>
       </div>
     </section>
 
+
     <!-- ============ 药材星图（列表） ============ -->
     <section class="page" data-route="herbs">
-      <div class="eyebrow">Herb Atlas</div>
-      <h1 class="title">药材星图</h1>
+      <div class="eyebrow">Herb Atlas / 完整资料档案</div>
+      <h1 class="title">本草图鉴</h1>
       <p class="page-intro">先用精品知识卡深入理解，再切换文献名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。</p>
+      <div id="atlasRecords">
       <div class="atlas-mode-tabs" role="tablist" aria-label="本草数据层"><button type="button" class="atlas-mode-tab on" data-atlas-mode="featured" role="tab">精品知识卡 <span id="featuredAtlasCount" data-featured-count>—</span></button><button type="button" class="atlas-mode-tab" data-atlas-mode="catalog" role="tab">文献名称索引 <span id="catalogAtlasCount">—</span></button></div>
       <div id="featuredAtlasPanel">
       <label class="coverage-filter" for="coverageFilter">资料覆盖<select id="coverageFilter"><option value="">全部知识卡</option><option value="complete">完整来源事实</option><option value="partial">部分字段记录</option><option value="images">有开放许可图片</option><option value="missing-image">图片待补充</option><option value="origin">有省级分布记录</option><option value="sources">有逐行来源链接</option></select></label>
@@ -167,6 +141,27 @@
       </div>
       <section class="insight-chart-panel province-insight" aria-labelledby="provinceTitle"><h2 id="provinceTitle">文献中的省级分布</h2><p class="chart-method" id="provinceCoverage">正在汇总有分布记录的药材…</p><div class="insight-detail-layout"><div><div class="chart-box" id="provinceDistributionChart"></div><div class="chart-access" id="provinceAccess"></div></div><div class="chart-evidence" id="provinceEvidence" aria-live="polite"></div></div></section>
       <section class="insight-chart-panel completeness-insight" aria-labelledby="completenessTitle"><div class="section-heading-row"><div><span>FACT COVERAGE</span><h2 id="completenessTitle">资料完整度 × 传统分类</h2></div><span class="home-section-note">按当前知识卡逐行统计；空白字段不会被推断为已录入。</span></div><p class="chart-method" id="completenessCoverage">正在汇总图片、归经、地区、分类学与来源记录…</p><div class="insight-detail-layout"><div><div class="chart-box" id="factCompletenessChart"></div><div class="chart-access" id="factCompletenessAccess"></div></div><div class="chart-evidence" id="factCompletenessEvidence" aria-live="polite"><p>点击色块查看该分类的知识卡，并继续补全缺失字段。</p></div></div></section>
+      </div>
+      <div id="archiveProvenance" hidden>
+      <div class="stats evidence-rail cultural-numbers" aria-label="三段本草记忆">
+        <a class="stat" href="#/herbs?section=classics"><div class="v">365<small> 味</small></div><div class="l">《神农本草经》</div><div class="source-mini">传统收载量 · 周天的文化象征</div></a>
+        <a class="stat" href="#/herbs?section=classics"><div class="v">1,892<small> 药</small></div><div class="l">《本草纲目》</div><div class="source-mini">分类、考辨与本草知识的汇集</div></a>
+        <a class="stat" href="#/herbs?section=classics"><div class="v">5,911<small> 项标准</small></div><div class="l">《中国药典》2020</div><div class="source-mini">四部合计 · 含化学药与生物制品</div></a>
+      </div>
+      <p class="evidence-note">三组数字的范围不同，展示知识编纂方式的变化。全国普查确认 18,817 种中药资源；本馆实际可浏览规模见馆藏账本。</p>
+
+        <section class="collection-ledger" id="home-collection" data-home-section="home-collection" aria-labelledby="collectionTitle">
+          <div class="section-heading-row"><div><span>馆藏账本 · 当前可浏览的资料</span><h2 id="collectionTitle">文化意象背后，有据可查</h2></div></div>
+          <div class="home-kpis" id="homeKpis"></div>
+          <details class="collection-detail" id="collectionCoverage"><summary>展开资料覆盖与分类 · 查看已收录和待补充的边界</summary><div class="home-coverage insight-chart-panel" aria-labelledby="coverageTitle"><div class="coverage-intro"><span class="section-kicker">已收录 · 可追溯 · 持续补全</span><h3 id="coverageTitle">这一册，整理到哪里？</h3><p id="homeCoverageNote" class="chart-method">按当前知识卡计算图片、来源与分布字段覆盖情况。</p><a href="#/herbs?anchor=home-sources">查看来源与收录边界 ↗</a></div><div><div id="homeCoverageChart" class="chart-box"></div><div id="homeCoverageControls" class="coverage-controls" aria-label="按资料覆盖情况浏览"></div><p id="homeCoverageSummary" class="chart-method"></p></div></div><div class="home-category-row"><div class="home-subhead"><span>分类目录</span><strong>按资料分类检索</strong></div><p class="chart-method">数量按当前知识卡的资料分类统计；不含名称索引或原方物料，不代表药效强弱与全部中药资源分布。</p><div class="home-categories" id="homeCategories"></div></div></details>
+        </section>
+
+        <section class="home-source-band" id="home-sources" data-home-section="home-sources" aria-labelledby="homeSourceTitle">
+          <div class="home-source-copy"><span>馆藏来源与资料边界</span><h2 id="homeSourceTitle">每份档案，都保留来处</h2><p>本馆以中医药本草知识为主体，在传承展区介绍藏医药浴等文化实践。不同医药体系各有知识语境，不混同药性和诊疗规则。资源普查、典籍与非遗名录提供文化背景，馆藏字段逐条保留资料来源。</p><div class="home-source-actions"><a href="#/herbs?section=culture">查阅文化档案</a><a href="#/learn">参与文化传习</a><button type="button" data-saved-open>查看我的收藏</button></div></div>
+          <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委食药物质目录</span></div><div><strong>当前版本</strong><span><span data-featured-count>—</span> 味精品知识卡 · <span data-catalog-count>—</span> 条文献名称索引 · <span data-formula-count>—</span> 首代表方剂 · <span data-zheng-count>—</span> 个证候链路 · <span data-review-count>—</span> 条待审候选</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div><details id="homeImageCredits"><summary>馆藏图像署名与许可</summary><p><a href="https://www.inaturalist.org/observations/93914221" target="_blank" rel="noopener noreferrer">人参 · Nina Filippova</a>（<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer license">CC BY 4.0</a>） · <a href="https://www.inaturalist.org/observations/41439227" target="_blank" rel="noopener noreferrer">野菊花 · Cheng-Tao Lin</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/photos/142691899" target="_blank" rel="noopener noreferrer">甘草 · Nina Filippova</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/observations/371467034" target="_blank" rel="noopener noreferrer">黄芩 · Urgamal Magsar</a>（CC BY 4.0） · <a href="https://commons.wikimedia.org/wiki/File:Lycium_barbarum_Habitus_Miguelturra_CampodeCalatrava.jpg" target="_blank" rel="noopener noreferrer">枸杞子 · javier martin</a>（<a href="https://creativecommons.org/publicdomain/mark/1.0/" target="_blank" rel="noopener noreferrer license">Public domain</a>）。照片仅按版面缩放与裁切；文化卡背景为项目自有 AI 概念图。<a href="IMAGE_SOURCES_V4.md">查看完整图像来源与许可清单</a>。</p></details></div>
+          <p class="home-source-dynamic-note" data-directory-only-note hidden></p>
+        </section>
+      </div>
     </section>
 
     <!-- ============ 药材详情 ============ -->
@@ -186,30 +181,33 @@
 
     <!-- ============ 性味归经图谱 ============ -->
     <section class="page" data-route="qiwei">
-      <div class="eyebrow">第二幕 · 道 / 文化之魂</div>
+      <div class="eyebrow">属性档案 / 性味归经</div>
       <h1 class="title">天地有序，本草有性</h1>
       <p class="page-intro">古人用寒热温凉、酸苦甘辛咸与归经，表达本草与身体的关系。从文化读法走进矩阵，再点击一格，回到具体药材与文献。</p>
-      <section class="cultural-reading" aria-labelledby="daoReadingTitle"><div class="reading-label"><span class="act-seal">道</span><h2 id="daoReadingTitle">天人合一：传统的关系观</h2><p>理解一套历史知识的语言</p></div><div class="reading-text"><p><b>四气</b>描述传统药性中的寒、热、温、凉，“平”表示寒热偏性不明显。它与阴阳寒热观相连，不能直接等同四季或实测温度。</p><p><b>五味与五行</b>是传统理论中的对应关系：酸—木、苦—火、甘—土、辛—金、咸—水。五色用来辨认味型，色深表示计数；淡、涩保留为补充味型。</p><p><b>归经</b>是传统药物作用归属的表述。下面的统计展示当前馆藏标签，不作为现代解剖定位、药效排名或临床推荐。</p><a href="https://www.ihchina.cn/" target="_blank" rel="noopener noreferrer">延伸阅读：国家非遗网 · 传统医药 ↗</a></div></section>
+      <details class="cultural-reading archive-concepts" aria-labelledby="daoReadingTitle"><summary>展开传统概念与统计口径</summary><div class="reading-label"><span class="act-seal">道</span><h2 id="daoReadingTitle">天人合一：传统的关系观</h2><p>理解一套历史知识的语言</p></div><div class="reading-text"><p><b>四气</b>描述传统药性中的寒、热、温、凉，“平”表示寒热偏性不明显。它与阴阳寒热观相连，不能直接等同四季或实测温度。</p><p><b>五味与五行</b>是传统理论中的对应关系：酸—木、苦—火、甘—土、辛—金、咸—水。五色用来辨认味型，色深表示计数；淡、涩保留为补充味型。</p><p><b>归经</b>是传统药物作用归属的表述。下面的统计展示当前馆藏标签，不作为现代解剖定位、药效排名或临床推荐。</p><a href="https://www.ihchina.cn/" target="_blank" rel="noopener noreferrer">延伸阅读：国家非遗网 · 传统医药 ↗</a></div></details>
       <div id="fivePhaseLegend" class="chart-semantic-legend" aria-label="五味五行图例"></div>
       <div class="analysis-toolbar"><div class="analysis-metrics"><div class="analysis-metric"><strong id="qiweiSampleCount" data-featured-count>—</strong><span>当前样本</span></div><div class="analysis-metric"><strong id="qiweiCategoryCount">—</strong><span>资料类别</span></div><div class="analysis-metric"><strong id="qiweiMeridianCount">—</strong><span>归经标签</span></div></div><div class="analysis-controls"><label for="qiweiCatFilter">筛选类别<select id="qiweiCatFilter"><option value="">全部类别</option></select></label></div></div>
+      <div class="attribute-view-switch" role="group" aria-label="属性统计视图">
+        <button type="button" data-attribute-view="matrix" aria-pressed="true">四气五味矩阵</button><button type="button" data-attribute-view="meridian" aria-pressed="false">归经分布</button><button type="button" data-attribute-view="qi" aria-pressed="false">四气占比</button><button type="button" data-attribute-view="wei" aria-pressed="false">五味分布</button><button type="button" data-attribute-view="relations" aria-pressed="false">同归经关系</button><button type="button" data-attribute-view="flow" aria-pressed="false">归经分类流向</button>
+      </div>
       <div class="analysis-dashboard">
-        <div class="chart-panel analysis-primary"><h3>四气 × 五味矩阵</h3><div class="cap">样本 n=<span id="qiweiMatrixSample">—</span>；复合五味拆分计入对应味型，点击单元格查看证据。</div><div class="chart-box wide-chart" id="qiweiMatrixChart"></div></div>
-        <div class="chart-panel"><h3>归经分布排行</h3><div class="cap">按归经标签累计计数，点击一项反查本草。</div><div class="chart-box compact-chart" id="meridianBarChart"></div></div>
-        <div class="chart-panel"><h3>四气占比</h3><div class="cap">从寒到热的当前样本分布。</div><div class="chart-box compact-chart" id="qiRoseChart"></div></div>
-        <div class="chart-panel analysis-wide"><h3>五味分布</h3><div class="cap">样本 n=<span id="weiBarSample">—</span>；复合五味拆分计入对应味型，因此合计可能高于样本数。</div><div class="chart-box wide-chart" id="weiBarChart"></div></div>
-        <details class="chart-panel analysis-wide extension-reading"><summary>延伸读法 · 同归经的本草关系</summary><div class="cap">从同一归经中抽取高频药材对；共现不等于配伍推荐。</div><div class="chart-box wide-chart" id="qiweiFlowChart"></div></details>
+        <div class="chart-panel analysis-primary" data-attribute-panel="matrix"><h3>四气 × 五味矩阵</h3><div class="cap">样本 n=<span id="qiweiMatrixSample">—</span>；复合五味拆分计入对应味型，点击单元格查看证据。</div><div class="chart-box wide-chart" id="qiweiMatrixChart"></div></div>
+        <div class="chart-panel" data-attribute-panel="meridian" hidden><h3>归经分布排行</h3><div class="cap">按归经标签累计计数，点击一项反查本草。</div><div class="chart-box compact-chart" id="meridianBarChart"></div></div>
+        <div class="chart-panel" data-attribute-panel="qi" hidden><h3>四气占比</h3><div class="cap">从寒到热的当前样本分布。</div><div class="chart-box compact-chart" id="qiRoseChart"></div></div>
+        <div class="chart-panel analysis-wide" data-attribute-panel="wei" hidden><h3>五味分布</h3><div class="cap">样本 n=<span id="weiBarSample">—</span>；复合五味拆分计入对应味型，因此合计可能高于样本数。</div><div class="chart-box wide-chart" id="weiBarChart"></div></div>
+        <details class="chart-panel analysis-wide extension-reading" data-attribute-panel="relations" hidden><summary>延伸读法 · 同归经的本草关系</summary><div class="cap">从同一归经中抽取高频药材对；共现不等于配伍推荐。</div><div class="chart-box wide-chart" id="qiweiFlowChart"></div></details>
       </div>
       <div class="viz-inspector" id="qiweiInspector"><div><span>点击图表继续探索</span><h2>从分布回到每一味药</h2></div><p>点击热力矩阵中的气味组合，或点击归经柱形，即可查看对应药材并跳转知识卡。</p></div>
-      <section class="insight-chart-panel meridian-insight"><div class="section-heading-row"><div><span>BRIDGE VIEW</span><h2>归经 → 资料分类流向</h2></div><span class="home-section-note">把十二经与当前精品卡资料分类连成一条可追溯的流。</span></div><div class="chart-box" id="meridianEffectChart"></div><div class="chart-evidence" id="meridianEvidence" aria-live="polite"><p>点击连线或节点查看对应药材。</p></div></section>
+      <section class="insight-chart-panel meridian-insight" data-attribute-panel="flow" hidden><div class="section-heading-row"><div><span>BRIDGE VIEW</span><h2>归经 → 资料分类流向</h2></div><span class="home-section-note">把十二经与当前精品卡资料分类连成一条可追溯的流。</span></div><div class="chart-box" id="meridianEffectChart"></div><div class="chart-evidence" id="meridianEvidence" aria-live="polite"><p>点击连线或节点查看对应药材。</p></div></section>
       <nav class="act-next" aria-label="幕间导航"><a href="#/home">← 回到源</a><a href="#/formula"><small>第三幕 · 术</small><b>读一首方的分工与协同 →</b></a></nav>
     </section>
 
     <!-- ============ 配伍网络 ============ -->
     <section class="page" data-route="formula">
-      <div class="eyebrow">第三幕 · 术 / 文化之技</div>
+      <div class="eyebrow">方剂档案 / 文献关系</div>
       <h1 class="title">众味成方，各有所司</h1>
       <p class="page-intro">一首方剂怎样组织多味本草？“君臣佐使”借用治理的语言来说明分工。先读文化隐喻，再进入方剂、证候与药材的文献关系。</p>
-      <section class="role-reading" aria-labelledby="roleReadingTitle"><div class="section-heading-row"><div><span>生生之道 · 组方的协同观</span><h2 id="roleReadingTitle">君臣佐使，不只是四种颜色</h2></div><p class="home-section-note">传统组方角色解释；具体角色依方剂与资料而定</p></div><div class="role-principles"><article><span class="act-seal">君</span><h3>主其所治</h3><p>围绕主要病机或主证，承担方中主要作用。</p></article><article><span class="act-seal">臣</span><h3>辅君成事</h3><p>协助君药，或针对兼证形成补充。</p></article><article><span class="act-seal">佐</span><h3>兼顾与调和</h3><p>可作佐助、佐制或反佐，含义依具体组方。</p></article><article><span class="act-seal">使</span><h3>引导与协调</h3><p>传统解释中承担引经或调和诸药等角色。</p></article></div><p class="chart-method">角色是读方的传统语言，不是每首方都必有四类。本馆只统计来源明确标注的角色；无标注保留空缺。网络连线表示文献中的同方关系。</p></section>
+      <details class="role-reading archive-concepts" aria-labelledby="roleReadingTitle"><summary>展开君臣佐使的传统概念</summary><div class="section-heading-row"><div><span>生生之道 · 组方的协同观</span><h2 id="roleReadingTitle">君臣佐使，不只是四种颜色</h2></div><p class="home-section-note">传统组方角色解释；具体角色依方剂与资料而定</p></div><div class="role-principles"><article><span class="act-seal">君</span><h3>主其所治</h3><p>围绕主要病机或主证，承担方中主要作用。</p></article><article><span class="act-seal">臣</span><h3>辅君成事</h3><p>协助君药，或针对兼证形成补充。</p></article><article><span class="act-seal">佐</span><h3>兼顾与调和</h3><p>可作佐助、佐制或反佐，含义依具体组方。</p></article><article><span class="act-seal">使</span><h3>引导与协调</h3><p>传统解释中承担引经或调和诸药等角色。</p></article></div><p class="chart-method">角色是读方的传统语言，不是每首方都必有四类。本馆只统计来源明确标注的角色；无标注保留空缺。网络连线表示文献中的同方关系。</p></details>
       <div class="formula-view-switch" role="group" aria-label="配伍阅读视图"><button type="button" data-formula-view="network" aria-pressed="true">读方剂网络</button><button type="button" data-formula-view="stats" aria-pressed="false">看配伍样本</button><button type="button" data-formula-view="directory" aria-pressed="false">查方剂目录</button><button type="button" data-formula-view="zheng" aria-pressed="false">追证候药链</button></div>
       <div id="formulaNetworkView">
       <div class="graph-workspace"><aside class="graph-index"><div class="workspace-label">方剂索引</div><label for="formulaFocus">检索方剂<select id="formulaFocus"><option value="">全部方剂</option></select></label><div class="network-stats" id="networkStats"></div><div class="formula-index-list" id="formulaIndex"></div></aside><section class="graph-canvas"><div class="graph-heading"><div><h3>方剂—药材关系图</h3><p id="networkFocusNote">点击节点聚焦邻域，拖动节点调整布局。</p></div><button id="resetGraph" type="button">显示全网</button></div><div class="chart-box" id="formulaGraph"></div></section><aside class="graph-inspector" id="formulaInspector"><span>关系检查器</span><h2>选择一首方剂</h2><p>从左侧索引或网络节点选择，查看出处、主治与君臣佐使组成。</p></aside></div>
@@ -269,7 +267,7 @@
     <div class="footer-inner">
       <div>
         <div class="f-title">本草宇宙 · HERBAL COSMOS</div>
-        <p>源 · 道 · 术 · 传<br>民族医药文化数字展馆 · 文化传习</p>
+        <p>漫游星海 · 文化长卷 · 本草图鉴<br>民族医药文化数字展馆</p>
       </div>
       <div>
         <div class="f-title">数据来源</div>
@@ -308,6 +306,7 @@
 <script defer src="assets/js/pages/culture.js"></script>
 <script defer src="assets/js/lib/culture-learning.js"></script>
 <script defer src="assets/js/pages/cosmos-engine.js"></script>
+<script defer src="assets/js/core/exhibition-router.js"></script>
 <script defer src="assets/js/core/runtime.js"></script>
 <script defer src="assets/js/components/stamp.browser.js"></script>
 <script defer src="assets/js/components/context-bar.browser.js"></script>

@@ -81,13 +81,10 @@
     const root = document.getElementById('introExhibit');
     if (!root) return;
     const expandedSources = new Set([...root.querySelectorAll('.culture-classic-source[open]')].map(note => note.dataset.classicName));
-    root.innerHTML = '<div class="culture-exhibit culture-intro"><div class="culture-door"><div class="culture-door-copy"><p class="culture-kicker">序章 · 民族医药文化数字展馆</p><h1>本草<span>千年</span></h1><p class="culture-door-deck">从草木走向天地，<br>从一页本草走向一段传承。</p><p class="culture-door-description">这是一段由“源、道、术、传”组成的文化旅程。以典籍与名录为线索，以星图、属性与关系为表达，一起读懂本草背后的人与生活。</p><a class="culture-enter" href="#/home"><span>叩门 · 进入本草宇宙</span><span aria-hidden="true">→</span></a><a class="culture-skip" href="#/herbs">直接查一味本草 ↗</a></div>' + starsIllustration() + '</div>'
-      + '<aside class="culture-legend"><span class="culture-small-seal" aria-hidden="true">起源</span><div><h2>神农尝百草：一个起源故事</h2><p>传说把人们认识草木、积累药物经验的漫长过程，凝成神农尝百草的形象。《神农本草经》托名神农，传说与文献成书史需要分开阅读。</p><span>文化传说 · 不作为历史事件或用药依据</span></div></aside>'
+    root.innerHTML = '<div class="culture-exhibit culture-intro"><div class="culture-act-head"><div><p class="culture-kicker">典籍档案</p><h1>本草千年</h1><p class="culture-act-deck">沿七部典籍，读知识如何观察、整理与传递。</p></div></div>'
       + '<section class="culture-section" id="intro-timeline">' + sectionHeading('一', '把时间翻成书页', '每一部本草，都是一次观察、整理与传递。时间线展示知识组织方式的变化。')
       + '<ol class="culture-chronicle">' + classicEntries().map((item, index) => '<li><span class="culture-chronicle-index">' + String(index + 1).padStart(2, '0') + '</span><div><p class="culture-era">' + escapeHtml(item.era) + '</p><h3>《' + escapeHtml(item.name) + '》</h3><strong>' + escapeHtml(item.focus) + '</strong><p>' + escapeHtml(item.note) + '</p>' + (item.figure ? '<div class="culture-classic-figure"><b>' + item.figure + '</b><span>' + escapeHtml(item.unit) + '</span></div>' : '') + classicSourceDisclosure(item) + '</div></li>').join('') + '</ol><p class="culture-method-note">阅读提示：古代典籍的药物、现代药典的品种标准与资源普查的物种，统计对象各不相同。此处按年代排列，不作收载量增长比较。每个节点可展开出处，区分正式公告、二级书目与馆内导读。</p></section>'
-      + '<section class="culture-section">' + sectionHeading('二', '三条线索，读进四幕', '先问一个文化问题，再进入数据表达。')
-      + '<div class="culture-narrative-lines"><a href="#/qiwei"><span>天人合一</span><h3>草木怎样被理解？</h3><p>在“道”中读四气、五味与归经，分清传统文化解释与现代统计。</p><b>进入第二幕 · 道 →</b></a><a href="#/formula"><span>生生之道</span><h3>一味药怎样成为一首方？</h3><p>在“术”中读君臣佐使，看相互关系如何成为配伍的表达。</p><b>进入第三幕 · 术 →</b></a><a href="#/heritage"><span>薪火相传</span><h3>知识怎样回到人的生活？</h3><p>在“传”中读非遗、食养与典籍，再用收藏与传习留下自己的足迹。</p><b>进入第四幕 · 传 →</b></a></div></section>'
-      + '<div class="culture-next"><p>故事从这里开始</p><h2>一草一木，皆有来处。</h2><a class="culture-enter" href="#/home"><span>第一幕 · 源 · 本草宇宙</span><span aria-hidden="true">→</span></a></div></div>';
+      + '</div>';
     for (const note of root.querySelectorAll('.culture-classic-source')) note.open = expandedSources.has(note.dataset.classicName);
     bindRoot(root);
   }
@@ -103,8 +100,8 @@
     if (!root) return;
     const heritage = Array.isArray(window.HERITAGE) && window.HERITAGE.length ? window.HERITAGE : Object.keys(heritageNotes).map(name => ({ name }));
     const foodCount = (window.FOODS || []).length;
-    root.innerHTML = '<div class="culture-exhibit culture-heritage"><div class="culture-act-head"><div><p class="culture-kicker">第四幕 · 传</p><h1>薪火相传</h1><p class="culture-act-deck">传承不只在书页里，<br>也在一双手、一餐饭、一次重新阅读里。</p></div><span class="culture-act-glyph" aria-hidden="true">传</span></div>'
-      + '<nav class="culture-local-nav" aria-label="第四幕章节"><a href="#/heritage?anchor=heritage-culture">非遗技艺</a><a href="#/heritage?anchor=heritage-together">共同的本草</a><a href="#/heritage?anchor=heritage-food">厨房里的本草</a><a href="#/heritage?anchor=heritage-classics">典籍读法</a></nav>'
+    root.innerHTML = '<div class="culture-exhibit culture-heritage"><div class="culture-act-head"><div><p class="culture-kicker">文化档案</p><h1>技艺与生活</h1><p class="culture-act-deck">传承不只在书页里，<br>也在一双手、一餐饭、一次重新阅读里。</p></div><span class="culture-act-glyph" aria-hidden="true">传</span></div>'
+      + '<nav class="culture-local-nav" aria-label="文化档案章节"><a href="#/herbs?section=culture&anchor=heritage-culture">非遗技艺</a>' + (approvedEthnicEntries().length ? '<a href="#/herbs?section=culture&anchor=heritage-together">共同的本草</a>' : '') + '<a href="#/herbs?section=culture&anchor=heritage-food">厨房里的本草</a><a href="#/herbs?section=classics">典籍时间线</a></nav>'
       + '<section class="culture-section" id="heritage-culture">' + sectionHeading('一', '技艺靠人，代代相传', '六个文化主题，连接人类非遗与国家级名录。主题名称与名录中的具体项目逐项区别。')
       + '<div class="culture-heritage-grid">' + heritage.map(renderHeritageCard).join('') + '</div><p class="culture-method-note">本展柜不是“六项国家级非遗”的计数：针灸、藏医药浴法链接 UNESCO 名录，其余主题链接国家级名录的具体项目。插画用于文化表达，完整说明见 <a href="IMAGE_SOURCES.md">图像来源清单 ↗</a>。</p></section>'
       + renderTogetherSection()
@@ -112,15 +109,15 @@
       + '<div class="culture-food-intro"><div><strong>' + foodCount + '</strong><span>种目录物质</span></div><p>本展柜采用截至 ' + escapeHtml(window.FOOD_MEDICINE_REVISION || '2024-08-26') + ' 的整理快照。目录收载、生活用法与药材知识卡属于不同资料层级，每个条目保留公告入口。</p></div>'
       + '<div class="culture-food-controls"><label for="heritageFoodSearch">查找目录<input id="heritageFoodSearch" type="search" placeholder="例如：山药、橘皮" value="' + escapeHtml(foodState.query) + '" autocomplete="off"></label><label for="heritageFoodScope">资料范围<select id="heritageFoodScope"><option value="all">全部目录</option><option value="enriched"' + (foodState.scope === 'enriched' ? ' selected' : '') + '>有生活场景说明</option><option value="directory"' + (foodState.scope === 'directory' ? ' selected' : '') + '>仅目录收载</option></select></label></div>'
       + '<p class="culture-food-status" id="heritageFoodStatus" role="status" aria-live="polite" aria-atomic="true"></p><div class="culture-food-grid" id="heritageFoodGrid"></div><nav class="culture-food-pages" id="heritageFoodPages" aria-label="食药物质目录翻页"></nav><p class="culture-method-note">“药食同源”不等于人人可食、无限量食用。生活场景说明用于文化阅读，具体适用范围以公告为准。</p></section>'
-      + '<section class="culture-section" id="heritage-classics">' + sectionHeading(ethnicOrdinal(2), '典籍读法：带着问题翻书', '七部典籍的完整时间线在序章。这里先交代三条读法，再回去按年代看。')
+      + '<section class="culture-section" id="heritage-classics">' + sectionHeading(ethnicOrdinal(2), '典籍读法：带着问题翻书', '七部典籍共用一条档案时间线。这里交代三条读法，再按年代看。')
       + '<ol class="culture-method-list">'
-      + '<li><span aria-hidden="true">一</span><div><h3>版本与刊刻是两件事</h3><p>一部古籍的成稿、作序、初刻与进献往往相隔多年。序章时间线采用通行书目记载的初刊年份，并在节点内注明这一区别，不把成书时间写成人物生卒。</p></div></li>'
+      + '<li><span aria-hidden="true">一</span><div><h3>版本与刊刻是两件事</h3><p>一部古籍的成稿、作序、初刻与进献往往相隔多年。典籍时间线采用通行书目记载的初刊年份，并在节点内注明这一区别，不把成书时间写成人物生卒。</p></div></li>'
       + '<li><span aria-hidden="true">二</span><div><h3>药物数与标准数不是同类</h3><p>古代典籍的“收载药物”是当时的药物条目计数；现代药典的“品种标准”是质量标准计数，且分四部合计与一部单列。两者统计对象不同，不连成一条增长曲线。</p></div></li>'
-      + '<li><span aria-hidden="true">三</span><div><h3>导读不等于原文</h3><p>展区文字是依据馆内典籍资料编写的文化导读，不作原文引语。序章时间线的每个节点可展开，查看该条的资料来源层级（官方公告、二级书目或馆内导读）。</p></div></li>'
-      + '</ol><p class="culture-method-note">七部典籍的完整时间线在序章。<a href="#/intro?anchor=intro-timeline">回到序章时间线，按年代读七部典籍 →</a></p></section>'
+      + '<li><span aria-hidden="true">三</span><div><h3>导读不等于原文</h3><p>展区文字是依据馆内典籍资料编写的文化导读，不作原文引语。典籍时间线的每个节点可展开，查看该条的资料来源层级（官方公告、二级书目或馆内导读）。</p></div></li>'
+      + '</ol><p class="culture-method-note">七部典籍的完整时间线在典籍档案。<a href="#/herbs?section=classics">回到典籍时间线，按年代读七部典籍 →</a></p></section>'
       + '<section class="culture-section" id="heritage-journey">' + sectionHeading('尾声', '让阅读继续', '从观看到参与：读一张卡、留一味收藏、完成一次传习。')
       + '<p class="culture-journey-bridge">收藏、足迹与传习次数只在当前浏览器保存。<a href="#/learn">去传习留下你的足迹 →</a></p></section>'
-      + '<div class="culture-next culture-next-compact"><p>让阅读继续</p><div class="culture-next-links"><a href="#/herbs"><span>图鉴</span><b>查一味本草 →</b></a><a href="#/learn"><span>传习</span><b>进入学习舱 →</b></a><a href="#/intro"><span>回望</span><b>重读本草千年 →</b></a></div></div></div>';
+      + '<div class="culture-next culture-next-compact"><p>让阅读继续</p><div class="culture-next-links"><a href="#/herbs"><span>图鉴</span><b>查一味本草 →</b></a><a href="#/learn"><span>传习</span><b>进入学习舱 →</b></a><a href="#/herbs?section=classics"><span>回望</span><b>重读本草千年 →</b></a></div></div></div>';
     bindRoot(root);
     renderFood();
   }

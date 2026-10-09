@@ -8,12 +8,12 @@ async function openPrimaryNavigation(page) {
   }
 }
 
-test('primary navigation exposes the cultural journey and its two utilities directly', async ({ page }) => {
+test('primary navigation exposes three exhibition entries and an auxiliary personal tool', async ({ page }) => {
   await page.goto('/#/home');
-  await expect(page.locator('#mainNav > a')).toHaveCount(7);
+  await expect(page.locator('#mainNav > a')).toHaveCount(3);
   await openPrimaryNavigation(page);
   await expect(page.locator('.nav-more')).toHaveCount(0);
-  for (const route of ['intro', 'home', 'qiwei', 'formula', 'heritage', 'learn', 'herbs']) {
+  for (const route of ['home', 'exhibit', 'herbs']) {
     await expect(page.locator('#mainNav [data-route-link="' + route + '"]')).toBeVisible();
   }
 });
@@ -42,15 +42,17 @@ test('formula views preserve syndrome and formula context in both directions', a
 
 test('route titles describe the active Chinese view', async ({ page }) => {
   const cases = [
-    ['intro', '序章 · 本草千年 · 本草宇宙'],
-    ['home', '源 · 本草宇宙'],
-    ['herbs', '探索本草 · 本草宇宙'],
+    ['intro', '漫游星海 · 本草宇宙'],
+    ['herbs?section=classics', '典籍时间线 · 本草图鉴 · 本草宇宙'],
+    ['exhibit', '文化长卷 · 本草宇宙'],
+    ['home', '漫游星海 · 本草宇宙'],
+    ['herbs', '本草图鉴 · 本草宇宙'],
     ['herb?id=gancao', '甘草 · 本草宇宙'],
-    ['qiwei', '道 · 性味归经 · 本草宇宙'],
-    ['formula', '术 · 配伍成方 · 本草宇宙'],
-    ['formula?view=zheng', '术 · 证候药链 · 本草宇宙'],
-    ['heritage', '传 · 薪火相传 · 本草宇宙'],
-    ['learn', '文化传习 · 本草宇宙'],
+    ['qiwei', '属性统计 · 本草图鉴 · 本草宇宙'],
+    ['formula', '方剂档案 · 本草图鉴 · 本草宇宙'],
+    ['formula?view=zheng', '证候药链 · 本草图鉴 · 本草宇宙'],
+    ['heritage', '文化档案 · 本草图鉴 · 本草宇宙'],
+    ['learn', '我的本草 · 本草宇宙'],
     ['route-that-does-not-exist', '路径未收录 · 本草宇宙']
   ];
   for (const [hash, title] of cases) {
@@ -83,20 +85,20 @@ test('malformed query encoding cannot stop route rendering', async ({ page }) =>
   expect(pageErrors).toEqual([]);
 });
 
-test('each cultural view has one navigation owner and the brand returns to the prologue', async ({ page }) => {
+test('each archive view has one navigation owner and the brand returns to the star sea', async ({ page }) => {
   await page.goto('/#/home');
   await openPrimaryNavigation(page);
   await page.locator('.brand').click();
-  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'intro');
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'home');
   await expect(page.locator('#mainNav [aria-current="page"]')).toHaveCount(1);
-  await expect(page.locator('[data-route-link="intro"]')).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('[data-route-link="home"]')).toHaveAttribute('aria-current', 'page');
 
   await page.goto('/#/learn');
   await expect(page.locator('[data-route-link="learn"]')).toHaveAttribute('aria-current', 'page');
 
   await page.goto('/#/formula?view=zheng');
   await expect(page.locator('#mainNav [aria-current="page"]')).toHaveCount(1);
-  await expect(page.locator('[data-route-link="formula"]')).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('[data-route-link="herbs"]')).toHaveAttribute('aria-current', 'page');
 });
 
 test('mobile menu exposes its state and Escape returns focus to the trigger', async ({ page }, testInfo) => {

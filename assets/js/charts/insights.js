@@ -127,7 +127,9 @@ function renderRoute(){
   if(!['formula','qiwei','herbs','home','heritage'].includes(route))return;
   const needsChart=()=>{
    if(route==='formula')return new URLSearchParams(location.hash.split('?')[1]||'').get('view')==='stats';
-   if(route==='home')return Boolean(document.getElementById('collectionCoverage')?.open);
+   if(route==='home')return false;
+   if(route==='herbs')return Boolean(document.getElementById('collectionCoverage')?.open||document.getElementById('provinceDistributionChart'));
+   if(route==='qiwei')return !document.querySelector('[data-attribute-panel="flow"]')?.hidden;
    if(route==='heritage')return Boolean(document.getElementById('foodUsageChart'));
    return true;
   };
@@ -137,7 +139,7 @@ function renderRoute(){
    if(location.hash!==expectedHash||activeRoute()!==route||!needsChart())return;
    if(route==='formula')renderFormulaInsights();
    if(route==='qiwei')renderMeridianEffectInsight();
-   if(route==='herbs'){renderProvinceInsight();renderCompletenessInsight();}
+   if(route==='herbs'){renderProvinceInsight();renderCompletenessInsight();if(document.getElementById('collectionCoverage')?.open)renderCoverageInsight();}
    if(route==='home')renderCoverageInsight();
    if(route==='heritage')renderFoodUsageInsight();
   };

@@ -48,7 +48,7 @@ test('questions have answerable choices, explanations, sources and exhibition de
     assert.ok(Number.isInteger(item.answer) && item.answer >= 0 && item.answer < item.options.length);
     assert.ok(item.note.includes('来源：'));
     assert.ok(item.source.trim());
-    assert.ok(['#/intro', '#/qiwei', '#/formula', '#/heritage'].includes(item.readHref));
+    assert.ok(['#/herbs?section=classics', '#/qiwei', '#/formula', '#/heritage'].includes(item.readHref));
   }
 });
 

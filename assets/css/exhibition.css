@@ -1,0 +1,33 @@
+/* V7 shell and archive: primary routes share one navigation owner. */
+[hidden]{display:none!important}
+.my-herbal-link{color:#DCE9E1;font-size:12px;white-space:nowrap;padding:8px 4px}
+.my-herbal-link[aria-current="page"]{color:#F3D9A0;text-decoration:underline;text-underline-offset:5px}
+.archive-nav{max-width:1400px;margin:0 auto;padding:18px 24px 0;display:flex;flex-wrap:wrap;gap:8px}
+.archive-nav a,.attribute-view-switch button{padding:9px 13px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:13px;border-radius:4px}
+.archive-nav a[aria-current="page"],.page .attribute-view-switch button[aria-pressed="true"],.page .formula-view-switch button[aria-pressed="true"]{background:#183D32;color:#FFF4DB;border-color:#183D32}
+.attribute-view-switch{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 16px}
+.page[data-route="qiwei"] .analysis-dashboard{display:block}
+.page[data-route="qiwei"] .analysis-dashboard>.chart-panel{width:100%;margin:0}
+.page .archive-concepts{display:block;padding:15px 18px;border:1px solid var(--line);margin:18px 0;background:var(--card)}
+.page .archive-concepts summary{cursor:pointer;color:var(--qing);font-size:13px}
+.page .archive-concepts[open]>.reading-label,.page .archive-concepts[open]>.section-heading-row{margin-top:16px}
+.page .act-next{display:none}
+.home-archive-entry{display:flex;flex-wrap:wrap;gap:18px;margin:28px 0 10px;font-size:14px;color:var(--qing)}
+.page[data-route="herbs"] .collection-ledger{margin-top:28px;padding:22px;background:var(--card);border:1px solid var(--line)}
+.page[data-route="herbs"] .home-kpis{margin-top:16px;border-color:var(--line)}
+.page[data-route="herbs"] .home-kpi{background:var(--paper-2);border-color:var(--line)}
+.page[data-route="herbs"] .home-kpi strong,.page[data-route="herbs"] .home-source-copy h2{color:var(--qing)}
+.page[data-route="herbs"] .home-kpi span,.page[data-route="herbs"] .home-kpi em{color:var(--ink-2)}
+.page[data-route="herbs"] .home-subhead strong{color:var(--qing)}
+.page[data-route="herbs"] .home-coverage{display:grid;grid-template-columns:1fr 1.3fr;gap:24px;padding:22px 0}
+.page[data-route="herbs"] .home-source-band{margin-top:30px}
+.page[data-route="herbs"] .cultural-numbers{margin-top:36px}
+.page[data-route="home"] .hero #cosmosControls button[aria-pressed="true"]{background:#D0A24C;color:#172C23;border-color:#D0A24C}
+.archive-nav a:focus-visible,.attribute-view-switch button:focus-visible,.my-herbal-link:focus-visible{outline:2px solid var(--jin);outline-offset:3px}
+@media(max-width:768px){
+ .archive-nav{padding:14px 16px 0;gap:6px}.archive-nav a{padding:8px 10px;font-size:12px}
+ .my-herbal-link{font-size:11px}.page[data-route="herbs"] .home-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .page[data-route="herbs"] .home-kpi{padding:14px;min-width:0}.page[data-route="herbs"] .home-kpi strong{font-size:24px}
+ .page[data-route="herbs"] .home-coverage,.page[data-route="herbs"] .home-source-band{grid-template-columns:1fr}
+ .page[data-route="herbs"] .collection-ledger{padding:16px}.attribute-view-switch button{padding:9px 10px;font-size:12px}
+}

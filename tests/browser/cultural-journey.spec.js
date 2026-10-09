@@ -2,18 +2,16 @@ import { test, expect } from '@playwright/test';
 
 test.use({ serviceWorkers: 'block' });
 
-test('a first visit opens the cultural door and each act leads to the next', async ({ page }) => {
+test('a first visit opens the star sea and archive paths keep the learning loop', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'intro');
-  await expect(page.locator('#introExhibit h1')).toHaveText('本草千年');
-  await expect(page.locator('#introExhibit')).toContainText('文化传说');
-  await page.locator('#introExhibit a[href="#/home"]').first().click();
   await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'home');
-  await page.locator('.act-portals a[href="#/qiwei"]').click();
+  await page.locator('.hero-overlay a[href="#/herbs"]').click();
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'herbs');
+  await page.locator('#archiveNav [data-archive-view="qiwei"]').click();
   await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'qiwei');
-  await page.locator('.page.active .act-next a[href="#/formula"]').click();
+  await page.locator('#archiveNav [data-archive-view="formula"]').click();
   await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'formula');
-  await page.locator('.page.active .act-next a[href="#/heritage"]').click();
+  await page.locator('#archiveNav [data-archive-view="heritage"]').click();
   await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'heritage');
   await page.locator('.culture-next-links a[href="#/learn"]').click();
   await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'learn');
@@ -28,20 +26,20 @@ test('legacy collection links reach the corresponding heritage exhibit', async (
   const cases = [
     ['food', 'heritage-food'],
     ['culture', 'heritage-culture'],
-    ['classics', 'heritage-classics'],
+    ['classics', 'intro-timeline'],
     ['home?anchor=home-food', 'heritage-food'],
-    ['home?anchor=home-classics', 'heritage-classics']
+    ['home?anchor=home-classics', 'intro-timeline']
   ];
   for (const [route, anchor] of cases) {
     await page.goto('/#/' + route);
-    await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'heritage');
-    await expect(page.locator('[data-route-link="heritage"]')).toHaveAttribute('aria-current', 'page');
+    await expect(page.locator('.page.active')).toHaveAttribute('data-route', anchor === 'intro-timeline' ? 'intro' : 'heritage');
+    await expect(page.locator('[data-route-link="herbs"]')).toHaveAttribute('aria-current', 'page');
     await expect(page.locator('#' + anchor)).toBeInViewport({ ratio: .01 });
   }
 });
 
 test('cultural context numbers stay separate from the actual explorable collection', async ({ page }) => {
-  await page.goto('/#/home');
+  await page.goto('/#/herbs?anchor=home-collection');
   await expect(page.locator('.cultural-numbers')).toContainText('365');
   await expect(page.locator('.cultural-numbers')).toContainText('1,892');
   await expect(page.locator('.cultural-numbers')).toContainText('5,911');
@@ -130,7 +128,7 @@ test('ink theme persists on cultural pages and legacy classic preferences migrat
   await expect(page.locator('body')).not.toHaveClass(/night/);
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'ink');
-  await expect(page.locator('#heritageExhibit h1')).toHaveText('薪火相传');
+  await expect(page.locator('#heritageExhibit h1')).toHaveText('技艺与生活');
   expect(await page.evaluate(() => localStorage.getItem('herbal_theme'))).toBe('ink');
 });
 
@@ -209,7 +207,7 @@ test('new cultural exhibits have no duplicate ids, page errors or mobile overflo
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   for (const route of ['intro', 'heritage']) {
-    await page.goto('/#/' + route);
+    await page.goto('/#/' + (route === 'intro' ? 'herbs?section=classics' : route));
     await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
     await expect(page.locator('.page.active h1')).toBeVisible();
     for (const theme of ['day', 'night', 'ink']) {

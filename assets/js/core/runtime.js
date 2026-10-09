@@ -38,8 +38,8 @@ window.addEventListener('herbal:selected',event=>{
 });
 function routeTitle(route, params={}){
   if(route==='herb') return (byId(params.id)?.name||'药材知识卡')+' · 本草宇宙';
-  if(route==='formula'&&params.view==='zheng') return '术 · 证候药链 · 本草宇宙';
-  return ({intro:'序章 · 本草千年 · 本草宇宙',home:'源 · 本草宇宙',heritage:'传 · 薪火相传 · 本草宇宙',learn:'文化传习 · 本草宇宙',herbs:'探索本草 · 本草宇宙',qiwei:'道 · 性味归经 · 本草宇宙',formula:'术 · 配伍成方 · 本草宇宙','not-found':'路径未收录 · 本草宇宙'})[route]||'本草宇宙';
+  if(route==='formula'&&params.view==='zheng') return '证候药链 · 本草图鉴 · 本草宇宙';
+  return ({intro:'典籍时间线 · 本草图鉴 · 本草宇宙',home:'漫游星海 · 本草宇宙',exhibit:'文化长卷 · 本草宇宙',heritage:'文化档案 · 本草图鉴 · 本草宇宙',learn:'我的本草 · 本草宇宙',herbs:'本草图鉴 · 本草宇宙',qiwei:'属性统计 · 本草图鉴 · 本草宇宙',formula:'方剂档案 · 本草图鉴 · 本草宇宙','not-found':'路径未收录 · 本草宇宙'})[route]||'本草宇宙';
 }
 function applyLanguage(route='home',params={}){
   document.documentElement.lang='zh-CN';
@@ -220,25 +220,8 @@ function stampHtml(h, sizeCls){
   return `<span class="stamp ${sizeCls||''}"><span class="a">${esc(short)}</span><span class="b">${esc(fact(h.qi))}·${esc(fact(h.wei))}</span></span>`;
 }
 
-const routes = ['intro','home','heritage','learn','herbs','herb','qiwei','formula'];
 function parseHash(){
-  const raw = location.hash.replace(/^#\/?/, '') || 'intro';
-  const separator = raw.indexOf('?');
-  const path = separator < 0 ? raw : raw.slice(0, separator);
-  const queryStr = separator < 0 ? '' : raw.slice(separator + 1);
-  const params = Object.fromEntries(new URLSearchParams(queryStr));
-  const legacyAnchors = { food: 'heritage-food', culture: 'heritage-culture', classics: 'heritage-classics', 'home-food':'heritage-food', 'home-culture':'heritage-culture', 'home-classics':'heritage-classics' };
-  const legacyRoutes = new Set(['learn','zheng']);
-  const legacyDrawers = new Set(['saved']);
-  const homeAnchors = new Set(['home-learning','home-sources','home-collection']);
-  const known = routes.includes(path) || legacyRoutes.has(path) || Boolean(legacyAnchors[path]) || legacyDrawers.has(path) || homeAnchors.has(path) || path==='classics';
-  let route = known ? (routes.includes(path) ? path : 'home') : 'not-found';
-  if(path==='zheng'){route='formula';params.view='zheng';}
-  if (legacyAnchors[path]) params.anchor = legacyAnchors[path];
-  else if (homeAnchors.has(path)) params.anchor = path;
-  if(legacyAnchors[path]){route='heritage';params.anchor=legacyAnchors[path];}
-  if(route==='home'&&(params.focus==='classics'||legacyAnchors[params.anchor])){route='heritage';params.anchor=legacyAnchors[params.anchor]||'heritage-classics';}
-  return { route, params, unknownPath: known ? '' : path };
+  return window.HerbalExhibitionRouter.resolve(location.hash);
 }
 function renderNotFound(path){
   const unknownRoute=document.getElementById('unknownRoute');
@@ -256,33 +239,46 @@ function render(options={}){
   chartManager.clear();
   window.HerbalInsights?.dispose?.();
   syncDatasetCounts();
-  const { route, params, unknownPath } = parseHash();
+  const { route, params, section, unknownPath } = parseHash();
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active', p.dataset.route===route));
   document.querySelectorAll('[data-route-link]').forEach(a=>{
-    const active=a.dataset.routeLink===route;
+    const active=a.dataset.routeLink===section;
     a.classList.toggle('active',active);
     if(active) a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
+  const archiveNav=document.getElementById('archiveNav');
+  if(archiveNav){
+    archiveNav.hidden=section!=='herbs';
+    archiveNav.querySelectorAll('[data-archive-view]').forEach(link=>{
+      const owner=params.anchor==='home-sources'||params.anchor==='home-collection'?'sources':route==='herb'?'herbs':route;
+      if(link.dataset.archiveView===owner) link.setAttribute('aria-current','page');
+      else link.removeAttribute('aria-current');
+    });
+  }
   if(!options.preserveSearch&&typeof closeSearch==='function') closeSearch();
   if(savedScroll===null) window.scrollTo(0,0);
   if(route==='herbs'){
+    const sourcesOnly=['home-sources','home-collection'].includes(params.anchor);
+    document.getElementById('atlasRecords').hidden=sourcesOnly;
+    document.getElementById('archiveProvenance').hidden=!sourcesOnly;
     if(params.mode==='catalog') store._atlasMode='catalog';
     if(params.mode==='featured') store._atlasMode='featured';
     if(params.coverage !== undefined){store._coverage=params.coverage;store._atlasMode='featured';store.filters={qi:'',wei:'',cat:''};store._kw='';}
     if(params.cat !== undefined){store._coverage='';store._atlasMode='featured';store.filters={qi:'',wei:'',cat:params.cat};store._kw='';}
     if(params.q!=null){ store._catalogKw=params.q; store._catalogPage=1; }
   }
-  const views = { intro:()=>window.HerbalCulture?.renderIntro(), heritage:()=>window.HerbalCulture?.renderHeritage(), home:renderHome, learn:renderLearn, herbs:renderHerbs, herb:()=>renderHerb(params.id), qiwei:renderQiwei,
+  if(route==='qiwei' && params.cat!==undefined) store._qiweiCat=params.cat;
+  const views = { exhibit:()=>window.HerbalExhibition?.render(params), intro:()=>window.HerbalCulture?.renderIntro(), heritage:()=>window.HerbalCulture?.renderHeritage(), home:renderHome, learn:renderLearn, herbs:()=>{renderHerbs();renderHomeMuseum();}, herb:()=>renderHerb(params.id), qiwei:renderQiwei,
     formula:renderFormula, 'not-found':()=>renderNotFound(unknownPath) };
   const invokeView=()=>{ try{ (views[route]||views.home)(); }catch(err){ console.error('[herbal-cosmos] render error:', err); } };
   invokeView();
   applyLanguage(route,params);
-  window.dispatchEvent(new CustomEvent('herbal:route',{detail:{route,params,unknownPath}}));
+  window.dispatchEvent(new CustomEvent('herbal:route',{detail:{route,params,section,unknownPath}}));
   if(route==='learn')window.HerbalCulture?.renderJourney?.('learnJourney');
   if(savedScroll!==null){requestAnimationFrame(()=>window.scrollTo({top:savedScroll,behavior:'instant'}));return;}
   if(route==='home' && params.focus==='star' && params.id){ setSelected(params.id,{source:'context-bar'}); setTimeout(()=>window.HerbalCosmos?.focusHerb?.(params.id,{animate:true}),80); }
-  if(['intro','heritage'].includes(route)&&params.anchor)setTimeout(()=>{const target=document.getElementById(params.anchor);if(target)window.scrollTo({top:Math.max(0,target.getBoundingClientRect().top+window.scrollY-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--shell-height'))||64)-20),behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});},120);
+  if(['intro','heritage','herbs'].includes(route)&&params.anchor)setTimeout(()=>{const target=document.getElementById(params.anchor);if(target)window.scrollTo({top:Math.max(0,target.getBoundingClientRect().top+window.scrollY-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--shell-height'))||64)-20),behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});},120);
   if(route==='learn' && params.anchor) setTimeout(()=>{
     const target = document.getElementById(params.anchor);
     if (!target) return;
@@ -401,7 +397,6 @@ function renderHome(){
       <div><div class="n">${esc(h.name)}</div><div class="d">${esc(fact(h.qi))} · ${esc(fact(h.wei))} · 归${esc(h.meridian.length?h.meridian.join('、'):missingLabel())}${h.meridian.length?'经':''}</div></div>
     </a>`).join('');
   syncDatasetCounts();
-  renderHomeMuseum();
 }
 
 function renderHerbs(){
@@ -719,6 +714,10 @@ function renderHerb(id){
 }
 
 function renderQiwei(){
+  const requested=parseHash().params.chart;
+  const selected=['matrix','meridian','qi','wei','relations','flow'].includes(requested)?requested:'matrix';
+  document.querySelectorAll('[data-attribute-panel]').forEach(panel=>{panel.hidden=panel.dataset.attributePanel!==selected;if(panel.tagName==='DETAILS'&&!panel.hidden)panel.open=true;});
+  document.querySelectorAll('[data-attribute-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.attributeView===selected)));
   window.HerbalFivePhases?.renderFlavorLegend('fivePhaseLegend',{note:'五色表达五味与五行的传统对应，同色深浅表示记录数量。“四气待补”灰色行保留已知味型；淡、涩仅作补充味型图例，未纳入当前主矩阵与五味柱图。'});
   if(typeof echarts === 'undefined'){ renderWhenEchartsReady(renderQiwei); return; }
   const routeQuery=parseHash().params;
@@ -1183,6 +1182,13 @@ document.addEventListener('click', e=>{
   if(more?.open&&!e.target.closest('.nav-more')) more.open=false;
   if(e.target.id==='resetGraph'){ store._formulaFocus=''; if(parseHash().route==='formula' && !parseHash().params.f) renderFormula(); else location.hash='#/formula'; }
   const formulaView=e.target.closest('[data-formula-view]');
+  const attributeView=e.target.closest('[data-attribute-view]');
+  if(attributeView){
+    const params=new URLSearchParams(parseHash().params);
+    params.set('view','attributes');params.set('chart',attributeView.dataset.attributeView);
+    params.set('cat',store._qiweiCat||'');
+    location.hash='#/herbs?'+params.toString();
+  }
   if(formulaView){
     const params=parseHash().params;
     const next=new URLSearchParams();

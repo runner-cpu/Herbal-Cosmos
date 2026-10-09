@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 
 test('coverage chart links to bounded, correctly filtered knowledge-card pages',async({page})=>{
- await page.goto('/#/home');
+ await page.goto('/#/herbs?anchor=home-collection');
  await expect(page.locator('#collectionCoverage')).not.toHaveAttribute('open','');
  await page.locator('#collectionCoverage > summary').click();
  await expect(page.locator('#homeCoverageChart canvas')).toBeVisible();
@@ -25,12 +25,12 @@ test('coverage chart links to bounded, correctly filtered knowledge-card pages',
  await expect(page.locator('#herbResultCount')).toContainText(expected.featuredCards+' 味');
 });
 
-test('homepage guide and source sections keep coherent theme surfaces without duplicate navigation',async({page})=>{
- await page.goto('/#/home');
- await expect(page.locator('#mainNav > a')).toHaveCount(7);
+test('atlas source sections keep coherent theme surfaces without duplicate navigation',async({page})=>{
+ await page.goto('/#/herbs?anchor=home-sources');
+ await expect(page.locator('#mainNav > a')).toHaveCount(3);
  await expect(page.locator('#navMore')).toHaveCount(0);
  for(let i=0;i<3;i++){
-  const colors=await page.locator('.home-dashboard,.home-source-band').evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));
+  const colors=await page.locator('.home-source-band').evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));
   expect(new Set(colors).size).toBe(1);
   expect(colors[0]).toBe('rgba(0, 0, 0, 0)');
   await page.locator('#themeToggle').click();

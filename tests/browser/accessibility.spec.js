@@ -82,7 +82,7 @@ test('home route actions remain native keyboard links', async ({ page }) => {
   await page.goto('/#/home');
   const destinations = new Map([
     ['打开本草图鉴', '#/herbs'],
-    ['续读第二幕 · 道', '#/qiwei']
+    ['阅读文化长卷', '#/exhibit']
   ]);
   const hero = page.locator('.hero-overlay');
   for (const [name, href] of destinations) {
@@ -100,14 +100,14 @@ test('legacy saved links recover to the home route and open the drawer', async (
   await expect(page.locator('#savedDrawer')).toHaveClass(/is-open/);
 });
 
-test('home chapter rail follows the consolidated reading path', async ({ page }) => {
+test('home archive link preserves the legacy collection anchor and keyboard access', async ({ page }) => {
   await page.goto('/#/home');
-  await expect(page.locator('[data-home-chapter-current]')).toHaveText('文化导览');
-  await page.locator('[data-home-chapter="home-collection"]').click();
-  await expect(page).toHaveURL(/#\/home\?anchor=home-collection$/);
-  await expect(page.locator('[data-home-chapter-current]')).toHaveText('馆藏账本');
-  await expect(page.locator('[data-home-chapter-progress]')).toHaveText('3 / 4');
-  await expect(page.locator('[data-home-chapter="home-collection"]')).toHaveAttribute('aria-current', 'location');
+  const link = page.locator('.home-archive-entry a[href*="home-collection"]');
+  await link.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'herbs');
+  await expect(page.locator('#home-collection')).toBeInViewport({ ratio: .01 });
+  await expect(page.locator('#archiveNav [data-archive-view="sources"]')).toHaveAttribute('aria-current', 'page');
 });
 
 test('favorites drawer is modal and traps focus', async ({ page }, testInfo) => {
@@ -150,14 +150,15 @@ test('favorites drawer closes with Escape and returns focus', async ({ page }) =
 });
 
 test('heritage gives the classic reading method and links back to the sequence timeline', async ({ page }) => {
-  await page.goto('/#/heritage?anchor=heritage-classics');
+  await page.goto('/#/heritage');
   const section = page.locator('#heritage-classics');
+  await section.scrollIntoViewIfNeeded();
   await expect(section).toBeInViewport({ ratio: .01 });
   const methods = section.locator('.culture-method-list > li');
   await expect(methods).toHaveCount(3);
   await expect(methods.first()).toContainText('版本与刊刻');
-  const back = section.getByRole('link', { name: /回到序章时间线/ });
-  await expect(back).toHaveAttribute('href', '#/intro?anchor=intro-timeline');
+  const back = section.getByRole('link', { name: /典籍时间线/ });
+  await expect(back).toHaveAttribute('href', '#/herbs?section=classics');
   await back.focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'intro');

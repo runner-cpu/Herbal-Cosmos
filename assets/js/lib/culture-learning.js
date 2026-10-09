@@ -41,7 +41,7 @@
       answer: 0,
       note: '“神农尝百草”讲述文化起源，《神农本草经》是后世托名神农的本草文献。传说、文献与现代资料分别说明，不能把故事人物直接当作已考证的作者。来源：展览“序章 · 本草千年”的传说与文献说明。',
       source: '序章 · 本草千年：传说与文献',
-      readHref: '#/intro'
+      readHref: '#/herbs?section=classics'
     },
     {
       id: 'culture-tibetan-bathing',
