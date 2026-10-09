@@ -124,19 +124,19 @@ test('favorites drawer closes with Escape and returns focus', async ({ page }) =
   await expect(trigger).toBeFocused();
 });
 
-test('heritage classic reading notes open and close with the native keyboard disclosure', async ({ page }) => {
+test('heritage gives the classic reading method and links back to the sequence timeline', async ({ page }) => {
   await page.goto('/#/heritage?anchor=heritage-classics');
-  const entry = page.locator('#heritage-classics .culture-reading-list details').nth(1);
-  const summary = entry.locator('summary');
-  await expect(entry).not.toHaveAttribute('open', '');
-  await summary.focus();
+  const section = page.locator('#heritage-classics');
+  await expect(section).toBeInViewport({ ratio: .01 });
+  const methods = section.locator('.culture-method-list > li');
+  await expect(methods).toHaveCount(3);
+  await expect(methods.first()).toContainText('版本与刊刻');
+  const back = section.getByRole('link', { name: /回到序章时间线/ });
+  await expect(back).toHaveAttribute('href', '#/intro?anchor=intro-timeline');
+  await back.focus();
   await page.keyboard.press('Enter');
-  await expect(entry).toHaveAttribute('open', '');
-  await expect(entry.locator('.culture-era')).toBeVisible();
-  await expect(summary).toBeFocused();
-  await page.keyboard.press('Enter');
-  await expect(entry).not.toHaveAttribute('open', '');
-  await expect(summary).toBeFocused();
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'intro');
+  await expect(page.locator('#intro-timeline')).toBeInViewport({ ratio: .01 });
 });
 
 test('related formulas expose a native keyboard link to the network view', async ({ page }) => {
