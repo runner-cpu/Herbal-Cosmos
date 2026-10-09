@@ -18,13 +18,13 @@ test('quality workflow is least-privilege and verifies generated browser copies'
   assert.match(quality, /test:browser:compat/);
 });
 
-test('pages smoke waits for gh-pages and verifies the public versioned shell', () => {
+test('pages smoke waits for gh-pages and verifies the deployed shell version', () => {
   assert.match(smoke, /branches:\s*\[gh-pages\]/);
   assert.match(smoke, /permissions:\s*\n\s*contents:\s*read/);
   assert.match(smoke, /https:\/\/runner-cpu\.github\.io\/Herbal-Cosmos\//);
   assert.match(smoke, /expanded\.generated\.js/);
   assert.match(smoke, /HERBAL_DATA_VERSION/);
-  const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  const version = worker.match(/const CACHE_VERSION = '([^']+)'/)[1];
-  assert.ok(smoke.includes(version), 'Pages smoke must verify the current shell version');
+  assert.match(smoke, /uses:\s*actions\/checkout@v4/);
+  assert.match(smoke, /CACHE_VERSION/);
+  assert.equal(smoke.includes('herbal-cosmos-v'), false, 'smoke must read the version from sw.js instead of hard-coding it');
 });

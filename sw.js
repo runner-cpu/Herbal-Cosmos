@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v20-20261008-polish';
+const CACHE_VERSION = 'herbal-cosmos-v21-20261009-cosmos-readings';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -42,6 +42,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/data/expanded.chunk-08.js',
   './assets/js/data/expanded.generated.js',
   './assets/js/core/field-utils.js',
+  './assets/js/pages/cosmos-engine.js',
   './assets/js/core/runtime.js',
   './assets/js/core/app-shell.js',
   './assets/js/core/catalog-loader.browser.js',

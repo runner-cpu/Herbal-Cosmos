@@ -160,6 +160,57 @@
     const byId = new Map((window.HERBS || []).map(herb => [herb.id, herb]));
     return [...new Set(Array.isArray(ids) ? ids : [])].map(id => byId.get(id)).filter(Boolean);
   }
+  function renderReadingLegend(mode) {
+    const el = typeof document.querySelector === 'function' ? document.getElementById('cosmosReadingLegend') : null;
+    if (!el) return;
+    const engine = window.HerbalCosmosEngine;
+    if (!engine || mode === 'category') {
+      el.hidden = true; el.innerHTML = '';
+      return;
+    }
+    const items = engine.legendFor(mode);
+    el.hidden = false;
+    el.innerHTML = '<span class="reading-legend-label">' + escapeHtml(engine.READING_LABELS[mode] || '') + '</span>'
+      + items.map(item => '<span><i style="background:' + escapeHtml(item.color) + '"></i>' + escapeHtml(item.label) + '</span>').join('');
+  }
+  function readingButtons() {
+    if (typeof document.querySelectorAll !== 'function') return [];
+    return [...document.querySelectorAll('#cosmosControls [data-cosmos-reading]')];
+  }
+  function syncReadingControls(mode) {
+    const current = mode || document.documentElement.dataset.cosmosReadingMode || 'category';
+    readingButtons().forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.cosmosReading === current));
+    });
+    renderReadingLegend(current);
+    return current;
+  }
+  function initReadingControls() {
+    if (typeof document.addEventListener !== 'function') return;
+    // 控件由 cosmos.browser.js 在 DOMContentLoaded 时注入，因此用事件委托而不是绑定具体容器。
+    document.addEventListener('click', event => {
+      const button = event.target.closest?.('[data-cosmos-reading]');
+      if (!button) return;
+      const engine = window.HerbalCosmosEngine;
+      const modes = engine?.READING_MODES || ['category', 'geography', 'nature', 'ethnic'];
+      const mode = button.dataset.cosmosReading;
+      if (!modes.includes(mode)) return;
+      syncReadingControls(mode);
+      window.dispatchEvent(new CustomEvent('herbal:cosmos-reading', { detail: { mode } }));
+    });
+    window.addEventListener('herbal:cosmos-ready', () => syncReadingControls());
+    window.addEventListener('herbal:route', event => {
+      const engine = window.HerbalCosmosEngine;
+      const requested = event.detail?.params?.read;
+      if (requested && engine?.READING_MODES?.includes(requested)) {
+        syncReadingControls(requested);
+        window.dispatchEvent(new CustomEvent('herbal:cosmos-reading', { detail: { mode: requested } }));
+        return;
+      }
+      syncReadingControls();
+    });
+    syncReadingControls();
+  }
   function renderJourney(targetId = 'learnJourney') {
     const root = document.getElementById(targetId);
     if (!root) return;
@@ -229,5 +280,12 @@
   window.addEventListener('storage', event => {
     if (['herbal_favs', 'herbal_viewed', 'herbal_learn_stats'].includes(event.key)) updateJourneys();
   });
-  window.HerbalCulture = Object.freeze({ renderIntro, renderHeritage, renderJourney });
+  function bootReading() {
+    if (typeof document === 'undefined' || typeof document.readyState !== 'string') return;
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initReadingControls, { once: true });
+    else initReadingControls();
+  }
+  window.addEventListener('herbal:cosmos-reading', event => syncReadingControls(event.detail?.mode));
+  bootReading();
+  window.HerbalCulture = Object.freeze({ renderIntro, renderHeritage, renderJourney, renderReadingLegend, syncReadingControls });
 })();

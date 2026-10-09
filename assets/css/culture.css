@@ -136,6 +136,12 @@
 .culture-method-list > li > span { font: 600 20px/1.5 var(--serif); color: var(--cinnabar); text-align: center; padding-top: 2px; }
 .culture-method-list h3 { font-size: 18px; color: var(--qing); margin: 2px 0 9px; }
 .culture-method-list p { font-size: 12px; color: var(--ink-2); line-height: 1.95; }
+.cosmos-readings { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+.cosmos-readings button { min-height: 38px; padding: 6px 4px; border: 1px solid rgba(204,224,212,.28); background: #162F26; color: #CFDED4; border-radius: 4px; font-size: 11px; }
+.cosmos-readings button[aria-pressed="true"] { background: #D0A24C; border-color: #D0A24C; color: #23301F; font-weight: 600; }
+.cosmos-readings button:hover { border-color: #D0A24C; }
+.cosmos-readings button:focus-visible { outline: 2px solid #F3D9A0; outline-offset: 2px; }
+#cosmosReadingLegend .reading-legend-label { color: #E8C588; }
 .culture-journey-bridge { font-size: 13px; color: var(--ink-2); line-height: 1.95; }
 .culture-journey-bridge a { color: var(--qing); text-decoration: underline; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
 .culture-journey-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
@@ -180,4 +186,5 @@
   .culture-next-links { grid-template-columns: 1fr; gap: 5px; }.culture-next-links a { flex-direction: row; justify-content: space-between; align-items: center; padding: 13px; }
 }
 @media (max-width: 360px) { .culture-act-glyph { display: none; }.culture-door h1 { font-size: 56px; }.culture-kicker { font-size: 10px; letter-spacing: .14em; } }
+@media (max-width: 600px) { .cosmos-readings { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cosmos-readings button { min-height: 44px; } }
 @media (prefers-reduced-motion: reduce) { .culture-orbit-stars { animation: none; }.culture-exhibit a, .culture-exhibit button, .culture-exhibit input, .culture-exhibit select, .culture-exhibit summary { transition: none; }.culture-exhibit a:hover, .culture-exhibit button:hover, .culture-exhibit a:active { transform: none; } }

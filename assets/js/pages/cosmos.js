@@ -15,6 +15,7 @@ const EFFECT_COLORS = {
 };
 
 export const DEFAULT_COLOR_MODE = 'effect';
+export const EFFECT_LEGEND_ID = 'cosmosEffectLegend';
 
 export function effectLegendMarkup() {
   return Object.entries(EFFECT_COLORS)
@@ -22,8 +23,20 @@ export function effectLegendMarkup() {
     .join('') + '<span><i style="background:#D8C9A8"></i>其他／未录类别</span>';
 }
 
+export function readingControlsMarkup(readings = []) {
+  return '<div class="cosmos-readings" role="group" aria-label="星图着色读法" data-cosmos-readings>'
+    + readings.map((item, index) => '<button type="button" data-cosmos-reading="' + item.id + '" aria-pressed="' + (index === 0) + '">' + item.label + '</button>').join('')
+    + '</div>';
+}
+
 export function cosmosControlsMarkup() {
-  return '<button type="button" class="cosmos-collapse" data-cosmos-collapse aria-expanded="true" aria-label="收起星图控制面板">⌄</button><form class="cosmos-search"><label for="cosmosSearch">定位一味本草</label><div><input id="cosmosSearch" type="search" list="cosmosNames" placeholder="输入药名或拼音" autocomplete="off"><button type="submit">飞向本草</button></div><datalist id="cosmosNames"></datalist></form><div class="cosmos-actions"><button type="button" data-cosmos-color aria-pressed="false">统一色</button><button type="button" data-cosmos-motion aria-pressed="true">动效开</button><button type="button" data-cosmos-zoom="-.2" aria-label="缩小星图">−</button><button type="button" data-cosmos-zoom=".2" aria-label="放大星图">＋</button></div><p class="cosmos-legend" data-cosmos-legend>每一颗可选星辰对应一张本草知识卡。</p><div class="cosmos-selection" aria-live="polite"><span>点选星辰；双击聚焦。</span><a data-cosmos-detail hidden>打开知识卡 →</a></div>';
+  return '<button type="button" class="cosmos-collapse" data-cosmos-collapse aria-expanded="true" aria-label="收起星图控制面板">⌄</button>'
+    + '<div class="cosmos-readings" role="group" aria-label="星图着色读法" data-cosmos-readings><button type="button" data-cosmos-reading="category" aria-pressed="true">资料分类</button><button type="button" data-cosmos-reading="geography" aria-pressed="false">文献分布</button><button type="button" data-cosmos-reading="nature" aria-pressed="false">药性</button><button type="button" data-cosmos-reading="ethnic" aria-pressed="false">民族对照</button></div>'
+    + '<form class="cosmos-search"><label for="cosmosSearch">定位一味本草</label><div><input id="cosmosSearch" type="search" list="cosmosNames" placeholder="输入药名或拼音" autocomplete="off"><button type="submit">飞向本草</button></div><datalist id="cosmosNames"></datalist></form>'
+    + '<div class="cosmos-actions"><button type="button" data-cosmos-color aria-pressed="false">统一色</button><button type="button" data-cosmos-motion aria-pressed="true">动效开</button><button type="button" data-cosmos-zoom="-.2" aria-label="缩小星图">−</button><button type="button" data-cosmos-zoom=".2" aria-label="放大星图">＋</button></div>'
+    + '<p class="cosmos-legend" data-cosmos-legend>每一颗可选星辰对应一张本草知识卡。</p>'
+    + '<p class="cosmos-legend" id="cosmosReadingLegend" hidden></p>'
+    + '<div class="cosmos-selection" aria-live="polite"><span>点选星辰；双击聚焦。</span><a data-cosmos-detail hidden>打开知识卡 →</a></div>';
 }
 
 export function colorForEffect(category = '') {
@@ -89,6 +102,12 @@ function setMotionEnabled(enabled) {
   return value;
 }
 
+function setReading(mode) {
+  if (typeof window === 'undefined') return mode;
+  window.dispatchEvent(new CustomEvent('herbal:cosmos-reading', { detail: { mode } }));
+  return mode;
+}
+
 function initCosmos() {
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false;
   let preference = true;
@@ -97,7 +116,12 @@ function initCosmos() {
   let storedColor = DEFAULT_COLOR_MODE;
   try { storedColor = localStorage.getItem('herbal_cosmos_color') === 'uniform' ? 'uniform' : DEFAULT_COLOR_MODE; } catch { /* optional */ }
   document.documentElement.dataset.cosmosColor = storedColor;
-  window.HerbalCosmos = { selectVisibleLabels, colorForEffect, motionEnabled, focusHerb, setCosmosColorMode, setMotionEnabled, animate };
+  window.HerbalCosmos = {
+    selectVisibleLabels, colorForEffect, motionEnabled, focusHerb, setCosmosColorMode, setMotionEnabled, animate,
+    setReading,
+    readings: () => (window.HerbalCosmosEngine?.READING_MODES || ['category', 'geography', 'nature', 'ethnic'])
+      .map(id => ({ id, label: window.HerbalCosmosEngine?.READING_LABELS?.[id] || id }))
+  };
   window.dispatchEvent(new CustomEvent('herbal:motion', { detail: { enabled: animate } }));
   const hero = document.querySelector('.hero');
   if (hero && !document.getElementById('cosmosControls')) {

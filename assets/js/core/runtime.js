@@ -312,156 +312,59 @@ function render(options={}){
 (function initNebula(){
   const canvas = document.getElementById('heroCanvas');
   if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W=0, H=0, DPR=1;
-  let stars = [], dust = [];
-  let rotY = 0, targetRotY = 0, scale = 1, targetScale = 1;
-  let dragging = false, lastX = 0, lastY = 0;
-  let hoverId = null;
-  let running = true;
-  let motion = !(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) && storageRead('herbal_motion','on')!=='off';
-  let colorMode = document.documentElement.dataset.cosmosColor || storageRead('herbal_cosmos_color','effect');
-  let focusedId = null, panY=0, targetPanY=0, moved=0, animationFrame=0;
-  const activePointers=new Map(); let pinchDistance=0;
-  canvas.setAttribute('tabindex','0'); canvas.setAttribute('aria-label','本草星图：拖动旋转，双击聚焦；也可使用星图搜索与缩放按钮。');
-
-  function resize(){
-    DPR = Math.min(window.devicePixelRatio||1, 2);
-    W = canvas.clientWidth; H = canvas.clientHeight;
-    canvas.width = W*DPR; canvas.height = H*DPR;
-    ctx.setTransform(DPR,0,0,DPR,0,0);
+  const engine = window.HerbalCosmosEngine;
+  if(!engine || !engine.supported()){
+    canvas.hidden = true;
+    return;
   }
+  const readingKey = 'herbal_cosmos_reading';
+  let reading = document.documentElement.dataset.cosmosReadingMode || storageRead(readingKey, engine.DEFAULT_READING);
+  if(!engine.READING_MODES.includes(reading)) reading = engine.DEFAULT_READING;
 
-  function buildStars(){
-    stars = KNOWLEDGE_HERBS.map((h,i)=>{
-      // 球面分布 + 星等
-      const phi = Math.acos(1 - 2*(i+0.5)/KNOWLEDGE_HERBS.length);
-      const theta = i * Math.PI * (3 - Math.sqrt(5)); // 黄金角
-      const r = 210;
-      return {
-        id:h.id, name:h.name, herb:h,
-        x:r*Math.sin(phi)*Math.cos(theta), y:r*Math.cos(phi), z:r*Math.sin(phi)*Math.sin(theta),
-        size: isFav(h.id) ? 6.2 : 4.6, color: colorMode==='effect' ? (window.HerbalCosmos?.colorForEffect?.(h.cat)||'#D8C9A8') : '#D8C9A8'
-      };
-    });
-    // 背景星尘（全量资源分布的氛围示意）
-    dust = [];
-    const N = 1500;
-    for(let i=0;i<N;i++){
-      const r = 260 + Math.random()*240;
-      const theta = Math.random()*Math.PI*2;
-      const phi = Math.acos(2*Math.random()-1);
-      dust.push({
-        x:r*Math.sin(phi)*Math.cos(theta), y:r*Math.cos(phi)*Math.sin(theta)*0.7, z:r*Math.sin(phi)*Math.sin(theta),
-        s: Math.random()*1.4+0.3,
-        a: Math.random()*0.5+0.08,
-        tw: Math.random()*Math.PI*2
-      });
-    }
-  }
-
-  function project(x,y,z){
-    // 绕 Y 轴旋转
-    const c = Math.cos(rotY), s = Math.sin(rotY);
-    const xr = x*c + z*s, zr = -x*s + z*c;
-    const fov = 640;
-    const persp = fov / (fov + zr);
-    return { sx: W/2 + xr*scale*persp, sy: H/2 + y*scale*persp + panY, persp, zr };
-  }
-
-  function frame(){
-    if(!running) return;
-    ctx.clearRect(0,0,W,H);
-    if(motion) rotY += (targetRotY - rotY)*0.06;
-    else rotY = targetRotY;
-    scale += (targetScale - scale)*(motion?.08:1);
-    panY += (targetPanY-panY)*(motion?.08:1);
-    if(motion&&!dragging&&!focusedId)targetRotY+=.0005;
-
-    // 星尘
-    for(const d of dust){
-      const p = project(d.x, d.y, d.z);
-      if(p.zr > 300) continue;
-      const tw = motion ? 0.6 + 0.4*Math.sin(d.tw + performance.now()*0.001) : 0.8;
-      ctx.globalAlpha = d.a*tw*Math.min(1, p.persp);
-      ctx.fillStyle = '#BFD4DC';
-      ctx.beginPath(); ctx.arc(p.sx, p.sy, d.s*p.persp, 0, Math.PI*2); ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-
-    // 精品星
-    const viewed = new Set((()=>{ try{const value=JSON.parse(storageRead('herbal_viewed','[]'));return Array.isArray(value)?value:[];}catch(e){return [];} })());
-    const favorites=new Set(getFavs());
-    stars.forEach(st=>{ const projected=project(st.x,st.y,st.z); st.screenX=projected.sx; st.screenY=projected.sy; st.viewed=viewed.has(st.id); st.favorite=favorites.has(st.id); });
-    const visibleLabels = new Set((window.HerbalCosmos?.selectVisibleLabels?.(stars,{width:W,height:H},scale,{selectedHerb:store.selectedHerb?.id||null,viewedHerbs:viewed})||[]).map(item=>item.id));
-    for(const st of stars){
-      const p = project(st.x, st.y, st.z);
-      if(p.zr > 300) continue;
-      const sz = st.size * p.persp * scale;
-      const alpha = Math.min(1, p.persp);
-      // 光晕
-      const g = ctx.createRadialGradient(p.sx,p.sy,0,p.sx,p.sy,sz*3.4);
-      g.addColorStop(0, st.color+'55'); g.addColorStop(1, 'transparent');
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.sx,p.sy,sz*3.4,0,Math.PI*2); ctx.fill();
-      ctx.fillStyle = st.color; ctx.globalAlpha = alpha;
-      ctx.beginPath(); ctx.arc(p.sx,p.sy,Math.max(1.4,sz),0,Math.PI*2); ctx.fill();
-      ctx.globalAlpha = 1;
-      // 名称：默认只标注药食同源与亮星；放大星云时显示全部药名
-      const showLabel = visibleLabels.size ? visibleLabels.has(st.id) || hoverId===st.id || focusedId===st.id : ((hoverId===st.id) || (scale >= 1.8 && sz > 2.0) || (st.herb && st.herb.food && scale > 1.25));
-      if(showLabel){
-        ctx.fillStyle = hoverId===st.id ? '#F3D9A0' : 'rgba(232,224,207,.82)';
-        ctx.font = hoverId===st.id ? '600 12px "Noto Sans SC",sans-serif' : '400 11px "Noto Sans SC",sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(st.name, p.sx, p.sy - sz*3.6);
-      }
-      if(st.viewed || focusedId===st.id){ ctx.strokeStyle='#F0CA77'; ctx.lineWidth=1.2; ctx.globalAlpha=.85; ctx.beginPath(); ctx.arc(p.sx,p.sy,Math.max(5,sz*1.9),0,Math.PI*2); ctx.stroke(); ctx.globalAlpha=1; }
-    }
-    animationFrame=requestAnimationFrame(frame);
-  }
-
-  function hitTest(mx,my){
-    let best=null, bd=1e9;
-    for(const st of stars){
-      const p = project(st.x, st.y, st.z);
-      if(p.zr>300) continue;
-      const sz = Math.max(10, st.size*p.persp*scale*3.4);
-      const d = Math.hypot(mx-p.sx, my-p.sy);
-      if(d<sz && d<bd){ bd=d; best=st; }
-    }
-    return best;
-  }
-
-  function focusStar(id, animate=true){
-    const star=stars.find(item=>item.id===id); if(!star)return;
-    focusedId=star.id;targetRotY=Math.atan2(star.x,-star.z);targetScale=Math.max(targetScale,1.35);
-    const depth=-Math.hypot(star.x,star.z); targetPanY=-star.y*targetScale*640/(640+depth);
-    if(!animate||!motion){rotY=targetRotY;scale=targetScale;panY=targetPanY;}
-    setSelected(star.id,{source:'cosmos-focus'});
-    window.dispatchEvent(new CustomEvent('herbal:cosmos-selection',{detail:{herb:star.herb}}));
-  }
-  canvas.addEventListener('pointerdown',e=>{activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});dragging=true;moved=0;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);if(activePointers.size===2){const [a,b]=[...activePointers.values()];pinchDistance=Math.hypot(a.x-b.x,a.y-b.y);}});
-  canvas.addEventListener('pointermove',e=>{
-    if(activePointers.has(e.pointerId))activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
-    if(activePointers.size===2){const [a,b]=[...activePointers.values()],distance=Math.hypot(a.x-b.x,a.y-b.y);if(pinchDistance)targetScale=Math.max(.5,Math.min(2.4,targetScale*distance/pinchDistance));pinchDistance=distance;moved=20;return;}
-    if(dragging){const delta=Math.hypot(e.clientX-lastX,e.clientY-lastY);moved+=delta;targetRotY+=(e.clientX-lastX)*.006;lastX=e.clientX;lastY=e.clientY;if(moved>5){focusedId=null;targetPanY=0;}}
-    else{const rect=canvas.getBoundingClientRect(),hit=hitTest(e.clientX-rect.left,e.clientY-rect.top);hoverId=hit?.id||null;canvas.style.cursor=hit?'pointer':'grab';}
+  const instance = engine.mount(canvas, {
+    herbs: KNOWLEDGE_HERBS,
+    categoryColor: herb => window.HerbalCosmos?.colorForEffect?.(herb.cat) || engine.UNIFORM_COLOR,
+    colorMode: () => document.documentElement.dataset.cosmosColor === 'uniform' ? 'uniform' : 'effect',
+    ethnicIds: () => new Set((window.ETHNIC_CORRESPONDENCE||[]).filter(item=>item.status==='approved').map(item=>item.herbId)),
+    isFavorite: id => isFav(id),
+    viewedIds: () => { try{const value=JSON.parse(storageRead('herbal_viewed','[]'));return Array.isArray(value)?value:[];}catch(e){return [];} },
+    selectedId: () => store.selectedHerb?.id || null,
+    motionAllowed: () => window.HerbalCosmos?.animate !== false,
+    selectVisibleLabels: (...args) => window.HerbalCosmos?.selectVisibleLabels?.(...args) || [],
+    onSelect: (id, source) => setSelected(id, { source }),
+    onPick: herb => window.dispatchEvent(new CustomEvent('herbal:cosmos-selection',{detail:{herb}})),
+    openSelected: () => { if(store.selectedHerb) location.hash = '#/herb?id=' + store.selectedHerb.id; }
   });
-  const release=e=>{activePointers.delete(e.pointerId);dragging=activePointers.size>0;if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);if(activePointers.size===1){const [point]=activePointers.values();lastX=point.x;lastY=point.y;}};
-  canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);
-  canvas.addEventListener('click',e=>{if(moved>5)return;const rect=canvas.getBoundingClientRect(),hit=hitTest(e.clientX-rect.left,e.clientY-rect.top);if(hit){setSelected(hit.id,{source:'cosmos'});window.dispatchEvent(new CustomEvent('herbal:cosmos-selection',{detail:{herb:hit.herb}}));}});
-  canvas.addEventListener('dblclick',e=>{const rect=canvas.getBoundingClientRect(),hit=hitTest(e.clientX-rect.left,e.clientY-rect.top);if(hit)focusStar(hit.id);});
-  canvas.addEventListener('wheel',e=>{const next=Math.max(.5,Math.min(2.4,targetScale-e.deltaY*.001));if(next!==targetScale){e.preventDefault();targetScale=next;}},{passive:false});
-  canvas.addEventListener('keydown',e=>{if(e.key==='+'||e.key==='='){targetScale=Math.min(2.4,targetScale+.2);e.preventDefault();}if(e.key==='-'){targetScale=Math.max(.5,targetScale-.2);e.preventDefault();}if(e.key==='ArrowLeft'||e.key==='ArrowRight'){targetRotY+=(e.key==='ArrowLeft'?-.2:.2);focusedId=null;targetPanY=0;e.preventDefault();}if(e.key==='Enter'&&store.selectedHerb)location.hash='#/herb?id='+store.selectedHerb.id;});
-  window.addEventListener('herbal:focus-herb',event=>focusStar(event.detail?.herbId,event.detail?.animate!==false));
-  window.addEventListener('herbal:cosmos-zoom',event=>{targetScale=Math.max(.5,Math.min(2.4,targetScale+Number(event.detail?.delta||0)));});
-  const updateRunning=()=>{const next=!document.hidden&&document.querySelector('.page.active')?.dataset.route==='home';if(next&&!running){running=true;animationFrame=requestAnimationFrame(frame);}else if(!next){running=false;cancelAnimationFrame(animationFrame);}};
-  window.addEventListener('herbal:route',updateRunning);document.addEventListener('visibilitychange',updateRunning);
-  window.addEventListener('herbal:motion', event=>{ motion=Boolean(event.detail?.enabled); if(!motion) targetRotY=rotY; });
-  window.addEventListener('herbal:cosmos-color', event=>{ colorMode=event.detail?.mode==='effect'?'effect':'uniform'; buildStars(); });
+  if(!instance){
+    canvas.hidden = true;
+    return;
+  }
+  instance.setReading(reading);
+  document.documentElement.dataset.cosmosReadingMode = reading;
 
-  const ro = new ResizeObserver(()=>{ resize(); });
-  ro.observe(canvas);
-  resize(); buildStars(); frame();
+  window.addEventListener('herbal:cosmos-reading', event => {
+    const next = instance.setReading(event.detail?.mode);
+    document.documentElement.dataset.cosmosReadingMode = next;
+    storageWrite(readingKey, next);
+  });
+  window.addEventListener('herbal:focus-herb', event => instance.focus(event.detail?.herbId, event.detail?.animate !== false));
+  window.addEventListener('herbal:cosmos-zoom', event => instance.zoom(event.detail?.delta));
+  window.addEventListener('herbal:motion', () => instance.resetMotion());
+  window.addEventListener('herbal:cosmos-color', () => instance.setColorMode());
+  window.addEventListener('herbal:theme', () => instance.paint());
+  window.addEventListener('herbal:ethnic-correspondence', () => instance.paint());
+
+  const updateRunning = () => {
+    const active = !document.hidden && document.querySelector('.page.active')?.dataset.route === 'home';
+    if(active) instance.start(); else instance.stop();
+  };
+  window.addEventListener('herbal:route', updateRunning);
+  document.addEventListener('visibilitychange', updateRunning);
+  updateRunning();
+
+  window.__HERBAL_DEBUG__ = window.__HERBAL_DEBUG__ || {};
+  window.__HERBAL_DEBUG__.cosmosPerf = () => instance.perf();
+  window.HerbalNebula = instance;
 })();
 
 function renderHomeMuseum(){

@@ -17,21 +17,30 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - uses: actions/checkout@v4
       - name: Wait for the branch-based Pages deployment
         shell: bash
         run: |
           set -euo pipefail
+          expected=$(grep -o "const CACHE_VERSION = '[^']*'" sw.js | head -1 | sed "s/.*'\(.*\)'/\1/")
+          if [ -z "$expected" ]; then
+            echo 'Could not read CACHE_VERSION from the checked-out sw.js.' >&2
+            exit 1
+          fi
+          echo "Expecting deployed shell version: ${expected}"
           site='https://runner-cpu.github.io/Herbal-Cosmos/'
           for attempt in $(seq 1 30); do
             html=$(curl --fail --silent --show-error --location --max-time 20 "${site}?sha=${GITHUB_SHA}" || true)
             runtime=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/core/runtime.js?sha=${GITHUB_SHA}" || true)
             data=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/data/expanded.generated.js?sha=${GITHUB_SHA}" || true)
+            engine=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/pages/cosmos-engine.js?sha=${GITHUB_SHA}" || true)
             worker=$(curl --fail --silent --show-error --location --max-time 20 "${site}sw.js?sha=${GITHUB_SHA}" || true)
             missing=$(curl --silent --show-error --location --max-time 20 --write-out '%{http_code}' --output /tmp/herbal-404.html "${site}definitely-not-a-page-${GITHUB_SHA}" || true)
             if grep -q '本草宇宙' <<<"$html" \
               && grep -q 'function render' <<<"$runtime" \
               && grep -q 'HERBAL_DATA_VERSION' <<<"$data" \
-              && grep -q 'herbal-cosmos-v20-20261008-polish' <<<"$worker" \
+              && grep -q 'HerbalCosmosEngine' <<<"$engine" \
+              && grep -q "$expected" <<<"$worker" \
               && grep -q '此页未入卷' /tmp/herbal-404.html \
               && [[ "$missing" == '404' ]]; then
               echo "Public Pages smoke passed on attempt ${attempt}."
