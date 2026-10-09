@@ -20,6 +20,13 @@
 .cosmos-settings summary{font-size:12px;cursor:pointer;color:#DED5BF;margin-bottom:10px}
 .page[data-route="home"] .hero #cosmosControls button{min-height:42px;font-size:11px;padding:7px 10px;background:#19372B;color:#E7EDE6;border:1px solid #577164;border-radius:3px;transition:background .2s}
 .cosmos-readings{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+/* 星团穿梭：分区按钮由引擎按实际收录数量生成，是镜头旅行的目的地。 */
+.cosmos-clusters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.cosmos-clusters[data-empty="true"]{display:none}
+.cosmos-clusters button{display:inline-flex;align-items:center;gap:7px}
+.cosmos-clusters b{font-weight:400;font-size:10px;font-variant-numeric:tabular-nums;color:#AFC5B5}
+.page[data-route="home"] .hero #cosmosControls .cosmos-clusters button[aria-pressed="true"]{background:#D0A24C;color:#172C23;border-color:#D0A24C}
+.page[data-route="home"] .hero #cosmosControls .cosmos-clusters button[aria-pressed="true"] b{color:#4A3A18}
 .cosmos-category{display:flex;align-items:center;gap:12px;font-size:12px;margin:10px 0}
 .cosmos-category select{max-width:100%;min-width:0;min-height:38px;background:#19372B;color:#F3EDDF;border:1px solid #577164;padding:6px;font-size:12px}
 [data-cosmos-regions]{display:flex;flex-wrap:wrap;gap:12px;border:0;padding:8px 0;font-size:12px;color:#D8E4DA}

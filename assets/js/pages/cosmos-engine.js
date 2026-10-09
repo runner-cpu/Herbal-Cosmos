@@ -23,14 +23,23 @@
   const UNIFORM_COLOR = '#D8C9A8';
   const ETHNIC_COLOR = '#E8C06A';
   const DIM_COLOR = '#465850';
+  const NO_REGION = '无分布记录';
+  const CLUSTER_ALL = 'all';
   const READING_MODES = Object.freeze(['category', 'geography', 'nature', 'ethnic']);
   const READING_LABELS = Object.freeze({ category: '资料分类', geography: '文献分布', nature: '药性', ethnic: '民族对照' });
+  const CLUSTER_LABELS = Object.freeze({ 青藏: '青藏', 西北: '西北', 北方: '北方', 西南: '西南', 东南: '东南', [NO_REGION]: '未录分布' });
   const DEFAULT_READING = 'category';
   const GLOW_SIZE = 128;
   const GLOW_ALPHA_BY_THEME = Object.freeze({ day: 0.55, night: 1, ink: 0.72 });
   const DEPTH_RANGE = 300;
   const FOV = 640;
   const REVEAL = Object.freeze({ dustMs: 800, starMs: 1200, spread: 0.75, ramp: 0.45 });
+  const TRAIL_SAME = 'rgba(126,164,152,';
+  const TRAIL_CROSS = 'rgba(216,188,116,';
+  // Herb-to-herb trails come from recorded prescriptions. Sampling keeps the
+  // line layer inside the frame budget without dropping the network's shape.
+  const TRAIL_LIMIT = 420;
+  const FLY_MS = 900;
 
   function hexWithAlpha(color, alpha) {
     const match = String(color || '').trim().match(/^#([0-9a-f]{6})$/i);
@@ -39,6 +48,8 @@
     return 'rgba(' + ((value >> 16) & 255) + ',' + ((value >> 8) & 255) + ',' + (value & 255) + ',' + alpha + ')';
   }
 
+  // Province lists follow the same five-region reading the archive publishes;
+  // a card recorded in several provinces belongs to every region it names.
   function regionOf(origin) {
     const regions = regionsOf(origin);
     return regions.length === 1 ? regions[0] : regions.length ? 'multiple' : 'unknown';
@@ -46,6 +57,9 @@
   function regionsOf(origin) {
     const list = Array.isArray(origin) ? origin : [];
     return Object.keys(REGION_OF_PROVINCE).filter(region => list.some(province => REGION_OF_PROVINCE[region].includes(province)));
+  }
+  function clusterOf(herb = {}) {
+    return regionsOf(herb.origin)[0] || NO_REGION;
   }
 
   function colorForReading(herb = {}, mode = DEFAULT_READING, options = {}) {
@@ -116,6 +130,11 @@
     const herbs = host.herbs || [];
     const layoutApi = window.HerbalCosmosLayout;
     const layout = layoutApi.build(herbs, host.formulas || []);
+    const regionOfId = new Map(herbs.map(herb => [herb.id, clusterOf(herb)]));
+    const regionNodes = layoutApi.regionPositions
+      ? layoutApi.regionPositions(layout.nodes, node => regionOfId.get(node.id))
+      : layout.nodes;
+    const trails = layoutApi.cooccurrence ? layoutApi.cooccurrence(layout, { limit: TRAIL_LIMIT }) : [];
     const reducedQuery = typeof window !== 'undefined' ? window.matchMedia?.('(prefers-reduced-motion: reduce)') : null;
     const mobileQuery = typeof window !== 'undefined' ? window.matchMedia?.('(max-width: 768px)') : null;
 
@@ -123,10 +142,10 @@
     let stars = [], dust = [];
     let rotY = 0, targetRotY = 0, scale = 1, targetScale = 1;
     let dragging = false, lastX = 0, lastY = 0, moved = 0;
-    let hoverId = null, focusedId = null, panY = 0, targetPanY = 0;
+    let hoverId = null, focusedId = null;
     let running = false, animationFrame = 0, lastFrameAt = 0, disposed = false;
-    let categoryFilter = '', regionFilters = new Set(), roam = false;
     let manuallyRotated = false;
+    let categoryFilter = '', regionFilters = new Set(), roam = false;
     let webgl = null, webglCanvas = null, loadingRenderer = null, rendererAttempted = false, rendererReason = '';
     let rendererChoice = host.renderer || 'auto';
     let rendererEpoch = 0;
@@ -134,6 +153,22 @@
     const listeners = [];
     const on = (name, fn, options) => { canvas.addEventListener(name, fn, options); listeners.push([name, fn, options]); };
     let reading = DEFAULT_READING;
+    let readingLayout = layout.nodes;
+    let trailsEnabled = host.trails !== false;
+    let cluster = CLUSTER_ALL;
+    let flight = null;
+
+    // The cluster list the host renders as travel buttons, counted from the
+    // cards actually present so no empty region ever ships as a destination.
+    function clusterCounts() {
+      const counts = new Map();
+      for (const star of stars) {
+        const key = clusterOf(star.herb);
+        counts.set(key, (counts.get(key) || 0) + 1);
+      }
+      return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-CN')).map(([key, count]) => ({ key, label: CLUSTER_LABELS[key] || key, count }));
+    }
+    let anchorX = 0, anchorY = 0, targetAnchorX = 0, targetAnchorY = 0;
     let degradeLevel = 0;
     let revealed = false, revealStart = 0;
     let firstFrameMs = 0;
@@ -237,11 +272,17 @@
     function buildStars() {
       const inputs = colorInputs();
       const byId = new Map(herbs.map(h => [h.id, h]));
+      const regionById = new Map(regionNodes.map(node => [node.id, node]));
       stars = layout.nodes.map(node => {
         const herb = byId.get(node.id);
+        const region = regionById.get(node.id) || node;
         return {
           id: herb.id, name: herb.name,
-          ...node, tx: node.x, ty: node.y, tz: node.z,
+          category: node.category,
+          gx: node.x, gy: node.y, gz: node.z,
+          rx: region.x, ry: region.y, rz: region.z,
+          x: node.x, y: node.y, z: node.z,
+          tx: node.x, ty: node.y, tz: node.z,
           size: favorite(herb.id) ? 3.2 : 2.2,
           herb,
           color: colorForReading(herb, reading, inputs),
@@ -264,19 +305,72 @@
           tw: Math.random() * Math.PI * 2
         });
       }
+      materialize();
       setRelationPositions();
       invalidate();
     }
 
+    // Reveal and reduced-motion paths write positions straight through; the
+    // animated path leaves them to the frame loop's easing.
+    function materialize() {
+      if (revealEnabled()) return;
+      for (const star of stars) { star.x = star.tx; star.y = star.ty; star.z = star.tz; }
+    }
+
+    // Two registrations share one node contract: the category disk, and the
+    // regional ring used by the literature-distribution reading and by every
+    // cluster the viewer travels to.
+    function syncLayout() {
+      readingLayout = reading === 'geography' || cluster !== CLUSTER_ALL ? regionNodes : layout.nodes;
+    }
+
     function setRelationPositions() {
-      const positions = focusedId ? layoutApi.selectedPositions(layout, focusedId) : layout.nodes;
+      const positions = focusedId ? layoutApi.selectedPositions(layout, focusedId) : readingLayout;
       const targets = new Map(positions.map(n => [n.id, n]));
       for (const star of stars) {
-        const target = targets.get(star.id);
-        star.tx = target.x; star.ty = target.y; star.tz = target.z;
-        if (!revealEnabled()) { star.x = star.tx; star.y = star.ty; star.z = star.tz; }
+        const target = targets.get(star.id) || star;
+        const source = target === star
+          ? (reading === 'geography' ? { x: star.rx, y: star.ry, z: star.rz } : { x: star.gx, y: star.gy, z: star.gz })
+          : target;
+        star.tx = source.x; star.ty = source.y; star.tz = source.z;
       }
+      materialize();
     }
+
+    // A cluster the viewer chose: the camera aims at its centroid while the
+    // rest of the field keeps its shape, so the flight reads as travel.
+    function centroidOf(ids) {
+      let x = 0, y = 0, z = 0, n = 0;
+      for (const star of stars) {
+        if (!ids.has(star.id)) continue;
+        x += star.x; y += star.y; z += star.z; n += 1;
+      }
+      if (!n) return { x: 0, y: 0, z: 0 };
+      return { x: x / n, y: y / n, z: z / n };
+    }
+
+    function anchorFor(key) {
+      if (key === CLUSTER_ALL) return { x: 0, y: 0, z: 0, scale: 1 };
+      const ids = new Set(stars.filter(star => clusterOf(star.herb) === key).map(star => star.id));
+      const focus = centroidOf(ids);
+      const share = Math.sqrt(ids.size / Math.max(1, stars.length));
+      return { ...focus, scale: Math.max(1.05, Math.min(2.1, 0.95 + share * 1.5)) };
+    }
+
+    // Screen projection folds the camera yaw into x, so the anchor is derived
+    // from the live rotation: the chosen cluster stays under the viewer's eye
+    // even while the field is still turning.
+    function syncAnchor() {
+      const focus = anchorFor(cluster);
+      if (focus.scale === 1) { targetAnchorX = 0; targetAnchorY = 0; targetScale = 1; return; }
+      const c = Math.cos(targetRotY), s = Math.sin(targetRotY);
+      const xr = focus.x * c + focus.z * s;
+      const fit = Math.min(W / 600, H / 430, 1.25);
+      targetAnchorX = -xr * focus.scale * fit;
+      targetAnchorY = -focus.y * focus.scale * fit;
+      targetScale = focus.scale;
+    }
+
     function visible(star) {
       return (!categoryFilter || star.category === categoryFilter) && (reading !== 'geography' || !regionFilters.size || regionsOf(star.herb.origin).some(region => regionFilters.has(region)));
     }
@@ -286,7 +380,7 @@
       const xr = x * c + z * s, zr = -x * s + z * c;
       const persp = FOV / (FOV + zr);
       const fit = Math.min(W / 600, H / 430, 1.25);
-      return { sx: W / 2 + xr * scale * fit * persp, sy: H / 2 + y * scale * fit * persp + panY, persp, zr };
+      return { sx: W / 2 + xr * scale * fit * persp + anchorX, sy: H / 2 + y * scale * fit * persp + anchorY, persp, zr };
     }
 
     function revealEnabled() {
@@ -305,10 +399,30 @@
       ctx.clearRect(0, 0, W, H);
       if (revealEnabled()) {
         rotY += (targetRotY - rotY) * 0.06;
-        if (!dragging && !focusedId && !manuallyRotated) targetRotY = .18 * Math.sin(frameStart * .00006);
+        if (!dragging && !flight && !focusedId && !manuallyRotated) targetRotY = .18 * Math.sin(frameStart * .00006);
       } else rotY = targetRotY;
-      if (revealEnabled()) { scale += (targetScale - scale) * 0.08; panY += (targetPanY - panY) * 0.08; }
-      else { scale = targetScale; panY = targetPanY; }
+      if (flight) {
+        // Interstellar hop: ease rotation and framing toward the chosen cluster
+        // instead of cutting, so the field visibly travels under the camera.
+        const t = Math.max(0, Math.min(1, (frameStart - flight.start) / Math.max(1, flight.duration)));
+        const ease = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        rotY = flight.fromRot + (flight.toRot - flight.fromRot) * ease;
+        targetRotY = flight.toRot;
+        const anchor = anchorFor(flight.key);
+        const fit = Math.min(W / 600, H / 430, 1.25);
+        const c = Math.cos(rotY), s = Math.sin(rotY);
+        const goalX = anchor.scale === 1 ? 0 : -(anchor.x * c + anchor.z * s) * anchor.scale * fit;
+        const goalY = anchor.scale === 1 ? 0 : -anchor.y * anchor.scale * fit;
+        anchorX = flight.fromX + (goalX - flight.fromX) * ease;
+        anchorY = flight.fromY + (goalY - flight.fromY) * ease;
+        scale = flight.fromScale + (anchor.scale - flight.fromScale) * ease;
+        targetAnchorX = goalX; targetAnchorY = goalY; targetScale = anchor.scale;
+        if (t >= 1) flight = null;
+      } else if (revealEnabled()) {
+        scale += (targetScale - scale) * 0.08;
+        anchorX += (targetAnchorX - anchorX) * 0.08;
+        anchorY += (targetAnchorY - anchorY) * 0.08;
+      } else { scale = targetScale; anchorX = targetAnchorX; anchorY = targetAnchorY; }
       const particles = [];
 
       const dustFactor = dustReveal(elapsed);
@@ -339,7 +453,11 @@
       const labelIds = new Set((labels || []).map(item => item.id));
       const alpha = glowAlpha();
       const relatedIds = new Set(focusedId ? layoutApi.relations(layout, focusedId).ids : []);
-      const emphasis = star => focusedId && star.id !== focusedId && !relatedIds.has(star.id) ? .18 : 1;
+      const emphasis = star => {
+        if (focusedId) return star.id === focusedId || relatedIds.has(star.id) ? 1 : .18;
+        if (cluster !== CLUSTER_ALL) return clusterOf(star.herb) === cluster ? 1 : .16;
+        return 1;
+      };
 
       if (focusedId) {
         const selected = shown.find(s => s.id === focusedId);
@@ -347,6 +465,21 @@
         if (selected) for (const star of shown.filter(s => relations.has(s.id))) {
           ctx.strokeStyle = 'rgba(214,192,139,.22)'; ctx.lineWidth = .7;
           ctx.beginPath(); ctx.moveTo(selected.screenX, selected.screenY); ctx.lineTo(star.screenX, star.screenY); ctx.stroke();
+        }
+      } else if (trailsEnabled) {
+        // Interchange trails: two cards are joined when one recorded formula
+        // lists both. Same-category pairs read as one colour family, pairs that
+        // cross categories are brighter, which is where the traditions meet.
+        const byStar = new Map(stars.map(star => [star.id, star]));
+        const trailAlpha = (degradeLevel >= 2 ? 0 : degradeLevel >= 1 ? .4 : 1) * (0.35 + 0.65 * Math.min(1, elapsed / (REVEAL.dustMs + REVEAL.starMs)));
+        ctx.lineWidth = .6;
+        for (const link of trails) {
+          const a = byStar.get(link.source), b = byStar.get(link.target);
+          if (!a || !b || a.zr > DEPTH_RANGE || b.zr > DEPTH_RANGE) continue;
+          if (!visible(a) || !visible(b)) continue;
+          const cross = a.category !== b.category;
+          ctx.strokeStyle = (cross ? TRAIL_CROSS : TRAIL_SAME) + (cross ? .26 : .13) * trailAlpha + ')';
+          ctx.beginPath(); ctx.moveTo(a.screenX, a.screenY); ctx.lineTo(b.screenX, b.screenY); ctx.stroke();
         }
       }
 
@@ -437,11 +570,13 @@
       const star = stars.find(item => item.id === id);
       if (!star) return;
       focusedId = star.id;
+      cluster = CLUSTER_ALL; flight = null;
+      syncLayout();
       categoryFilter = ''; regionFilters.clear();
-      targetRotY = 0; targetScale = 1.1; targetPanY = 0;
+      targetRotY = 0; targetScale = 1.1; targetAnchorX = 0; targetAnchorY = 0;
       setRelationPositions();
       if (!animate || !revealEnabled()) {
-        rotY = targetRotY; scale = targetScale; panY = targetPanY;
+        rotY = targetRotY; scale = targetScale; anchorX = targetAnchorX; anchorY = targetAnchorY;
         for (const s of stars) { s.x = s.tx; s.y = s.ty; s.z = s.tz; }
       }
       host.onSelect?.(star.id, source);
@@ -480,8 +615,9 @@
         moved += Math.hypot(event.clientX - lastX, event.clientY - lastY);
         targetRotY += (event.clientX - lastX) * 0.006;
         manuallyRotated = true;
+        flight = null;
         lastX = event.clientX; lastY = event.clientY;
-        if (moved > 5) { focusedId = null; targetPanY = 0; setRelationPositions(); }
+        if (moved > 5) { focusedId = null; setRelationPositions(); }
       } else {
         const rect = canvas.getBoundingClientRect();
         const hit = hitTest(event.clientX - rect.left, event.clientY - rect.top);
@@ -527,7 +663,7 @@
       if (event.key === '+' || event.key === '=') { targetScale = Math.min(2.4, targetScale + 0.2); event.preventDefault(); }
       if (event.key === '-') { targetScale = Math.max(0.5, targetScale - 0.2); event.preventDefault(); }
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        targetRotY += (event.key === 'ArrowLeft' ? -0.2 : 0.2); manuallyRotated = true; focusedId = null; targetPanY = 0; setRelationPositions(); event.preventDefault();
+        targetRotY += (event.key === 'ArrowLeft' ? -0.2 : 0.2); manuallyRotated = true; flight = null; focusedId = null; setRelationPositions(); event.preventDefault();
       }
       if (event.key === 'Enter') host.openSelected?.();
       invalidate();
@@ -557,8 +693,38 @@
       stop,
       isFavorite: favorite,
       toggleFavorite(id) { host.toggleFavorite?.(id); },
-      clearFocus() { focusedId = null; manuallyRotated = false; targetRotY = 0; targetPanY = 0; targetScale = 1; setRelationPositions(); invalidate(); },
+      clearFocus() {
+        focusedId = null; manuallyRotated = false; flight = null;
+        cluster = CLUSTER_ALL;
+        targetRotY = 0; targetScale = 1; targetAnchorX = 0; targetAnchorY = 0;
+        setRelationPositions(); invalidate();
+      },
       setFilter(category = '', regions = []) { categoryFilter = category; regionFilters = new Set(regions); invalidate(); return stars.filter(visible).length; },
+      // Cluster travel: choosing a recorded region regroups the sky by that
+      // reading and flies the camera to the group, so the destination is a
+      // place in the map rather than a filter over it.
+      flyTo(key = CLUSTER_ALL) {
+        const next = key === CLUSTER_ALL || stars.some(star => clusterOf(star.herb) === key) ? key : CLUSTER_ALL;
+        focusedId = null; manuallyRotated = true; flight = null;
+        categoryFilter = ''; regionFilters.clear();
+        if (next === CLUSTER_ALL) {
+          cluster = CLUSTER_ALL;
+          syncLayout();
+          targetRotY = 0; targetScale = 1; targetAnchorX = 0; targetAnchorY = 0;
+          setRelationPositions();
+          if (!revealEnabled()) { rotY = targetRotY; scale = targetScale; anchorX = 0; anchorY = 0; }
+          invalidate();
+          return cluster;
+        }
+        cluster = next;
+        syncLayout();
+        setRelationPositions();
+        syncAnchor();
+        flight = { key: next, start: performance.now(), duration: revealEnabled() ? FLY_MS : 0, fromRot: rotY, toRot: targetRotY, fromX: anchorX, fromY: anchorY, fromScale: scale };
+        if (!revealEnabled()) { rotY = targetRotY; scale = targetScale; anchorX = targetAnchorX; anchorY = targetAnchorY; flight = null; }
+        invalidate();
+        return cluster;
+      },
       setRoam(enabled) {
         roam = Boolean(enabled); canvas.dataset.roam = String(roam);
         const pointers = [...activePointers.keys()]; activePointers.clear();
@@ -568,12 +734,17 @@
       setRenderer(choice = 'auto') { rendererEpoch += 1; rendererChoice = choice; rendererAttempted = false; fallback(''); if (running) enhance(); },
       setReading(mode) {
         reading = READING_MODES.includes(mode) ? mode : DEFAULT_READING;
+        // The literature-distribution reading is the one that regroups cards
+        // into their recorded regions; every other reading keeps the disk.
+        syncLayout();
+        setRelationPositions();
         paint();
         return reading;
       },
       setColorMode() { paint(); },
+      clusters: clusterCounts,
       zoom(delta) { targetScale = Math.max(0.5, Math.min(2.4, targetScale + Number(delta || 0))); invalidate(); },
-      resetMotion() { if (!revealEnabled()) { targetRotY = rotY; scale = targetScale; panY = targetPanY; setRelationPositions(); } invalidate(); },
+      resetMotion() { if (!revealEnabled()) { targetRotY = rotY; scale = targetScale; anchorX = targetAnchorX; anchorY = targetAnchorY; setRelationPositions(); } invalidate(); },
       beginReveal() { revealed = false; revealStart = performance.now(); },
       perf() {
         const avg = frameSamples.length ? frameSamples.reduce((sum, value) => sum + value, 0) / frameSamples.length : 0;
@@ -589,7 +760,10 @@
           spriteReadyMs,
           renderer: canvas.dataset.renderer, rendererReason, running, scheduled: Boolean(animationFrame), frames,
           renderCostMs: Math.round(renderMs * 100) / 100, visibleCount: stars.filter(visible).length,
-          nodeCount: stars.length, categoryFilter, regions: [...regionFilters], roam, focusedId,
+          nodeCount: stars.length, categoryFilter, regions: [...regionFilters], roam, focusedId, cluster,
+          flight: Boolean(flight),
+          trailCount: trailsEnabled ? trails.length : 0,
+          clusters: clusterCounts(),
           paletteCount: new Set(stars.map(s => s.color)).size,
           relations: focusedId ? layoutApi.relations(layout, focusedId) : { ids: [], formulas: [] }
         };
@@ -613,6 +787,7 @@
     supported,
     regionOf,
     regionsOf,
+    clusterOf,
     colorForReading,
     legendFor,
     particleBudget,
@@ -626,6 +801,9 @@
     QI_COLORS,
     READING_MODES,
     READING_LABELS,
+    CLUSTER_LABELS,
+    CLUSTER_ALL,
+    NO_REGION,
     DEFAULT_READING,
     UNIFORM_COLOR,
     ETHNIC_COLOR,
