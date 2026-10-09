@@ -172,7 +172,8 @@
         const layer = document.createElement('canvas');
         layer.className = 'cosmos-webgl'; layer.setAttribute('aria-hidden', 'true');
         canvas.before(layer); webglCanvas = layer;
-        webgl = module.createRenderer(layer, fallback);
+        // Covers all device budgets, including viewport changes after mount.
+        webgl = module.createRenderer(layer, fallback, layout.nodes.length + particleBudget({ cores: 8 }).dust);
         rendererStatus(); invalidate();
       } catch (_) { if (!disposed) fallback('增强画面不可用，已使用基础星图'); }
       finally { loadingRenderer = null; }

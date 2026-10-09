@@ -285,3 +285,36 @@ test('renderer changes during enhancement keep one active particle painter', asy
   await expect(page.locator('.cosmos-webgl')).toHaveCount(0);
   expect((await readingState(page)).perf.renderer).toBe('canvas');
 });
+
+test('progressive particle reveal reuses four GPU buffers and disposes every upload', async ({ page }) => {
+  await page.goto('/?renderer=canvas#/home');
+  const result = await page.evaluate(async () => {
+    const { createRenderer } = await import('/assets/vendor/cosmos-webgl.js');
+    const canvas = document.createElement('canvas'); document.body.append(canvas);
+    const gl = canvas.getContext('webgl2');
+    const uploaded = new Set(), deleted = new Set(); let allocations = 0;
+    const originalUpload = gl.bufferData.bind(gl), originalDelete = gl.deleteBuffer.bind(gl);
+    gl.bufferData = (...args) => {
+      if (args[0] === gl.ARRAY_BUFFER) { allocations++; uploaded.add(gl.getParameter(gl.ARRAY_BUFFER_BINDING)); }
+      return originalUpload(...args);
+    };
+    gl.deleteBuffer = buffer => { deleted.add(buffer); return originalDelete(buffer); };
+    const painter = createRenderer(canvas, () => {}, 32);
+    const particle = { x: 50, y: 50, size: 3, color: '#D0A24C', alpha: .5 };
+    const uploadCounts = [];
+    for (let count = 1; count <= 32; count++) {
+      painter.render(Array.from({ length: count }, () => particle), 100, 100);
+      uploadCounts.push(allocations);
+    }
+    painter.render([particle], 100, 100);
+    let overflowRejected = false;
+    try { painter.render(Array.from({ length: 33 }, () => particle), 100, 100); } catch (_) { overflowRejected = true; }
+    painter.dispose(); painter.dispose(); canvas.remove();
+    return { uploadCounts, allocations, buffers: uploaded.size, freed: [...uploaded].filter(buffer => deleted.has(buffer)).length, overflowRejected };
+  });
+  expect(result.uploadCounts).toEqual(Array(32).fill(4));
+  expect(result.allocations).toBe(4);
+  expect(result.buffers).toBe(4);
+  expect(result.freed).toBe(4);
+  expect(result.overflowRejected).toBe(true);
+});
