@@ -3,24 +3,28 @@ import { test, expect } from '@playwright/test';
 test.use({ serviceWorkers: 'block' });
 
 test('collection counts survive theme changes during and after count animation', async ({ page }) => {
-  await page.goto('/#/home');
+  await page.goto('/#/herbs?anchor=home-collection');
   const expected = await page.evaluate(() => [HERBS.filter(herb => !['directory-only','formula-material'].includes(herb.kind)).length, HERB_CATALOG_MANIFEST.approvedCount, FORMULAS.length, HERBAL_DATA_COVERAGE.imageBacked].map(value => value.toLocaleString('zh-CN')));
   await page.evaluate(() => window.HerbalTheme.setTheme('night'));
   await expect(page.locator('#homeKpis strong')).toHaveText(expected);
   await page.evaluate(() => window.HerbalTheme.setTheme('day'));
   await expect(page.locator('#homeKpis strong')).toHaveText(expected);
   await page.goto('/#/herbs');
-  await page.goto('/#/home');
-  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'home');
+  await page.goto('/#/herbs?anchor=home-collection');
+  await expect(page.locator('.page.active')).toHaveAttribute('data-route', 'herbs');
   await expect(page.locator('#homeKpis strong')).toHaveText(expected);
-  await page.evaluate(() => window.scrollTo(0, 1000));
-  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(1000);
+  // Finish the delayed legacy-anchor scroll before testing independent scroll retention.
+  await page.waitForTimeout(1200);
+  const targetScroll = await page.evaluate(() => Math.min(300, document.documentElement.scrollHeight-innerHeight));
+  expect(targetScroll).toBeGreaterThan(0);
+  await page.evaluate(y => window.scrollTo({top:y,behavior:'instant'}), targetScroll);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(targetScroll);
   await page.evaluate(() => window.HerbalTheme.setTheme('night'));
-  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(1000);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(targetScroll);
 });
 
 test('night panels use dark surfaces and readable text', async ({ page }) => {
-  await page.goto('/#/home');
+  await page.goto('/#/herbs?anchor=home-collection');
   await page.evaluate(() => window.HerbalTheme.setTheme('night'));
   await page.locator('#collectionCoverage > summary').click();
   const surfaces = await page.locator('.home-kpis,.home-coverage,footer').evaluateAll(elements => elements.map(el => {
@@ -38,7 +42,7 @@ test('night panels use dark surfaces and readable text', async ({ page }) => {
 });
 
 test('resource explanation follows the statistics without intersecting them', async ({ page }) => {
-  await page.goto('/#/home');
+  await page.goto('/#/herbs?anchor=home-collection');
   await page.locator('.evidence-note').scrollIntoViewIfNeeded();
   await expect.poll(() => page.evaluate(() => {
     const stats = document.querySelector('.evidence-rail').getBoundingClientRect();
@@ -90,15 +94,16 @@ test('formula directory is bounded, searchable and keeps every formula reachable
 test('syndrome view has one navigation owner and anchors clear both sticky rails', async ({ page }) => {
   await page.goto('/#/formula?view=zheng');
   await expect(page.locator('.nav-more a[href*="view=zheng"]')).toHaveCount(0);
-  await expect(page.locator('[data-route-link="formula"]')).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('[data-route-link="herbs"]')).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('#mainNav [aria-current="page"]')).toHaveCount(1);
   await expect(page.locator('#formulaZhengView')).toBeVisible();
   await page.goto('/#/herb?id=gancao');
   await page.goto('/#/home');
-  await page.locator('[data-home-chapter="home-sources"]').click();
+  await page.locator('.home-archive-entry a[href*="home-collection"]').click();
+  await page.locator('#archiveNav [data-archive-view="sources"]').click();
   await expect.poll(() => page.evaluate(() => {
     const target = document.getElementById('home-sources').getBoundingClientRect();
-    const nav = document.querySelector('.home-chapter-nav').getBoundingClientRect();
+    const nav = document.querySelector('#archiveNav').getBoundingClientRect();
     return target.top - nav.bottom;
   })).toBeGreaterThanOrEqual(10);
 });

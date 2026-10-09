@@ -23,6 +23,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: npm run build:cosmos
+      - run: git diff --exit-code -- assets/vendor/cosmos-webgl.js
       - run: npm run build:data
       - run: git diff --exit-code -- data/ reports/ assets/js/data
       - run: npm run build:browser
@@ -39,6 +41,7 @@ jobs:
         shell: bash
         run: |
           test -s workers/catalog-search.js
+          test -s assets/vendor/cosmos-webgl.js
           test -s assets/icons/favicon.svg
           test -s assets/icons/apple-touch-icon-180.png
           test -s assets/icons/app-icon-192.png
@@ -53,6 +56,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # The release regression serves the actual 37c61a7 shell.
       - uses: actions/setup-node@v4
         with:
           node-version: 22

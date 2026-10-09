@@ -128,7 +128,7 @@ test('ink theme persists on cultural pages and legacy classic preferences migrat
   await expect(page.locator('body')).not.toHaveClass(/night/);
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'ink');
-  await expect(page.locator('#heritageExhibit h1')).toHaveText('技艺与生活');
+  await expect(page.locator('#exhibitionRoot h1')).toContainText('传一艺');
   expect(await page.evaluate(() => localStorage.getItem('herbal_theme'))).toBe('ink');
 });
 
@@ -207,7 +207,7 @@ test('new cultural exhibits have no duplicate ids, page errors or mobile overflo
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   for (const route of ['intro', 'heritage']) {
-    await page.goto('/#/' + (route === 'intro' ? 'herbs?section=classics' : route));
+    await page.goto('/#/' + (route === 'intro' ? 'herbs?section=classics' : 'herbs?section=culture'));
     await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
     await expect(page.locator('.page.active h1')).toBeVisible();
     for (const theme of ['day', 'night', 'ink']) {

@@ -27,13 +27,13 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon-180.png" sizes="180x180">
-<link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/components.css">
-<link rel="stylesheet" href="assets/css/home.css">
-<link rel="stylesheet" href="assets/css/culture.css">
-<link rel="stylesheet" href="assets/css/cultural-charts.css">
-<link rel="stylesheet" href="assets/css/journey.css">
-<link rel="stylesheet" href="assets/css/exhibition.css">
+<link rel="stylesheet" href="assets/css/site.css?v=cultural-v7">
+<link rel="stylesheet" href="assets/css/components.css?v=cultural-v7">
+<link rel="stylesheet" href="assets/css/home.css?v=cultural-v7">
+<link rel="stylesheet" href="assets/css/culture.css?v=cultural-v7">
+<link rel="stylesheet" href="assets/css/cultural-charts.css?v=cultural-v7">
+<link rel="stylesheet" href="assets/css/journey.css?v=cultural-v7">
+<link rel="stylesheet" href="assets/css/exhibition.css?v=cultural-v7">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalApplication","name":"本草宇宙","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://runner-cpu.github.io/Herbal-Cosmos/","inLanguage":"zh-CN","description":"漫游星海、文化长卷与本草图鉴组成的数字展馆。内容仅供文化科普与学习，不构成医疗建议。"}</script>
 </head>
 <body>
@@ -79,8 +79,8 @@
     <section class="page" data-route="exhibit" aria-label="文化长卷"><div id="exhibitionRoot"></div></section>
     <section class="page" data-route="intro" aria-label="典籍档案 · 本草千年"><div id="introExhibit"></div></section>
     <!-- ============ 首页 ============ -->
-    <section class="page" data-route="home">
-      <div class="hero">
+    <section class="page active" data-route="home">
+      <div class="hero" id="cosmosHero">
         <div class="hero-aurora" aria-hidden="true"></div>
         <div class="hero-overlay">
           <div class="exhibit-kicker">漫游星海 / 从一味本草开始</div>
@@ -112,9 +112,9 @@
     <section class="page" data-route="herbs">
       <div class="eyebrow">Herb Atlas / 完整资料档案</div>
       <h1 class="title">本草图鉴</h1>
-      <p class="page-intro">先用精品知识卡深入理解，再切换文献名称索引扩大检索范围。只有精品层进入性味归经图表与详情联动。</p>
+      <p class="page-intro">先用本草知识卡深入理解，再切换文献名称索引扩大检索范围。知识卡进入性味归经图表与详情联动。</p>
       <div id="atlasRecords">
-      <div class="atlas-mode-tabs" role="tablist" aria-label="本草数据层"><button type="button" class="atlas-mode-tab on" data-atlas-mode="featured" role="tab">精品知识卡 <span id="featuredAtlasCount" data-featured-count>—</span></button><button type="button" class="atlas-mode-tab" data-atlas-mode="catalog" role="tab">文献名称索引 <span id="catalogAtlasCount">—</span></button></div>
+      <div class="atlas-mode-tabs" role="tablist" aria-label="本草数据层"><button type="button" class="atlas-mode-tab on" data-atlas-mode="featured" role="tab">本草知识卡 <span id="featuredAtlasCount" data-featured-count>—</span></button><button type="button" class="atlas-mode-tab" data-atlas-mode="catalog" role="tab">文献名称索引 <span id="catalogAtlasCount">—</span></button></div>
       <div id="featuredAtlasPanel">
       <label class="coverage-filter" for="coverageFilter">资料覆盖<select id="coverageFilter"><option value="">全部知识卡</option><option value="complete">完整来源事实</option><option value="partial">部分字段记录</option><option value="images">有开放许可图片</option><option value="missing-image">图片待补充</option><option value="origin">有省级分布记录</option><option value="sources">有逐行来源链接</option></select></label>
       <div class="filter-bar" id="herbFilters">
@@ -122,7 +122,7 @@
         <label class="filter-control" for="qiFilter">四气<select id="qiFilter" data-herb-filter="qi"></select></label>
         <label class="filter-control" for="weiFilter">五味<select id="weiFilter" data-herb-filter="wei"></select></label>
         <label class="filter-control" for="catFilter">资料分类<select id="catFilter" data-herb-filter="cat"></select></label>
-        <span class="filter-summary" id="herbFilterSummary">按字段筛选精品知识卡</span>
+        <span class="filter-summary" id="herbFilterSummary">按字段筛选本草知识卡</span>
       </div>
       <div class="atlas-toolbar"><span id="herbResultCount">代表药材</span><div class="compare-tray" id="compareTray">选择 2-3 味药材进行属性对比</div><button id="openCompare" type="button" disabled>生成对比图</button></div>
       <div class="table-wrap">
@@ -141,8 +141,10 @@
         <p class="chart-method catalog-scroll-hint">小屏可左右滑动表格，查看来源、数据状态和“下一步”入口。</p><div class="catalog-table-wrap" tabindex="0" role="region" aria-label="名称索引明细，可横向滚动"><table><thead><tr><th>名称</th><th>来源</th><th>数据状态</th><th>下一步</th></tr></thead><tbody id="catalogTableBody"></tbody></table></div>
         <div class="catalog-pagination" id="catalogPagination"></div>
       </div>
+      <details id="atlasAnalysis"><summary>展开补充分析 · 省级分布与资料完整度</summary>
       <section class="insight-chart-panel province-insight" aria-labelledby="provinceTitle"><h2 id="provinceTitle">文献中的省级分布</h2><p class="chart-method" id="provinceCoverage">正在汇总有分布记录的药材…</p><div class="insight-detail-layout"><div><div class="chart-box" id="provinceDistributionChart"></div><div class="chart-access" id="provinceAccess"></div></div><div class="chart-evidence" id="provinceEvidence" aria-live="polite"></div></div></section>
       <section class="insight-chart-panel completeness-insight" aria-labelledby="completenessTitle"><div class="section-heading-row"><div><span>FACT COVERAGE</span><h2 id="completenessTitle">资料完整度 × 传统分类</h2></div><span class="home-section-note">按当前知识卡逐行统计；空白字段不会被推断为已录入。</span></div><p class="chart-method" id="completenessCoverage">正在汇总图片、归经、地区、分类学与来源记录…</p><div class="insight-detail-layout"><div><div class="chart-box" id="factCompletenessChart"></div><div class="chart-access" id="factCompletenessAccess"></div></div><div class="chart-evidence" id="factCompletenessEvidence" aria-live="polite"><p>点击色块查看该分类的知识卡，并继续补全缺失字段。</p></div></div></section>
+      </details>
       </div>
       <div id="archiveProvenance" hidden>
       <div class="stats evidence-rail cultural-numbers" aria-label="三段本草记忆">
@@ -160,7 +162,7 @@
 
         <section class="home-source-band" id="home-sources" data-home-section="home-sources" aria-labelledby="homeSourceTitle">
           <div class="home-source-copy"><span>馆藏来源与资料边界</span><h2 id="homeSourceTitle">每份档案，都保留来处</h2><p>本馆以中医药本草知识为主体，在传承展区介绍藏医药浴等文化实践。不同医药体系各有知识语境，不混同药性和诊疗规则。资源普查、典籍与非遗名录提供文化背景，馆藏字段逐条保留资料来源。</p><div class="home-source-actions"><a href="#/herbs?section=culture">查阅文化档案</a><a href="#/learn">参与文化传习</a><button type="button" data-saved-open>查看我的收藏</button></div></div>
-          <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委食药物质目录</span></div><div><strong>当前版本</strong><span><span data-featured-count>—</span> 味精品知识卡 · <span data-catalog-count>—</span> 条文献名称索引 · <span data-formula-count>—</span> 首代表方剂 · <span data-zheng-count>—</span> 个证候链路 · <span data-review-count>—</span> 条待审候选</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div><details id="homeImageCredits"><summary>馆藏图像署名与许可</summary><p><a href="https://www.inaturalist.org/observations/93914221" target="_blank" rel="noopener noreferrer">人参 · Nina Filippova</a>（<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer license">CC BY 4.0</a>） · <a href="https://www.inaturalist.org/observations/41439227" target="_blank" rel="noopener noreferrer">野菊花 · Cheng-Tao Lin</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/photos/142691899" target="_blank" rel="noopener noreferrer">甘草 · Nina Filippova</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/observations/371467034" target="_blank" rel="noopener noreferrer">黄芩 · Urgamal Magsar</a>（CC BY 4.0） · <a href="https://commons.wikimedia.org/wiki/File:Lycium_barbarum_Habitus_Miguelturra_CampodeCalatrava.jpg" target="_blank" rel="noopener noreferrer">枸杞子 · javier martin</a>（<a href="https://creativecommons.org/publicdomain/mark/1.0/" target="_blank" rel="noopener noreferrer license">Public domain</a>）。照片仅按版面缩放与裁切；文化卡背景为项目自有 AI 概念图。<a href="IMAGE_SOURCES_V4.md">查看完整图像来源与许可清单</a>。</p></details></div>
+          <div class="home-source-ledger"><div><strong>数据来源</strong><span>第四次全国中药资源普查 · 《中国药典》2020 · 《本草纲目》 · 国家卫健委食药物质目录</span></div><div><strong>当前版本</strong><span><span data-featured-count>—</span> 张本草知识卡 · <span data-catalog-count>—</span> 条文献名称索引 · <span data-formula-count>—</span> 首代表方剂 · <span data-zheng-count>—</span> 个证候链路 · <span data-review-count>—</span> 条待审候选</span></div><div><strong>使用边界</strong><span>内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。</span></div><details id="homeImageCredits"><summary>馆藏图像署名与许可</summary><p><a href="https://www.inaturalist.org/observations/93914221" target="_blank" rel="noopener noreferrer">人参 · Nina Filippova</a>（<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer license">CC BY 4.0</a>） · <a href="https://www.inaturalist.org/observations/41439227" target="_blank" rel="noopener noreferrer">野菊花 · Cheng-Tao Lin</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/photos/142691899" target="_blank" rel="noopener noreferrer">甘草 · Nina Filippova</a>（CC BY 4.0） · <a href="https://www.inaturalist.org/observations/371467034" target="_blank" rel="noopener noreferrer">黄芩 · Urgamal Magsar</a>（CC BY 4.0） · <a href="https://commons.wikimedia.org/wiki/File:Lycium_barbarum_Habitus_Miguelturra_CampodeCalatrava.jpg" target="_blank" rel="noopener noreferrer">枸杞子 · javier martin</a>（<a href="https://creativecommons.org/publicdomain/mark/1.0/" target="_blank" rel="noopener noreferrer license">Public domain</a>）。照片仅按版面缩放与裁切；文化卡背景为项目自有 AI 概念图。<a href="IMAGE_SOURCES_V4.md">查看完整图像来源与许可清单</a>。</p></details></div>
           <p class="home-source-dynamic-note" data-directory-only-note hidden></p>
         </section>
       </div>
@@ -288,51 +290,51 @@
 <div class="app-update" id="appUpdate" role="status" aria-live="polite" aria-atomic="true" hidden><span>本草宇宙已有新版本。</span><button id="appUpdateRefresh" type="button">刷新更新</button><button id="appUpdateLater" type="button">稍后</button></div>
 <div id="toast"></div>
 
-<script defer src="assets/js/lib/echarts-loader.js"></script>
-<script defer src="assets/js/data/food-medicine.generated.js"></script>
-<script defer src="assets/js/data/featured.js"></script>
-<script defer src="assets/js/data/expanded.bootstrap.js"></script>
-<script defer src="assets/js/data/expanded.chunk-00.js"></script>
-<script defer src="assets/js/data/expanded.chunk-01.js"></script>
-<script defer src="assets/js/data/expanded.chunk-02.js"></script>
-<script defer src="assets/js/data/expanded.chunk-03.js"></script>
-<script defer src="assets/js/data/expanded.chunk-04.js"></script>
-<script defer src="assets/js/data/expanded.chunk-05.js"></script>
-<script defer src="assets/js/data/expanded.chunk-06.js"></script>
-<script defer src="assets/js/data/expanded.chunk-07.js"></script>
-<script defer src="assets/js/data/expanded.chunk-08.js"></script>
-<script defer src="assets/js/data/expanded.generated.js"></script>
-<script defer src="assets/js/data/ethnic-correspondence.js"></script>
-<script defer src="assets/js/core/field-utils.js"></script>
-<script defer src="assets/js/lib/culture-semantics.js"></script>
-<script defer src="assets/js/pages/culture.js"></script>
-<script defer src="assets/js/lib/culture-learning.js"></script>
-<script defer src="assets/js/pages/cosmos-layout.js"></script>
-<script defer src="assets/js/pages/cosmos-engine.js"></script>
-<script defer src="assets/js/core/exhibition-router.js"></script>
-<script defer src="assets/js/data/exhibition-cases.js"></script>
-<script defer src="assets/js/pages/exhibition.js"></script>
-<script defer src="assets/js/core/runtime.js"></script>
-<script defer src="assets/js/components/stamp.browser.js"></script>
-<script defer src="assets/js/components/context-bar.browser.js"></script>
-<script defer src="assets/js/components/search.browser.js"></script>
-<script defer src="assets/js/components/saved-drawer.browser.js"></script>
+<script defer src="assets/js/lib/echarts-loader.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/food-medicine.generated.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/featured.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.bootstrap.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-00.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-01.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-02.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-03.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-04.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-05.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-06.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-07.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.chunk-08.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/expanded.generated.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/ethnic-correspondence.js?v=cultural-v7"></script>
+<script defer src="assets/js/core/field-utils.js?v=cultural-v7"></script>
+<script defer src="assets/js/lib/culture-semantics.js?v=cultural-v7"></script>
+<script defer src="assets/js/pages/culture.js?v=cultural-v7"></script>
+<script defer src="assets/js/lib/culture-learning.js?v=cultural-v7"></script>
+<script defer src="assets/js/pages/cosmos-layout.js?v=cultural-v7"></script>
+<script defer src="assets/js/pages/cosmos-engine.js?v=cultural-v7"></script>
+<script defer src="assets/js/core/exhibition-router.js?v=cultural-v7"></script>
+<script defer src="assets/js/data/exhibition-cases.js?v=cultural-v7"></script>
+<script defer src="assets/js/pages/exhibition.js?v=cultural-v7"></script>
+<script defer src="assets/js/core/runtime.js?v=cultural-v7"></script>
+<script defer src="assets/js/components/stamp.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/components/context-bar.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/components/search.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/components/saved-drawer.browser.js?v=cultural-v7"></script>
 <!-- Source module paths retained for build/test traceability; browser copies below keep file:// direct-open support.
 assets/js/components/stamp.js assets/js/components/context-bar.js assets/js/components/search.js
 assets/js/components/saved-drawer.js assets/js/components/theme.js assets/js/pages/home.js
 assets/js/pages/cross-navigation.js assets/js/pages/cosmos.js assets/js/core/catalog-loader.js -->
-<script defer src="assets/js/components/theme.browser.js"></script>
-<script defer src="assets/js/pages/home.browser.js"></script>
-<script defer src="assets/js/pages/formula-directory.browser.js"></script>
-<script defer src="assets/js/lib/insight-aggregates.browser.js"></script>
-<script defer src="assets/js/lib/learn-modules.js"></script>
-<script defer src="assets/js/lib/data-coverage.browser.js"></script>
-<script defer src="assets/js/charts/insights.js"></script>
-<script defer src="assets/js/pages/cross-navigation.browser.js"></script>
-<script defer src="assets/js/pages/cosmos.browser.js"></script>
-<script defer src="assets/js/core/catalog-loader.browser.js"></script>
-<script defer src="assets/js/beautify.js"></script>
-<script defer src="assets/js/exhibition-effects.js"></script>
-<script defer src="assets/js/core/app-shell.js"></script>
+<script defer src="assets/js/components/theme.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/pages/home.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/pages/formula-directory.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/lib/insight-aggregates.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/lib/learn-modules.js?v=cultural-v7"></script>
+<script defer src="assets/js/lib/data-coverage.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/charts/insights.js?v=cultural-v7"></script>
+<script defer src="assets/js/pages/cross-navigation.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/pages/cosmos.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/core/catalog-loader.browser.js?v=cultural-v7"></script>
+<script defer src="assets/js/beautify.js?v=cultural-v7"></script>
+<script defer src="assets/js/exhibition-effects.js?v=cultural-v7"></script>
+<script defer src="assets/js/core/app-shell.js?v=cultural-v7"></script>
 </body>
 </html>

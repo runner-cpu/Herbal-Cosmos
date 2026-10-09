@@ -73,7 +73,7 @@ export function checkInlineRuntime({ baseDir = root, html, maxInlineBytes = 2048
   const references = [];
   const positions = [];
   for (const asset of requiredAssets) {
-    const reference = documentAssets.find(item => item.asset === asset);
+    const reference = documentAssets.find(item => item.asset.split(/[?#]/)[0] === asset);
     if (!reference) {
       issues.push(`missing external asset reference: ${asset}`);
     } else {
@@ -104,7 +104,7 @@ export function checkInlineRuntime({ baseDir = root, html, maxInlineBytes = 2048
     const count = [...source.matchAll(new RegExp(`\\b(?:const|let|var)\\s+${name}\\b`, 'g'))].length;
     if (count > 1) duplicates.push(`duplicate inline definition: ${name} (${count})`);
   }
-  return { ok: issues.length === 0, issues, duplicates, references: references.map(item => item.asset) };
+  return { ok: issues.length === 0, issues, duplicates, references: references.map(item => item.asset.split(/[?#]/)[0]) };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

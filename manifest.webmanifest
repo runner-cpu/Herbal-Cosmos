@@ -1,9 +1,9 @@
 {
   "name": "本草宇宙 · HERBAL COSMOS",
   "short_name": "本草宇宙",
-  "description": "沿源、道、术、传四幕阅读民族医药文化的数字展馆。",
+  "description": "漫游星海、阅读三章文化长卷、检索本草图鉴的文化交互展。",
   "lang": "zh-CN",
-  "start_url": "./#/intro",
+  "start_url": "./#/home",
   "scope": "./",
   "display": "standalone",
   "background_color": "#F6F1E7",

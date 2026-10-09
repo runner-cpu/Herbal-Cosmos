@@ -54,7 +54,7 @@ test('320px shell and core routes stay within the viewport', async ({ page }) =>
   await page.setViewportSize({ width: 320, height: 700 });
   for (const route of ['intro', 'home', 'herbs', 'qiwei', 'formula', 'heritage', 'learn']) {
     await page.goto('/#/' + route);
-    await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
+    await expect(page.locator('.page.active')).toHaveAttribute('data-route', route==='intro'?'home':route==='heritage'?'exhibit':route);
     expect(await page.evaluate(() => document.documentElement.scrollWidth), route + ' overflow').toBeLessThanOrEqual(321);
   }
 });
@@ -113,7 +113,7 @@ test('375px routes do not create document or chart overflow', async ({ page }) =
   await page.setViewportSize({ width: 375, height: 812 });
   for (const route of ['intro', 'home', 'herbs', 'qiwei', 'formula', 'heritage']) {
     await page.goto('/#/' + route);
-    await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
+    await expect(page.locator('.page.active')).toHaveAttribute('data-route', route==='intro'?'home':route==='heritage'?'exhibit':route);
     const widths = await page.evaluate(() => ({
       scroll: document.documentElement.scrollWidth,
       client: document.documentElement.clientWidth,

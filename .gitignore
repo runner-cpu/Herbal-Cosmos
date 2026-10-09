@@ -1,5 +1,7 @@
 scripts/__pycache__/
 .worktrees/
+.superpowers/
+output/review/
 node_modules/
 .tmp-v3/
 test-results/

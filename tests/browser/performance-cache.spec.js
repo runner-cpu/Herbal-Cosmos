@@ -4,10 +4,11 @@ test.use({ serviceWorkers: 'allow' });
 
 async function openCachedIntro(page) {
   await page.goto('/#/intro');
-  await expect(page.locator('#introExhibit h1')).toBeVisible();
+  await expect(page.locator('[data-route="home"] .cosmos-scene')).toBeVisible();
   await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker.controller)), {
     timeout: 15_000
   }).toBeTruthy();
+  await expect.poll(() => page.evaluate(async () => Boolean(await caches.match('assets/vendor/cosmos-webgl.js'))), {timeout:15000}).toBeTruthy();
 }
 
 async function openQiwei(page) {
@@ -88,10 +89,10 @@ test('reading a project document cannot replace the offline exhibition or its ch
   await expect.poll(() => page.evaluate(async () => Boolean(await caches.match('assets/vendor/echarts.min.js')))).toBeTruthy();
   const document = await page.goto('/docs/competition-framework.md');
   expect(document.headers()['content-type']).toContain('text/plain');
-  await expect(page.locator('body')).toContainText('民族文化与创新表达版框架');
+  await expect(page.locator('body')).toContainText('文化交互展 V7');
   await context.setOffline(true);
   await page.goto('/#/intro');
-  await expect(page.locator('#introExhibit h1')).toHaveText('本草千年');
+  await expect(page.locator('[data-route="home"] .cosmos-scene')).toBeVisible();
   await openQiwei(page);
   expect(await page.evaluate(() => ({
     cards: window.HERBS.filter(herb => !['formula-material', 'directory-only'].includes(herb.kind)).length,

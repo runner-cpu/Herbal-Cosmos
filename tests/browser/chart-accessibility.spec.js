@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('rendered charts have readable names and generated evidence summaries', async ({ page }) => {
   await page.goto('/#/qiwei');
 
-  const charts = page.locator('.page.active .chart-box');
+  const charts = page.locator('.page.active .chart-box:visible');
   await expect.poll(() => charts.count()).toBeGreaterThan(0);
   for (let index = 0; index < await charts.count(); index += 1) {
     const chart = charts.nth(index);
@@ -31,6 +31,8 @@ test('rendered charts have readable names and generated evidence summaries', asy
 
 test('catalog completeness matrix exposes a keyboard-accessible evidence path', async ({ page }) => {
   await page.goto('/#/herbs');
+  await expect(page.locator('#factCompletenessChart canvas')).toHaveCount(0);
+  await page.locator('#atlasAnalysis summary').click();
   await expect(page.locator('#factCompletenessChart canvas')).toBeVisible();
   await expect(page.locator('#factCompletenessChart')).toHaveAttribute('role', 'img');
   await expect(page.locator('#factCompletenessChart')).toHaveAttribute('aria-label', /资料|覆盖/);

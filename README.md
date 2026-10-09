@@ -1,134 +1,62 @@
-# 本草宇宙 · HERBAL COSMOS
+# 本草宇宙 · 一草一世界
 
-面向“民族文化、创新表达”赛道的医药文化数字展馆。以“一扇门、四幕展览、一段个人旅程”组织本草资料：序章讲起源，源走近草木，道解释传统分类，术读组方关系，传看技艺与生活，传习让观众参与。
+中华医药文化交互展 V7。三个主入口：漫游星海、文化长卷、本草图鉴；我的本草作为收藏、足迹、练习与阅读札记工具。认识一味本草、读懂一条关系、打开具体出处，然后留下自己的理解。
 
-作品以中医本草与方剂为主体，并通过有明确来源的藏医药浴等专题呈现民族医药文化的多样性。不同体系各有语境，不用中医四气五味替代所有民族医学的理论。
+[在线展馆](https://runner-cpu.github.io/Herbal-Cosmos/) · [网站职责](docs/website-framework.md) · [文化框架与证据](docs/competition-framework.md) · [三分钟演示](docs/competition-presentation.md) · [V7本地验收报告](reports/2026-10-09-v7-release.md)
 
-## 体验与导览
+下载完整仓库后可双击 index.html 阅读与查询。完整动画、离线安装与增强渲染推荐 HTTP(S)：
 
-[在线展馆](https://runner-cpu.github.io/Herbal-Cosmos/) · [文化赛道框架](docs/competition-framework.md) · [参赛说明与三分钟演示](docs/competition-presentation.md) · [本轮星图与民族对照层报告](reports/2026-10-09-cosmos-readings.md)
-
-普通体验无需安装依赖。克隆或下载完整仓库后打开 `index.html`；推荐使用本地HTTP服务，以体验Service Worker、安装和更新：
-
-```bash
-git clone https://github.com/runner-cpu/Herbal-Cosmos.git
-cd Herbal-Cosmos
-python -m http.server 8080
+```sh
+npm ci --ignore-scripts
+node scripts/serve-local.mjs 4188
 ```
 
-访问 `http://localhost:8080`。只下载单个HTML文件不包含所需资料与图片。`file://`支持主体浏览，但不注册Service Worker；未访问图片与目录分块不保证离线可用。
+开发构建：npm run build:data、npm run build:browser、npm run build:cosmos。依赖锁定；渲染器由 esbuild 打包 Three.js，自托管且按需加载。Canvas 与静态列表保留同一选择和资料语义。file:// 不注册 Service Worker，不保证完整动画或尚未访问资料离线可用。
 
-| 入口 | 页面任务与实际交互 |
+| 入口 | 实际任务 |
 |---|---|
-| 序章 `#/intro`（默认） | 区分神农起源传说与文献成书；**七部典籍时间轴是本馆唯一完整承载地**，支持键盘展开出处，区分导读、二级书目与官方公告；SVG星轨与三条文化主线；可直接进入展览或图鉴 |
-| 源·本草宇宙 `#/home` | 星图引擎V2：光晕精灵、加色辉光与景深，四种读法（资料分类／文献分布／药性／民族对照）切换不重建几何；首屏揭示动画；三组文化数字、道/术/传入口、六味精选、四章阅读路径、可点击馆藏KPI；覆盖与分类按需展开 |
-| 道·性味归经 `#/qiwei` | 四气五味与归经解读；五行配色加文字图例，保留淡、涩；矩阵和排行可反查知识卡；延伸关系折叠 |
-| 术·配伍成方 `#/formula` | 君臣佐使解释；网络、配伍样本、方剂目录、证候药链四个视图；目录搜索与每页12首分页 |
-| 传·薪火相传 `#/heritage` | 六个有官方名录入口的文化专题；「共同的本草」一节（对照清单与星图读法入口，仅在对照条目通过来源门禁后出现）；106项食药目录搜索、筛选与每页12项分页；典籍一栏改为《怎么读一本本草》三条读法并回链序章 |
-| 传习 `#/learn` | 5道文化题置前，保留25道基础题，共30题；答后可回读对应展柜，有来源URL的题可打开原出处；来源生物照片测验与**本馆唯一的「我的本草之旅」旅程面板** |
-| 图鉴 `#/herbs`（工具入口） | 902张精品卡与8,818条名称索引分层检索，筛选、分页、2–3味属性对比与共享药材详情 |
+| #/home（默认；旧 #/intro 兼容） | 902 张知识卡对应可选星；分类分组为设计布局，非地理坐标；详情、关系、完整键盘清单 |
+| #/exhibit?chapter=recognize | 八张展例的五味关系；复合味多边但本草不复制；淡、涩与未录入独立保留 |
+| #/exhibit?chapter=compose | 四君子汤、麻黄汤、桂枝汤三例，一次一首；有据角色开关与教学图出处 |
+| #/exhibit?chapter=inherit | Lum 药浴和中药炮制两专题，一次一例；名录所述关系，非重建师承 |
+| #/herbs | 知识卡／名称索引、属性统计、方剂、文化资料、典籍与来源账本；补充分析折叠并按需加载 |
+| #/learn | 30 题、足迹与个人阅读回看；札记本机保存／SVG导出，无账号或自动发布 |
 
-主导航直接展示以上七个入口，不保留“更多”菜单。旧 `#/zheng` 链接进入“术”的证候视图；旧首页食养、文化与典籍锚点转入“传”。药材知识卡通过 `#/herb?id=…` 在各页共享。**一物一处**：七部典籍只在序章完整呈现，旅程面板只在传习完整呈现，其余位置用一行链接指回。
+旧 qiwei、formula、heritage、zheng、intro 锚点经集中路由表到达对应真实资料；知识卡 #/herb?id=… 保留。来源与未知字段继续可查，旧收藏／主题／足迹不迁移成新格式。
 
-全局搜索按“知识卡、方剂、名称索引”分组展示，名称索引明确标为“仅名称 · 无药性”，原方物料不冒充完整知识卡；支持别名与↑↓、Enter、Esc键盘操作。药材联动条仅在对应知识卡显示，离页时清空，星图与图表的显式定位仍保留药材选择。收藏抽屉负责收藏、取消收藏与JSON导出，详情按钮与角标即时同步；探索足迹、收藏数量和练习统计在“传”与“传习”的“我的本草之旅”面板汇总。它们保存在当前浏览器，无账号、无遥测；清理网站数据会清除记录，存储不可用时使用当前会话回退。
+## 数据与证据
 
-## 文化表达与数据口径
+UI V7 与数据版本10（2026-10-08）分开。构建报告：[数据覆盖](reports/data-coverage.json)、[名称待审](reports/catalog-review.json)、[民族候选](reports/ethnic-coverage.json)。
 
-日间、夜读、水墨古籍三主题贯穿卡片、导航、图表和反馈，旧`classic`主题值迁移至`ink`。字体采用本机宋体与无衬线字体回退，不请求外部字体。品牌和favicon采用本草印章矢量符号；已有PWA栅格图标继续保留。动效遵守`prefers-reduced-motion`，序章入口不等待动画结束。
+| 层级 | 保留规模 | 边界 |
+|---|---:|---|
+| 本草知识卡 | 902 | 803完整、96部分、3基础；不全部称精品 |
+| 运行时实体 | 961 | 另含17目录身份、42原方物料；不混入902分母 |
+| 名称索引 | 8,818 | 1,487待审另列，名称不等于完整药性档案 |
+| 方剂／证候 | 100／58 | 馆藏样本，非全国全量 |
+| 食药目录 | 106 | 2002—2024公告快照，非实时目录或食用保证 |
+| 有许可照片的卡 | 624 | 562唯一文件；278卡照片待补 |
+| 民族对照候选 | 37 | 正式通过0，全部待核，不生成跨体系药材边 |
 
-首页365、1,892、5,911分别表示《神农本草经》的传统收载药物、《本草纲目》的记载药物和药典2020四部合计标准品种，统计范围不同；时间轴不将它们画作同类增长曲线。365与周天是传统文化象征。全国18,817种中药资源仅作普查背景，不等于18,817张本馆卡片或可点击星点，也不是民族医药资源的细分统计。药典2020是历史版本，不称为现行标准。
+五味、归经与角色属于传统知识语境，不作温度、解剖、疗效或剂量推断。地区采用文献多值记录，非道地产区认证。文化断言有独立来源定位、核查摘要与日期；URL非空不代表证据通过。
 
-### 民族对照线索
+[来源清单](data/sources/source-manifest.json) · [展览案例](assets/js/data/exhibition-cases.js) · [角色证据](docs/exhibition-sources.md) · [照片许可](IMAGE_SOURCES_V4.md) · [既有AI概念图](IMAGE_SOURCES.md)。照片仅作来源生物参考；六张既有概念图非现场纪实，本轮未生成新栅格图。
 
-“本草”是包括汉族和少数民族医药在内的各民族医药的统称，但本馆的编目主体仍是中医本草。为避免用主体口径替其他体系讲话，民族维度采用**来源门禁的最小增量层**实现，不新建体系页、不新建术语表：
+## 验证与边界
 
-- 数据只加一层对照记录（`assets/js/data/ethnic-correspondence.js`），字段为 `herbId / herbName / systems / note / source / status`，`systems` 取值限于 `tibetan | mongolian | uyghur | common`。
-- `status:'approved'` 才渲染，且必须有 `https://` 来源；来源缺失或非 `https` 会被 `validate:ethnic` **自动降级为 `review`**，`note` 另经疗效断言词表扫描。`review` 条目不出现在任何页面，只进覆盖报告。
-- 覆盖报告 [reports/ethnic-coverage.json](reports/ethnic-coverage.json) 当前为 0 条 approved / 37 条 review，因此**星图民族对照读法按钮、传承页「共同的本草」一节、知识卡对照行三处都会自行隐藏**——先上线门禁与容器，等有可核对来源的条目再显示。
-- 对照线索只说明“该药材在其他体系中也有使用记录”，不等于该体系收载认定，也不代表本馆覆盖了任何民族的医药体系。
-
-当前数据版本10，日期2026-10-08；数字以 [生成覆盖报告](reports/data-coverage.json)和各数据清单为准。
-
-| 层级 | 当前快照 | 使用边界 |
-|---|---|---|
-| 精品知识卡 | 902张：803完整、96部分、3基础卡 | 属性图共同样本；缺失字段显示待补充，不推断为零 |
-| 运行时实体 | 961条，另含17条目录身份与42条原方物料 | 两类辅助实体不计入精品属性样本 |
-| 名称索引 | 8,818条默认可检索，1,487条待审隐藏，45个按需分块 | 公开名称收录不等于药典核验；当前仅2条有可机械复核的药典逐名证据 |
-| 方剂与证候 | 100首方、58个证候 | 基础精选21首、V4数字化29首、V5经典整理50首；统计仅代表当前样本 |
-| 食药目录 | 106个2002—2024公告汇总项 | 有公告逐项归属；不是实时最新目录或任意食用许可 |
-| 开放照片 | 624张卡有图、278张待补，562个唯一文件 | 来源生物参考；同源复用不计作独立照片 |
-| 字段覆盖 | 来源899张、归经814张、资料地区614张 | 指标可重叠，不相加；资料地区不等于道地产地 |
-
-主五味按酸、苦、甘、辛、咸拆分复合记录；矩阵保留“四气待补”灰行，使已知味型不会因缺四气而丢失，各列合计与五味柱图一致，味型合计可能超过样本数。默认902卡，选择类别后采用对应子样本；淡、涩仅作补充图例，未纳入主矩阵与柱图。方剂角色统计只取明确标注的组成；V4/V5未标角色不自动补全。古方剂量保留原单位，箱线图仅采用明确正数克单位子样本，不擅自换算或与未载剂量混合。
-
-## 来源、图像与参考边界
-
-[来源清单](data/sources/source-manifest.json)记录官方公告、带版本号的开放研究资料与行级出处；[V4方剂来源](docs/formula-sources-v4.md)和[V5整理说明](docs/formula-sources-v5.md)分别说明数字化索引与经典整理能力。名称、药性、目录身份、原方古名与图片有独立证据层，不以单个徽标替代全部字段来源。
-
-非遗展区实际六专题为针灸、中药炮制、藏医药浴、中医诊法、中医养生、同仁堂中医药文化。针灸和药浴分别链接UNESCO2010、2018年条目；其余链接国家级名录具体项目，养生以“中医传统导引法”为代表阅读入口。六专题不是全国医药非遗总数。现有六张场景图为项目AI概念插画，页面明示“非历史影像”，不冒称传承人实拍。
-
-开放药材照片来自Wikimedia Commons与iNaturalist，逐图保留作者、许可、来源URL和SHA-256，见 [开放图像许可账本](IMAGE_SOURCES_V4.md)。旧图片状态与概念图见 [原图像说明](IMAGE_SOURCES.md)及[图像元数据](data/image-sources.json)。照片不证明药用部位、炮制状态或药效；缺图展示“照片待补”，网络失败展示“加载失败”。本轮文化改版未生成新的栅格图像。
-
-项目借鉴 [KGAT-RAG中医知识图谱](https://github.com/cheny6/KGAT-RAG-Traditional-Chinese-Medicine-Knowledge-Graph-Retrieval-Augmented-Generation-System)的实体组织、[方剂知识图谱](https://github.com/jjasminum02-debug/tcm-formula-knowledge-graph)的来源追溯和[OptiSyn](https://github.com/viviiviiikikiikiii/OptiSyn)的可解释关系交互，未复制其模型或数据。TCM_KG事实来源未声明内容许可，项目不复用其临床长文、研究结论、剂量与图片；其他数据和素材按各自账本许可使用。
-
-内容用于文化科普与学习，不替代专业鉴定、诊断或用药建议。
-
-## 工程与开发
-
-原生HTML/CSS/JavaScript，静态部署，无前端框架。序章SVG与首页星图引擎分工；ECharts随仓库自托管、按需加载，失败时提供文字降级。Hash路由与共享状态连接图表、目录及详情；`chartManager`在切页时销毁实例与观察器。Service Worker缓存应用外壳，图表库移出安装预缓存、访问后保存在版本化缓存且命中不后台重拉；图片按访问保留最近120项，索引按访问缓存最多45块；新版本通过提示刷新，不预取图片全集。45个名称索引分块在搜索或进入索引时加载，知识卡的9个扩充块目前仍是首屏`defer`依赖；此轮未改为按路由加载或更换ECharts完整构建。
-
-星图引擎（`assets/js/pages/cosmos-engine.js`，经典脚本，暴露 `window.HerbalCosmosEngine`）用三步替代每帧重建渐变：① 光晕按颜色与DPR预渲染进离屏精灵并缓存；② 绘制光晕时用 `globalCompositeOperation='lighter'` 做加色辉光，画完立即复位，并按主题给不同alpha（day 0.55／night 1／ink 0.72）；③ `depthBlur(zr)` 驱动景深，远景精灵放大降alpha。粒子数按设备分档（移动端1500星尘、桌面3600或6000），移动端总数硬顶2,500。帧耗时用30帧滑动平均自适应，连续超20ms降级、稳定低于12ms三秒后回升，四级降级不白屏。切读法只改颜色映射并重绘，不重建几何。可见性能读数：`window.__HERBAL_DEBUG__.cosmosPerf()` 返回首帧、平均帧、粒子数、降级级别、当前读法与精灵预热耗时。
-
-体验无需以下步骤。贡献代码或数据时，安装锁定依赖并运行相应检查：
-
-```bash
-npm ci --ignore-scripts
-npm run build:data
-npm run build:browser
-npm run check:browser-copies
+```sh
 npm run validate:data
 npm run validate:app
-node scripts/fetch-herb-images.mjs --verify
-npm test
+npm run check:browser-copies
 npm run check:inline
-npx playwright install chromium firefox webkit
+npm test
+# PowerShell: $env:PLAYWRIGHT_PORT='4187'
 npm run test:browser:ci
 npm run test:browser:compat
 ```
 
-`build:data`从受版本控制的资料确定性生成数据，`build:browser`生成可直接本地打开的经典脚本副本。相同输入重复构建应得到相同字节；贡献者和CI检查生成产物无漂移，普通体验者不需要重建。`validate:data`包含 `validate:ethnic`，后者同时写出确定性的 [民族对照覆盖报告](reports/ethnic-coverage.json)，CI 以 `git diff --exit-code` 保证报告与数据不分叉。浏览器回归同时覆盖桌面和375px模拟，兼容任务覆盖Firefox/WebKit核心路径。总检结果和发布记录见本轮报告，不以开发命令列表代替通过记录。
+CI另检查生成物和本地渲染器确定性。Pages沿用 gh-pages:/ 分支根目录，发布维护者需检查 Actions／公开文件一致性。本地通过不等于已发布，发布状态见日期报告。
 
-```text
-Herbal-Cosmos/
-├── index.html / 404.html / manifest.webmanifest / sw.js
-├── assets/
-│   ├── css/                 # site、home、culture、cultural-charts、journey等
-│   ├── icons/               # 矢量favicon与既有PWA图标
-│   ├── vendor/              # 自托管ECharts
-│   └── js/
-│       ├── core/            # 路由、状态、索引加载
-│       ├── data/            # 精选数据、民族对照线索与确定性生成分块
-│       ├── components/      # 主题、搜索、印章、收藏、上下文
-│       ├── pages/           # culture、home、formula-directory、cosmos-engine等
-│       ├── lib/             # culture-semantics、culture-learning、统计工具
-│       └── charts/          # 样本洞察
-├── data/sources/            # 版本化来源、公告、照片许可与候选资料
-├── data/catalog/            # 名称索引清单与45块数据
-├── images/                  # 药材照片与已标注文化概念图
-├── workers/                 # 名称检索Worker
-├── scripts/ / tests/        # 构建、验证、Node及浏览器回归
-├── docs/                    # competition-framework、方剂来源与历史设计
-├── reports/                 # 当前data-coverage与按日期留存的审计报告
-├── IMAGE_SOURCES_V4.md / IMAGE_SOURCES.md
-└── README.md
-```
+首屏静态数据仍完整加载，未实现“先轻量星辰索引、详细资料延迟取用”目标；图表库、渲染增强、名称索引分块、照片按需取用。未访问的全库与图库不承诺离线。真实手机、真实 Safari、屏幕阅读器专项与非开发者任务研究尚未完成。性能值来自明确条件的浏览器模拟，见报告，不冒充线上或真实设备结论。
 
-## 已知边界与后续建设
-
-- 278张照片、部分属性和1,487条待审名称仍待有证据的补录，不能为增加覆盖率生成药材识别照片或批准无来源名称。
-- 民族对照层目前 0 条 approved：37 条待核条目全部缺 `https://` 来源，因此相关读法、区块与筛选保持隐藏。补齐来源后由 `npm run validate:ethnic` 与覆盖报告复核，不需要改代码。
-- 古籍尚未逐条补齐影印本页码；现有知识卡主要为中医本草，各族医药专题仍需独立文献和授权纪实素材。
-- 药典2020、食药2002—2024和普查叙事都是注明范围的资料快照，不保证同步现行全部标准或目录。
-- 320/375px模拟与三主题已回归，真实iOS/Android设备和屏幕阅读器仍需专项验收；开放图片约66.74MB，WebP、响应式缩略图留待后续管线建设。首访测量与受限网络模拟见本轮打磨报告，完整知识卡依赖仍有进一步优化空间。
-
-当前架构以 [文化赛道框架](docs/competition-framework.md)为准；[上一轮功能框架](docs/website-framework.md)、`DESIGN_AUDIT.md`及更早报告保留历史背景，数字不能替代当前生成快照。
+第三方：Three.js 0.186.1 与 esbuild 0.28.2（MIT）、ECharts（Apache-2.0）、Playwright（Apache-2.0）；许可见本地 vendor 注释、锁文件和依赖声明。诗云（PolyForm Noncommercial）仅借鉴交互原则，无代码或资产复制；3d-force-graph、Scrollama、React Bits FadeContent／SpotlightCard仅参考设计原则，原生实现，不整包引入。AI辅助本轮路由、图形、测试、文档和核查整理；用户批准选题与设计，不能称学生独立手写全部代码或编造成员分工。

@@ -359,7 +359,7 @@ function render(options={}){
 
   let inView = true;
   const updateRunning = () => {
-    const active = inView && !document.hidden && document.querySelector('.page.active')?.dataset.route === 'home';
+    const active = inView && !document.hidden && parseHash().route === 'home' && document.querySelector('.page.active')?.dataset.route === 'home';
     if(active) instance.start(); else instance.stop();
   };
   window.addEventListener('herbal:route', updateRunning);
@@ -395,7 +395,7 @@ function renderHomeMuseum(){
   if(boundary){
     boundary.hidden=directoryCount<1;
     boundary.textContent=directoryCount>0
-      ? '当前官方食药物质目录中，有 '+directoryCount+' 条仅确认目录身份，性味、归经与功效仍待逐条补录；它们不会计入精品知识卡或属性图表。'
+      ? '当前官方食药物质目录中，有 '+directoryCount+' 条仅确认目录身份，性味、归经与功效仍待逐条补录；它们不会计入本草知识卡或属性图表。'
       : '';
   }
 }
@@ -461,7 +461,7 @@ function renderHerbs(){
   const count = $('#herbResultCount');
   if(count) count.textContent = `${list.length} 味药材${kw ? ` · 搜索“${kw}”` : ''}`;
   const summary=$('#herbFilterSummary');
-  if(summary){ const active=[f.qi&&`四气 ${f.qi}`,f.wei&&(CANONICAL_WEIS.includes(f.wei)?`五味 ${f.wei}`:`复合 ${f.wei}`),f.cat&&`分类 ${f.cat}`,store._coverage&&`覆盖 ${coverageLabel(store._coverage)}`].filter(Boolean); summary.textContent=active.length?`当前筛选：${active.join(' · ')}`:'按字段筛选精品知识卡'; }
+  if(summary){ const active=[f.qi&&`四气 ${f.qi}`,f.wei&&(CANONICAL_WEIS.includes(f.wei)?`五味 ${f.wei}`:`复合 ${f.wei}`),f.cat&&`分类 ${f.cat}`,store._coverage&&`覆盖 ${coverageLabel(store._coverage)}`].filter(Boolean); summary.textContent=active.length?`当前筛选：${active.join(' · ')}`:'按字段筛选本草知识卡'; }
   $('#herbTableBody').innerHTML = visibleRows.map(h=>`
     <tr>
       <td class="rowname"><a class="herb-row-link" href="#/herb?id=${esc(h.id)}">${herbImage(h,"herb-thumb")}<span>${esc(h.name)}</span></a></td>
@@ -517,7 +517,7 @@ function renderCatalog(){
   const pageRows=rows.slice((store._catalogPage-1)*pageSize,store._catalogPage*pageSize);
   const visible=$('#catalogVisibleCount'); if(visible) visible.textContent=rows.length.toLocaleString('zh-CN');
   const body=$('#catalogTableBody');
-  if(body) body.innerHTML=pageRows.map(item=>`<tr><td><strong>${esc(item.name)}</strong></td><td><span class="catalog-source">${esc(sourceLabel(item))}</span> ${catalogSourceLink(item)}</td><td><span class="badge outline">仅名称索引</span></td><td><button type="button" class="catalog-open" data-catalog-name="${esc(item.name)}">在精品层查找</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty"><p>没有匹配名称，请检查关键词或来源筛选。</p><button type="button" data-switch-featured>去精品层浏览</button></td></tr>';
+  if(body) body.innerHTML=pageRows.map(item=>`<tr><td><strong>${esc(item.name)}</strong></td><td><span class="catalog-source">${esc(sourceLabel(item))}</span> ${catalogSourceLink(item)}</td><td><span class="badge outline">仅名称索引</span></td><td><button type="button" class="catalog-open" data-catalog-name="${esc(item.name)}">在知识卡层查找</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty"><p>没有匹配名称，请检查关键词或来源筛选。</p><button type="button" data-switch-featured>去知识卡层浏览</button></td></tr>';
   const pagination=$('#catalogPagination');
   if(pagination){
     const windowStart=Math.max(1,Math.min(store._catalogPage-2,pageCount-4));
@@ -1027,6 +1027,7 @@ function renderFavButtons(){
     const name = (b.getAttribute('aria-label')||'').replace(/^(取消收藏|收藏)/,'');
     b.setAttribute('aria-label',(on?'取消收藏':'收藏')+name);
     b.title = on?'取消收藏':'收藏';
+    if(b.closest('.exhibit-detail-actions')) b.textContent = on?'已收藏':'收藏';
   });
 }
 window.addEventListener('herbal:favorites',event=>{

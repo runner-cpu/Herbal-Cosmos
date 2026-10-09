@@ -34,12 +34,19 @@ jobs:
             runtime=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/core/runtime.js?sha=${GITHUB_SHA}" || true)
             data=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/data/expanded.generated.js?sha=${GITHUB_SHA}" || true)
             engine=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/pages/cosmos-engine.js?sha=${GITHUB_SHA}" || true)
+            router=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/core/exhibition-router.js?sha=${GITHUB_SHA}" || true)
+            exhibition=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/pages/exhibition.js?sha=${GITHUB_SHA}" || true)
+            renderer_status=$(curl --silent --show-error --location --max-time 20 --write-out '%{http_code}' --output /tmp/herbal-renderer.js "${site}assets/vendor/cosmos-webgl.js?sha=${GITHUB_SHA}" || true)
             worker=$(curl --fail --silent --show-error --location --max-time 20 "${site}sw.js?sha=${GITHUB_SHA}" || true)
             missing=$(curl --silent --show-error --location --max-time 20 --write-out '%{http_code}' --output /tmp/herbal-404.html "${site}definitely-not-a-page-${GITHUB_SHA}" || true)
             if grep -q '本草宇宙' <<<"$html" \
               && grep -q 'function render' <<<"$runtime" \
               && grep -q 'HERBAL_DATA_VERSION' <<<"$data" \
               && grep -q 'HerbalCosmosEngine' <<<"$engine" \
+              && grep -q 'HerbalExhibitionRouter' <<<"$router" \
+              && grep -q 'HerbalExhibition' <<<"$exhibition" \
+              && [[ "$renderer_status" == '200' ]] \
+              && test -s /tmp/herbal-renderer.js \
               && grep -q "$expected" <<<"$worker" \
               && grep -q '此页未入卷' /tmp/herbal-404.html \
               && [[ "$missing" == '404' ]]; then

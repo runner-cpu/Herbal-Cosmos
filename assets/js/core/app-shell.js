@@ -39,10 +39,13 @@ function watchInstalling(registration) {
 }
 
 function cacheLoadedCharts() {
-  // A direct chart deep link can load the library before the first worker
-  // claims this page. Warm only the library already used, never the intro.
-  if (!supported || !window.echarts || !navigator.serviceWorker.controller) return;
-  try { navigator.serviceWorker.controller.postMessage({ type: 'CACHE_VENDOR' }); }
+  // An enhancement can load before the first worker claims this page.
+  // Warm only the chart or renderer already used by this visit.
+  if (!supported || !navigator.serviceWorker.controller) return;
+  try {
+    if(window.echarts) navigator.serviceWorker.controller.postMessage({ type: 'CACHE_VENDOR' });
+    if(document.getElementById('heroCanvas')?.dataset.renderer==='webgl') navigator.serviceWorker.controller.postMessage({type:'CACHE_RENDERER'});
+  }
   catch { /* Offline caching must not block an already rendered chart. */ }
 }
 
@@ -72,6 +75,7 @@ window.addEventListener('online', () => {
 
 if (supported) {
   window.addEventListener('herbal:charts-loaded', cacheLoadedCharts);
+  window.addEventListener('herbal:cosmos-renderer', cacheLoadedCharts);
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     cacheLoadedCharts();
     if (!refreshApproved || refreshing) return;

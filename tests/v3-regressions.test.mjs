@@ -40,7 +40,7 @@ test('shell publishes install, sharing, structured-data, and privacy metadata', 
 
 test('manifest and branded 404 retain project-relative navigation', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
-  assert.equal(manifest.start_url, './#/intro');
+  assert.equal(manifest.start_url, './#/home');
   assert.equal(manifest.scope, './');
   assert.equal(manifest.display, 'standalone');
   assert.ok(manifest.icons.some(icon => icon.src === 'assets/icons/app-icon-192.png' && icon.sizes === '192x192'));
@@ -77,7 +77,7 @@ test('catalog and saved empty states provide a real next action', () => {
   const runtime = fs.readFileSync(path.join(root, 'assets/js/core/runtime.js'), 'utf8');
   const drawer = fs.readFileSync(path.join(root, 'assets/js/components/saved-drawer.js'), 'utf8');
   assert.match(runtime, /data-switch-featured/);
-  assert.match(runtime, /去精品层浏览/);
+  assert.match(runtime, /去知识卡层浏览/);
   assert.match(drawer, /href="#\/herbs"/);
 });
 

@@ -128,7 +128,7 @@ function renderRoute(){
   const needsChart=()=>{
    if(route==='formula')return new URLSearchParams(location.hash.split('?')[1]||'').get('view')==='stats';
    if(route==='home')return false;
-   if(route==='herbs')return Boolean(document.getElementById('collectionCoverage')?.open||document.getElementById('provinceDistributionChart'));
+   if(route==='herbs')return Boolean((!document.getElementById('archiveProvenance')?.hidden&&document.getElementById('collectionCoverage')?.open)||(!document.getElementById('atlasRecords')?.hidden&&document.getElementById('atlasAnalysis')?.open));
    if(route==='qiwei')return !document.querySelector('[data-attribute-panel="flow"]')?.hidden;
    if(route==='heritage')return Boolean(document.getElementById('foodUsageChart'));
    return true;
@@ -139,7 +139,10 @@ function renderRoute(){
    if(location.hash!==expectedHash||activeRoute()!==route||!needsChart())return;
    if(route==='formula')renderFormulaInsights();
    if(route==='qiwei')renderMeridianEffectInsight();
-   if(route==='herbs'){renderProvinceInsight();renderCompletenessInsight();if(document.getElementById('collectionCoverage')?.open)renderCoverageInsight();}
+   if(route==='herbs'){
+    if(!document.getElementById('atlasRecords')?.hidden&&document.getElementById('atlasAnalysis')?.open){renderProvinceInsight();renderCompletenessInsight();}
+    if(!document.getElementById('archiveProvenance')?.hidden&&document.getElementById('collectionCoverage')?.open)renderCoverageInsight();
+   }
    if(route==='home')renderCoverageInsight();
    if(route==='heritage')renderFoodUsageInsight();
   };
@@ -149,6 +152,6 @@ function renderRoute(){
 if(typeof window!=='undefined'&&typeof document!=='undefined'){
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderRoute,{once:true});else renderRoute();
  window.addEventListener('herbal:route',renderRoute);window.addEventListener('herbal:theme',renderRoute);window.addEventListener('pagehide',disposeInsights);
- document.addEventListener('toggle',event=>{if(event.target.id==='collectionCoverage')renderRoute();},true);
+ document.addEventListener('toggle',event=>{if(['collectionCoverage','atlasAnalysis'].includes(event.target.id))renderRoute();},true);
  window.HerbalInsights={renderFormulaInsights,renderMeridianEffectInsight,renderFoodUsageInsight,renderProvinceInsight,renderCompletenessInsight,renderCoverageInsight,dispose:disposeInsights};window.__HERBAL_DEBUG__=window.__HERBAL_DEBUG__||{};window.__HERBAL_DEBUG__.insightCounts=()=>({charts:chartMap.size,observers:observers.size});
 }

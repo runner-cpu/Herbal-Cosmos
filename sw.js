@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v21-20261009-cosmos-readings';
+const CACHE_VERSION = 'herbal-cosmos-v22-20261009-cultural-v7';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -21,6 +21,12 @@ const PRECACHE_URLS = Object.freeze([
   './assets/css/culture.css',
   './assets/css/cultural-charts.css',
   './assets/css/journey.css',
+  './assets/css/exhibition.css',
+  './assets/js/core/exhibition-router.js',
+  './assets/js/data/exhibition-cases.js',
+  './assets/js/pages/exhibition.js',
+  './assets/js/pages/cosmos-layout.js',
+  './assets/js/exhibition-effects.js',
   './assets/js/lib/culture-semantics.js',
   './assets/js/lib/culture-learning.js',
   './assets/js/pages/culture.js',
@@ -67,6 +73,7 @@ const PRECACHE_REQUESTS = new Set(PRECACHE_URLS.map(value => new URL(value, self
 const APP_ENTRY_PATHS = new Set(['./', './index.html'].map(value => new URL(value, self.registration.scope).pathname));
 const ECHARTS_URL = new URL('./assets/vendor/echarts.min.js', self.registration.scope).href;
 const ECHARTS_PATH = new URL(ECHARTS_URL).pathname;
+const RENDERER_PATH = new URL('./assets/vendor/cosmos-webgl.js', self.registration.scope).pathname;
 const VENDOR_INFLIGHT = new Map();
 
 self.addEventListener('install', event => {
@@ -86,6 +93,9 @@ self.addEventListener('message', event => {
   if (event.data?.type === 'CACHE_VENDOR') {
     // Never accept a URL from a client message: this is one pinned local asset.
     event.waitUntil(cacheVisitedVendor(ECHARTS_URL).catch(() => undefined));
+  }
+  if (event.data?.type === 'CACHE_RENDERER') {
+    event.waitUntil(cacheVisitedVendor(new URL('./assets/vendor/cosmos-webgl.js', self.registration.scope).href).catch(() => undefined));
   }
 });
 
@@ -168,16 +178,17 @@ async function cacheVisitedVendor(request) {
   // Download it on first use; a hit needs no background megabyte-sized refresh.
   const cached = await matchCache(VENDOR_CACHE, request, { ignoreSearch: true });
   if (cached) return cached;
-  if (!VENDOR_INFLIGHT.has(ECHARTS_PATH)) {
+  const requestPath = new URL(typeof request === 'string' ? request : request.url, self.registration.scope).pathname;
+  if (!VENDOR_INFLIGHT.has(requestPath)) {
     const download = (async () => {
       const response = await fetch(request);
       await storeResponse(VENDOR_CACHE, request, response);
       return response;
-    })().finally(() => VENDOR_INFLIGHT.delete(ECHARTS_PATH));
-    VENDOR_INFLIGHT.set(ECHARTS_PATH, download);
+    })().finally(() => VENDOR_INFLIGHT.delete(requestPath));
+    VENDOR_INFLIGHT.set(requestPath, download);
   }
   // Concurrent message/fetch consumers need independent response bodies.
-  return (await VENDOR_INFLIGHT.get(ECHARTS_PATH)).clone();
+  return (await VENDOR_INFLIGHT.get(requestPath)).clone();
 }
 
 self.addEventListener('fetch', event => {
@@ -190,7 +201,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(networkFirstNavigation(request));
     return;
   }
-  if (url.pathname === ECHARTS_PATH) {
+  if (url.pathname === ECHARTS_PATH || url.pathname === RENDERER_PATH) {
     event.respondWith(cacheVisitedVendor(request));
     return;
   }
@@ -202,7 +213,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(staleWhileRevalidate(request, CATALOG_CACHE, MAX_CATALOG_ENTRIES, event));
     return;
   }
-  if (PRECACHE_REQUESTS.has(url.href.split('#')[0])) {
+  if (PRECACHE_REQUESTS.has(url.origin + url.pathname)) {
     event.respondWith(cacheFirstWithRefresh(request, event));
   }
 });

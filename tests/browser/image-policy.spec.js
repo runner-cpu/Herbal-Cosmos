@@ -49,7 +49,7 @@ test('open-materia formula inspector keeps the sourced-classification label', as
 });
 
 test('homepage exposes attribution for its static herb imagery', async ({ page }) => {
-  await page.goto('/#/home');
+  await page.goto('/#/herbs?anchor=home-sources');
   const credits = page.locator('#homeImageCredits');
   await credits.locator('summary').click();
   await expect(credits).toContainText('Nina Filippova');

@@ -29,8 +29,11 @@ test('homepage content renders before the deferred chart bundle resolves', async
 
   await page.goto('/#/home', { waitUntil: 'domcontentloaded' });
   try {
-    await expect(page.locator('#homeFeatured .featured-herb').first()).toBeVisible({ timeout: 700 });
+    await expect(page.locator('.cosmos-scene')).toBeVisible({ timeout: 700 });
+    await expect(page.locator('.hero-overlay a[href="#/exhibit"]')).toBeVisible();
+    await page.goto('/#/herbs?anchor=home-collection', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('#homeKpis .home-kpi')).toHaveCount(4);
+    await expect(page.locator('#homeKpis')).toBeVisible();
   } finally {
     releaseBundle();
   }

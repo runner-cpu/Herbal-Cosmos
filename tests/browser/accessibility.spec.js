@@ -1,5 +1,21 @@
 import { test, expect } from '@playwright/test';
 
+test('source badges maintain normal text contrast in all reading themes', async ({ page }) => {
+  await page.goto('/#/herbs');
+  for(const theme of ['day','night','ink']) {
+    await page.evaluate(theme=>window.HerbalTheme.setTheme(theme),theme);
+    const ratios=await page.locator('.page.active .badge:visible').evaluateAll(elements=>{
+      const luminance=color=>{
+        const channels=color.match(/[\d.]+/g).slice(0,3).map(Number).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;});
+        return channels[0]*.2126+channels[1]*.7152+channels[2]*.0722;
+      };
+      return elements.map(el=>{const style=getComputedStyle(el),a=luminance(style.color),b=luminance(style.backgroundColor);return {label:el.textContent,ratio:(Math.max(a,b)+.05)/(Math.min(a,b)+.05)};});
+    });
+    expect(ratios.length).toBeGreaterThan(0);
+    for(const item of ratios) expect(item.ratio,theme+' '+item.label).toBeGreaterThanOrEqual(4.5);
+  }
+});
+
 test('keyboard focus and reduced motion preference remain usable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#/home');
@@ -151,7 +167,7 @@ test('favorites drawer closes with Escape and returns focus', async ({ page }) =
 });
 
 test('heritage gives the classic reading method and links back to the sequence timeline', async ({ page }) => {
-  await page.goto('/#/heritage');
+  await page.goto('/#/herbs?section=culture');
   const section = page.locator('#heritage-classics');
   await section.scrollIntoViewIfNeeded();
   await expect(section).toBeInViewport({ ratio: .01 });

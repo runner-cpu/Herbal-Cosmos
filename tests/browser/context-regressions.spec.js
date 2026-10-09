@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.use({ serviceWorkers: 'block' });
 
 async function navigateFromHeader(page, route) {
-  const link = page.locator('#mainNav [data-route-link="' + route + '"]');
+  const link = page.locator('[data-route-link="' + route + '"]');
   if (!(await link.isVisible())) await page.locator('#hamburger').click();
   await link.click();
   await expect(page.locator('.page.active')).toHaveAttribute('data-route', route);
@@ -20,10 +20,16 @@ async function expectNoContext(page) {
 }
 
 test('ordinary navigation removes the knowledge-card context instead of carrying a stale selection rail', async ({ page }) => {
-  for (const route of ['intro', 'home', 'herbs', 'qiwei', 'formula', 'heritage', 'learn']) {
+  for (const route of ['home', 'exhibit', 'herbs', 'learn']) {
     await page.goto('/#/herb?id=gancao');
     await expect(page.locator('#herbContext')).toContainText('甘草');
     await navigateFromHeader(page, route);
+    await expectNoContext(page);
+  }
+  for(const [hash,route] of [['herbs?section=classics','intro'],['qiwei','qiwei'],['formula','formula'],['herbs?section=culture','heritage']]) {
+    await page.goto('/#/herb?id=gancao');
+    await page.evaluate(hash=>{ location.hash='/'+hash; },hash);
+    await expect(page.locator('.page.active')).toHaveAttribute('data-route',route);
     await expectNoContext(page);
   }
 });

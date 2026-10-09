@@ -7,6 +7,7 @@
   let state, graph, pending = null, sourceOpen = false, noteOpen = false;
   const narrowScene = root.matchMedia('(max-width:480px)');
   let notes = {};
+  const sessionNotes = new Set();
   const downloadUrls = new Set();
   try { const value = JSON.parse(localStorage.getItem(noteKey) || '{}'); if (value && typeof value === 'object' && !Array.isArray(value)) notes = value; } catch (_) {}
   const noteId = () => state.chapter + ':' + state.caseId + ':' + state.selected;
@@ -130,14 +131,16 @@
   }
   function noteForm(draft) {
     const saved = notes[noteId()];
+    const temporary = sessionNotes.has(noteId());
     const note = { ...defaults(), ...(saved && typeof saved === 'object' ? saved : {}), ...draft, url: canonicalUrl() };
-    return '<details class="exhibit-note-disclosure"' + (noteOpen ? ' open' : '') + '><summary>阅读札记 · ' + (saved ? '已保存，可打开继续编辑' : '打开后写下自己的理解') + '</summary><section class="exhibit-note" aria-labelledby="exhibitNoteHeading"><div><span class="exhibit-eyebrow">读后留一页</span><h2 id="exhibitNoteHeading">我的阅读札记</h2><p>选择一条理解，改写成自己的话。札记只保存到本机，可导出为 SVG。</p><a href="#/learn">我的本草 · 测验与阅读足迹 ↗</a></div><form id="exhibitNoteForm"><label>阅读对象<input name="object" maxlength="160" value="' + esc(note.object) + '"></label><label>我的理解<textarea name="takeaway" rows="3" maxlength="1800">' + esc(note.takeaway) + '</textarea></label><label>资料来源<textarea name="source" rows="3" maxlength="1800">' + esc(note.source) + '</textarea></label><label>展览地址<input name="url" value="' + esc(note.url) + '" readonly></label><div class="exhibit-note-actions"><button type="submit">保存到本机</button><button type="button" data-export-note>导出 SVG 札记</button></div><p id="exhibitNoteStatus" role="status">' + (saved ? '已读取本机札记。' : '尚未保存。可用键盘操作所有字段与按钮。') + '</p></form></section></details>';
+    return '<details class="exhibit-note-disclosure"' + (noteOpen ? ' open' : '') + '><summary>阅读札记 · ' + (temporary ? '本次页面暂存' : saved ? '已保存，可打开继续编辑' : '打开后写下自己的理解') + '</summary><section class="exhibit-note" aria-labelledby="exhibitNoteHeading"><div><span class="exhibit-eyebrow">读后留一页</span><h2 id="exhibitNoteHeading">我的阅读札记</h2><p>选择一条理解，改写成自己的话。札记只保存到本机，可导出为 SVG。</p><a href="#/learn">我的本草 · 测验与阅读足迹 ↗</a></div><form id="exhibitNoteForm"><label>阅读对象<input name="object" maxlength="160" value="' + esc(note.object) + '"></label><label>我的理解<textarea name="takeaway" rows="3" maxlength="1800">' + esc(note.takeaway) + '</textarea></label><label>资料来源<textarea name="source" rows="3" maxlength="1800">' + esc(note.source) + '</textarea></label><label>展览地址<input name="url" value="' + esc(note.url) + '" readonly></label><div class="exhibit-note-actions"><button type="submit">保存到本机</button><button type="button" data-export-note>导出 SVG 札记</button></div><p id="exhibitNoteStatus" role="status">' + (temporary ? '本机存储不可用，札记已暂存本次页面；请导出保留。' : saved ? '已读取本机札记。' : '尚未保存。可用键盘操作所有字段与按钮。') + '</p></form></section></details>';
   }
   function readForm() { return Object.fromEntries(new FormData(document.getElementById('exhibitNoteForm'))); }
   function saveNote() {
     notes[noteId()] = { ...readForm(), url: canonicalUrl() };
     let local = true;
     try { localStorage.setItem(noteKey, JSON.stringify(notes)); } catch (_) { local = false; }
+    if(local) sessionNotes.clear(); else sessionNotes.add(noteId());
     document.getElementById('exhibitNoteStatus').textContent = local ? '已保存到本机。可继续修改或导出。' : '本机存储不可用，札记已暂存本次页面；请导出保留。';
     document.querySelector('.exhibit-note-disclosure summary').textContent = local ? '阅读札记 · 已保存，可打开继续编辑' : '阅读札记 · 本次页面暂存';
   }
@@ -154,7 +157,7 @@
     const chapter = data.chapters.find(c => c.id === state.chapter);
     const cases = state.chapter === 'compose' ? data.formulas : state.chapter === 'inherit' ? data.heritages : [];
     host.dataset.chapter = state.chapter;
-    host.innerHTML = '<div class="exhibit-heading"><span class="exhibit-eyebrow">文化长卷 · 三章阅读</span><h1><span>' + chapter.number + '</span>' + esc(chapter.title) + '</h1><p class="exhibit-subtitle">' + esc(chapter.subtitle) + '</p><p>' + esc(chapter.description) + '</p></div><nav class="exhibit-chapters" aria-label="长卷章节">' + data.chapters.map(c => '<a data-chapter="' + c.id + '" href="' + esc(data.canonicalHash({ chapter: c.id })) + '"' + (c.id === state.chapter ? ' aria-current="page"' : '') + '><span>' + c.number + '</span>' + c.title + '</a>').join('') + '</nav>' + (cases.length ? '<div class="exhibit-cases" role="group" aria-label="选择展例">' + cases.map(c => '<button type="button" data-case="' + c.id + '" aria-pressed="' + (c.id === state.caseId) + '">' + esc(c.name) + '</button>').join('') + '</div>' : '') + '<div class="exhibit-layout"><section class="exhibit-figure" aria-label="' + esc(caseLabel()) + '"><div class="exhibit-figure-top"><span>' + esc(caseLabel()) + '</span>' + (state.chapter === 'compose' ? '<button type="button" data-role-toggle aria-pressed="' + state.roles + '">' + (state.roles ? '隐藏角色标注' : '显示有据角色') + '</button>' : '<span>' + graph.nodes.length + ' 个对象 · ' + graph.edges.length + ' 条关系</span>') + '</div>' + scene() + '<div class="exhibit-legend">' + (state.chapter === 'recognize' ? '五味与五行对应 · 淡／涩为补充味型 · 未录入独立标示' : state.chapter === 'compose' ? '组成关系 → 角色解释可切换；每条角色有对应教学图证据' : '实践形式 ／ 参与者 ／ 传递场景 · 每个对象可打开证据') + '</div><details class="exhibit-object-list" open><summary>选择阅读对象 · 键盘等效列表</summary><div role="group" aria-label="阅读对象选择">' + graph.nodes.map(button).join('') + '</div></details></section>' + detail() + '</div>' + (state.chapter === 'recognize' ? '<a class="exhibit-archive-link exhibit-full-atlas" href="#/qiwei?view=wei">进入本草图鉴，查看完整性味统计 ↗</a>' : '') + noteForm(draft?.id === noteId() ? draft.fields : null);
+    host.innerHTML = '<div class="exhibit-heading"><span class="exhibit-eyebrow">文化长卷 · 三章阅读</span><h1><span>' + chapter.number + '</span>' + esc(chapter.title) + '</h1><p class="exhibit-subtitle">' + esc(chapter.subtitle) + '</p><p>' + esc(chapter.description) + '</p></div><nav class="exhibit-chapters" aria-label="长卷章节">' + data.chapters.map(c => '<a data-chapter="' + c.id + '" href="' + esc(data.canonicalHash({ chapter: c.id })) + '"' + (c.id === state.chapter ? ' aria-current="page"' : '') + '><span>' + c.number + '</span>' + c.title + '</a>').join('') + '</nav>' + (cases.length ? '<div class="exhibit-cases" role="group" aria-label="选择展例">' + cases.map(c => '<button type="button" data-case="' + c.id + '" aria-pressed="' + (c.id === state.caseId) + '">' + esc(c.name) + '</button>').join('') + '</div>' : '') + '<div class="exhibit-layout"><section class="exhibit-figure" aria-label="' + esc(caseLabel()) + '"><div class="exhibit-figure-top"><span>' + esc(caseLabel()) + '</span>' + (state.chapter === 'compose' ? '<button type="button" data-role-toggle aria-pressed="' + state.roles + '">' + (state.roles ? '隐藏角色标注' : '显示有据角色') + '</button>' : '<span>' + graph.nodes.length + ' 个对象 · ' + graph.edges.length + ' 条关系</span>') + '</div>' + scene() + '<div class="exhibit-legend">' + (state.chapter === 'recognize' ? '五味与五行对应 · 淡／涩为补充味型 · 未录入独立标示' : state.chapter === 'compose' ? '组成关系 → 角色解释可切换；每条角色有对应教学图证据' : '实践形式 ／ 参与者 ／ 传递场景 · 每个对象可打开证据') + '</div><details class="exhibit-object-list" open><summary>选择阅读对象 · 键盘等效列表</summary><div role="group" aria-label="阅读对象选择">' + graph.nodes.map(button).join('') + '</div></details></section>' + detail() + '</div>' + (state.chapter === 'recognize' ? '<a class="exhibit-archive-link exhibit-full-atlas" href="#/qiwei?chart=wei">进入本草图鉴，查看完整性味统计 ↗</a>' : '') + noteForm(draft?.id === noteId() ? draft.fields : null);
     host.onclick = event => {
       const target = event.target.closest('[data-select],[data-case],[data-role-toggle],[data-takeaway],[data-export-note]');
       if (!target) return;
@@ -178,8 +181,6 @@
     };
     host.querySelector('.exhibit-source-disclosure').ontoggle = event => { sourceOpen = event.target.open; };
     host.querySelector('.exhibit-note-disclosure').ontoggle = event => { noteOpen = event.target.open; };
-    const atlas = host.querySelector('.exhibit-full-atlas');
-    if (atlas) atlas.href = '#/qiwei?chart=wei';
     document.getElementById('exhibitNoteForm').onsubmit = event => { event.preventDefault(); saveNote(); };
     if (pending) {
       const restore = pending; pending = null;
