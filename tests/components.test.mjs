@@ -5,7 +5,7 @@ import { contextLinks, viewedIds } from '../assets/js/components/context-bar.js'
 import { serializeFavorites } from '../assets/js/components/saved-drawer.js';
 import { filterApproved } from '../assets/js/components/search.js';
 import { stampText } from '../assets/js/components/stamp.js';
-import { foodCardModel, foodMatrixData, cultureSelection, homeChapterState } from '../assets/js/pages/home.js';
+import { homeChapterState } from '../assets/js/pages/home.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -64,25 +64,6 @@ test('shell gives each cultural act a route and consolidates secondary collectio
   assert.ok(html.includes('id="collectionCoverage"'), 'collection boundaries remain accessible on demand');
   assert.ok(!html.includes('id="home-learning"'), 'home no longer hosts the learning workbench');
   assert.ok(html.includes('href="#/learn"'), 'nav exposes the learning lab');
-});
-
-test('home food matrix aggregates flavor and use dimensions', () => {
-  assert.deepEqual(foodMatrixData([{ flavor: '甘平', tag: '滋补' }, { flavor: '甘平', tag: '滋补' }, { flavor: '辛温', tag: '散寒' }]), [
-    { flavor: '甘平', use: '滋补', count: 2 },
-    { flavor: '辛温', use: '散寒', count: 1 }
-  ]);
-  assert.equal(cultureSelection([1, 2, 3, 4]).length, 3);
-  assert.equal(cultureSelection([1, 2, 3, 4], true).length, 4);
-});
-
-test('food overview keeps unaudited properties out of the matrix and never borrows another herb image', () => {
-  assert.deepEqual(foodMatrixData([
-    { flavor: '甘平', tag: '滋补', enriched: true },
-    { flavor: '未录入', tag: '属性未录入', enriched: false }
-  ]), [{ flavor: '甘平', use: '滋补', count: 1 }]);
-  assert.deepEqual(foodCardModel({ name: '丁香', flavor: '未录入', use: '目录收载', enriched: false }, [
-    { id: 'renshen', name: '人参', image: 'images/herbs/renshen.jpg' }
-  ]), { name: '丁香', detail: '目录收载 · 生活用法待补充', href: null, image: null, herb: null });
 });
 
 test('home chapter state exposes the concise four-section reading path', () => {

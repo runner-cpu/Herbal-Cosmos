@@ -56,18 +56,7 @@
     }));
   }
 
-  let cultureExpanded = false;
-  function renderLearnCulture(){
-    const grid = $('#learnCultureGrid'); if (!grid) return;
-    const items = cultureExpanded ? (window.HERITAGE || []) : (window.HERITAGE || []).slice(0, 3);
-    const images = window.HERITAGE_IMAGES || {};
-    grid.innerHTML = items.map(item => '<article class="home-culture-card"><div class="home-culture-image"><img src="' + esc(images[item.name] || '') + '" alt="' + esc(item.name) + '" loading="lazy"></div><div class="home-culture-copy"><span>' + esc(item.type) + '</span><h3>' + esc(item.name) + '</h3><p>' + esc(item.note) + '</p></div></article>').join('');
-    const button = $('#learnCultureExpand'); if (button) button.textContent = cultureExpanded ? '收起精选' : '查看全部';
-  }
-
   window.HerbalLearn = {
-    renderPictureQuiz,
-    renderLearnCulture,
-    toggleCulture: () => { cultureExpanded = !cultureExpanded; renderLearnCulture(); }
+    renderPictureQuiz
   };
 })();

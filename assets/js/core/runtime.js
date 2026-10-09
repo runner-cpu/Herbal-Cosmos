@@ -64,7 +64,6 @@ function catalogManifestCount(key){
 function syncDatasetCounts(){
   const values=[
     ['[data-featured-count]',KNOWLEDGE_HERBS.length],
-    ['[data-food-count]',FOODS.length],
     ['[data-formula-count]',FORMULAS.length],
     ['[data-zheng-count]',ZHENGS.length],
     ['[data-catalog-count]',catalogManifestCount('approvedCount')],
@@ -1043,62 +1042,6 @@ document.addEventListener('click', e=>{
 });
 document.addEventListener('input', e=>{const state=parseHash();if(e.target.id==='syndromeSearch'&&state.route==='formula'&&state.params.view==='zheng')renderZheng();});
 
-function renderHomeClassics(){
-  $('#homeClassicTimeline').innerHTML = CLASSICS.map(c=>`
-    <div class="cl-item" tabindex="0">
-      <div class="cl-era">${esc(c.era)}</div>
-      <div class="cl-name">${esc(c.name)}</div>
-      <div class="cl-meta">${esc(c.author)} · <span class="cl-num">收载 ${esc(c.num)} 种</span></div>
-      <div class="cl-desc">${esc(c.desc)}</div>
-    </div>`).join('');
-  if(typeof echarts === 'undefined'){
-    renderWhenEchartsReady(()=>{if(parseHash().route==='home')renderHomeClassics();});
-    return;
-  }
-  const p=chartPalette();
-  const el=document.getElementById('homeClassicBarChart');
-  if(!el) return;
-  const bChart = chartManager.register('homeClassicBar', echarts.init(el), el);
-  const data = CLASSICS.map(c=>({name:c.name, value:c.num}));
-  bChart.setOption({
-    backgroundColor:'transparent',
-    tooltip:{trigger:'axis', confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}, formatter:item=>`${esc(item[0].name)}<br/>收载 <b>${item[0].value}</b> 种`},
-    grid:{left:56,right:20,top:14,bottom:60},
-    xAxis:{type:'category', data:data.map(d=>d.name), axisLabel:{color:p.muted,fontSize:10.5,rotate:32,interval:0}, axisLine:{lineStyle:{color:p.line}}},
-    yAxis:{type:'value', axisLabel:{color:p.muted,fontSize:11}, splitLine:{lineStyle:{color:p.line}}},
-    series:[{type:'bar', data:data.map(d=>d.value), barWidth:'52%', itemStyle:{color:item=> item.dataIndex>=4 ? p.cinnabar : p.celadon, borderRadius:[6,6,0,0]}, label:{show:true, position:'top', color:p.text,fontSize:11}}]
-  });
-
-}
-
-function renderFood(){
-  const tags = ['全部', ...new Set(FOODS.map(f=>f.tag))];
-  $('#foodFilters').innerHTML = tags.map(t=>`<button class="filter-chip ${store._foodTag===t||(t==='全部'&&!store._foodTag)?'on':''}" data-food="${esc(t)}">${esc(t)}</button>`).join('');
-  const list = FOODS.filter(f=>!store._foodTag || store._foodTag==='全部' || f.tag===store._foodTag);
-  $('#foodGrid').innerHTML = list.map(f=>`
-    <div class="card card-pad thumb-card">
-      <div class="image-frame food-image">${herbImage(byName(f.name)||{name:f.name})}</div>
-      <div class="hd"><span class="stamp"><span class="a">${esc(f.name.slice(0,2))}</span><span class="b">${esc(f.flavor)}</span></span>
-        <div><h3>${esc(f.name)}</h3><div class="muted" style="font-size:11.5px;">${esc(f.flavor)} · ${esc(f.tag)}</div></div></div>
-      <p>${esc(f.note)}</p>
-      <div class="tags"><span class="badge jin">用法：${esc(f.use)}</span></div>
-    </div>`).join('');
-}
-document.addEventListener('click', e=>{
-  const chip = e.target.closest('[data-food]');
-  if(chip){ store._foodTag = chip.dataset.food; renderFood(); }
-});
-
-function renderCulture(){
-  $('#heritageGrid').innerHTML = HERITAGE.map(h=>`
-    <div class="card card-pad thumb-card">
-      <div class="image-frame culture-image"><img src="${esc(HERITAGE_IMAGES[h.name]||herbPlaceholder('遗'))}" alt="${esc(h.name)} 非遗场景图" loading="lazy" onerror="this.onerror=null;this.src=herbPlaceholder('遗')"></div>
-      <div class="hd"><span class="stamp"><span class="a">${esc(h.name.slice(0,2))}</span><span class="b">非遗</span></span>
-        <div><h3>${esc(h.name)}</h3><div class="muted" style="font-size:11.5px;">${esc(h.type)}</div></div></div>
-      <p>${esc(h.note)}</p>
-    </div>`).join('');
-}
-
 const QUIZ = (typeof window !== 'undefined' && Array.isArray(window.QUIZ)) ? window.QUIZ : [];
 const learnState = {index:0, answered:false, picked:null, routeHash:null, correct:0, total:0};
 if (typeof window !== 'undefined') window.HerbalLearnState = learnState;
@@ -1140,7 +1083,7 @@ function renderLearn(){
   }));
   if(learnState.answered&&Number.isInteger(learnState.picked))restoreAnswer();
   stats.textContent=`已完成 ${s.total} · 正确 ${s.correct}`;
-  if (window.HerbalLearn) { window.HerbalLearn.renderPictureQuiz(); window.HerbalLearn.renderLearnCulture(); }
+  if (window.HerbalLearn) { window.HerbalLearn.renderPictureQuiz(); }
 }
 
 function renderFavButtons(){
@@ -1343,9 +1286,6 @@ document.querySelectorAll('[data-learn-mode]').forEach(button=>button.addEventLi
   if(picture) picture.hidden = mode!=='picture';
   if(mode==='picture') window.HerbalLearn?.renderPictureQuiz();
 }));
-document.addEventListener('click',e=>{
-  if(e.target.closest('#learnCultureExpand')){ window.HerbalLearn?.toggleCulture(); }
-});
 document.addEventListener('click', e=>{
   if(e.target.closest('nav a') || (e.target.closest('#app') && !e.target.closest('#mainNav,#hamburger') && window.innerWidth<=768)){
     setNavigationOpen(false);

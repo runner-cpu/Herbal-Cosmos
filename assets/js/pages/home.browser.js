@@ -1,69 +1,5 @@
-function foodMatrixData(foods = []) {
-  const matrix = new Map();
-  foods.filter(food => food.enriched !== false).forEach(food => {
-    const key = (food.flavor || '未标注') + '|' + (food.tag || '未标注');
-    matrix.set(key, (matrix.get(key) || 0) + 1);
-  });
-  return [...matrix.entries()].map(([key, count]) => {
-    const parts = key.split('|');
-    return { flavor: parts[0], use: parts[1], count };
-  });
-}
-
-function foodCardModel(food = {}, herbs = []) {
-  const herb = herbs.find(item => item.name === food.name) || null;
-  const enriched = food.enriched !== false;
-  return {
-    name: food.name || '',
-    detail: enriched ? `${food.flavor || '待补充'} · ${food.use || '目录收载'}` : '目录收载 · 生活用法待补充',
-    href: herb ? '#/herb?id=' + (herb.id || '') : null,
-    image: herb?.image || null,
-    herb
-  };
-}
-
-function cultureSelection(items = [], expanded = false) {
-  return expanded ? items : items.slice(0, 3);
-}
-
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>\"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' }[char]));
-}
-
-function renderFood() {
-  const foods = window.FOODS || [];
-  const herbs = window.HERBS || [];
-  const strip = document.getElementById('homeFoodStrip');
-  if (strip) strip.innerHTML = foods.slice(0, window.__HERBAL_FOOD_EXPANDED__ ? foods.length : 12).map(food => {
-    const model = foodCardModel(food, herbs);
-    const stamp = model.herb ? (window.HerbalStamp?.renderStamp?.(model.herb, 'home-food-stamp') || '') : '';
-    const visual = '<div class="home-food-image">' + (window.herbImage?.(model.herb || { name: model.name }) || '') + '</div>';
-    const content = visual + stamp + '<strong>' + escapeHtml(model.name) + '</strong><span>' + escapeHtml(model.detail) + '</span>';
-    return model.href
-      ? '<a class="home-food-card" href="' + escapeHtml(model.href) + '">' + content + '</a>'
-      : '<article class="home-food-card directory-only">' + content + '</article>';
-  }).join('');
-  const matrix = document.getElementById('homeFoodMatrix');
-  if (matrix) {
-    const cells = foodMatrixData(foods);
-    matrix.innerHTML = '<div class="food-matrix-label">性味 × 用法</div>' + cells.map(cell => '<div class="food-matrix-cell" style="--heat:' + Math.min(1, cell.count / 5) + '"><b>' + escapeHtml(cell.flavor) + '</b><span>' + escapeHtml(cell.use) + '</span><em>' + cell.count + '</em></div>').join('');
-  }
-}
-
-let cultureExpanded = false;
-function renderCulture() {
-  const grid = document.getElementById('homeCultureGrid');
-  if (!grid) return;
-  const items = cultureSelection(window.HERITAGE || [], cultureExpanded);
-  const images = window.HERITAGE_IMAGES || {};
-  grid.innerHTML = items.map(item => '<article class="home-culture-card"><div class="home-culture-image"><img src="' + escapeHtml(images[item.name] || '') + '" alt="' + escapeHtml(item.name) + '" loading="lazy"></div><div class="home-culture-copy"><span>' + escapeHtml(item.type) + '</span><h3>' + escapeHtml(item.name) + '</h3><p>' + escapeHtml(item.note) + '</p></div></article>').join('');
-  const button = document.getElementById('homeCultureExpand');
-  if (button) button.textContent = cultureExpanded ? '收起精选' : '查看全部';
-}
-
-function updateFoodToggle() {
-  const button = document.getElementById('homeFoodExpand');
-  if (button) button.textContent = window.__HERBAL_FOOD_EXPANDED__ ? '收起目录' : '查看' + (window.FOODS?.length || 0) + '种目录';
 }
 
 const HOME_CHAPTERS = [
@@ -188,23 +124,6 @@ function scrollHomeAnchor(anchor) {
   }, 0);
 }
 
-function showClassicDetail(item) {
-  const name = item?.querySelector('.cl-name')?.textContent?.trim();
-  const classic = (window.CLASSICS || []).find(entry => entry.name === name);
-  if (!classic) return;
-  let dialog = document.getElementById('classicDetail');
-  if (!dialog) {
-    dialog = document.createElement('dialog');
-    dialog.id = 'classicDetail';
-    dialog.className = 'classic-detail';
-    document.body.append(dialog);
-  }
-  dialog.innerHTML = '<button type="button" class="classic-detail-close" aria-label="关闭典籍详情">×</button><span>COLLECTION NOTE</span><h2>' + escapeHtml(classic.name) + '</h2><p class="classic-detail-era">' + escapeHtml(classic.era) + ' · ' + escapeHtml(classic.author) + '</p><div class="classic-detail-stats"><b>' + classic.num + '</b><span>收载数量</span></div><p>' + escapeHtml(classic.desc) + '</p>';
-  dialog.showModal?.();
-  dialog.querySelector('.classic-detail-close')?.focus();
-  dialog.querySelector('.classic-detail-close')?.addEventListener('click', () => dialog.close());
-}
-
 function initHomeModules() {
   initShellLayout();
   window.HerbalHome = { scrollToAnchor: scrollHomeAnchor };
@@ -213,33 +132,11 @@ function initHomeModules() {
   const renderRecent=()=>{const el=document.getElementById('homeRecent');if(!el)return;const cards=recent.slice(-6).reverse().map(id=>(window.HERBS||[]).find(h=>h.id===id)).filter(Boolean);el.hidden=!cards.length;el.innerHTML='<strong>继续上次探索</strong>'+cards.map(h=>'<a href="#/herb?id='+encodeURIComponent(h.id)+'">'+escapeHtml(h.name)+' ↗</a>').join('');};
   renderRecent();
   window.addEventListener('herbal:selected',event=>{recent=event.detail?.viewedIds||recent;renderRecent();});
-  renderFood();
-  renderCulture();
-  updateFoodToggle();
   initHomeChapterNav();
-  const initialAnchor = location.hash.replace(/^#\/?/, '').split('?')[0];
-  if (initialAnchor === 'home-food' || initialAnchor === 'home-culture') scrollHomeAnchor(initialAnchor);
-  document.getElementById('homeCultureExpand')?.addEventListener('click', () => { cultureExpanded = !cultureExpanded; renderCulture(); });
-  document.getElementById('homeFoodExpand')?.addEventListener('click', () => { window.__HERBAL_FOOD_EXPANDED__ = !window.__HERBAL_FOOD_EXPANDED__; renderFood(); updateFoodToggle(); });
-  document.addEventListener('click', event => {
-    const item = event.target.closest('.classic-timeline .cl-item');
-    if (item) showClassicDetail(item);
-  });
-  document.addEventListener('keydown', event => {
-    if (!['Enter', ' '].includes(event.key)) return;
-    const item = event.target.closest('.classic-timeline .cl-item');
-    if (!item) return;
-    event.preventDefault();
-    showClassicDetail(item);
-  });
   window.addEventListener('hashchange', () => {
     const route = location.hash.replace(/^#\/?/, '').split('?')[0] || 'home';
-    if (route === 'home' || route === 'home-food' || route === 'home-culture') {
-      renderFood(); renderCulture(); updateFoodToggle();
-      if (route !== 'home') scrollHomeAnchor(route);
-    }
+    if (route === 'home-food' || route === 'home-culture' || route === 'home-classics') scrollHomeAnchor(route);
   });
-  window.renderHomeModules = () => { renderFood(); renderCulture(); updateFoodToggle(); };
 }
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {
