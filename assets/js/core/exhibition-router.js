@@ -28,6 +28,7 @@
       else if (params.view === 'attributes') route = 'qiwei';
     }
     if (route === 'heritage' && params.anchor === 'heritage-classics') { route = 'intro'; params.anchor = 'intro-timeline'; }
+    if (path === 'heritage' && !params.anchor) { route = 'exhibit'; params.chapter = 'inherit'; }
     const section = ['herbs', 'herb', 'qiwei', 'formula', 'heritage', 'intro'].includes(route) ? 'herbs' : route === 'learn' ? 'learn' : route === 'exhibit' ? 'exhibit' : 'home';
     return { route, params, section, unknownPath: route === 'not-found' ? path : '' };
   }

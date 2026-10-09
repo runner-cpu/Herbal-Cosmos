@@ -51,7 +51,8 @@ test('route titles describe the active Chinese view', async ({ page }) => {
     ['qiwei', '属性统计 · 本草图鉴 · 本草宇宙'],
     ['formula', '方剂档案 · 本草图鉴 · 本草宇宙'],
     ['formula?view=zheng', '证候药链 · 本草图鉴 · 本草宇宙'],
-    ['heritage', '文化档案 · 本草图鉴 · 本草宇宙'],
+    ['heritage', '文化长卷 · 本草宇宙'],
+    ['heritage?anchor=heritage-food', '文化档案 · 本草图鉴 · 本草宇宙'],
     ['learn', '我的本草 · 本草宇宙'],
     ['route-that-does-not-exist', '路径未收录 · 本草宇宙']
   ];

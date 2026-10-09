@@ -14,6 +14,9 @@ test('V7 main and legacy routes select an existing workspace and navigation owne
   assert.equal(resolve('').route, 'home');
   assert.equal(resolve('#/intro').route, 'home');
   assert.equal(resolve('#/exhibit?chapter=compose').params.chapter, 'compose');
+  assert.equal(resolve('#/heritage').route, 'exhibit');
+  assert.equal(resolve('#/heritage').params.chapter, 'inherit');
+  assert.equal(resolve('#/heritage?anchor=heritage-food').route, 'heritage');
   assert.equal(resolve('#/qiwei?cat=补虚药').section, 'herbs');
   assert.equal(resolve('#/qiwei?cat=补虚药').params.cat, '补虚药');
   assert.equal(resolve('#/herbs?section=formulas').route, 'formula');
