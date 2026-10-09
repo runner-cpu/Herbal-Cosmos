@@ -318,8 +318,9 @@ function render(options={}){
     return;
   }
   const readingKey = 'herbal_cosmos_reading';
+  const ethnicAvailable = (window.ETHNIC_CORRESPONDENCE||[]).some(item=>item.status==='approved');
   let reading = document.documentElement.dataset.cosmosReadingMode || storageRead(readingKey, engine.DEFAULT_READING);
-  if(!engine.READING_MODES.includes(reading)) reading = engine.DEFAULT_READING;
+  if(!engine.READING_MODES.includes(reading) || (reading==='ethnic' && !ethnicAvailable)) reading = engine.DEFAULT_READING;
 
   const instance = engine.mount(canvas, {
     herbs: KNOWLEDGE_HERBS,
@@ -619,9 +620,29 @@ document.getElementById('resetFilters').addEventListener('click', ()=>{
   toast('已重置筛选');
 });
 
+function ethnicSystemLabel(system){
+  return ({tibetan:'藏医药',mongolian:'蒙古医药',uyghur:'维吾尔医药',common:'多体系共通'})[system]||system;
+}
+function approvedEthnicEntries(herbId){
+  return (window.ETHNIC_CORRESPONDENCE||[]).filter(item=>item.status==='approved'&&item.herbId===herbId);
+}
+function renderHerbEthnic(h){
+  const host=$('#herbEthnic');
+  if(!host) return;
+  const entries=approvedEthnicEntries(h.id);
+  if(!entries.length){ host.hidden=true; host.innerHTML=''; return; }
+  host.hidden=false;
+  host.innerHTML='<h2>其他体系中的使用线索</h2><ul>'+entries.map(item=>{
+    const url=safeSourceUrl(item.source?.url);
+    return '<li><span class="herb-ethnic-system">'+esc(item.systems.map(ethnicSystemLabel).join(' · '))+'</span>'
+      +'<span class="herb-ethnic-note">'+esc(item.note||'')+'</span>'
+      +(url?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(item.source?.title||'来源')+' ↗</a>':'')+'</li>';
+  }).join('')+'</ul>'
+  +'<p class="herb-ethnic-boundary">对照线索表示该药材在其他民族的医药文献中亦有记载，不代表体系收载认定，也不改变本馆按中医本草框架编目的四气、五味与资料分类。本馆未覆盖各民族医药的完整体系。</p>';
+}
 function renderHerb(id){
   const h = byId(id);
-  if(!h){ $('#herbCrumb').innerHTML=''; $('#herbDetailHead').innerHTML=`<div class="empty">未找到该药材。</div>`; $('#herbProps').innerHTML=''; $('#herbFormulaList').innerHTML=''; return; }
+  if(!h){ $('#herbCrumb').innerHTML=''; $('#herbDetailHead').innerHTML=`<div class="empty">未找到该药材。</div>`; $('#herbProps').innerHTML=''; const ethnic=$('#herbEthnic'); if(ethnic){ethnic.hidden=true;ethnic.innerHTML='';} $('#herbFormulaList').innerHTML=''; return; }
   const p=chartPalette();
   const factSource=h.source==='openMateria'?'公开资料整理':'编辑精选资料';
   const efficacyLabel=herbEfficacyLabel(h);
@@ -643,6 +664,7 @@ function renderHerb(id){
     <div class="prop"><div class="k">文献分布</div><div class="v">${esc(h.origin?.length?h.origin.join('、'):missingLabel())}</div><div class="src">来源记载，不等同道地产区认证</div></div>
     <div class="prop"><div class="k">${efficacyLabel}</div><div class="v" style="font-size:14px;">${esc(h.eff)}</div></div>
     <div class="prop" style="grid-column:1/-1;"><div class="k">本草小记</div><div class="v" style="font-size:13.5px;font-weight:400;font-family:var(--sans);">${esc(h.note||'小记待补充，可展开资料来源查看当前收录依据。')}</div></div>`;
+  renderHerbEthnic(h);
   const rel = FORMULAS.filter(f=>f.herbs.some(x=>x[0]===h.id));
   $('#herbFormulaList').innerHTML = rel.length ? rel.map(f=>`
     <a class="formula-row" href="#/formula?f=${esc(f.id)}">

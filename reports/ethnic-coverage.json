@@ -1,0 +1,331 @@
+{
+  "runtimeCards": 902,
+  "total": 37,
+  "approved": 0,
+  "review": 37,
+  "bySystem": {
+    "tibetan": 0,
+    "mongolian": 0,
+    "uyghur": 0,
+    "common": 0
+  },
+  "approvedEntries": [],
+  "reviewEntries": [
+    {
+      "herbId": "open-4547aaf7fe62",
+      "herbName": "诃子",
+      "systems": [
+        "tibetan",
+        "mongolian"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-91b2193137e8",
+      "herbName": "翼首草",
+      "systems": [
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-89674717be7b",
+      "herbName": "独一味",
+      "systems": [
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-ee284eac912e",
+      "herbName": "红景天",
+      "systems": [
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-88aa79dc3e86",
+      "herbName": "菊苣",
+      "systems": [
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-aebd1c705d07",
+      "herbName": "黑种草子",
+      "systems": [
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-6a20da163f2b",
+      "herbName": "沙棘",
+      "systems": [
+        "tibetan",
+        "mongolian"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-e01c5fa72aa1",
+      "herbName": "余甘子",
+      "systems": [
+        "tibetan",
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-b48432da0f27",
+      "herbName": "草乌",
+      "systems": [
+        "mongolian"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-a840d0d6ecec",
+      "herbName": "天仙子",
+      "systems": [
+        "mongolian"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-6134ebf4a2c7",
+      "herbName": "肉豆蔻",
+      "systems": [
+        "mongolian",
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-b5d360fd884e",
+      "herbName": "荜茇",
+      "systems": [
+        "mongolian",
+        "uyghur",
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-a7d91150c3f4",
+      "herbName": "胡椒",
+      "systems": [
+        "mongolian",
+        "uyghur",
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-3e8ef1fb9296",
+      "herbName": "豆蔻",
+      "systems": [
+        "mongolian",
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-0a9c97694038",
+      "herbName": "檀香",
+      "systems": [
+        "uyghur",
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-fcfd247e26bd",
+      "herbName": "沉香",
+      "systems": [
+        "uyghur",
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-73c484b4ebc7",
+      "herbName": "丁香",
+      "systems": [
+        "uyghur",
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-ac59252eb64c",
+      "herbName": "玫瑰花",
+      "systems": [
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "mahuang",
+      "herbName": "麻黄",
+      "systems": [
+        "common"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "gancao",
+      "herbName": "甘草",
+      "systems": [
+        "common"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "huangqi",
+      "herbName": "黄芪",
+      "systems": [
+        "common"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "qinjiao",
+      "herbName": "秦艽",
+      "systems": [
+        "common"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "longdan",
+      "herbName": "龙胆",
+      "systems": [
+        "common"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-84a8115d849f",
+      "herbName": "锁阳",
+      "systems": [
+        "mongolian"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-3cabeb886781",
+      "herbName": "肉苁蓉",
+      "systems": [
+        "mongolian"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-f8cc35eb6a83",
+      "herbName": "冬虫夏草",
+      "systems": [
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-b3764e15996d",
+      "herbName": "西红花",
+      "systems": [
+        "tibetan",
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "honghua",
+      "herbName": "红花",
+      "systems": [
+        "mongolian",
+        "uyghur",
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "caoguo",
+      "herbName": "草果",
+      "systems": [
+        "mongolian",
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "muxiang",
+      "herbName": "木香",
+      "systems": [
+        "tibetan",
+        "mongolian"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-680cefa37061",
+      "herbName": "小茴香",
+      "systems": [
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "rougui",
+      "herbName": "肉桂",
+      "systems": [
+        "mongolian",
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "ganjiang",
+      "herbName": "干姜",
+      "systems": [
+        "mongolian",
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-03c5239b1058",
+      "herbName": "巴戟天",
+      "systems": [
+        "uyghur"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "pugongying",
+      "herbName": "蒲公英",
+      "systems": [
+        "common"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-84a4206e8d79",
+      "herbName": "石榴皮",
+      "systems": [
+        "tibetan",
+        "mongolian"
+      ],
+      "reason": "missing source url"
+    },
+    {
+      "herbId": "open-d75da9b9d4fb",
+      "herbName": "当药",
+      "systems": [
+        "tibetan"
+      ],
+      "reason": "missing source url"
+    }
+  ]
+}

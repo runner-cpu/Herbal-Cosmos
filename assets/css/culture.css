@@ -144,6 +144,29 @@
 #cosmosReadingLegend .reading-legend-label { color: #E8C588; }
 .culture-journey-bridge { font-size: 13px; color: var(--ink-2); line-height: 1.95; }
 .culture-journey-bridge a { color: var(--qing); text-decoration: underline; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
+.herb-ethnic { margin: 22px 0 6px; padding: 20px 0 4px; border-top: 1px solid var(--line); }
+.herb-ethnic[hidden] { display: none; }
+.herb-ethnic h2 { font: 600 19px/1.5 var(--serif); color: var(--qing); margin-bottom: 12px; }
+.herb-ethnic ul { display: grid; gap: 12px; list-style: none; padding: 0; margin: 0; }
+.herb-ethnic li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 16px; align-items: baseline; padding: 12px 14px; background: var(--paper-2); border-left: 2px solid var(--celadon); }
+.herb-ethnic-system { font: 500 12px/1.7 var(--sans); color: var(--qing); letter-spacing: .04em; }
+.herb-ethnic-note { font-size: 12.5px; color: var(--ink-2); line-height: 1.85; }
+.herb-ethnic li a { grid-column: 2; font-size: 12px; color: var(--qing); text-decoration: underline; text-underline-offset: 3px; min-height: 36px; display: inline-flex; align-items: center; }
+.herb-ethnic-boundary { margin-top: 12px; font-size: 11.5px; color: var(--ink-2); line-height: 1.85; }
+.together-entry { display: grid; grid-template-columns: 46px minmax(0, 1fr); align-items: center; gap: 18px; padding: 20px 22px; border: 1px solid var(--line); background: var(--surface-soft); color: var(--ink); }
+.together-entry:hover { border-color: var(--jin); }
+.together-entry-mark { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--jin); color: var(--jin); font-size: 18px; }
+.together-entry strong { display: block; font: 600 17px/1.5 var(--serif); color: var(--qing); }
+.together-entry p { font-size: 12.5px; color: var(--ink-2); line-height: 1.85; margin: 6px 0 8px; max-width: 70ch; }
+.together-entry b { font-size: 12px; font-weight: 500; color: var(--qing); }
+.together-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px 28px; margin-top: 24px; }
+.together-groups h3 { font: 600 15px/1.5 var(--serif); color: var(--qing); padding-bottom: 9px; border-bottom: 1px solid var(--line); }
+.together-groups ul { display: grid; gap: 10px; list-style: none; padding: 0; margin: 12px 0 0; }
+.together-groups li { display: grid; gap: 3px; padding: 9px 12px; background: var(--paper-2); border-left: 2px solid var(--celadon); font-size: 12px; }
+.together-groups li > a:first-child { font: 600 14px/1.6 var(--serif); color: var(--qing); }
+.together-groups li > span { color: var(--ink-2); line-height: 1.8; }
+.together-groups li > a:not(:first-child) { color: var(--qing); text-decoration: underline; text-underline-offset: 3px; min-height: 32px; display: inline-flex; align-items: center; }
+@media (max-width: 600px) { .herb-ethnic li { grid-template-columns: 1fr; } .herb-ethnic li a { grid-column: 1; min-height: 44px; } }
 .culture-journey-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .culture-journey-stats > a, .culture-journey-stats > button { display: flex; flex-direction: column; align-items: flex-start; background: var(--paper-2); color: var(--ink); border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 22px 24px; text-align: left; }
 .culture-journey-stats strong { font: 42px/1.2 Georgia, serif; color: var(--qing); font-variant-numeric: tabular-nums; }

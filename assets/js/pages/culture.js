@@ -104,14 +104,15 @@
     const heritage = Array.isArray(window.HERITAGE) && window.HERITAGE.length ? window.HERITAGE : Object.keys(heritageNotes).map(name => ({ name }));
     const foodCount = (window.FOODS || []).length;
     root.innerHTML = '<div class="culture-exhibit culture-heritage"><div class="culture-act-head"><div><p class="culture-kicker">第四幕 · 传</p><h1>薪火相传</h1><p class="culture-act-deck">传承不只在书页里，<br>也在一双手、一餐饭、一次重新阅读里。</p></div><span class="culture-act-glyph" aria-hidden="true">传</span></div>'
-      + '<nav class="culture-local-nav" aria-label="第四幕章节"><a href="#/heritage?anchor=heritage-culture">非遗技艺</a><a href="#/heritage?anchor=heritage-food">厨房里的本草</a><a href="#/heritage?anchor=heritage-classics">典籍读法</a></nav>'
+      + '<nav class="culture-local-nav" aria-label="第四幕章节"><a href="#/heritage?anchor=heritage-culture">非遗技艺</a><a href="#/heritage?anchor=heritage-together">共同的本草</a><a href="#/heritage?anchor=heritage-food">厨房里的本草</a><a href="#/heritage?anchor=heritage-classics">典籍读法</a></nav>'
       + '<section class="culture-section" id="heritage-culture">' + sectionHeading('一', '技艺靠人，代代相传', '六个文化主题，连接人类非遗与国家级名录。主题名称与名录中的具体项目逐项区别。')
       + '<div class="culture-heritage-grid">' + heritage.map(renderHeritageCard).join('') + '</div><p class="culture-method-note">本展柜不是“六项国家级非遗”的计数：针灸、藏医药浴法链接 UNESCO 名录，其余主题链接国家级名录的具体项目。插画用于文化表达，完整说明见 <a href="IMAGE_SOURCES.md">图像来源清单 ↗</a>。</p></section>'
-      + '<section class="culture-section" id="heritage-food">' + sectionHeading('二', '厨房里的本草', '从熟悉的生活场景认识食药物质，再回到目录看名称与收载依据。')
+      + renderTogetherSection()
+      + '<section class="culture-section" id="heritage-food">' + sectionHeading(ethnicOrdinal(1), '厨房里的本草', '从熟悉的生活场景认识食药物质，再回到目录看名称与收载依据。')
       + '<div class="culture-food-intro"><div><strong>' + foodCount + '</strong><span>种目录物质</span></div><p>本展柜采用截至 ' + escapeHtml(window.FOOD_MEDICINE_REVISION || '2024-08-26') + ' 的整理快照。目录收载、生活用法与药材知识卡属于不同资料层级，每个条目保留公告入口。</p></div>'
       + '<div class="culture-food-controls"><label for="heritageFoodSearch">查找目录<input id="heritageFoodSearch" type="search" placeholder="例如：山药、橘皮" value="' + escapeHtml(foodState.query) + '" autocomplete="off"></label><label for="heritageFoodScope">资料范围<select id="heritageFoodScope"><option value="all">全部目录</option><option value="enriched"' + (foodState.scope === 'enriched' ? ' selected' : '') + '>有生活场景说明</option><option value="directory"' + (foodState.scope === 'directory' ? ' selected' : '') + '>仅目录收载</option></select></label></div>'
       + '<p class="culture-food-status" id="heritageFoodStatus" role="status" aria-live="polite" aria-atomic="true"></p><div class="culture-food-grid" id="heritageFoodGrid"></div><nav class="culture-food-pages" id="heritageFoodPages" aria-label="食药物质目录翻页"></nav><p class="culture-method-note">“药食同源”不等于人人可食、无限量食用。生活场景说明用于文化阅读，具体适用范围以公告为准。</p></section>'
-      + '<section class="culture-section" id="heritage-classics">' + sectionHeading('三', '典籍读法：带着问题翻书', '七部典籍的完整时间线在序章。这里先交代三条读法，再回去按年代看。')
+      + '<section class="culture-section" id="heritage-classics">' + sectionHeading(ethnicOrdinal(2), '典籍读法：带着问题翻书', '七部典籍的完整时间线在序章。这里先交代三条读法，再回去按年代看。')
       + '<ol class="culture-method-list">'
       + '<li><span aria-hidden="true">一</span><div><h3>版本与刊刻是两件事</h3><p>一部古籍的成稿、作序、初刻与进献往往相隔多年。序章时间线采用通行书目记载的初刊年份，并在节点内注明这一区别，不把成书时间写成人物生卒。</p></div></li>'
       + '<li><span aria-hidden="true">二</span><div><h3>药物数与标准数不是同类</h3><p>古代典籍的“收载药物”是当时的药物条目计数；现代药典的“品种标准”是质量标准计数，且分四部合计与一部单列。两者统计对象不同，不连成一条增长曲线。</p></div></li>'
@@ -185,24 +186,27 @@
     renderReadingLegend(current);
     return current;
   }
+  function availableReadingIds() {
+    const buttons = readingButtons().map(button => button.dataset.cosmosReading);
+    if (buttons.length) return buttons;
+    const engine = window.HerbalCosmosEngine;
+    return engine?.READING_MODES || ['category', 'geography', 'nature'];
+  }
   function initReadingControls() {
     if (typeof document.addEventListener !== 'function') return;
     // 控件由 cosmos.browser.js 在 DOMContentLoaded 时注入，因此用事件委托而不是绑定具体容器。
     document.addEventListener('click', event => {
       const button = event.target.closest?.('[data-cosmos-reading]');
       if (!button) return;
-      const engine = window.HerbalCosmosEngine;
-      const modes = engine?.READING_MODES || ['category', 'geography', 'nature', 'ethnic'];
       const mode = button.dataset.cosmosReading;
-      if (!modes.includes(mode)) return;
+      if (!availableReadingIds().includes(mode)) return;
       syncReadingControls(mode);
       window.dispatchEvent(new CustomEvent('herbal:cosmos-reading', { detail: { mode } }));
     });
     window.addEventListener('herbal:cosmos-ready', () => syncReadingControls());
     window.addEventListener('herbal:route', event => {
-      const engine = window.HerbalCosmosEngine;
       const requested = event.detail?.params?.read;
-      if (requested && engine?.READING_MODES?.includes(requested)) {
+      if (requested && availableReadingIds().includes(requested)) {
         syncReadingControls(requested);
         window.dispatchEvent(new CustomEvent('herbal:cosmos-reading', { detail: { mode: requested } }));
         return;
@@ -210,6 +214,34 @@
       syncReadingControls();
     });
     syncReadingControls();
+  }
+  const ETHNIC_SYSTEM_LABELS = { tibetan: '藏医药', mongolian: '蒙古医药', uyghur: '维吾尔医药', common: '多体系共通' };
+  const SECTION_ORDINALS = ['一', '二', '三', '四', '五'];
+  function ethnicOrdinal(index) {
+    return SECTION_ORDINALS[index + (approvedEthnicEntries().length ? 1 : 0)] || '';
+  }
+  function approvedEthnicEntries() {
+    return (Array.isArray(window.ETHNIC_CORRESPONDENCE) ? window.ETHNIC_CORRESPONDENCE : [])
+      .filter(item => item?.status === 'approved' && /^https:\/\//.test(String(item.source?.url || '')));
+  }
+  function renderTogetherSection() {
+    const entries = approvedEthnicEntries();
+    if (!entries.length) return '';
+    const herbs = new Map((window.HERBS || []).map(herb => [herb.id, herb]));
+    const groups = Object.keys(ETHNIC_SYSTEM_LABELS)
+      .map(system => ({ system, rows: entries.filter(entry => entry.systems.includes(system)) }))
+      .filter(group => group.rows.length);
+    return '<section class="culture-section" id="heritage-together">'
+      + sectionHeading('二', '共同的本草', '本草知识在各民族之间长期交流。本馆以中医本草为主体编目，并按可核对来源标注在其他体系中的使用线索。')
+      + '<a class="together-entry" href="#/home?read=ethnic"><span class="together-entry-mark" aria-hidden="true">✦</span><div><strong>在星图中查看这些线索</strong><p>切到「民族对照」读法，已有记载在其他体系中使用的本草会亮起。</p><b>打开星图 →</b></div></a>'
+      + '<div class="together-groups">' + groups.map(group => '<section><h3>' + escapeHtml(ETHNIC_SYSTEM_LABELS[group.system]) + ' · ' + group.rows.length + ' 味</h3><ul>'
+        + group.rows.map(entry => {
+          const herb = herbs.get(entry.herbId);
+          const link = herb ? '<a href="#/herb?id=' + encodeURIComponent(herb.id) + '">' + escapeHtml(entry.herbName) + '</a>' : escapeHtml(entry.herbName);
+          const source = externalLink(entry.source.url, entry.source.title || '来源');
+          return '<li>' + link + '<span>' + escapeHtml(entry.note || '') + '</span>' + source + '</li>';
+        }).join('') + '</ul></section>').join('') + '</div>'
+      + '<p class="culture-method-note">对照线索表示该药材在其他民族的医药文献中亦有记载，不代表体系收载认定，也不改变本馆按中医本草框架编目的四气、五味与资料分类。完整目录与复核状态见 <a href="reports/ethnic-coverage.json">民族对照覆盖报告 ↗</a>；藏医药浴法条目见 <a href="#heritage-culture">非遗技艺</a>。</p></section>';
   }
   function renderJourney(targetId = 'learnJourney') {
     const root = document.getElementById(targetId);

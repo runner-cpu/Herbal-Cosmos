@@ -41,6 +41,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/data/expanded.chunk-07.js',
   './assets/js/data/expanded.chunk-08.js',
   './assets/js/data/expanded.generated.js',
+  './assets/js/data/ethnic-correspondence.js',
   './assets/js/core/field-utils.js',
   './assets/js/pages/cosmos-engine.js',
   './assets/js/core/runtime.js',

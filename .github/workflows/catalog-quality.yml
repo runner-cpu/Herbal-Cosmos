@@ -28,6 +28,8 @@ jobs:
       - run: npm run build:browser
       - run: git diff --exit-code -- assets/js/components/*.browser.js assets/js/pages/*.browser.js assets/js/core/catalog-loader.browser.js
       - run: npm run check:browser-copies
+      - run: npm run validate:ethnic
+      - run: git diff --exit-code -- reports/ethnic-coverage.json
       - run: npm run validate:data
       - run: npm run validate:app
       - run: node scripts/fetch-herb-images.mjs --verify

@@ -23,15 +23,26 @@ function effectLegendMarkup() {
     .join('') + '<span><i style="background:#D8C9A8"></i>其他／未录类别</span>';
 }
 
-function readingControlsMarkup(readings = []) {
+const READING_LABELS = { category: '资料分类', geography: '文献分布', nature: '药性', ethnic: '民族对照' };
+
+// 民族对照读法只有在门禁确认了带来源的线索之后才出现：没有 approved 条目时
+// 整片星云只会被压暗，不如不提供这个入口（见 scripts/validate-ethnic-data.mjs）。
+function availableReadings() {
+  const approved = typeof window !== 'undefined' && Array.isArray(window.ETHNIC_CORRESPONDENCE)
+    ? window.ETHNIC_CORRESPONDENCE.some(item => item?.status === 'approved')
+    : false;
+  return ['category', 'geography', 'nature', ...(approved ? ['ethnic'] : [])];
+}
+
+function readingControlsMarkup(readings = availableReadings()) {
   return '<div class="cosmos-readings" role="group" aria-label="星图着色读法" data-cosmos-readings>'
-    + readings.map((item, index) => '<button type="button" data-cosmos-reading="' + item.id + '" aria-pressed="' + (index === 0) + '">' + item.label + '</button>').join('')
+    + readings.map((id, index) => '<button type="button" data-cosmos-reading="' + id + '" aria-pressed="' + (index === 0) + '">' + (READING_LABELS[id] || id) + '</button>').join('')
     + '</div>';
 }
 
 function cosmosControlsMarkup() {
   return '<button type="button" class="cosmos-collapse" data-cosmos-collapse aria-expanded="true" aria-label="收起星图控制面板">⌄</button>'
-    + '<div class="cosmos-readings" role="group" aria-label="星图着色读法" data-cosmos-readings><button type="button" data-cosmos-reading="category" aria-pressed="true">资料分类</button><button type="button" data-cosmos-reading="geography" aria-pressed="false">文献分布</button><button type="button" data-cosmos-reading="nature" aria-pressed="false">药性</button><button type="button" data-cosmos-reading="ethnic" aria-pressed="false">民族对照</button></div>'
+    + readingControlsMarkup()
     + '<form class="cosmos-search"><label for="cosmosSearch">定位一味本草</label><div><input id="cosmosSearch" type="search" list="cosmosNames" placeholder="输入药名或拼音" autocomplete="off"><button type="submit">飞向本草</button></div><datalist id="cosmosNames"></datalist></form>'
     + '<div class="cosmos-actions"><button type="button" data-cosmos-color aria-pressed="false">统一色</button><button type="button" data-cosmos-motion aria-pressed="true">动效开</button><button type="button" data-cosmos-zoom="-.2" aria-label="缩小星图">−</button><button type="button" data-cosmos-zoom=".2" aria-label="放大星图">＋</button></div>'
     + '<p class="cosmos-legend" data-cosmos-legend>每一颗可选星辰对应一张本草知识卡。</p>'
