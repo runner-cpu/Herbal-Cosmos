@@ -59,6 +59,33 @@ test('320px shell and core routes stay within the viewport', async ({ page }) =>
   }
 });
 
+test('star map controls and legend stay inside 320px and 375px', async ({ page }) => {
+  for (const width of [320, 375]) {
+    await page.setViewportSize({ width, height: 812 });
+    await page.goto('/#/home');
+    await expect(page.locator('#cosmosControls')).toBeVisible();
+    const measured = await page.evaluate(() => {
+      const doc = document.documentElement;
+      const controls = document.getElementById('cosmosControls');
+      const rect = controls.getBoundingClientRect();
+      return { overflow: doc.scrollWidth - doc.clientWidth, left: Math.round(rect.left), right: Math.round(rect.right), client: doc.clientWidth };
+    });
+    expect(measured.overflow, width + 'px document overflow; ' + JSON.stringify(measured)).toBeLessThanOrEqual(1);
+    expect(measured.left, width + 'px controls left edge; ' + JSON.stringify(measured)).toBeGreaterThanOrEqual(0);
+    expect(measured.right, width + 'px controls right edge; ' + JSON.stringify(measured)).toBeLessThanOrEqual(measured.client + 1);
+
+    await page.locator('#cosmosControls [data-cosmos-reading="geography"]').click();
+    await expect(page.locator('#cosmosReadingLegend')).toBeVisible();
+    const legend = await page.evaluate(() => {
+      const doc = document.documentElement;
+      const box = document.getElementById('cosmosReadingLegend').getBoundingClientRect();
+      return { overflow: doc.scrollWidth - doc.clientWidth, right: Math.round(box.right), client: doc.clientWidth };
+    });
+    expect(legend.overflow, width + 'px legend overflow; ' + JSON.stringify(legend)).toBeLessThanOrEqual(1);
+    expect(legend.right, width + 'px legend right edge; ' + JSON.stringify(legend)).toBeLessThanOrEqual(legend.client + 1);
+  }
+});
+
 test('herb context bar stays a horizontal rail on small screens', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/#/herb?id=gancao');

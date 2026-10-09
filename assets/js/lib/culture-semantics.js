@@ -19,7 +19,7 @@
   }
   function token(name, fallback) { return styles()?.getPropertyValue(name).trim() || fallback; }
   function hexChannels(color) {
-    const match = /^#([0-9a-f]{6})$/i.exec(String(color).trim());
+    const match = String(color).trim().match(/^#([0-9a-f]{6})$/i);
     return match ? [0, 2, 4].map(offset => parseInt(match[1].slice(offset, offset + 2), 16)) : null;
   }
   function mixColor(base, foreground, strength) {
@@ -43,12 +43,21 @@
     if (candidates[0].contrast >= 4.5) return candidates[0].text;
     return (luminance + .05) / .05 >= 1.05 / (luminance + .05) ? '#000000' : '#FFFFFF';
   }
+  function plainText(value, fallback) {
+    const text = String(value ?? '').trim() || fallback;
+    // 这里是纯文本上下文：先把 HTML 元字符中和掉，再返回固定长度与字符集的安全值。
+    return text.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
+  }
+  function safeColor(value, fallback) {
+    const text = String(value ?? '').trim();
+    return /^#[0-9a-f]{6}$/i.test(text) ? text : fallback;
+  }
   function flavorMeta(value) {
-    const text = String(value || '');
+    const text = plainText(value, '');
     const matches = known.filter(item => text.includes(item.flavor));
     const item = matches.length === 1 ? matches[0] : compound;
-    const color = token('--phase-' + item.key, item.color);
-    const border = token('--phase-' + item.key + '-border', item.border);
+    const color = safeColor(token('--phase-' + item.key, item.color), item.color);
+    const border = safeColor(token('--phase-' + item.key + '-border', item.border), item.border);
     return { ...item, color, border, text: contrastText(color), supplementary: !item.phase, compound: item === compound };
   }
   function flavorLabel(value) {

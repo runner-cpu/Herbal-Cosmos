@@ -33,7 +33,7 @@
   const REVEAL = Object.freeze({ dustMs: 800, starMs: 1200, spread: 0.75, ramp: 0.45 });
 
   function hexWithAlpha(color, alpha) {
-    const match = /^#([0-9a-f]{6})$/i.exec(String(color || '').trim());
+    const match = String(color || '').trim().match(/^#([0-9a-f]{6})$/i);
     if (!match) return color;
     const value = parseInt(match[1], 16);
     return 'rgba(' + ((value >> 16) & 255) + ',' + ((value >> 8) & 255) + ',' + (value & 255) + ',' + alpha + ')';

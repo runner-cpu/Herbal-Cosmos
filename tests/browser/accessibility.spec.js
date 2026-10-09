@@ -25,6 +25,31 @@ test('forced colors keeps shell controls and panels distinguishable', async ({ p
   await expect(toggle).toHaveCSS('forced-color-adjust', 'auto');
 });
 
+test('forced colors keeps the star map controls and reading state readable', async ({ page }) => {
+  await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
+  await page.goto('/#/home');
+  await expect(page.locator('#cosmosControls [data-cosmos-readings]')).toBeVisible();
+  await expect(page.locator('#cosmosControls [data-cosmos-reading="category"]')).toHaveAttribute('aria-pressed', 'true');
+  // 高对比模式下读法按钮不能再靠颜色区分，必须保留可见边框与文字。
+  const surface = await page.evaluate(() => {
+    const button = document.querySelector('#cosmosControls [data-cosmos-reading="category"]');
+    const style = getComputedStyle(button);
+    return { borderTopWidth: parseFloat(style.borderTopWidth), text: (button.textContent || '').trim() };
+  });
+  expect(surface.borderTopWidth, 'forced colors keeps a button edge').toBeGreaterThan(0);
+  expect(surface.text.length, 'reading buttons keep their label').toBeGreaterThan(0);
+  await page.locator('#cosmosControls [data-cosmos-reading="nature"]').click();
+  await expect(page.locator('#cosmosReadingLegend')).toBeVisible();
+});
+
+test('printing drops the star map canvas instead of burning ink on it', async ({ page }) => {
+  await page.goto('/#/home');
+  await expect(page.locator('#heroCanvas')).toBeVisible();
+  await page.emulateMedia({ media: 'print' });
+  await expect(page.locator('#heroCanvas')).toBeHidden();
+  await expect(page.locator('#cosmosControls')).toBeHidden();
+});
+
 test('desktop herb rows expose a native keyboard link to the knowledge card', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'The desktop table is intentionally replaced by mobile cards.');
   await page.goto('/#/herbs');
