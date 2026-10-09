@@ -28,6 +28,7 @@ test('forced colors keeps shell controls and panels distinguishable', async ({ p
 test('forced colors keeps the star map controls and reading state readable', async ({ page }) => {
   await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
   await page.goto('/#/home');
+  await page.locator('[data-cosmos-collapse]').click();
   await expect(page.locator('#cosmosControls [data-cosmos-readings]')).toBeVisible();
   await expect(page.locator('#cosmosControls [data-cosmos-reading="category"]')).toHaveAttribute('aria-pressed', 'true');
   // 高对比模式下读法按钮不能再靠颜色区分，必须保留可见边框与文字。

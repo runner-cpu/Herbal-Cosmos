@@ -210,7 +210,8 @@
   /* ---------- 生命周期 ---------- */
   function boot() {
     addNoise();
-    blurTitle();
+    // The exhibition title stays readable from first paint; its native reveal
+    // is owned by exhibition-effects.js rather than a second split-text layer.
     shinyKickers();
     countUpAll();
     spotlight();

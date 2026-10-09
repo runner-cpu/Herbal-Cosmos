@@ -40,17 +40,16 @@
   }
 
   function regionOf(origin) {
+    const regions = regionsOf(origin);
+    return regions.length === 1 ? regions[0] : regions.length ? 'multiple' : 'unknown';
+  }
+  function regionsOf(origin) {
     const list = Array.isArray(origin) ? origin : [];
-    for (const province of list) {
-      for (const region of Object.keys(REGION_OF_PROVINCE)) {
-        if (REGION_OF_PROVINCE[region].indexOf(province) >= 0) return region;
-      }
-    }
-    return 'unknown';
+    return Object.keys(REGION_OF_PROVINCE).filter(region => list.some(province => REGION_OF_PROVINCE[region].includes(province)));
   }
 
   function colorForReading(herb = {}, mode = DEFAULT_READING, options = {}) {
-    if (mode === 'geography') return REGION_COLORS[regionOf(herb.origin)] || REGION_COLORS.unknown;
+    if (mode === 'geography') return regionOf(herb.origin) === 'multiple' ? UNIFORM_COLOR : REGION_COLORS[regionOf(herb.origin)] || REGION_COLORS.unknown;
     if (mode === 'nature') return QI_COLORS[herb.qi] || REGION_COLORS.unknown;
     if (mode === 'ethnic') return options.ethnicIds?.has?.(herb.id) ? ETHNIC_COLOR : DIM_COLOR;
     if (options.uniform) return UNIFORM_COLOR;
@@ -58,7 +57,7 @@
   }
 
   function legendFor(mode, options = {}) {
-    if (mode === 'geography') return Object.keys(REGION_COLORS).map(key => ({ label: key === 'unknown' ? '无分布记录' : key, color: REGION_COLORS[key] }));
+    if (mode === 'geography') return [...Object.keys(REGION_COLORS).map(key => ({ label: key === 'unknown' ? '无分布记录' : key, color: REGION_COLORS[key] })), { label: '跨区记录', color: UNIFORM_COLOR }];
     if (mode === 'nature') return Object.keys(QI_COLORS).map(key => ({ label: key, color: QI_COLORS[key] }));
     if (mode === 'ethnic') return [{ label: '有对照线索', color: ETHNIC_COLOR }, { label: '未标注', color: DIM_COLOR }];
     return (options.categories || []).map(item => ({ label: item.name, color: item.color }));
@@ -115,6 +114,8 @@
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
     const herbs = host.herbs || [];
+    const layoutApi = window.HerbalCosmosLayout;
+    const layout = layoutApi.build(herbs, host.formulas || []);
     const reducedQuery = typeof window !== 'undefined' ? window.matchMedia?.('(prefers-reduced-motion: reduce)') : null;
     const mobileQuery = typeof window !== 'undefined' ? window.matchMedia?.('(max-width: 768px)') : null;
 
@@ -123,7 +124,15 @@
     let rotY = 0, targetRotY = 0, scale = 1, targetScale = 1;
     let dragging = false, lastX = 0, lastY = 0, moved = 0;
     let hoverId = null, focusedId = null, panY = 0, targetPanY = 0;
-    let running = true, animationFrame = 0, lastFrameAt = 0;
+    let running = false, animationFrame = 0, lastFrameAt = 0, disposed = false;
+    let categoryFilter = '', regionFilters = new Set(), roam = false;
+    let manuallyRotated = false;
+    let webgl = null, webglCanvas = null, loadingRenderer = null, rendererAttempted = false, rendererReason = '';
+    let rendererChoice = host.renderer || 'auto';
+    let rendererEpoch = 0;
+    let renderMs = 0, frames = 0;
+    const listeners = [];
+    const on = (name, fn, options) => { canvas.addEventListener(name, fn, options); listeners.push([name, fn, options]); };
     let reading = DEFAULT_READING;
     let degradeLevel = 0;
     let revealed = false, revealStart = 0;
@@ -136,7 +145,38 @@
     let pinchDistance = 0;
 
     canvas.setAttribute('tabindex', '0');
-    canvas.setAttribute('aria-label', '本草星图：拖动旋转，双击聚焦；可用读法按钮改变着色，也可使用搜索与缩放按钮。');
+    canvas.setAttribute('aria-label', '本草星图：点选知识卡；进入漫游后可拖动与缩放，也可通过顶部搜索定位。');
+    canvas.dataset.renderer = 'canvas';
+
+    function invalidate() {
+      if (running && !disposed && !animationFrame) animationFrame = requestAnimationFrame(frame);
+    }
+    function rendererStatus(reason = '') {
+      rendererReason = reason;
+      canvas.dataset.renderer = webgl ? 'webgl' : rendererChoice === 'static' ? 'static' : 'canvas';
+      window.dispatchEvent(new CustomEvent('herbal:cosmos-renderer', { detail: { renderer: canvas.dataset.renderer, reason } }));
+    }
+    function fallback(reason) {
+      webgl?.dispose(); webgl = null;
+      webglCanvas?.remove(); webglCanvas = null;
+      rendererStatus(reason); invalidate();
+    }
+    async function enhance() {
+      if (rendererAttempted || rendererChoice === 'canvas' || rendererChoice === 'static' || !/^https?:$/.test(location.protocol) || !revealEnabled()) return;
+      rendererAttempted = true;
+      const epoch = rendererEpoch;
+      try {
+        loadingRenderer = import('../../vendor/cosmos-webgl.js');
+        const module = await loadingRenderer;
+        if (disposed || epoch !== rendererEpoch || webgl || rendererChoice === 'canvas' || rendererChoice === 'static') return;
+        const layer = document.createElement('canvas');
+        layer.className = 'cosmos-webgl'; layer.setAttribute('aria-hidden', 'true');
+        canvas.before(layer); webglCanvas = layer;
+        webgl = module.createRenderer(layer, fallback);
+        rendererStatus(); invalidate();
+      } catch (_) { if (!disposed) fallback('增强画面不可用，已使用基础星图'); }
+      finally { loadingRenderer = null; }
+    }
 
     function themeName() {
       const value = document.documentElement.dataset.theme;
@@ -167,6 +207,7 @@
       W = canvas.clientWidth; H = canvas.clientHeight;
       canvas.width = Math.max(1, W * DPR); canvas.height = Math.max(1, H * DPR);
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      invalidate();
     }
 
     function colorInputs() {
@@ -178,8 +219,9 @@
     }
     function paint() {
       const inputs = colorInputs();
-      for (const star of stars) star.color = colorForReading(star.herb || {}, reading, inputs);
+      for (const star of stars) { star.color = colorForReading(star.herb || {}, reading, inputs); star.size = favorite(star.id) ? 3.2 : 2.2; }
       warmSprites();
+      invalidate();
     }
 
     // 精灵生成是一次性开销：必须在进入渲染循环之前完成，否则首帧会包含
@@ -193,16 +235,13 @@
 
     function buildStars() {
       const inputs = colorInputs();
-      stars = herbs.map((herb, index) => {
-        const phi = Math.acos(1 - 2 * (index + 0.5) / Math.max(1, herbs.length));
-        const theta = index * Math.PI * (3 - Math.sqrt(5));
-        const r = 210;
+      const byId = new Map(herbs.map(h => [h.id, h]));
+      stars = layout.nodes.map(node => {
+        const herb = byId.get(node.id);
         return {
           id: herb.id, name: herb.name,
-          x: r * Math.sin(phi) * Math.cos(theta),
-          y: r * Math.cos(phi),
-          z: r * Math.sin(phi) * Math.sin(theta),
-          size: favorite(herb.id) ? 6.2 : 4.6,
+          ...node, tx: node.x, ty: node.y, tz: node.z,
+          size: favorite(herb.id) ? 3.2 : 2.2,
           herb,
           color: colorForReading(herb, reading, inputs),
           screenX: 0, screenY: 0, persp: 1, zr: 0, viewed: false
@@ -224,32 +263,52 @@
           tw: Math.random() * Math.PI * 2
         });
       }
+      setRelationPositions();
+      invalidate();
+    }
+
+    function setRelationPositions() {
+      const positions = focusedId ? layoutApi.selectedPositions(layout, focusedId) : layout.nodes;
+      const targets = new Map(positions.map(n => [n.id, n]));
+      for (const star of stars) {
+        const target = targets.get(star.id);
+        star.tx = target.x; star.ty = target.y; star.tz = target.z;
+        if (!revealEnabled()) { star.x = star.tx; star.y = star.ty; star.z = star.tz; }
+      }
+    }
+    function visible(star) {
+      return (!categoryFilter || star.category === categoryFilter) && (reading !== 'geography' || !regionFilters.size || regionsOf(star.herb.origin).some(region => regionFilters.has(region)));
     }
 
     function project(x, y, z) {
       const c = Math.cos(rotY), s = Math.sin(rotY);
       const xr = x * c + z * s, zr = -x * s + z * c;
       const persp = FOV / (FOV + zr);
-      return { sx: W / 2 + xr * scale * persp, sy: H / 2 + y * scale * persp + panY, persp, zr };
+      const fit = Math.min(W / 600, H / 430, 1.25);
+      return { sx: W / 2 + xr * scale * fit * persp, sy: H / 2 + y * scale * fit * persp + panY, persp, zr };
     }
 
     function revealEnabled() {
-      return !(reducedQuery?.matches) && host.motionAllowed?.() !== false;
+      return rendererChoice !== 'static' && !(reducedQuery?.matches) && host.motionAllowed?.() !== false;
     }
 
     function frame(now = 0) {
+      animationFrame = 0;
       if (!running) return;
-      const frameStart = now || performance.now();
-      if (!lastFrameAt) lastFrameAt = frameStart;
+      const frameStart = performance.now();
+      const interval = lastFrameAt ? now - lastFrameAt : 0;
+      lastFrameAt = now;
+      frames += 1;
       const elapsed = revealEnabled() ? Math.max(0, frameStart - revealStart) : REVEAL.dustMs + REVEAL.starMs;
 
       ctx.clearRect(0, 0, W, H);
-      if (host.motionAllowed?.() !== false) {
+      if (revealEnabled()) {
         rotY += (targetRotY - rotY) * 0.06;
-        if (!dragging && !focusedId) targetRotY += 0.0005;
+        if (!dragging && !focusedId && !manuallyRotated) targetRotY = .18 * Math.sin(frameStart * .00006);
       } else rotY = targetRotY;
-      scale += (targetScale - scale) * 0.08;
-      panY += (targetPanY - panY) * 0.08;
+      if (revealEnabled()) { scale += (targetScale - scale) * 0.08; panY += (targetPanY - panY) * 0.08; }
+      else { scale = targetScale; panY = targetPanY; }
+      const particles = [];
 
       const dustFactor = dustReveal(elapsed);
       if (dustFactor > 0) {
@@ -259,6 +318,7 @@
           if (p.zr > DEPTH_RANGE) continue;
           const tw = host.motionAllowed?.() !== false ? 0.6 + 0.4 * Math.sin(d.tw + frameStart * 0.001) : 0.8;
           ctx.globalAlpha = d.a * tw * dustFactor * Math.min(1, p.persp);
+          if (webgl) { particles.push({ x: p.sx, y: p.sy, size: d.s * p.persp * 3, color: '#BFD4DC', alpha: ctx.globalAlpha * .5 }); continue; }
           ctx.fillStyle = '#BFD4DC';
           ctx.beginPath(); ctx.arc(p.sx, p.sy, d.s * p.persp, 0, Math.PI * 2); ctx.fill();
         }
@@ -268,26 +328,40 @@
       const viewed = new Set(host.viewedIds?.() || []);
       const selectedId = host.selectedId?.() || null;
       for (const star of stars) {
+        star.x += (star.tx - star.x) * .12; star.y += (star.ty - star.y) * .12; star.z += (star.tz - star.z) * .12;
         const p = project(star.x, star.y, star.z);
         star.screenX = p.sx; star.screenY = p.sy; star.persp = p.persp; star.zr = p.zr;
         star.viewed = viewed.has(star.id);
       }
-      const visible = host.selectVisibleLabels?.(stars, { width: W, height: H }, scale, { selectedHerb: selectedId, viewedHerbs: viewed });
-      const labelIds = new Set((visible || []).map(item => item.id));
+      const shown = stars.filter(visible);
+      const labels = host.selectVisibleLabels?.(shown, { width: W, height: H }, scale, { selectedHerb: selectedId, viewedHerbs: viewed });
+      const labelIds = new Set((labels || []).map(item => item.id));
       const alpha = glowAlpha();
+      const relatedIds = new Set(focusedId ? layoutApi.relations(layout, focusedId).ids : []);
+      const emphasis = star => focusedId && star.id !== focusedId && !relatedIds.has(star.id) ? .18 : 1;
 
-      if (alpha > 0) {
+      if (focusedId) {
+        const selected = shown.find(s => s.id === focusedId);
+        const relations = new Set(layoutApi.relations(layout, focusedId).ids);
+        if (selected) for (const star of shown.filter(s => relations.has(s.id))) {
+          ctx.strokeStyle = 'rgba(214,192,139,.22)'; ctx.lineWidth = .7;
+          ctx.beginPath(); ctx.moveTo(selected.screenX, selected.screenY); ctx.lineTo(star.screenX, star.screenY); ctx.stroke();
+        }
+      }
+
+      if (alpha > 0 && !webgl) {
         ctx.globalCompositeOperation = 'lighter';
         for (let i = 0; i < stars.length; i += 1) {
           const star = stars[i];
+          if (!visible(star)) continue;
           if (star.zr > DEPTH_RANGE) continue;
           const factor = starReveal(i, stars.length, elapsed);
           if (factor <= 0) continue;
           const blur = degradeLevel >= 1 ? 0 : depthBlur(star.zr);
           const core = Math.max(1.4, star.size * star.persp * scale);
-          const radius = core * 3.4 * (1 + blur * 1.2) * (0.3 + 0.7 * factor);
+          const radius = core * 2.5 * (1 + blur * .4) * (0.3 + 0.7 * factor);
           const image = sprite(star.color);
-          ctx.globalAlpha = alpha * Math.min(1, star.persp) * (1 - blur * 0.7) * factor;
+          ctx.globalAlpha = alpha * Math.min(1, star.persp) * (1 - blur * 0.7) * factor * emphasis(star);
           if (image) ctx.drawImage(image, star.screenX - radius, star.screenY - radius, radius * 2, radius * 2);
           else { ctx.fillStyle = star.color; ctx.beginPath(); ctx.arc(star.screenX, star.screenY, radius, 0, Math.PI * 2); ctx.fill(); }
         }
@@ -297,14 +371,16 @@
 
       for (let i = 0; i < stars.length; i += 1) {
         const star = stars[i];
+        if (!visible(star)) continue;
         if (star.zr > DEPTH_RANGE) continue;
         const factor = starReveal(i, stars.length, elapsed);
         if (factor <= 0) continue;
         const blur = degradeLevel >= 1 ? 0 : depthBlur(star.zr);
         const core = Math.max(1.4, star.size * star.persp * scale) * (0.3 + 0.7 * factor);
         ctx.fillStyle = star.color;
-        ctx.globalAlpha = Math.min(1, star.persp) * (1 - blur * 0.55) * factor;
-        ctx.beginPath(); ctx.arc(star.screenX, star.screenY, core, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = Math.min(1, star.persp) * (1 - blur * 0.55) * factor * emphasis(star);
+        if (webgl) particles.push({ x: star.screenX, y: star.screenY, size: core * 6, color: star.color, alpha: ctx.globalAlpha * .9 });
+        else { ctx.beginPath(); ctx.arc(star.screenX, star.screenY, core, 0, Math.PI * 2); ctx.fill(); }
         ctx.globalAlpha = 1;
         const hovered = hoverId === star.id;
         const labelled = labelIds.size
@@ -322,11 +398,13 @@
           ctx.globalAlpha = 1;
         }
       }
+      if (webgl) { try { webgl.render(particles, W, H); } catch (_) { fallback('增强画面中断，已恢复基础星图'); } }
 
       const frameMs = performance.now() - frameStart;
+      renderMs = frameMs;
       if (!firstFrameMs) firstFrameMs = frameMs;
-      adapt(frameMs);
-      animationFrame = requestAnimationFrame(frame);
+      if (interval > 0 && interval < 1000) adapt(Math.max(interval, frameMs));
+      if (revealEnabled()) invalidate();
     }
 
     function adapt(frameMs) {
@@ -335,7 +413,7 @@
       if (frameSamples.length < 30) return;
       const avg = frameSamples.reduce((sum, value) => sum + value, 0) / frameSamples.length;
       if (avg > 20 && degradeLevel < 2) { degradeLevel += 1; frameSamples.length = 0; buildStars(); return; }
-      if (avg < 12) {
+      if (avg < 18) {
         stableSince = stableSince || performance.now();
         if (degradeLevel > 0 && performance.now() - stableSince > 3000) { degradeLevel -= 1; stableSince = 0; buildStars(); }
       } else stableSince = 0;
@@ -344,6 +422,7 @@
     function hitTest(mx, my) {
       let best = null, bestDistance = 1e9;
       for (const star of stars) {
+        if (!visible(star)) continue;
         if (star.zr > DEPTH_RANGE) continue;
         const blur = degradeLevel >= 1 ? 0 : depthBlur(star.zr);
         const radius = Math.max(10, star.size * star.persp * scale * 3.4) * (1 + blur * 0.6);
@@ -353,25 +432,29 @@
       return best;
     }
 
-    function focus(id, animate = true) {
+    function focus(id, animate = true, source = 'cosmos-focus') {
       const star = stars.find(item => item.id === id);
       if (!star) return;
       focusedId = star.id;
-      targetRotY = Math.atan2(star.x, -star.z);
-      targetScale = Math.max(targetScale, 1.35);
-      const depth = -Math.hypot(star.x, star.z);
-      targetPanY = -star.y * targetScale * FOV / (FOV + depth);
-      if (!animate || host.motionAllowed?.() === false) { rotY = targetRotY; scale = targetScale; panY = targetPanY; }
-      host.onSelect?.(star.id, 'cosmos-focus');
+      categoryFilter = ''; regionFilters.clear();
+      targetRotY = 0; targetScale = 1.1; targetPanY = 0;
+      setRelationPositions();
+      if (!animate || !revealEnabled()) {
+        rotY = targetRotY; scale = targetScale; panY = targetPanY;
+        for (const s of stars) { s.x = s.tx; s.y = s.ty; s.z = s.tz; }
+      }
+      host.onSelect?.(star.id, source);
+      host.onPick?.(star.herb);
+      invalidate();
     }
 
     function select(star, source) {
       if (!star) return;
-      host.onSelect?.(star.id, source);
-      host.onPick?.(star.herb);
+      focus(star.id, true, source);
     }
 
-    canvas.addEventListener('pointerdown', event => {
+    on('pointerdown', event => {
+      if (event.pointerType === 'touch' && !roam) { moved = 0; return; }
       activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
       if (activePointers.size === 1) moved = 0;
       dragging = true; lastX = event.clientX; lastY = event.clientY;
@@ -382,26 +465,29 @@
         pinchDistance = Math.hypot(a.x - b.x, a.y - b.y);
       }
     });
-    canvas.addEventListener('pointermove', event => {
+    on('pointermove', event => {
       if (activePointers.has(event.pointerId)) activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
       if (activePointers.size === 2) {
         const [a, b] = [...activePointers.values()];
         const distance = Math.hypot(a.x - b.x, a.y - b.y);
         if (pinchDistance) targetScale = Math.max(0.5, Math.min(2.4, targetScale * distance / pinchDistance));
         pinchDistance = distance; moved = 20;
+        invalidate();
         return;
       }
       if (dragging) {
         moved += Math.hypot(event.clientX - lastX, event.clientY - lastY);
         targetRotY += (event.clientX - lastX) * 0.006;
+        manuallyRotated = true;
         lastX = event.clientX; lastY = event.clientY;
-        if (moved > 5) { focusedId = null; targetPanY = 0; }
+        if (moved > 5) { focusedId = null; targetPanY = 0; setRelationPositions(); }
       } else {
         const rect = canvas.getBoundingClientRect();
         const hit = hitTest(event.clientX - rect.left, event.clientY - rect.top);
         hoverId = hit?.id || null;
         canvas.style.cursor = hit ? 'pointer' : 'grab';
       }
+      invalidate();
     });
     const release = event => {
       activePointers.delete(event.pointerId);
@@ -410,51 +496,56 @@
       pinchDistance = 0;
       if (activePointers.size === 1) { const [point] = activePointers.values(); lastX = point.x; lastY = point.y; }
     };
-    canvas.addEventListener('pointerup', release);
+    on('pointerup', release);
     const cancel = event => {
       moved = 20;
       activePointers.clear(); dragging = false; pinchDistance = 0;
       if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
     };
-    canvas.addEventListener('pointercancel', cancel);
-    canvas.addEventListener('lostpointercapture', event => {
+    on('pointercancel', cancel);
+    on('lostpointercapture', event => {
       if (activePointers.has(event.pointerId)) cancel(event);
     });
-    canvas.addEventListener('click', event => {
+    on('click', event => {
       if (moved > 5) return;
       const rect = canvas.getBoundingClientRect();
       select(hitTest(event.clientX - rect.left, event.clientY - rect.top), 'cosmos');
     });
-    canvas.addEventListener('dblclick', event => {
+    on('dblclick', event => {
       const rect = canvas.getBoundingClientRect();
       const hit = hitTest(event.clientX - rect.left, event.clientY - rect.top);
       if (hit) focus(hit.id);
     });
-    canvas.addEventListener('wheel', event => {
+    on('wheel', event => {
+      if (!roam) return;
       const next = Math.max(0.5, Math.min(2.4, targetScale - event.deltaY * 0.001));
       if (next !== targetScale) { event.preventDefault(); targetScale = next; }
+      invalidate();
     }, { passive: false });
-    canvas.addEventListener('keydown', event => {
+    on('keydown', event => {
       if (event.key === '+' || event.key === '=') { targetScale = Math.min(2.4, targetScale + 0.2); event.preventDefault(); }
       if (event.key === '-') { targetScale = Math.max(0.5, targetScale - 0.2); event.preventDefault(); }
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        targetRotY += (event.key === 'ArrowLeft' ? -0.2 : 0.2); focusedId = null; targetPanY = 0; event.preventDefault();
+        targetRotY += (event.key === 'ArrowLeft' ? -0.2 : 0.2); manuallyRotated = true; focusedId = null; targetPanY = 0; setRelationPositions(); event.preventDefault();
       }
       if (event.key === 'Enter') host.openSelected?.();
+      invalidate();
     });
 
     const resizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => resize()) : null;
     resizeObserver?.observe(canvas);
 
     function start() {
-      if (running) return;
+      if (disposed) return;
+      if (running) { invalidate(); return; }
       running = true;
       lastFrameAt = 0;
-      animationFrame = requestAnimationFrame(frame);
+      enhance(); invalidate();
     }
     function stop() {
       running = false;
       cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
     }
 
     const api = {
@@ -463,14 +554,25 @@
       focus,
       start,
       stop,
+      isFavorite: favorite,
+      toggleFavorite(id) { host.toggleFavorite?.(id); },
+      clearFocus() { focusedId = null; manuallyRotated = false; targetRotY = 0; targetPanY = 0; targetScale = 1; setRelationPositions(); invalidate(); },
+      setFilter(category = '', regions = []) { categoryFilter = category; regionFilters = new Set(regions); invalidate(); return stars.filter(visible).length; },
+      setRoam(enabled) {
+        roam = Boolean(enabled); canvas.dataset.roam = String(roam);
+        const pointers = [...activePointers.keys()]; activePointers.clear();
+        pointers.forEach(id => { if (canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id); });
+        dragging = false; pinchDistance = 0; moved = 20; invalidate();
+      },
+      setRenderer(choice = 'auto') { rendererEpoch += 1; rendererChoice = choice; rendererAttempted = false; fallback(''); if (running) enhance(); },
       setReading(mode) {
         reading = READING_MODES.includes(mode) ? mode : DEFAULT_READING;
         paint();
         return reading;
       },
       setColorMode() { paint(); },
-      zoom(delta) { targetScale = Math.max(0.5, Math.min(2.4, targetScale + Number(delta || 0))); },
-      resetMotion() { if (host.motionAllowed?.() === false) targetRotY = rotY; },
+      zoom(delta) { targetScale = Math.max(0.5, Math.min(2.4, targetScale + Number(delta || 0))); invalidate(); },
+      resetMotion() { if (!revealEnabled()) { targetRotY = rotY; scale = targetScale; panY = targetPanY; setRelationPositions(); } invalidate(); },
       beginReveal() { revealed = false; revealStart = performance.now(); },
       perf() {
         const avg = frameSamples.length ? frameSamples.reduce((sum, value) => sum + value, 0) / frameSamples.length : 0;
@@ -483,10 +585,15 @@
           rotation: rotY,
           targetRotation: targetRotY,
           dragging,
-          spriteReadyMs
+          spriteReadyMs,
+          renderer: canvas.dataset.renderer, rendererReason, running, scheduled: Boolean(animationFrame), frames,
+          renderCostMs: Math.round(renderMs * 100) / 100, visibleCount: stars.filter(visible).length,
+          nodeCount: stars.length, categoryFilter, regions: [...regionFilters], roam, focusedId,
+          paletteCount: new Set(stars.map(s => s.color)).size,
+          relations: focusedId ? layoutApi.relations(layout, focusedId) : { ids: [], formulas: [] }
         };
       },
-      dispose() { stop(); resizeObserver?.disconnect(); sprites.clear(); }
+      dispose() { disposed = true; rendererEpoch += 1; stop(); resizeObserver?.disconnect(); sprites.clear(); listeners.forEach(([name, fn, options]) => canvas.removeEventListener(name, fn, options)); webgl?.dispose(); webglCanvas?.remove(); }
     };
 
     resize();
@@ -495,7 +602,8 @@
     // 精灵预热与几何构建完成后才开始计时，保证揭示动画完整播放。
     if (!revealed) revealStart = performance.now();
     running = false;
-    start();
+    rendererStatus();
+    if (host.autoStart !== false) start();
     return api;
   }
 
@@ -503,6 +611,7 @@
     mount,
     supported,
     regionOf,
+    regionsOf,
     colorForReading,
     legendFor,
     particleBudget,

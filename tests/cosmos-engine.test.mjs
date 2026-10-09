@@ -27,6 +27,9 @@ test('geography reading groups provinces into regions and keeps missing origin e
   assert.equal(engine.regionOf(['云南']), '西南');
   assert.equal(engine.regionOf(['广东']), '东南');
   assert.equal(engine.regionOf([]), 'unknown');
+  assert.equal(engine.regionOf(['云南', '广东']), 'multiple');
+  assert.deepEqual(engine.regionsOf(['广东', '云南', '广东']), ['西南', '东南']);
+  assert.equal(engine.colorForReading({ origin: ['云南', '广东'] }, 'geography'), engine.UNIFORM_COLOR);
   assert.equal(engine.regionOf(['未收录省区']), 'unknown');
   assert.equal(engine.colorForReading({ origin: [] }, 'geography'), engine.REGION_COLORS.unknown);
 });

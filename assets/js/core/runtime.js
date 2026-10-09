@@ -320,16 +320,20 @@ function render(options={}){
 
   const instance = engine.mount(canvas, {
     herbs: KNOWLEDGE_HERBS,
+    formulas: FORMULAS,
+    autoStart: false,
+    renderer: new URLSearchParams(location.search).get('renderer') || 'auto',
     categoryColor: herb => window.HerbalCosmos?.colorForEffect?.(herb.cat) || engine.UNIFORM_COLOR,
     colorMode: () => document.documentElement.dataset.cosmosColor === 'uniform' ? 'uniform' : 'effect',
     ethnicIds: () => new Set((window.ETHNIC_CORRESPONDENCE||[]).filter(item=>item.status==='approved').map(item=>item.herbId)),
     isFavorite: id => isFav(id),
+    toggleFavorite: id => toggleFav(id),
     viewedIds: () => { try{const value=JSON.parse(storageRead('herbal_viewed','[]'));return Array.isArray(value)?value:[];}catch(e){return [];} },
     selectedId: () => store.selectedHerb?.id || null,
     motionAllowed: () => window.HerbalCosmos?.animate !== false,
     selectVisibleLabels: (...args) => window.HerbalCosmos?.selectVisibleLabels?.(...args) || [],
     onSelect: (id, source) => setSelected(id, { source }),
-    onPick: herb => window.dispatchEvent(new CustomEvent('herbal:cosmos-selection',{detail:{herb}})),
+    onPick: herb => window.dispatchEvent(new CustomEvent('herbal:cosmos-selection',{detail:{herb,imageMarkup:herbImage(herb),imageCreditMarkup:imageCredit(herb),sourcesMarkup:sourceLinks(herb)}})),
     openSelected: () => { if(store.selectedHerb) location.hash = '#/herb?id=' + store.selectedHerb.id; }
   });
   if(!instance){
@@ -348,15 +352,22 @@ function render(options={}){
   window.addEventListener('herbal:cosmos-zoom', event => instance.zoom(event.detail?.delta));
   window.addEventListener('herbal:motion', () => instance.resetMotion());
   window.addEventListener('herbal:cosmos-color', () => instance.setColorMode());
+  window.addEventListener('herbal:cosmos-ready', () => { instance.paint(); instance.resetMotion(); });
+  window.addEventListener('herbal:favorites', () => instance.paint());
   window.addEventListener('herbal:theme', () => instance.paint());
   window.addEventListener('herbal:ethnic-correspondence', () => instance.paint());
 
+  let inView = true;
   const updateRunning = () => {
-    const active = !document.hidden && document.querySelector('.page.active')?.dataset.route === 'home';
+    const active = inView && !document.hidden && document.querySelector('.page.active')?.dataset.route === 'home';
     if(active) instance.start(); else instance.stop();
   };
   window.addEventListener('herbal:route', updateRunning);
   document.addEventListener('visibilitychange', updateRunning);
+  const intersection = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(entries => { inView = entries[0].isIntersecting; updateRunning(); });
+  intersection?.observe(canvas);
+  window.addEventListener('pagehide', () => { instance.stop(); });
+  window.addEventListener('pageshow', updateRunning);
   updateRunning();
 
   window.__HERBAL_DEBUG__ = window.__HERBAL_DEBUG__ || {};

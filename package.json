@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:cosmos": "node scripts/build-cosmos-renderer.mjs",
     "build:catalog": "node scripts/build-herb-catalog.mjs",
     "build:food": "node scripts/build-food-medicine.mjs",
     "build:expanded": "node scripts/build-expanded-data.mjs",
@@ -23,6 +24,10 @@
     "test:browser:compat": "playwright test tests/browser/navigation.spec.js tests/browser/progressive-rendering.spec.js --project=firefox --project=webkit"
   },
   "devDependencies": {
-    "@playwright/test": "1.63.0"
+    "@playwright/test": "1.63.0",
+    "esbuild": "0.28.2"
+  },
+  "dependencies": {
+    "three": "0.186.1"
   }
 }

@@ -63,6 +63,7 @@ test('star map controls and legend stay inside 320px and 375px', async ({ page }
   for (const width of [320, 375]) {
     await page.setViewportSize({ width, height: 812 });
     await page.goto('/#/home');
+    if (!await page.locator('.cosmos-settings').evaluate(el => el.open)) await page.locator('[data-cosmos-collapse]').click();
     await expect(page.locator('#cosmosControls')).toBeVisible();
     const measured = await page.evaluate(() => {
       const doc = document.documentElement;

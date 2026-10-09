@@ -67,13 +67,15 @@ test('cancel, lost capture and a pinch never leave dragging or dispatch a false 
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/#/home');
   await page.waitForFunction(() => Boolean(window.__HERBAL_DEBUG__?.cosmosPerf?.()));
+  await page.locator('[data-cosmos-roam]').click();
+  await page.locator('#heroCanvas').scrollIntoViewIfNeeded();
   await page.evaluate(() => {
     window.__gesturePicks = 0;
     document.getElementById('heroCanvas').addEventListener('pointerdown', event => { window.__gesturePointer = event.pointerId; });
     window.addEventListener('herbal:cosmos-selection', () => window.__gesturePicks++);
   });
   const box = await page.locator('#heroCanvas').boundingBox();
-  const x = box.x + box.width * .86, y = box.y + 52;
+  const x = box.x + box.width * .86, y = box.y + box.height / 2;
   for (const operation of ['cancel', 'lost']) {
     await page.mouse.move(x, y);
     await page.mouse.down();

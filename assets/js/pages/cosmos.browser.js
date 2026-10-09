@@ -41,13 +41,15 @@ function readingControlsMarkup(readings = availableReadings()) {
 }
 
 function cosmosControlsMarkup() {
-  return '<button type="button" class="cosmos-collapse" data-cosmos-collapse aria-expanded="true" aria-label="收起星图控制面板">⌄</button>'
+  return '<details class="cosmos-settings"><summary data-cosmos-collapse>读法与显示</summary>'
     + readingControlsMarkup()
-    + '<form class="cosmos-search"><label for="cosmosSearch">定位一味本草</label><div><input id="cosmosSearch" type="search" list="cosmosNames" placeholder="输入药名或拼音" autocomplete="off"><button type="submit">飞向本草</button></div><datalist id="cosmosNames"></datalist></form>'
+    + '<label class="cosmos-category">资料分类 <select data-cosmos-category aria-label="星图资料分类"><option value="">全部知识卡</option></select></label>'
+    + '<fieldset data-cosmos-regions hidden><legend>选择分布区域（可多选）</legend></fieldset>'
     + '<div class="cosmos-actions"><button type="button" data-cosmos-color aria-pressed="false">统一色</button><button type="button" data-cosmos-motion aria-pressed="true">动效开</button><button type="button" data-cosmos-zoom="-.2" aria-label="缩小星图">−</button><button type="button" data-cosmos-zoom=".2" aria-label="放大星图">＋</button></div>'
-    + '<p class="cosmos-legend" data-cosmos-legend>每一颗可选星辰对应一张本草知识卡。</p>'
+    + '<p class="cosmos-legend" data-cosmos-legend>每一颗可选星辰对应一张本草知识卡。</p></details>'
     + '<p class="cosmos-legend" id="cosmosReadingLegend" hidden></p>'
-    + '<div class="cosmos-selection" aria-live="polite"><span>点选星辰；双击聚焦。</span><a data-cosmos-detail hidden>打开知识卡 →</a></div>';
+    + '<p class="cosmos-select-hint">点选星辰读档案</p><div class="cosmos-toolbar"><button type="button" data-cosmos-roam aria-pressed="false">进入漫游</button><button type="button" data-cosmos-find>搜索本草</button><output data-cosmos-count aria-live="polite"></output></div>'
+    + '<p data-cosmos-renderer class="cosmos-renderer-status" role="status">基础星图</p>';
 }
 
 function colorForEffect(category = '') {
@@ -140,30 +142,85 @@ function initCosmos() {
     controls.id = 'cosmosControls';
     controls.className = 'cosmos-controls';
     controls.innerHTML = cosmosControlsMarkup();
-    hero.append(controls);
-    const datalist=controls.querySelector('#cosmosNames');
-    (window.HERBS||[]).forEach(herb=>{const option=document.createElement('option');option.value=herb.name;option.label=herb.pinyin||'';datalist.append(option);});
+    hero.querySelector('.cosmos-scene').append(controls);
+    const detailPanel = document.createElement('aside');
+    detailPanel.id = 'cosmosDetail'; detailPanel.className = 'cosmos-detail native-spotlight'; detailPanel.setAttribute('aria-label', '选中本草');
+    detailPanel.hidden = true;
+    detailPanel.innerHTML = '<p class="cosmos-detail-kicker">从一颗星，读一份档案</p><h2>点选一味本草</h2><p>或使用顶部搜索，打开知识卡后从「星图定位」回到这里。</p><p>选中后，连线只表示项目方剂记录中的共同组成；不表示疗效、距离或推荐组合。</p>';
+    hero.append(detailPanel);
+    const all = (window.HERBS || []).filter(h => !['formula-material', 'directory-only'].includes(h.kind));
+    const category = controls.querySelector('[data-cosmos-category]');
+    [...new Set(all.map(h => h.cat || '类别未录入'))].sort().forEach(cat => { const option = document.createElement('option'); option.value = cat; option.textContent = cat; category.append(option); });
+    const regions = controls.querySelector('[data-cosmos-regions]');
+    Object.keys(window.HerbalCosmosEngine.REGION_OF_PROVINCE).forEach(region => {
+      const label = document.createElement('label'), input = document.createElement('input');
+      input.type = 'checkbox'; input.value = region; label.append(input, document.createTextNode(region)); regions.append(label);
+    });
+    const geographyNote = document.createElement('p');
+    geographyNote.className = 'cosmos-geography-note'; geographyNote.textContent = '记录可跨多区；多选按并集筛选，不表示独占产地或实测丰度。'; regions.append(geographyNote);
+    const updateFilter = () => {
+      const selectedRegions = [...regions.querySelectorAll('input:checked')].map(input => input.value);
+      const count = window.HerbalNebula?.setFilter(category.value, selectedRegions) ?? all.length;
+      controls.querySelector('[data-cosmos-count]').textContent = count + ' / ' + all.length + ' 张';
+    };
+    category.addEventListener('change', updateFilter); regions.addEventListener('change', updateFilter);
+    controls.querySelector('[data-cosmos-find]').addEventListener('click', () => document.getElementById('globalSearch')?.focus());
+    const roamButton = controls.querySelector('[data-cosmos-roam]');
+    roamButton.addEventListener('click', () => {
+      const enabled = roamButton.getAttribute('aria-pressed') !== 'true';
+      window.HerbalNebula?.setRoam(enabled); roamButton.setAttribute('aria-pressed', String(enabled));
+      roamButton.textContent = enabled ? '退出漫游' : '进入漫游';
+    });
     const colorButton=controls.querySelector('[data-cosmos-color]'),motionButton=controls.querySelector('[data-cosmos-motion]'),legend=controls.querySelector('[data-cosmos-legend]');
-    const syncColor=()=>{const effect=document.documentElement.dataset.cosmosColor==='effect';colorButton.textContent=effect?'功效色':'统一色';colorButton.setAttribute('aria-pressed',String(effect));legend.innerHTML=effect?effectLegendMarkup():'每一颗可选星辰对应一张本草知识卡。';};
+    const syncColor=()=>{const effect=document.documentElement.dataset.cosmosColor==='effect';colorButton.textContent=effect?'分类色':'统一色';colorButton.setAttribute('aria-pressed',String(effect));legend.innerHTML=effect?effectLegendMarkup():'每一颗可选星辰对应一张本草知识卡。';};
     const syncMotion=()=>{motionButton.textContent=window.HerbalCosmos.animate?'动效开':'动效关';motionButton.setAttribute('aria-pressed',String(window.HerbalCosmos.animate));};
     colorButton.addEventListener('click',()=>{setCosmosColorMode(document.documentElement.dataset.cosmosColor==='effect'?'uniform':'effect');syncColor();});
-    motionButton.addEventListener('click',()=>{window.HerbalCosmos.animate=setMotionEnabled(!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches&&!window.HerbalCosmos.animate);syncMotion();});
+    motionButton.addEventListener('click',()=>{preference=!window.HerbalCosmos.animate;window.HerbalCosmos.animate=setMotionEnabled(!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches&&preference);syncMotion();});
     controls.querySelectorAll('[data-cosmos-zoom]').forEach(button=>button.addEventListener('click',()=>window.dispatchEvent(new CustomEvent('herbal:cosmos-zoom',{detail:{delta:Number(button.dataset.cosmosZoom)}}))));
-    controls.querySelector('form').addEventListener('submit',event=>{event.preventDefault();const query=controls.querySelector('input').value.trim().toLowerCase();const all=window.HERBS||[];const match=all.find(h=>h.name.toLowerCase()===query||h.id===query||h.pinyin===query)||all.find(h=>h.name.includes(query)&&query);if(match)focusHerb(match.id,{animate:window.HerbalCosmos.animate});else controls.querySelector('.cosmos-selection span').textContent='没有匹配的知识卡，请换一个药名。';});
-    window.addEventListener('herbal:cosmos-selection',event=>{const herb=event.detail?.herb;if(!herb)return;controls.querySelector('.cosmos-selection span').textContent=herb.name+' · '+(herb.qi||'性味未录入')+' · '+(herb.cat||'类别未录入');const detail=controls.querySelector('[data-cosmos-detail]');detail.hidden=false;detail.href='#/herb?id='+encodeURIComponent(herb.id);});
-    const motionQuery=window.matchMedia?.('(prefers-reduced-motion: reduce)');motionQuery?.addEventListener?.('change',event=>{window.HerbalCosmos.animate=motionEnabled({reducedMotion:event.matches,preference});window.dispatchEvent(new CustomEvent('herbal:motion',{detail:{enabled:window.HerbalCosmos.animate}}));syncMotion();});
-    const collapseButton=controls.querySelector('[data-cosmos-collapse]');
-    collapseButton.addEventListener('click',()=>{
-      const collapsed=controls.dataset.collapsed==='true';
-      controls.dataset.collapsed=String(!collapsed);
-      collapseButton.setAttribute('aria-expanded',String(collapsed));
-      collapseButton.setAttribute('aria-label',collapsed?'收起星图控制面板':'展开星图控制面板');
-      collapseButton.textContent=collapsed?'⌄':'⌃';
+    const safeText = value => String(value || '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+    function syncFavorite() {
+      const button = detailPanel.querySelector('[data-cosmos-favorite]'); if (!button) return;
+      const isFavorite = window.HerbalNebula?.isFavorite(button.dataset.cosmosFavorite);
+      button.textContent = isFavorite ? '已收藏 · 取消收藏' : '收藏这味本草';
+      button.setAttribute('aria-pressed', String(Boolean(isFavorite)));
+      button.setAttribute('aria-label', (isFavorite ? '取消收藏' : '收藏') + button.dataset.herbName);
+      detailPanel.querySelector('[data-cosmos-favorite-status]').textContent = isFavorite ? '已加入我的本草收藏' : '尚未收藏';
+    }
+    function selectionUrl(id) {
+      const params = new URLSearchParams(location.hash.split('?')[1] || '');
+      if (id) { params.set('focus', 'star'); params.set('id', id); } else { params.delete('focus'); params.delete('id'); }
+      history.replaceState(history.state, '', '#/home' + (params.size ? '?' + params.toString() : ''));
+    }
+    window.addEventListener('herbal:favorites', syncFavorite);
+    window.addEventListener('herbal:cosmos-selection', event => {
+      const herb = event.detail?.herb; if (!herb) return;
+      hero.dataset.selected = 'true'; detailPanel.hidden = false;
+      selectionUrl(herb.id);
+      category.value = ''; regions.querySelectorAll('input').forEach(input => input.checked = false); updateFilter();
+      const related = window.HerbalNebula?.perf().relations || { ids: [], formulas: [] };
+      detailPanel.innerHTML = '<button type="button" data-cosmos-close aria-label="关闭本草预览">×</button><p class="cosmos-detail-kicker">选中本草 · 项目知识卡</p>'
+        + '<div class="cosmos-detail-image">' + (event.detail.imageMarkup || '') + '</div><div class="cosmos-image-credit">' + (event.detail.imageCreditMarkup || '') + '</div><h2>' + safeText(herb.name) + '</h2><p>' + safeText([herb.qi, herb.wei, herb.cat].filter(Boolean).join(' · ')) + '</p>'
+        + '<p class="cosmos-origin">分布记录：' + safeText((herb.origin || []).join('、') || '未录入') + '。可跨多区，不表示独占产地。</p>'
+        + '<p>' + (related.formulas.length ? '共同方剂记录：' + related.formulas.length + ' 首 · 相关知识卡 ' + related.ids.length + ' 张。连线仅为共同组成索引。' : '本馆尚无关联记录。可从完整档案阅读这味本草。') + '</p>'
+        + '<button type="button" data-cosmos-favorite="' + safeText(herb.id) + '" data-herb-name="' + safeText(herb.name) + '" aria-pressed="false">收藏这味本草</button><span class="sr-only" role="status" data-cosmos-favorite-status></span>'
+        + '<a data-cosmos-detail href="#/herb?id=' + encodeURIComponent(herb.id) + '">打开完整档案与来源 →</a><div class="cosmos-detail-sources">' + (event.detail.sourcesMarkup || '<span>字段来源请见完整档案</span>') + '</div>';
+      detailPanel.querySelector('[data-cosmos-favorite]').addEventListener('click', () => window.HerbalNebula.toggleFavorite(herb.id));
+      syncFavorite();
+      detailPanel.querySelector('[data-cosmos-close]').addEventListener('click', () => {
+        window.HerbalNebula?.clearFocus();
+        hero.dataset.selected = 'false'; detailPanel.hidden = true;
+        selectionUrl(null);
+        detailPanel.innerHTML = '<p class="cosmos-detail-kicker">从一颗星，读一份档案</p><h2>继续读星海</h2><p>点选本草，查看名字、性味与可核对的来源。</p>';
+        document.getElementById('heroCanvas').focus({ preventScroll: true });
+      });
     });
-    syncColor();syncMotion();
+    window.addEventListener('herbal:cosmos-reading', event => { regions.hidden = event.detail?.mode !== 'geography'; updateFilter(); });
+    window.addEventListener('herbal:cosmos-renderer', event => { controls.querySelector('[data-cosmos-renderer]').textContent = event.detail.reason || (event.detail.renderer === 'webgl' ? '增强星图' : event.detail.renderer === 'static' ? '静态星图' : '基础星图'); });
+    const motionQuery=window.matchMedia?.('(prefers-reduced-motion: reduce)');motionQuery?.addEventListener?.('change',event=>{window.HerbalCosmos.animate=motionEnabled({reducedMotion:event.matches,preference});window.dispatchEvent(new CustomEvent('herbal:motion',{detail:{enabled:window.HerbalCosmos.animate}}));syncMotion();});
+    controls.querySelector('details').open = false;
+    regions.hidden = document.documentElement.dataset.cosmosReadingMode !== 'geography';
+    syncColor();syncMotion();updateFilter();
   }
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => { if (window.HerbalCosmos.animate !== false) { lastScroll = Math.min(28, window.scrollY * .04); document.documentElement.style.setProperty('--hero-parallax', lastScroll + 'px'); } }, { passive: true });
   window.dispatchEvent(new CustomEvent('herbal:cosmos-ready'));
 }
 

@@ -81,7 +81,6 @@
     <!-- ============ 首页 ============ -->
     <section class="page" data-route="home">
       <div class="hero">
-        <canvas id="heroCanvas"></canvas>
         <div class="hero-aurora" aria-hidden="true"></div>
         <div class="hero-overlay">
           <div class="exhibit-kicker">漫游星海 / 从一味本草开始</div>
@@ -93,7 +92,10 @@
             <a class="cta" href="#/herbs">打开本草图鉴</a>
           </div>
         </div>
-        <div class="hero-hint">可选星辰对应馆藏知识卡；背景星尘为文化意象。</div>
+        <div class="cosmos-scene">
+          <canvas id="heroCanvas"></canvas>
+          <p class="hero-hint">星带按资料分类排布；距离不表示药效或地理关系。背景微尘不可选。</p>
+        </div>
         <button class="hero-scroll" type="button" data-scroll-down><span aria-hidden="true">↓</span>向下探索</button>
       </div>
 
@@ -305,6 +307,7 @@
 <script defer src="assets/js/lib/culture-semantics.js"></script>
 <script defer src="assets/js/pages/culture.js"></script>
 <script defer src="assets/js/lib/culture-learning.js"></script>
+<script defer src="assets/js/pages/cosmos-layout.js"></script>
 <script defer src="assets/js/pages/cosmos-engine.js"></script>
 <script defer src="assets/js/core/exhibition-router.js"></script>
 <script defer src="assets/js/data/exhibition-cases.js"></script>
@@ -329,6 +332,7 @@ assets/js/pages/cross-navigation.js assets/js/pages/cosmos.js assets/js/core/cat
 <script defer src="assets/js/pages/cosmos.browser.js"></script>
 <script defer src="assets/js/core/catalog-loader.browser.js"></script>
 <script defer src="assets/js/beautify.js"></script>
+<script defer src="assets/js/exhibition-effects.js"></script>
 <script defer src="assets/js/core/app-shell.js"></script>
 </body>
 </html>

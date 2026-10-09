@@ -1,5 +1,48 @@
 /* V7 shell and archive: primary routes share one navigation owner. */
 [hidden]{display:none!important}
+/* Semantic sea: title, scene and reading occupy separate columns. */
+.page[data-route="home"] .hero:has(#cosmosControls){display:grid;grid-template-columns:minmax(240px,.75fr) minmax(0,2.25fr);align-items:start;gap:22px;height:auto;min-height:640px;padding:58px 30px 56px;background:#0B2821;color:#F3EDDF;overflow:visible}
+.page[data-route="home"] .hero:has(#cosmosControls)[data-selected="true"]{grid-template-columns:minmax(220px,.85fr) minmax(380px,1.7fr) minmax(230px,.8fr)}
+.page[data-route="home"] .hero::after,.page[data-route="home"] .hero-aurora{display:none}
+.page[data-route="home"] .hero:has(#cosmosControls) .hero-overlay{grid-column:1;grid-row:1;position:static;display:block;padding:28px 0 0;text-align:left;background:none;pointer-events:auto;text-shadow:none;transform:none;z-index:1}
+.page[data-route="home"] .hero-overlay h1{font-family:"Noto Serif SC","Songti SC",SimSun,serif;font-weight:500;font-size:clamp(36px,4vw,60px);line-height:1.5;letter-spacing:.08em;color:#F5EBD5;text-shadow:none;margin:18px 0}
+.page[data-route="home"] .hero-overlay .en{font:12px/1.8 sans-serif;letter-spacing:.12em;color:#BDCDC3;margin:0}
+.page[data-route="home"] .hero-overlay .tagline{font-size:14px;line-height:2;letter-spacing:0;text-wrap:pretty;color:#D1DDD3;max-width:26ch}
+.page[data-route="home"] .hero-overlay .cta-row{justify-content:flex-start;gap:12px;display:grid}
+.page[data-route="home"] .hero-overlay .cta{border-radius:3px;text-align:center;padding:12px 14px;font-size:13px;max-width:220px}
+.cosmos-scene{position:relative;grid-column:2;grid-row:1;min-width:0;padding-top:400px;isolation:isolate}
+.page[data-route="home"] .hero #heroCanvas,.cosmos-webgl{position:absolute;inset:0 0 auto;width:100%;height:400px;transform:none;transition:none;touch-action:pan-y;z-index:1}
+.page[data-route="home"] .hero #heroCanvas[data-roam="true"]{touch-action:none}
+.cosmos-webgl{pointer-events:none;z-index:0}
+.page[data-route="home"] .hero .hero-hint{position:static;text-align:left;margin:0 0 10px;max-width:62ch;font-size:11px;line-height:1.8;color:#B8CEC0;letter-spacing:0}
+.page[data-route="home"] .hero #cosmosControls,.page[data-route="home"] .hero #cosmosControls[data-collapsed="true"]{position:static;display:block;left:auto;right:auto;bottom:auto;width:100%;min-width:0;padding:0;border:0;border-radius:0;background:none;z-index:2}
+.cosmos-settings{border-top:1px solid #436052;padding:12px 0;margin:0 0 10px}
+.cosmos-settings summary{font-size:12px;cursor:pointer;color:#DED5BF;margin-bottom:10px}
+.page[data-route="home"] .hero #cosmosControls button{min-height:42px;font-size:11px;padding:7px 10px;background:#19372B;color:#E7EDE6;border:1px solid #577164;border-radius:3px;transition:background .2s}
+.cosmos-readings{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.cosmos-category{display:flex;align-items:center;gap:12px;font-size:12px;margin:10px 0}
+.cosmos-category select{max-width:100%;min-width:0;min-height:38px;background:#19372B;color:#F3EDDF;border:1px solid #577164;padding:6px;font-size:12px}
+[data-cosmos-regions]{display:flex;flex-wrap:wrap;gap:12px;border:0;padding:8px 0;font-size:12px;color:#D8E4DA}
+[data-cosmos-regions] legend{padding:0 0 8px}[data-cosmos-regions] label{display:flex;align-items:center;gap:5px;min-height:36px}
+.cosmos-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.cosmos-toolbar output{margin-left:auto;font-size:12px;font-variant-numeric:tabular-nums;color:#D6DBC8}
+.cosmos-select-hint{font-size:12px;color:#D6DBC8;line-height:1.8;margin:0 0 10px}
+.cosmos-actions{flex-wrap:wrap;margin-bottom:10px}.cosmos-renderer-status{font-size:10px;color:#AFC5B5;margin:8px 0 0}
+.cosmos-detail{grid-column:3;grid-row:1;position:relative;min-width:0;border-left:1px solid #3E5F4E;padding:24px 0 24px 20px;z-index:1}
+.cosmos-detail-kicker{font-size:11px;letter-spacing:.1em;color:#C4BC9D;margin:0 0 16px}.cosmos-detail h2{font:500 28px/1.5 "Noto Serif SC","Songti SC",SimSun,serif;color:#F5EBD5;margin:16px 0 10px}
+.cosmos-detail p{font-size:12px;line-height:1.9;color:#C9D9CB;margin:0 0 14px}.cosmos-detail a{font-size:12px;color:#E8CF92;text-decoration:underline;text-underline-offset:4px;line-height:1.8}
+.cosmos-detail-image{height:160px;max-width:240px;overflow:hidden;background:#17382B}.cosmos-detail-image img{width:100%;height:100%;object-fit:contain}.cosmos-detail-image .herb-image-empty{height:100%;min-height:0}
+.cosmos-detail-sources{display:grid;gap:8px;margin-top:18px;font-size:11px;overflow-wrap:anywhere}.cosmos-detail-sources span{color:#BFD0C2}
+[data-cosmos-close]{position:absolute;right:0;top:0;width:36px;height:36px;border:1px solid #577164;color:#E7EDE6;background:#19372B;font-size:22px;border-radius:3px}
+[data-cosmos-favorite]{display:block;min-height:42px;padding:8px 12px;margin:14px 0;background:#19372B;border:1px solid #577164;color:#E7EDE6;border-radius:3px;font-size:12px}[data-cosmos-favorite][aria-pressed="true"]{color:#F3D9A0;border-color:#C6AA66}
+.cosmos-image-credit{font-size:10px;line-height:1.7;color:#BFD0C2;overflow-wrap:anywhere;max-width:250px;margin:8px 0}.cosmos-image-credit a{font-size:10px}.cosmos-geography-note{flex-basis:100%;font-size:11px;line-height:1.7;margin:0;color:#BFD0C2}
+.page[data-route="home"] .hero-scroll{left:30px;bottom:16px;transform:none;padding:7px 12px;font-size:11px}
+.native-spotlight{background-image:radial-gradient(180px circle at var(--light-x,50%) var(--light-y,50%),rgba(172,150,87,.08),transparent 75%)}
+.native-enter{animation:nativeReadingEntry .65s ease-out both}
+@keyframes nativeReadingEntry{from{opacity:.72;transform:translateY(7px)}to{opacity:1;transform:none}}
+.hero #cosmosControls :focus-visible,.cosmos-detail :focus-visible{outline:2px solid #E8CF92;outline-offset:3px}
+@media(max-width:1100px){.page[data-route="home"] .hero:has(#cosmosControls),.page[data-route="home"] .hero:has(#cosmosControls)[data-selected="true"]{grid-template-columns:220px minmax(0,1fr);padding:42px 24px 60px}.cosmos-detail{grid-column:2;grid-row:2;border-left:0;border-top:1px solid #3E5F4E;padding:20px 0}.cosmos-detail-image{float:left;width:140px;margin-right:20px;height:140px}.cosmos-detail:after{content:"";display:block;clear:both}}
+@media(max-width:768px){.page[data-route="home"] .hero:has(#cosmosControls),.page[data-route="home"] .hero:has(#cosmosControls)[data-selected="true"]{grid-template-columns:1fr;gap:24px;min-height:0;padding:28px 18px 64px}.page[data-route="home"] .hero:has(#cosmosControls) .hero-overlay{grid-column:1;grid-row:1;padding:0}.page[data-route="home"] .hero-overlay h1{font-size:42px;line-height:1.3;margin:12px 0}.page[data-route="home"] .hero-overlay h1 br{display:none}.page[data-route="home"] .hero-overlay .tagline{max-width:40ch}.page[data-route="home"] .hero-overlay .cta-row{display:flex}.cosmos-scene{grid-column:1;grid-row:2;padding-top:320px}.page[data-route="home"] .hero #heroCanvas,.cosmos-webgl{height:320px}.cosmos-detail{grid-column:1;grid-row:3}.cosmos-detail-image{height:140px;width:120px}.cosmos-toolbar output{font-size:11px}.cosmos-settings{margin-bottom:10px}.cosmos-category select{font-size:16px}.page[data-route="home"] .hero-scroll{left:18px;bottom:18px}}
+@media(prefers-reduced-motion:reduce){.native-enter{animation:none}.native-spotlight{background-image:none}}
 .my-herbal-link{color:#DCE9E1;font-size:12px;white-space:nowrap;padding:8px 4px}
 .my-herbal-link[aria-current="page"]{color:#F3D9A0;text-decoration:underline;text-underline-offset:5px}
 .archive-nav{max-width:1400px;margin:0 auto;padding:18px 24px 0;display:flex;flex-wrap:wrap;gap:8px}
