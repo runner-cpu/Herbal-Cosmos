@@ -116,6 +116,43 @@ test('herb collection uses existing favorite event and storage flow', async ({ p
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('herbal_favs')))).toContain('gancao');
 });
 
+test('theme rerenders preserve every unsaved note field for the selected object', async ({ page }) => {
+  await page.goto('/#/exhibit?chapter=compose&case=guizhitang&selected=baishao');
+  await openNote(page);
+  await page.getByLabel('阅读对象', { exact: true }).fill('尚未保存的白芍阅读对象');
+  await page.getByLabel('我的理解').fill('我的草稿：<角色> & 来源范围');
+  await page.getByLabel('资料来源').fill('自写来源笔记\nF00002教学图');
+  const canonicalUrl = await page.getByLabel('展览地址').inputValue();
+  for (const theme of ['night', 'ink', 'day']) {
+    await page.evaluate(theme => window.HerbalTheme.setTheme(theme), theme);
+    await expect(page.getByLabel('阅读对象', { exact: true })).toHaveValue('尚未保存的白芍阅读对象');
+    await expect(page.getByLabel('我的理解')).toHaveValue('我的草稿：<角色> & 来源范围');
+    await expect(page.getByLabel('资料来源')).toHaveValue('自写来源笔记\nF00002教学图');
+    await expect(page.getByLabel('展览地址')).toHaveValue(canonicalUrl);
+  }
+  expect(await page.evaluate(() => localStorage.getItem('herbal_exhibition_notes_v1'))).toBeNull();
+});
+
+test('role-label toggles preserve unsaved note edits and update only canonical URL state', async ({ page }) => {
+  await page.goto('/#/exhibit?chapter=compose&case=guizhitang&selected=baishao');
+  await openNote(page);
+  await page.getByLabel('阅读对象', { exact: true }).fill('自己的阅读对象');
+  await page.getByLabel('我的理解').fill('未保存的解释');
+  await page.getByLabel('资料来源').fill('待补充的来源');
+  for (const label of ['显示有据角色', '隐藏角色标注']) {
+    await page.getByRole('button', { name: label, exact: true }).click();
+    await expect(page.getByLabel('阅读对象', { exact: true })).toHaveValue('自己的阅读对象');
+    await expect(page.getByLabel('我的理解')).toHaveValue('未保存的解释');
+    await expect(page.getByLabel('资料来源')).toHaveValue('待补充的来源');
+    const url = await page.getByLabel('展览地址').inputValue();
+    expect(url.endsWith('&roles=1')).toBe(label === '显示有据角色');
+  }
+  expect(await page.evaluate(() => localStorage.getItem('herbal_exhibition_notes_v1'))).toBeNull();
+  await page.locator('button[data-select="gancao"]').click();
+  await expect(page.getByLabel('阅读对象', { exact: true })).not.toHaveValue('自己的阅读对象');
+  await expect(page.getByLabel('我的理解')).not.toHaveValue('未保存的解释');
+});
+
 for (const width of [320, 375, 1440]) {
   test(width + 'px scenes and editable note fit in night mode with reduced motion', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
