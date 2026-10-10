@@ -179,7 +179,7 @@ const chartPalette = () => ({
 });
 function sourceBadge(h){
   const s = SOURCE_MAP[h.source] || {badge:'outline',label:'公开资料整理'};
-  return `<span class="badge ${s.badge}">数据来源：${s.label}</span>` + (h.food ? ` <span class="badge cinnabar">药食同源</span>` : '');
+  return `<span class="badge ${esc(s.badge)}">数据来源：${esc(s.label)}</span>` + (h.food ? ` <span class="badge cinnabar">药食同源</span>` : '');
 }
 
 function safeSourceUrl(value){ if(typeof value!=='string'||!value.trim())return ''; try { const url=new URL(value,location.href); return /^https?:$/.test(url.protocol)?url.href:''; } catch { return ''; } }
@@ -432,7 +432,7 @@ function renderHerbs(){
   const cats = [...new Set(KNOWLEDGE_HERBS.map(h=>h.cat).filter(v=>v&&v!=='未录入'))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
   const renderSelect=(id, label, values, current, composite=[])=>{
     const el=$('#'+id); if(!el)return;
-    const options=['<option value="">全部'+label+'</option>',...values.map(v=>`<option value="${esc(v)}">${esc(v)}</option>` )];
+    const options=['<option value="">全部'+esc(label)+'</option>',...values.map(v=>`<option value="${esc(v)}">${esc(v)}</option>` )];
     if(composite.length) options.push(`<optgroup label="复合五味（${composite.length} 种）">${composite.map(v=>`<option value="${esc(v)}">${esc(v)} · 复合</option>`).join('')}</optgroup>`);
     el.innerHTML=options.join(''); el.value=current||'';
   };
@@ -605,7 +605,7 @@ function renderCompareTable(herbs,formulaCounts){
     ['资料口径', h=>esc(h.source==='openMateria'?'公开资料整理':'编辑精选资料')]
   ];
   head.innerHTML='<tr><th scope="col">属性</th>'+herbs.map(h=>`<th scope="col">${esc(h.name)}</th>`).join('')+'</tr>';
-  body.innerHTML=rows.map(([label,fn])=>`<tr><th scope="row">${label}</th>${herbs.map(h=>`<td>${fn(h)}</td>`).join('')}</tr>`).join('');
+  body.innerHTML=rows.map(([label,fn])=>`<tr><th scope="row">${esc(label)}</th>${herbs.map(h=>`<td>${fn(h)}</td>`).join('')}</tr>`).join('');
 }
 document.addEventListener('click', e=>{
   const compare=e.target.closest('[data-compare]');
@@ -710,7 +710,7 @@ function renderHerb(id){
   qiweiChart.setOption({
     backgroundColor:'transparent',
     grid:{left:64,right:20,top:20,bottom:36},
-    tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}, formatter:()=>`${h.name}：${h.qi} · ${h.wei}`},
+    tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}, formatter:()=>`${esc(h.name)}：${esc(h.qi)} · ${esc(h.wei)}`},
     xAxis:{type:'category', data:weis, name:'五味', nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11}},
     yAxis:{type:'category', data:qis, name:'四气', nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11}},
     series:[{
@@ -766,7 +766,7 @@ function renderQiwei(){
   const mChart = chartManager.register('qiweiMatrix', echarts.init(document.getElementById('qiweiMatrixChart')), document.getElementById('qiweiMatrixChart'));
   mChart.setOption({
     backgroundColor:'transparent',
-    tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}, formatter:item=>`${window.HerbalFivePhases?.flavorLabel(weis[item.value[0]])||weis[item.value[0]]} · ${qis[item.value[1]]}<br/>代表药材 <b>${item.value[2]}</b> 味`},
+    tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}, formatter:item=>`${esc(window.HerbalFivePhases?.flavorLabel(weis[item.value[0]])||weis[item.value[0]])} · ${esc(qis[item.value[1]])}<br/>代表药材 <b>${esc(item.value[2])}</b> 味`},
     grid:{left:54,right:16,top:14,bottom:40},
     xAxis:{type:'category', data:weis, name:'五味 · 五行', nameLocation:'middle', nameGap:26, nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11,formatter:value=>value+'·'+(window.HerbalFivePhases?.flavorMeta(value).phase||'')}},
     yAxis:{type:'category', data:qis, name:'四气', nameLocation:'middle', nameGap:38, nameTextStyle:{color:p.muted,fontSize:11}, axisLabel:{color:p.muted,fontSize:11}},
@@ -875,9 +875,12 @@ function renderFormula(){
   gChart.setOption({
     backgroundColor:'transparent',
     tooltip:{confine:true, backgroundColor:p.card, textStyle:{color:p.text,fontSize:12}, formatter:item=>{
+      // 图例 tooltip 是 HTML：方剂名、药材名与方剂功效都要先转义再拼。
+      const name = esc(item.data.name||'');
       if(item.dataType==='edge') return `${esc(item.data.sourceName||'方剂')} ⇄ ${esc(item.data.targetName||'名称待补')}`;
-      const id = item.data.id; const isF = id.startsWith('f_');
-      return isF ? `${item.data.name}<br/>${formulaById(id.slice(2))?formulaById(id.slice(2)).eff:''}` : `${item.data.name}`;
+      const id = String(item.data.id||''); const isF = id.startsWith('f_');
+      const formula = isF ? formulaById(id.slice(2)) : null;
+      return formula ? `${name}<br/>${esc(formula.eff||'')}` : name;
     }},
     legend:{type:'scroll', bottom:0, textStyle:{color:p.muted,fontSize:11}, data:['方剂','药材']},
     series:[{

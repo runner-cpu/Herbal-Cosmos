@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v25-20261010-island-cosmos';
+const CACHE_VERSION = 'herbal-cosmos-v26-20261010-runtime-escaping';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
