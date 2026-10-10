@@ -34,6 +34,7 @@ jobs:
             runtime=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/core/runtime.js?sha=${GITHUB_SHA}" || true)
             data=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/data/expanded.generated.js?sha=${GITHUB_SHA}" || true)
             engine=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/pages/cosmos-engine.js?sha=${GITHUB_SHA}" || true)
+            scene=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/pages/cosmos-scene.js?sha=${GITHUB_SHA}" || true)
             router=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/core/exhibition-router.js?sha=${GITHUB_SHA}" || true)
             exhibition=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/pages/exhibition.js?sha=${GITHUB_SHA}" || true)
             renderer_status=$(curl --silent --show-error --location --max-time 20 --write-out '%{http_code}' --output /tmp/herbal-renderer.js "${site}assets/vendor/cosmos-webgl.js?sha=${GITHUB_SHA}" || true)
@@ -45,6 +46,7 @@ jobs:
               && grep -q 'function render' <<<"$runtime" \
               && grep -q 'HERBAL_DATA_VERSION' <<<"$data" \
               && grep -q 'HerbalCosmosEngine' <<<"$engine" \
+              && grep -q 'HerbalCosmosScene' <<<"$scene" \
               && grep -q 'HerbalExhibitionRouter' <<<"$router" \
               && grep -q 'HerbalExhibition' <<<"$exhibition" \
               && grep -q 'HerbalApothecaryLayout' <<<"$layout" \

@@ -10,17 +10,20 @@
 .page[data-route="home"] .hero-overlay .tagline{font-size:14px;line-height:2;letter-spacing:0;text-wrap:pretty;color:#D1DDD3;max-width:26ch}
 .page[data-route="home"] .hero-overlay .cta-row{justify-content:flex-start;gap:12px;display:grid}
 .page[data-route="home"] .hero-overlay .cta{border-radius:3px;text-align:center;padding:12px 14px;font-size:13px;max-width:220px}
-.cosmos-scene{min-height:600px;position:relative;grid-column:2;grid-row:1;min-width:0;padding-top:400px;isolation:isolate}
-.page[data-route="home"] .hero #heroCanvas,.cosmos-webgl{position:absolute;inset:0 0 auto;width:100%;height:400px;transform:none;transition:none;touch-action:pan-y;z-index:1}
+.cosmos-scene{min-height:600px;position:relative;grid-column:2;grid-row:1;min-width:0;padding-top:470px;isolation:isolate}
+.page[data-route="home"] .hero #heroCanvas,.cosmos-webgl{position:absolute;inset:0 0 auto;width:100%;height:470px;transform:none;transition:none;touch-action:pan-y;z-index:1}
 .page[data-route="home"] .hero #heroCanvas[data-roam="true"]{touch-action:none}
 .cosmos-webgl{pointer-events:none;z-index:0}
 .page[data-route="home"] .hero .hero-hint{position:static;text-align:left;margin:0 0 10px;max-width:62ch;font-size:11px;line-height:1.8;color:#B8CEC0;letter-spacing:0}
 .page[data-route="home"] .hero #cosmosControls,.page[data-route="home"] .hero #cosmosControls[data-collapsed="true"]{position:static;display:block;left:auto;right:auto;bottom:auto;width:100%;min-width:0;padding:0;border:0;border-radius:0;background:none;z-index:2}
-.cosmos-settings{border-top:1px solid #436052;padding:12px 0;margin:0 0 10px}
+.cosmos-settings{border-top:1px solid #436052;padding:12px 0;margin:10px 0 10px}
 .cosmos-settings summary{font-size:12px;cursor:pointer;color:#DED5BF;margin-bottom:10px}
 .page[data-route="home"] .hero #cosmosControls button{min-height:42px;font-size:11px;padding:7px 10px;background:#19372B;color:#E7EDE6;border:1px solid #577164;border-radius:3px;transition:background .2s}
-.cosmos-readings{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
-/* 星团穿梭：分区按钮由引擎按实际收录数量生成，是镜头旅行的目的地。 */
+/* 读法与星团穿梭是首屏要做的两个决定，留在折叠之外；这里给它们一条分隔线，
+   免得和下面的工具栏挤成一片。 */
+.cosmos-readings{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px;padding-top:10px;border-top:1px solid #436052}
+.cosmos-readings button[aria-pressed="true"]{background:#D0A24C;color:#172C23;border-color:#D0A24C}
+/* 星团穿梭：分组按钮由引擎按当前读法实际存在的分组生成，是镜头旅行的目的地。 */
 .cosmos-clusters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
 .cosmos-clusters[data-empty="true"]{display:none}
 .cosmos-clusters button{display:inline-flex;align-items:center;gap:7px}
@@ -48,7 +51,7 @@
 @keyframes nativeReadingEntry{from{opacity:.72;transform:translateY(7px)}to{opacity:1;transform:none}}
 .hero #cosmosControls :focus-visible,.cosmos-detail :focus-visible{outline:2px solid #E8CF92;outline-offset:3px}
 @media(max-width:1100px){.page[data-route="home"] .hero#cosmosHero,.page[data-route="home"] .hero#cosmosHero[data-selected="true"]{grid-template-columns:220px minmax(0,1fr);padding:42px 24px 60px}.cosmos-detail{grid-column:2;grid-row:2;border-left:0;border-top:1px solid #3E5F4E;padding:20px 0}.cosmos-detail-image{float:left;width:140px;margin-right:20px;height:140px}.cosmos-detail:after{content:"";display:block;clear:both}}
-@media(max-width:768px){.page[data-route="home"] .hero#cosmosHero,.page[data-route="home"] .hero#cosmosHero[data-selected="true"]{grid-template-columns:1fr;gap:24px;min-height:0;padding:28px 18px 64px}.page[data-route="home"] .hero#cosmosHero .hero-overlay{grid-column:1;grid-row:1;padding:0}.page[data-route="home"] .hero-overlay h1{font-size:42px;line-height:1.3;margin:12px 0}.page[data-route="home"] .hero-overlay h1 br{display:none}.page[data-route="home"] .hero-overlay .tagline{max-width:40ch}.page[data-route="home"] .hero-overlay .cta-row{display:flex}.cosmos-scene{min-height:520px;grid-column:1;grid-row:2;padding-top:320px}.page[data-route="home"] .hero #heroCanvas,.cosmos-webgl{height:320px}.cosmos-detail{grid-column:1;grid-row:3}.cosmos-detail-image{height:140px;width:120px}.cosmos-toolbar output{font-size:11px}.cosmos-settings{margin-bottom:10px}.cosmos-category select{font-size:16px}.page[data-route="home"] .hero-scroll{left:18px;bottom:18px}}
+@media(max-width:768px){.page[data-route="home"] .hero#cosmosHero,.page[data-route="home"] .hero#cosmosHero[data-selected="true"]{grid-template-columns:1fr;gap:24px;min-height:0;padding:28px 18px 64px}.page[data-route="home"] .hero#cosmosHero .hero-overlay{grid-column:1;grid-row:1;padding:0}.page[data-route="home"] .hero-overlay h1{font-size:42px;line-height:1.3;margin:12px 0}.page[data-route="home"] .hero-overlay h1 br{display:none}.page[data-route="home"] .hero-overlay .tagline{max-width:40ch}.page[data-route="home"] .hero-overlay .cta-row{display:flex}.cosmos-scene{min-height:560px;grid-column:1;grid-row:2;padding-top:340px}.page[data-route="home"] .hero #heroCanvas,.cosmos-webgl{height:340px}.cosmos-detail{grid-column:1;grid-row:3}.cosmos-detail-image{height:140px;width:120px}.cosmos-toolbar output{font-size:11px}.cosmos-settings{margin-bottom:10px}.cosmos-category select{font-size:16px}.page[data-route="home"] .hero-scroll{left:18px;bottom:18px}}
 @media(prefers-reduced-motion:reduce){.native-enter{animation:none}.native-spotlight{background-image:none}}
 .my-herbal-link{color:#DCE9E1;font-size:12px;white-space:nowrap;padding:8px 4px}
 .my-herbal-link[aria-current="page"]{color:#F3D9A0;text-decoration:underline;text-underline-offset:5px}

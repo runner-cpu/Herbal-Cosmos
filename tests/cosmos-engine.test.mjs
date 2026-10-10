@@ -6,8 +6,11 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = fs.readFileSync(path.join(root, 'assets', 'js', 'pages', 'cosmos-engine.js'), 'utf8');
+// The engine destructures its vocabulary from cosmos-scene.js, so the sandbox
+// has to receive that module first — exactly the order index.html declares.
+const scene = fs.readFileSync(path.join(root, 'assets', 'js', 'pages', 'cosmos-scene.js'), 'utf8');
 const sandbox = { window: {} };
-const factory = new Function('window', source + '\nreturn window.HerbalCosmosEngine;');
+const factory = new Function('window', scene + '\n' + source + '\nreturn window.HerbalCosmosEngine;');
 const engine = factory(sandbox.window);
 
 test('cosmos engine exposes four readings with distinct colour functions', () => {

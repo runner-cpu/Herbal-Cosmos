@@ -31,5 +31,8 @@ test('pages smoke waits for gh-pages and verifies the deployed shell version', (
   assert.match(smoke, /apothecary-webgl\.js/);
   assert.match(smoke, /apothecary-layout\.js/);
   assert.match(smoke, /HerbalApothecaryLayout/);
+  // 星图拆成三支 classic script 之后，线上必须确认词汇表那支也在。
+  assert.match(smoke, /cosmos-scene\.js/);
+  assert.match(smoke, /HerbalCosmosScene/);
   assert.equal(smoke.includes('herbal-cosmos-v'), false, 'smoke must read the version from sw.js instead of hard-coding it');
 });

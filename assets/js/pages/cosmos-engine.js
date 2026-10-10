@@ -1,128 +1,26 @@
 /* 星云引擎 V2：光晕精灵预渲染 + 加色混合 + 景深 + 四种读法。
  * 与 runtime.js 解耦：几何、绘制、交互都收在这里，宿主只提供数据与回调。
  * 关键优化：把每帧 902 次 createRadialGradient 换成一次性的离屏精灵 + drawImage。
- * 以 classic script 形式加载（与 culture.js / insights.js 一致），暴露 window.HerbalCosmosEngine。 */
+ * 分区映射、配色与景深数学在 cosmos-scene.js；岛屿几何在 cosmos-layout.js。
+ * 两者都先于本文件加载，缺失即视为装配错误。以 classic script 形式加载
+ * （与 culture.js / insights.js 一致），暴露 window.HerbalCosmosEngine。 */
 (function () {
   'use strict';
 
-  const REGION_OF_PROVINCE = Object.freeze({
-    青藏: ['西藏', '青海'],
-    西北: ['新疆', '宁夏', '甘肃', '陕西'],
-    北方: ['内蒙古', '黑龙江', '吉林', '辽宁', '河北', '山西'],
-    西南: ['云南', '贵州', '四川', '广西'],
-    东南: ['广东', '福建', '海南', '台湾', '湖南', '湖北', '江西', '浙江', '安徽', '江苏', '山东', '河南', '天津']
-  });
-  const REGION_COLORS = Object.freeze({
-    青藏: '#C08A5A', 西北: '#C9A24F', 北方: '#5C8A6E',
-    西南: '#4F7F5C', 东南: '#4A7590', unknown: '#7E8783'
-  });
-  const QI_COLORS = Object.freeze({
-    大寒: '#4E7BA8', 寒: '#628FB4', 微寒: '#87AEC6', 凉: '#A6C6D4',
-    平: '#E2DAC0', 微温: '#DCBB8A', 温: '#CE9A67', 热: '#C1734C', 大热: '#AE4738'
-  });
-  const UNIFORM_COLOR = '#D8C9A8';
-  const ETHNIC_COLOR = '#E8C06A';
-  const DIM_COLOR = '#465850';
-  const NO_REGION = '无分布记录';
-  const CLUSTER_ALL = 'all';
-  const READING_MODES = Object.freeze(['category', 'geography', 'nature', 'ethnic']);
-  const READING_LABELS = Object.freeze({ category: '资料分类', geography: '文献分布', nature: '药性', ethnic: '民族对照' });
-  const CLUSTER_LABELS = Object.freeze({ 青藏: '青藏', 西北: '西北', 北方: '北方', 西南: '西南', 东南: '东南', [NO_REGION]: '未录分布' });
-  const DEFAULT_READING = 'category';
-  const GLOW_SIZE = 128;
-  const GLOW_ALPHA_BY_THEME = Object.freeze({ day: 0.55, night: 1, ink: 0.72 });
-  const DEPTH_RANGE = 300;
-  const FOV = 640;
-  const REVEAL = Object.freeze({ dustMs: 800, starMs: 1200, spread: 0.75, ramp: 0.45 });
-  const TRAIL_SAME = 'rgba(126,164,152,';
-  const TRAIL_CROSS = 'rgba(216,188,116,';
+  const vocabulary = (typeof window !== 'undefined' && window.HerbalCosmosScene) || null;
+  if (!vocabulary) throw new Error('HerbalCosmosScene must be loaded before cosmos-engine.js');
+  const {
+    REGION_OF_PROVINCE, REGION_COLORS, QI_COLORS, UNIFORM_COLOR, ETHNIC_COLOR, DIM_COLOR,
+    NO_REGION, CLUSTER_ALL, READING_MODES, READING_LABELS, CLUSTER_LABELS, DEFAULT_READING,
+    GLOW_SIZE, GLOW_ALPHA_BY_THEME, DEPTH_RANGE, FOV, REVEAL, TRAIL_SAME, TRAIL_CROSS,
+    FLY_MS, FRAME_MARGIN, FRAME_PAD, FRAME_MAX, TRAVEL_LIMIT,
+    hexWithAlpha, regionOf, regionsOf, clusterOf, colorForReading, legendFor, particleBudget,
+    depthBlur, dustReveal, starReveal, createGlowSprite, supported,
+    drawIslandHalos, drawIslandCaptions, islandsWithCards
+  } = vocabulary;
   // Herb-to-herb trails come from recorded prescriptions. Sampling keeps the
   // line layer inside the frame budget without dropping the network's shape.
   const TRAIL_LIMIT = 420;
-  const FLY_MS = 900;
-
-  function hexWithAlpha(color, alpha) {
-    const match = String(color || '').trim().match(/^#([0-9a-f]{6})$/i);
-    if (!match) return color;
-    const value = parseInt(match[1], 16);
-    return 'rgba(' + ((value >> 16) & 255) + ',' + ((value >> 8) & 255) + ',' + (value & 255) + ',' + alpha + ')';
-  }
-
-  // Province lists follow the same five-region reading the archive publishes;
-  // a card recorded in several provinces belongs to every region it names.
-  function regionOf(origin) {
-    const regions = regionsOf(origin);
-    return regions.length === 1 ? regions[0] : regions.length ? 'multiple' : 'unknown';
-  }
-  function regionsOf(origin) {
-    const list = Array.isArray(origin) ? origin : [];
-    return Object.keys(REGION_OF_PROVINCE).filter(region => list.some(province => REGION_OF_PROVINCE[region].includes(province)));
-  }
-  function clusterOf(herb = {}) {
-    return regionsOf(herb.origin)[0] || NO_REGION;
-  }
-
-  function colorForReading(herb = {}, mode = DEFAULT_READING, options = {}) {
-    if (mode === 'geography') return regionOf(herb.origin) === 'multiple' ? UNIFORM_COLOR : REGION_COLORS[regionOf(herb.origin)] || REGION_COLORS.unknown;
-    if (mode === 'nature') return QI_COLORS[herb.qi] || REGION_COLORS.unknown;
-    if (mode === 'ethnic') return options.ethnicIds?.has?.(herb.id) ? ETHNIC_COLOR : DIM_COLOR;
-    if (options.uniform) return UNIFORM_COLOR;
-    return typeof options.categoryColor === 'function' ? (options.categoryColor(herb) || UNIFORM_COLOR) : UNIFORM_COLOR;
-  }
-
-  function legendFor(mode, options = {}) {
-    if (mode === 'geography') return [...Object.keys(REGION_COLORS).map(key => ({ label: key === 'unknown' ? '无分布记录' : key, color: REGION_COLORS[key] })), { label: '跨区记录', color: UNIFORM_COLOR }];
-    if (mode === 'nature') return Object.keys(QI_COLORS).map(key => ({ label: key, color: QI_COLORS[key] }));
-    if (mode === 'ethnic') return [{ label: '有对照线索', color: ETHNIC_COLOR }, { label: '未标注', color: DIM_COLOR }];
-    return (options.categories || []).map(item => ({ label: item.name, color: item.color }));
-  }
-
-  function particleBudget(env = {}) {
-    // 902 星辰 + 微尘总数必须守住 2500 上限：移动端 1500 → 2,402。
-    if (env.mobile || (env.cores || 4) <= 4) return { dust: 1500 };
-    if ((env.dpr || 1) > 2 || (env.cores || 4) >= 8) return { dust: 6000 };
-    return { dust: 3600 };
-  }
-
-  function depthBlur(zr, range = DEPTH_RANGE) {
-    return Math.max(0, Math.min(1, Math.abs(zr) / range));
-  }
-
-  function dustReveal(elapsed, timing = REVEAL) {
-    return Math.max(0, Math.min(1, elapsed / timing.dustMs));
-  }
-
-  function starReveal(index, total, elapsed, timing = REVEAL) {
-    const span = timing.starMs * timing.spread;
-    const delay = timing.dustMs + (total > 1 ? (index / total) * span : 0);
-    if (elapsed >= timing.dustMs + timing.starMs) return 1;
-    if (elapsed <= delay) return 0;
-    return Math.max(0, Math.min(1, (elapsed - delay) / (timing.starMs * timing.ramp)));
-  }
-
-  function createGlowSprite(color, dpr = 1, size = GLOW_SIZE) {
-    if (typeof document === 'undefined') return null;
-    const px = Math.max(8, Math.round(size * dpr));
-    const sprite = document.createElement('canvas');
-    sprite.width = px; sprite.height = px;
-    const ctx = sprite.getContext('2d');
-    if (!ctx) return sprite;
-    const center = px / 2;
-    const gradient = ctx.createRadialGradient(center, center, 0, center, center, center);
-    gradient.addColorStop(0, hexWithAlpha(color, 1));
-    gradient.addColorStop(0.35, hexWithAlpha(color, 0.55));
-    gradient.addColorStop(0.72, hexWithAlpha(color, 0.18));
-    gradient.addColorStop(1, hexWithAlpha(color, 0));
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, px, px);
-    return sprite;
-  }
-
-  function supported() {
-    if (typeof document === 'undefined') return false;
-    const probe = document.createElement('canvas');
-    return Boolean(probe.getContext && probe.getContext('2d'));
-  }
 
   function mount(canvas, host = {}) {
     const ctx = canvas.getContext('2d');
@@ -131,9 +29,10 @@
     const layoutApi = window.HerbalCosmosLayout;
     const layout = layoutApi.build(herbs, host.formulas || []);
     const regionOfId = new Map(herbs.map(herb => [herb.id, clusterOf(herb)]));
-    const regionNodes = layoutApi.regionPositions
-      ? layoutApi.regionPositions(layout.nodes, node => regionOfId.get(node.id))
-      : layout.nodes;
+    const regionReading = layoutApi.regionLayout
+      ? layoutApi.regionLayout(layout.nodes, node => regionOfId.get(node.id))
+      : { nodes: layout.nodes, clusters: [] };
+    const regionNodes = regionReading.nodes;
     const trails = layoutApi.cooccurrence ? layoutApi.cooccurrence(layout, { limit: TRAIL_LIMIT }) : [];
     const reducedQuery = typeof window !== 'undefined' ? window.matchMedia?.('(prefers-reduced-motion: reduce)') : null;
     const mobileQuery = typeof window !== 'undefined' ? window.matchMedia?.('(max-width: 768px)') : null;
@@ -154,16 +53,29 @@
     const on = (name, fn, options) => { canvas.addEventListener(name, fn, options); listeners.push([name, fn, options]); };
     let reading = DEFAULT_READING;
     let readingLayout = layout.nodes;
+    let activeClusters = layout.clusters || [];
     let trailsEnabled = host.trails !== false;
     let cluster = CLUSTER_ALL;
     let flight = null;
+    // 上一帧名录层落笔的条目与被瞄准的岛在屏幕上的位置：让「每个分组都有名录」
+    // 和「穿梭后停在目标岛」可被断言，而不是只能靠肉眼看截图。
+    let captionsDrawn = [], aimedAt = null;
+
+    // The island a card currently belongs to, under the live reading. Both the
+    // captions and the travel buttons read this, so a button never points at a
+    // group the sky is not currently drawing.
+    function clusterKeyOf(star) {
+      if (!star) return NO_REGION;
+      if (reading === 'geography') return regionOfId.get(star.id) || NO_REGION;
+      return star.category;
+    }
 
     // The cluster list the host renders as travel buttons, counted from the
     // cards actually present so no empty region ever ships as a destination.
     function clusterCounts() {
       const counts = new Map();
       for (const star of stars) {
-        const key = clusterOf(star.herb);
+        const key = clusterKeyOf(star);
         counts.set(key, (counts.get(key) || 0) + 1);
       }
       return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-CN')).map(([key, count]) => ({ key, label: CLUSTER_LABELS[key] || key, count }));
@@ -317,11 +229,36 @@
       for (const star of stars) { star.x = star.tx; star.y = star.ty; star.z = star.tz; }
     }
 
-    // Two registrations share one node contract: the category disk, and the
-    // regional ring used by the literature-distribution reading and by every
-    // cluster the viewer travels to.
+    // Two registrations share one node contract: the category islands, and the
+    // literature-region islands used by the distribution reading. The reading
+    // alone decides which one is on screen — a chosen cluster highlights its
+    // group inside that same layout instead of silently regrouping the sky.
     function syncLayout() {
-      readingLayout = reading === 'geography' || cluster !== CLUSTER_ALL ? regionNodes : layout.nodes;
+      const regional = reading === 'geography';
+      readingLayout = regional ? regionNodes : layout.nodes;
+      activeClusters = regional ? regionReading.clusters : layout.clusters || [];
+    }
+
+    /* The field the camera must hold. Derived from the live reading instead of a
+       constant, and padded for the captions drawn outside the outermost cards,
+       so a reading with few groups is framed tighter than a busy one. */
+    function fieldBounds() {
+      const nodes = readingLayout?.length ? readingLayout : layout.nodes;
+      const box = layoutApi.bounds ? layoutApi.bounds(nodes, FRAME_PAD) : { spanX: 700, spanY: 420 };
+      const captions = activeClusters.reduce((widest, cluster) => Math.max(widest, cluster.radius * 2), 0) + 130;
+      return { spanX: Math.max(box.spanX, captions), spanY: Math.max(box.spanY, captions * 0.55) };
+    }
+
+    /* One framing rule for projection, anchoring and flights, so a cluster can
+       never be aimed at with a different scale than the one it is drawn with.
+       The result is cached for the frame: `project()` runs once per particle, so
+       recomputing the field extent inside it would be quadratic per frame. */
+    let frameFit = 1;
+    function refit() {
+      const field = fieldBounds();
+      const room = Math.min((W - 2 * FRAME_MARGIN) / field.spanX, (H - 2 * FRAME_MARGIN) / field.spanY);
+      frameFit = Math.max(0.12, Math.min(room, FRAME_MAX));
+      return frameFit;
     }
 
     function setRelationPositions() {
@@ -349,12 +286,23 @@
       return { x: x / n, y: y / n, z: z / n };
     }
 
+    /* Where a travel destination is and how far in the camera should go. Read
+       from the island geometry the sky is drawn with, so the frame a flight
+       lands on is the frame the caption was measured against. */
     function anchorFor(key) {
       if (key === CLUSTER_ALL) return { x: 0, y: 0, z: 0, scale: 1 };
-      const ids = new Set(stars.filter(star => clusterOf(star.herb) === key).map(star => star.id));
-      const focus = centroidOf(ids);
-      const share = Math.sqrt(ids.size / Math.max(1, stars.length));
-      return { ...focus, scale: Math.max(1.05, Math.min(2.1, 0.95 + share * 1.5)) };
+      const island = activeClusters.find(item => item.key === key);
+      if (!island) {
+        const ids = new Set(stars.filter(star => clusterKeyOf(star) === key).map(star => star.id));
+        if (!ids.size) return { x: 0, y: 0, z: 0, scale: 1 };
+        return { ...centroidOf(ids), scale: 1.6 };
+      }
+      // Enough magnification to read the island's own cards, capped so an
+      // eleven-card group is not blown up to the same size as a two-hundred one.
+      const field = refit();
+      const room = Math.min(W, H * 1.6) * 0.42;
+      const scale = Math.max(1.05, Math.min(3.2, room / Math.max(24, island.radius * field)));
+      return { x: island.x, y: island.y, z: 0, scale };
     }
 
     // Screen projection folds the camera yaw into x, so the anchor is derived
@@ -365,7 +313,7 @@
       if (focus.scale === 1) { targetAnchorX = 0; targetAnchorY = 0; targetScale = 1; return; }
       const c = Math.cos(targetRotY), s = Math.sin(targetRotY);
       const xr = focus.x * c + focus.z * s;
-      const fit = Math.min(W / 600, H / 430, 1.25);
+      const fit = refit();
       targetAnchorX = -xr * focus.scale * fit;
       targetAnchorY = -focus.y * focus.scale * fit;
       targetScale = focus.scale;
@@ -379,8 +327,7 @@
       const c = Math.cos(rotY), s = Math.sin(rotY);
       const xr = x * c + z * s, zr = -x * s + z * c;
       const persp = FOV / (FOV + zr);
-      const fit = Math.min(W / 600, H / 430, 1.25);
-      return { sx: W / 2 + xr * scale * fit * persp + anchorX, sy: H / 2 + y * scale * fit * persp + anchorY, persp, zr };
+      return { sx: W / 2 + xr * scale * frameFit * persp + anchorX, sy: H / 2 + y * scale * frameFit * persp + anchorY, persp, zr };
     }
 
     function revealEnabled() {
@@ -397,6 +344,9 @@
       const elapsed = revealEnabled() ? Math.max(0, frameStart - revealStart) : REVEAL.dustMs + REVEAL.starMs;
 
       ctx.clearRect(0, 0, W, H);
+      // One framing evaluation per frame, before anything projects. Deriving the
+      // field extent inside project() would run it 900+ times a frame.
+      refit();
       if (revealEnabled()) {
         rotY += (targetRotY - rotY) * 0.06;
         if (!dragging && !flight && !focusedId && !manuallyRotated) targetRotY = .18 * Math.sin(frameStart * .00006);
@@ -409,7 +359,7 @@
         rotY = flight.fromRot + (flight.toRot - flight.fromRot) * ease;
         targetRotY = flight.toRot;
         const anchor = anchorFor(flight.key);
-        const fit = Math.min(W / 600, H / 430, 1.25);
+        const fit = refit();
         const c = Math.cos(rotY), s = Math.sin(rotY);
         const goalX = anchor.scale === 1 ? 0 : -(anchor.x * c + anchor.z * s) * anchor.scale * fit;
         const goalY = anchor.scale === 1 ? 0 : -anchor.y * anchor.scale * fit;
@@ -447,15 +397,41 @@
         const p = project(star.x, star.y, star.z);
         star.screenX = p.sx; star.screenY = p.sy; star.persp = p.persp; star.zr = p.zr;
         star.viewed = viewed.has(star.id);
+        // The label pass reads the group each card is currently drawn in, so it
+        // can guarantee every island is named instead of labelling whichever
+        // cards happen to sit in the middle of the frame.
+        star.cluster = clusterKeyOf(star);
       }
+      // Island halos sit behind the cards: they are what turns a scatter of
+      // dots into named groups the moment the page paints, before any hover.
+      const islandAnchors = [];
+      for (const island of activeClusters) {
+        const spot = project(island.x, island.y, 0);
+        if (spot.zr > DEPTH_RANGE) continue;
+        islandAnchors.push({ island, ...spot, radius: island.radius * frameFit * scale * spot.persp });
+      }
+      drawIslandHalos(ctx, islandAnchors, island => (!focusedId || cluster === island.key ? 1 : 0.35));
       const shown = stars.filter(visible);
-      const labels = host.selectVisibleLabels?.(shown, { width: W, height: H }, scale, { selectedHerb: selectedId, viewedHerbs: viewed });
+      // Only the cards nearest each island's centre are offered to the label
+      // pass. Every island therefore gets named at least once, and the pass
+      // still decides the final collision-free subset.
+      const byCluster = new Map();
+      for (const star of shown) {
+        const list = byCluster.get(star.cluster);
+        if (list) list.push(star); else byCluster.set(star.cluster, [star]);
+      }
+      const captionCandidates = [];
+      for (const list of byCluster.values()) {
+        list.sort((a, b) => Math.hypot(a.x, a.z) - Math.hypot(b.x, b.z) || String(a.id).localeCompare(String(b.id)));
+        captionCandidates.push(...list.slice(0, 3));
+      }
+      const labels = host.selectVisibleLabels?.(captionCandidates.length ? captionCandidates : shown, { width: W, height: H }, scale, { selectedHerb: selectedId, viewedHerbs: viewed });
       const labelIds = new Set((labels || []).map(item => item.id));
       const alpha = glowAlpha();
       const relatedIds = new Set(focusedId ? layoutApi.relations(layout, focusedId).ids : []);
       const emphasis = star => {
         if (focusedId) return star.id === focusedId || relatedIds.has(star.id) ? 1 : .18;
-        if (cluster !== CLUSTER_ALL) return clusterOf(star.herb) === cluster ? 1 : .16;
+        if (cluster !== CLUSTER_ALL) return clusterKeyOf(star) === cluster ? 1 : .16;
         return 1;
       };
 
@@ -524,7 +500,7 @@
           ctx.fillStyle = hovered ? '#F3D9A0' : 'rgba(232,224,207,.82)';
           ctx.font = hovered ? '600 12px "Noto Sans SC",sans-serif' : '400 11px "Noto Sans SC",sans-serif';
           ctx.textAlign = 'center';
-          ctx.fillText(star.name, star.screenX, star.screenY - core * 3.6);
+          if (star.herb?.name) ctx.fillText(star.herb.name, star.screenX, star.screenY - core * 3.6);
         }
         if (star.viewed || focusedId === star.id) {
           ctx.strokeStyle = '#F0CA77'; ctx.lineWidth = 1.2; ctx.globalAlpha = 0.85;
@@ -533,6 +509,16 @@
         }
       }
       if (webgl) { try { webgl.render(particles, W, H); } catch (_) { fallback('增强画面中断，已恢复基础星图'); } }
+
+      // Captions last so no star can cover a name. The name is the group's own
+      // label from the data, and the count is the cards actually shown.
+      captionsDrawn = drawIslandCaptions(ctx, islandsWithCards(islandAnchors, shown), W, H, {
+        labelOf: island => CLUSTER_LABELS[island.key] || island.key,
+        activeKey: cluster,
+        focused: Boolean(focusedId)
+      }) || [];
+      const aimed = islandAnchors.find(anchor => anchor.island.key === cluster);
+      aimedAt = aimed ? { key: aimed.island.key, x: aimed.sx, y: aimed.sy, radius: aimed.radius } : null;
 
       const frameMs = performance.now() - frameStart;
       renderMs = frameMs;
@@ -555,11 +541,15 @@
 
     function hitTest(mx, my) {
       let best = null, bestDistance = 1e9;
+      // The picking radius shrinks as the field is magnified: at four times the
+      // scale a card is fifteen screen pixels across, and a fixed radius would
+      // swallow its neighbours long before the viewer could aim between them.
+      const reach = Math.max(8, Math.min(16, 16 * frameFit));
       for (const star of stars) {
         if (!visible(star)) continue;
         if (star.zr > DEPTH_RANGE) continue;
         const blur = degradeLevel >= 1 ? 0 : depthBlur(star.zr);
-        const radius = Math.max(10, star.size * star.persp * scale * 3.4) * (1 + blur * 0.6);
+        const radius = Math.max(reach, star.size * star.persp * scale * frameFit * 2.4) * (1 + blur * 0.6);
         const distance = Math.hypot(mx - star.screenX, my - star.screenY);
         if (distance < radius && distance < bestDistance) { bestDistance = distance; best = star; }
       }
@@ -700,11 +690,12 @@
         setRelationPositions(); invalidate();
       },
       setFilter(category = '', regions = []) { categoryFilter = category; regionFilters = new Set(regions); invalidate(); return stars.filter(visible).length; },
-      // Cluster travel: choosing a recorded region regroups the sky by that
-      // reading and flies the camera to the group, so the destination is a
-      // place in the map rather than a filter over it.
+      // Cluster travel: choosing a group regroups the sky by that reading and
+      // flies the camera to the group, so the destination is a place in the map
+      // rather than a filter over it.
       flyTo(key = CLUSTER_ALL) {
-        const next = key === CLUSTER_ALL || stars.some(star => clusterOf(star.herb) === key) ? key : CLUSTER_ALL;
+        syncLayout();
+        const next = key === CLUSTER_ALL || activeClusters.some(island => island.key === key) ? key : CLUSTER_ALL;
         focusedId = null; manuallyRotated = true; flight = null;
         categoryFilter = ''; regionFilters.clear();
         if (next === CLUSTER_ALL) {
@@ -762,6 +753,9 @@
           renderCostMs: Math.round(renderMs * 100) / 100, visibleCount: stars.filter(visible).length,
           nodeCount: stars.length, categoryFilter, regions: [...regionFilters], roam, focusedId, cluster,
           flight: Boolean(flight),
+          // 名录与被瞄准的岛：截图看不见的东西（哪个分组拿到了名录、穿梭后相机
+          // 是否真的停在目标岛上）只有报出来才能被浏览器用例断言。
+          captions: captionsDrawn, aimedAt, frameWidth: W, frameHeight: H,
           trailCount: trailsEnabled ? trails.length : 0,
           clusters: clusterCounts(),
           paletteCount: new Set(stars.map(s => s.color)).size,
@@ -809,7 +803,9 @@
     ETHNIC_COLOR,
     DIM_COLOR,
     GLOW_ALPHA_BY_THEME,
-    REVEAL
+    REVEAL,
+    TRAVEL_LIMIT,
+    FRAME_MAX
   };
   if (typeof window !== 'undefined') window.HerbalCosmosEngine = api;
   return api;

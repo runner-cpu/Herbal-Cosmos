@@ -42,6 +42,75 @@ test('the star map exposes its readings with a single pressed state', async ({ p
   await expect(page.locator('#cosmosReadingLegend')).toBeHidden();
 });
 
+test('every island is named on the canvas and the names never overlap', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'The caption layer is one canvas geometry; one desktop project is enough.');
+  await page.goto('/?renderer=canvas#/home');
+  await expect.poll(() => page.evaluate(() => Boolean(window.__HERBAL_DEBUG__?.cosmosPerf)), { timeout: 10_000 }).toBeTruthy();
+  // 首屏揭示结束后再读，否则读到的是动画中间态。
+  await page.waitForTimeout(2600);
+
+  const report = await page.evaluate(() => {
+    const perf = window.__HERBAL_DEBUG__.cosmosPerf();
+    return { captions: perf.captions, width: perf.frameWidth, height: perf.frameHeight, clusters: perf.clusters };
+  });
+
+  // 每个分组都要有名字：星图的价值就在于不旋转也能读出这是什么、有多少张。
+  expect(report.captions.length).toBe(report.clusters.length);
+  expect(new Set(report.captions.map(entry => entry.key))).toEqual(new Set(report.clusters.map(cluster => cluster.key)));
+  for (const entry of report.captions) {
+    const cluster = report.clusters.find(item => item.key === entry.key);
+    expect(entry.label, 'the name comes from the data, not from invented copy').toBe(cluster.label + ' ' + entry.shown);
+    expect(entry.shown, entry.label + ' must report the cards actually on screen').toBe(cluster.count);
+    expect(entry.shown).toBeGreaterThan(0);
+    // 名牌必须落在画布内，否则最外侧的星团名字会被裁掉。
+    expect(entry.x - entry.width / 2 - 5).toBeGreaterThanOrEqual(0);
+    expect(entry.x + entry.width / 2 + 5).toBeLessThanOrEqual(report.width);
+    expect(entry.y).toBeGreaterThanOrEqual(14);
+    expect(entry.y).toBeLessThanOrEqual(report.height);
+  }
+  // 两块牌子叠在一起就等于都读不出来。
+  for (let i = 0; i < report.captions.length; i++) for (let j = i + 1; j < report.captions.length; j++) {
+    const a = report.captions[i], b = report.captions[j];
+    const apart = Math.abs(a.x - b.x) >= a.width / 2 + b.width / 2 + 10 || Math.abs(a.y - b.y) >= 17;
+    expect(apart, a.label + ' must not sit on top of ' + b.label).toBe(true);
+  }
+});
+
+test('travel lands the camera on the chosen island and brightens its name', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'One desktop project is enough to verify the flight target.');
+  await page.goto('/?renderer=canvas#/home');
+  await expect.poll(() => page.evaluate(() => Boolean(window.__HERBAL_DEBUG__?.cosmosPerf)), { timeout: 10_000 }).toBeTruthy();
+  await page.waitForTimeout(2600);
+
+  const buttons = page.locator('#cosmosControls [data-cosmos-cluster]');
+  await expect(buttons).not.toHaveCount(0);
+  const target = (await buttons.first().getAttribute('data-cosmos-cluster'));
+  await buttons.first().click();
+  await expect.poll(async () => (await readingState(page)).perf.flight, { timeout: 8_000 }).toBe(false);
+  await expect.poll(async () => (await readingState(page)).perf.cluster).toBe(target);
+
+  const landed = await page.evaluate(() => {
+    const perf = window.__HERBAL_DEBUG__.cosmosPerf();
+    return { aimed: perf.aimedAt, captions: perf.captions, width: perf.frameWidth, height: perf.frameHeight };
+  });
+  expect(landed.aimed?.key).toBe(target);
+  // 穿梭的意义是目的地落在观众眼前，而不是仅仅高亮了一组卡片。
+  expect(Math.abs(landed.aimed.x - landed.width / 2) / landed.width).toBeLessThan(0.08);
+  expect(Math.abs(landed.aimed.y - landed.height / 2) / landed.height).toBeLessThan(0.08);
+  const active = landed.captions.filter(entry => entry.active);
+  expect(active.map(entry => entry.key)).toEqual([target]);
+  await expect(page.locator('#cosmosControls [data-cosmos-cluster="' + target + '"]')).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('the reading and travel controls are not buried behind a collapsed panel', async ({ page }) => {
+  await page.goto('/#/home');
+  // 「点选星辰读档案」之后的两个决定（怎么读、去哪个星团）必须直接可见。
+  await expect(page.locator('#cosmosControls [data-cosmos-readings]')).toBeVisible();
+  await expect(page.locator('.cosmos-select-hint')).toBeVisible();
+  await expect(page.locator('#cosmosControls [data-cosmos-clusters]')).toBeVisible();
+  await expect(page.locator('.cosmos-settings')).not.toHaveAttribute('open', '');
+});
+
 test('the reading selection survives a reload even without the ethnic reading', async ({ page }) => {
   await page.goto('/#/home');
   await page.locator('[data-cosmos-collapse]').click();

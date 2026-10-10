@@ -20,6 +20,14 @@ test('refactored page references external CSS and runtime modules in order', () 
   for (const reference of result.references.filter(asset => /^assets\/js\/(?:components|pages|core\/catalog-loader)/.test(asset))) {
     assert.match(reference, /\.browser\.js$/, reference + ' must be a browser runtime copy');
   }
+  // 星图的三支 classic script 不在 .browser.js 命名空间里，但它们的相对顺序是
+  // 真实契约：几何 → 场景词汇 → 引擎，顺序错了引擎会直接抛错。
+  const atlas = [...html.matchAll(/<script[^>]*src="(assets\/js\/pages\/cosmos(?!\.browser)[^"?]*)/g)].map(match => match[1]);
+  assert.deepEqual(atlas, [
+    'assets/js/pages/cosmos-layout.js',
+    'assets/js/pages/cosmos-scene.js',
+    'assets/js/pages/cosmos-engine.js'
+  ]);
 });
 
 test('checker rejects a large inline runtime block', () => {

@@ -427,7 +427,9 @@ function renderHerbs(){
   const qis = [...new Set(KNOWLEDGE_HERBS.map(h=>h.qi).filter(v=>v&&v!=='未录入'))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
   const weiValues = [...new Set(KNOWLEDGE_HERBS.flatMap(h=>weiTokens(h.wei)))];
   const compositeValues = [...new Set(KNOWLEDGE_HERBS.map(h=>String(h.wei||'').trim()).filter(v=>isCompositeWei(v)))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
-  const cats = [...new Set(KNOWLEDGE_HERBS.map(h=>h.cat).filter(v=>v&&v!=='未分类'&&v!=='未录入'))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+  // 「未分类」也要进筛选列表：21 张卡只归在这一档，排除它就等于让这些卡在
+  // 图鉴里没有任何可点的入口，只能靠星图逐颗点开。
+  const cats = [...new Set(KNOWLEDGE_HERBS.map(h=>h.cat).filter(v=>v&&v!=='未录入'))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
   const renderSelect=(id, label, values, current, composite=[])=>{
     const el=$('#'+id); if(!el)return;
     const options=['<option value="">全部'+label+'</option>',...values.map(v=>`<option value="${esc(v)}">${esc(v)}</option>` )];
@@ -1220,7 +1222,12 @@ themeToggle.addEventListener('click',()=>{
 updateThemeControl();
 const hero=document.querySelector('.hero');
 if(hero) hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--spot-x',`${((e.clientX-r.left)/r.width)*100}%`);hero.style.setProperty('--spot-y',`${((e.clientY-r.top)/r.height)*100}%`);});
-document.querySelectorAll('[data-scroll-down]').forEach(button=>button.addEventListener('click',()=>{document.querySelector('.evidence-rail')?.scrollIntoView({behavior:'smooth',block:'start'});}));
+document.querySelectorAll('[data-scroll-down]').forEach(button=>button.addEventListener('click',()=>{
+  // 「向下探索」的落点是首页百子柜。旧锚点 `.evidence-rail` 只存在于图鉴的
+  // 来源区、在首页永远 hidden，等于这个按钮点了不动。
+  const target=document.querySelector('#apothecary')||document.querySelector('[data-route="home"] .hero-bottom');
+  target?.scrollIntoView({behavior:'smooth',block:'start'});
+}));
 document.querySelectorAll('[data-learn-mode]').forEach(button=>button.addEventListener('click',()=>{
   const mode=button.dataset.learnMode;
   document.querySelectorAll('[data-learn-mode]').forEach(b=>{const on=b===button;b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on));});

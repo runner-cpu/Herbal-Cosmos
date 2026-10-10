@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v24-20261010-apothecary';
+const CACHE_VERSION = 'herbal-cosmos-v25-20261010-island-cosmos';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -27,6 +27,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/data/exhibition-cases.js',
   './assets/js/pages/exhibition.js',
   './assets/js/pages/cosmos-layout.js',
+  './assets/js/pages/cosmos-scene.js',
   './assets/js/pages/apothecary-layout.js',
   './assets/js/exhibition-effects.js',
   './assets/js/lib/culture-semantics.js',

@@ -25,9 +25,14 @@ export function effectLegendMarkup() {
 
 export const READING_LABELS = { category: '资料分类', geography: '文献分布', nature: '药性', ethnic: '民族对照' };
 
-// Cluster travel is offered as the literature regions this archive actually
-// records. The buttons are filled from the mounted engine, so a region with no
-// card never appears as a destination.
+/* The island the viewer can travel to. Offered for the groups big enough to be
+   a destination; the long tail of one-card categories is reachable by搜索 and by
+   the category filter rather than by a trip button nobody needs. */
+export const TRAVEL_LIMIT = 6;
+
+// Cluster travel is offered as the groups the archive actually records. The
+// buttons are filled from the mounted engine, so a group with no card never
+// appears as a destination, and the list follows the live 读法.
 export function clusterControlsMarkup() {
   return '<div class="cosmos-clusters" role="group" aria-label="星团穿梭" data-cosmos-clusters data-empty="true"></div>';
 }
@@ -55,16 +60,21 @@ export function readingControlsMarkup(readings = availableReadings()) {
     + '</div>';
 }
 
+/* The first screen is the sky itself. Which reading colours it and which group
+   the camera travels to are the two decisions a visitor actually makes, so they
+   stay open; everything that only adjusts the drawing (category filter, region
+   checkboxes, colour and motion switches, legend) stays folded away. */
 export function cosmosControlsMarkup() {
-  return '<details class="cosmos-settings"><summary data-cosmos-collapse>读法与显示</summary>'
+  return '<div class="cosmos-toolbar"><button type="button" data-cosmos-roam aria-pressed="false">进入漫游</button><button type="button" data-cosmos-find>搜索本草</button><output data-cosmos-count aria-live="polite"></output></div>'
+    + '<p class="cosmos-select-hint">点选星辰读档案；跨类连线表示同一首收录方剂中的共同组成。</p>'
     + readingControlsMarkup()
     + clusterControlsMarkup()
+    + '<details class="cosmos-settings"><summary data-cosmos-collapse>细化筛选与显示</summary>'
     + '<label class="cosmos-category">资料分类 <select data-cosmos-category aria-label="星图资料分类"><option value="">全部知识卡</option></select></label>'
     + '<fieldset data-cosmos-regions hidden><legend>选择分布区域（可多选）</legend></fieldset>'
     + '<div class="cosmos-actions"><button type="button" data-cosmos-color aria-pressed="false">统一色</button><button type="button" data-cosmos-motion aria-pressed="true">动效开</button><button type="button" data-cosmos-zoom="-.2" aria-label="缩小星图">−</button><button type="button" data-cosmos-zoom=".2" aria-label="放大星图">＋</button></div>'
     + '<p class="cosmos-legend" data-cosmos-legend>每一颗可选星辰对应一张本草知识卡。</p></details>'
     + '<p class="cosmos-legend" id="cosmosReadingLegend" hidden></p>'
-    + '<p class="cosmos-select-hint">点选星辰读档案；跨类连线表示同一首收录方剂中的共同组成。</p><div class="cosmos-toolbar"><button type="button" data-cosmos-roam aria-pressed="false">进入漫游</button><button type="button" data-cosmos-find>搜索本草</button><output data-cosmos-count aria-live="polite"></output></div>'
     + '<p data-cosmos-renderer class="cosmos-renderer-status" role="status">基础星图</p>';
 }
 
@@ -187,12 +197,13 @@ function initCosmos() {
       window.HerbalNebula?.setRoam(enabled); roamButton.setAttribute('aria-pressed', String(enabled));
       roamButton.textContent = enabled ? '退出漫游' : '进入漫游';
     });
-    // 星团穿梭按钮由引擎按实际收录的分区生成，避免出现空目的地。
+    // 星团穿梭按钮由引擎按当前读法实际存在的分组生成，避免出现空目的地。
+    // 只保留够大的分组：二十八个资料分类里一半只有一两个抽屉，把它们都做成
+    // 目的地只会让这一行变成噪声。
     const clusterHost = controls.querySelector('[data-cosmos-clusters]');
     let clusterButtons = [];
-    function drawClusterButtons() {
+    function drawClusterButtons(items) {
       if (!clusterHost) return;
-      const items = window.HerbalNebula?.clusters?.() || [];
       clusterHost.dataset.empty = String(items.length === 0);
       clusterHost.innerHTML = items.map(item => clusterButtonMarkup(item)).join('');
       clusterButtons = [...clusterHost.querySelectorAll('[data-cosmos-cluster]')];
@@ -201,11 +212,16 @@ function initCosmos() {
         flyToCluster(button.getAttribute('aria-pressed') === 'true' ? 'all' : key);
       }));
     }
+    function travelDestinations() {
+      const items = window.HerbalNebula?.clusters?.() || [];
+      return items.length <= TRAVEL_LIMIT ? items : items.slice(0, TRAVEL_LIMIT);
+    }
     function syncClusterButtons() {
       if (!clusterHost) return;
-      // 数量签名只在引擎重建星辰后才变；重建时才重绘按钮，避免每次交互都改 DOM。
-      const signature = (window.HerbalNebula?.clusters?.() || []).map(item => item.key + ':' + item.count).join('|');
-      if (clusterHost.dataset.signature !== signature) { clusterHost.dataset.signature = signature; drawClusterButtons(); }
+      const items = travelDestinations();
+      // 数量签名只在引擎重建分组后才变；重建时才重绘按钮，避免每次交互都改 DOM。
+      const signature = items.map(item => item.key + ':' + item.count).join('|');
+      if (clusterHost.dataset.signature !== signature) { clusterHost.dataset.signature = signature; drawClusterButtons(items); }
       const current = window.HerbalNebula?.perf?.().cluster || 'all';
       clusterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.cosmosCluster === current)));
     }
