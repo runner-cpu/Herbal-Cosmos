@@ -15,6 +15,8 @@ const REQUIRED_FILES = [
 export const RESOURCE_LIMITS = Object.freeze({
   'assets/vendor/echarts.min.js': 1_100_000,
   'assets/vendor/cosmos-webgl.js': 550_000,
+  // The drawer wall is an on-demand layer and carries its own budget.
+  'assets/vendor/apothecary-webgl.js': 560_000,
   // The curated layer is split into bounded evidence chunks so the first paint
   // and forge API requests never depend on one oversized generated file.
   'assets/js/data/expanded.bootstrap.js': 20_000,

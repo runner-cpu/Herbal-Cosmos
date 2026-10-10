@@ -1,0 +1,56 @@
+/* ============ 百子柜（抽屉墙） ============ */
+.apothecary{position:relative;margin:0;padding:0;background:radial-gradient(120% 90% at 50% 0%,#1B120A 0%,#0D0906 62%,#080503 100%);border-top:1px solid rgba(232,193,121,.18);border-bottom:1px solid rgba(232,193,121,.18);overflow:hidden}
+.apothecary-head{max-width:1260px;margin:0 auto;padding:46px 24px 0;color:#EFE3CB}
+.apothecary-head .section-heading-row span{color:#D9B061}
+.apothecary-head .section-heading-row h2{font-family:var(--serif);color:#F5EAD2;font-size:28px;line-height:1.35;margin:6px 0}
+.apothecary-head .section-heading-row a{color:#E8C179;text-decoration:underline;text-underline-offset:4px;font-size:13px}
+.apothecary-intro{max-width:82ch;margin:12px 0 0;font-size:13.5px;line-height:1.95;color:#C6B79C}
+.apothecary-stage{position:relative;min-height:min(74vh,640px);margin-top:22px}
+#apothecaryCanvas{display:block;width:100%;height:min(74vh,640px);touch-action:manipulation;cursor:crosshair}
+#apothecaryCanvas[data-renderer="apothecary"]:focus-visible{outline:2px solid #E8C179;outline-offset:2px}
+.apothecary-status{margin:0;padding:10px 24px;font-size:12px;letter-spacing:.5px;color:#A9967B}
+.apothecary-stage[data-mode="flat"] #apothecaryCanvas{display:none}
+.apothecary-stage[data-mode="flat"]{min-height:0}
+
+.apothecary-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;max-width:1260px;margin:0 auto;padding:0 24px 14px}
+.apothecary-search{flex:1 1 240px;min-width:0}
+.apothecary-search input{width:100%;min-height:44px;padding:9px 13px;font:inherit;font-size:13px;color:#F3EDDF;background:rgba(28,20,12,.9);border:1px solid rgba(232,193,121,.34);border-radius:6px;caret-color:#E8C179}
+.apothecary-search input::placeholder{color:#9C8C74}
+.apothecary-chips{display:flex;flex-wrap:wrap;gap:7px}
+.apothecary-chips button{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:7px 12px;font-size:12px;color:#E4D8BF;background:rgba(30,21,12,.86);border:1px solid rgba(232,193,121,.26);border-radius:999px}
+.apothecary-chips button:hover{border-color:rgba(232,193,121,.6)}
+.apothecary-chips button[aria-pressed="true"]{background:#D0A24C;border-color:#D0A24C;color:#2C2013;font-weight:600}
+.apothecary-chips i{display:inline-block;width:8px;height:8px;border-radius:50%}
+.apothecary-chips b{font-weight:400;font-size:11px;font-variant-numeric:tabular-nums}
+.apothecary-chips button[aria-pressed="true"] b{color:#4A3A18}
+.apothecary-count{margin-left:auto;font-size:12px;color:#BCA98B;font-variant-numeric:tabular-nums}
+
+.apothecary-readout{position:absolute;left:50%;bottom:78px;transform:translateX(-50%);width:min(430px,calc(100% - 40px));padding:18px 20px;color:#F3EDDF;background:rgba(16,11,7,.95);border:1px solid rgba(232,193,121,.4);border-radius:10px;box-shadow:0 18px 46px rgba(0,0,0,.5);backdrop-filter:blur(4px)}
+.apothecary-readout[hidden]{display:none}
+.apothecary-kicker{margin:0;font-size:11px;letter-spacing:2px;color:#D9B061}
+.apothecary-readout h3{margin:5px 0 8px;font-family:var(--serif);font-size:27px;line-height:1.25;color:#F7EDD8}
+.apothecary-attrs{margin:0 0 8px;font-size:12.5px;color:#DCD0B6}
+.apothecary-note{margin:0;font-size:12px;line-height:1.8;color:#B4A489}
+.apothecary-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.apothecary-actions a,.apothecary-actions button{min-height:42px;padding:9px 16px;font-size:13px;border-radius:6px}
+.apothecary-actions a{display:inline-flex;align-items:center;background:#D0A24C;color:#2C2013;font-weight:600}
+.apothecary-actions button{background:transparent;color:#E8C179;border:1px solid rgba(232,193,121,.46)}
+.apothecary-actions button:hover,.apothecary-actions a:hover{filter:brightness(1.08)}
+
+@media(max-width:1024px){
+  .apothecary-head{padding:34px 18px 0}
+  .apothecary-head .section-heading-row{display:block}
+  .apothecary-head .section-heading-row h2{font-size:23px}
+  .apothecary-controls{padding:0 18px 12px}
+  .apothecary-count{margin-left:0;width:100%}
+  .apothecary-stage,#apothecaryCanvas{min-height:min(58vh,460px);height:min(58vh,460px)}
+  .apothecary-readout{position:static;transform:none;width:auto;margin:0 18px 18px}
+}
+@media(max-width:600px){
+  #apothecaryCanvas,.apothecary-stage{min-height:min(52vh,380px);height:min(52vh,380px)}
+  .apothecary-chips button{min-height:44px}
+  .apothecary-readout h3{font-size:23px}
+}
+@media(prefers-reduced-motion:reduce){
+  .apothecary-actions a:hover,.apothecary-actions button:hover{filter:none}
+}

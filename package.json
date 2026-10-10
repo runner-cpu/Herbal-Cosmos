@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build:cosmos": "node scripts/build-cosmos-renderer.mjs",
+    "build:apothecary": "node scripts/build-apothecary-renderer.mjs",
     "build:catalog": "node scripts/build-herb-catalog.mjs",
     "build:food": "node scripts/build-food-medicine.mjs",
     "build:expanded": "node scripts/build-expanded-data.mjs",

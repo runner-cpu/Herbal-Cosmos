@@ -76,3 +76,18 @@ test('concurrent warm-up and chart fetch share one download with separate readab
   assert.equal(await responses[1].text(), 'chart-code');
   assert.equal(await responses[2].text(), 'chart-code');
 });
+
+test('the drawer wall renderer keeps its own pinned warm-up and fetch rule', async () => {
+  const worker = workerHarness();
+  const apothecaryUrl = 'https://example.test/exhibition/assets/vendor/apothecary-webgl.js';
+  const rendererUrl = 'https://example.test/exhibition/assets/vendor/cosmos-webgl.js';
+  await worker.warm({ type: 'CACHE_APOTHECARY', url: 'https://unrelated.test/other.js' });
+  assert.deepEqual(worker.downloads, [apothecaryUrl], 'the warm-up never accepts a client URL');
+  await worker.warm({ type: 'CACHE_APOTHECARY' });
+  assert.deepEqual(worker.downloads, [apothecaryUrl], 'a cached renderer does not download again');
+  assert.equal(await (await worker.request(apothecaryUrl)).text(), 'chart-code');
+  // 两个按需渲染器各自独立：热了柜子不等于替用户热了星图。
+  assert.equal(worker.downloads.includes(rendererUrl), false);
+  await worker.warm({ type: 'CACHE_RENDERER' });
+  assert.deepEqual(worker.downloads, [apothecaryUrl, rendererUrl]);
+});

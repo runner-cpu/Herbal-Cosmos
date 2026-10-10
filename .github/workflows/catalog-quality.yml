@@ -25,6 +25,8 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run build:cosmos
       - run: git diff --exit-code -- assets/vendor/cosmos-webgl.js
+      - run: npm run build:apothecary
+      - run: git diff --exit-code -- assets/vendor/apothecary-webgl.js
       - run: npm run build:data
       - run: git diff --exit-code -- data/ reports/ assets/js/data
       - run: npm run build:browser

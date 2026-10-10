@@ -35,6 +35,7 @@ const REQUIRED_ASSETS = [
   'assets/js/charts/insights.js',
   'assets/js/pages/cross-navigation.browser.js',
   'assets/js/pages/cosmos.browser.js',
+  'assets/js/pages/apothecary.browser.js',
   'assets/js/core/catalog-loader.browser.js',
   'assets/js/beautify.js',
   'assets/js/core/app-shell.js'

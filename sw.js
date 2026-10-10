@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v23-20261009-cosmos-clusters';
+const CACHE_VERSION = 'herbal-cosmos-v24-20261010-apothecary';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';
@@ -22,10 +22,12 @@ const PRECACHE_URLS = Object.freeze([
   './assets/css/cultural-charts.css',
   './assets/css/journey.css',
   './assets/css/exhibition.css',
+  './assets/css/apothecary.css',
   './assets/js/core/exhibition-router.js',
   './assets/js/data/exhibition-cases.js',
   './assets/js/pages/exhibition.js',
   './assets/js/pages/cosmos-layout.js',
+  './assets/js/pages/apothecary-layout.js',
   './assets/js/exhibition-effects.js',
   './assets/js/lib/culture-semantics.js',
   './assets/js/lib/culture-learning.js',
@@ -62,6 +64,7 @@ const PRECACHE_URLS = Object.freeze([
   './assets/js/pages/formula-directory.browser.js',
   './assets/js/pages/cross-navigation.browser.js',
   './assets/js/pages/cosmos.browser.js',
+  './assets/js/pages/apothecary.browser.js',
   './assets/js/charts/insights.js',
   './assets/js/beautify.js',
   './workers/catalog-search.js',
@@ -74,6 +77,9 @@ const APP_ENTRY_PATHS = new Set(['./', './index.html'].map(value => new URL(valu
 const ECHARTS_URL = new URL('./assets/vendor/echarts.min.js', self.registration.scope).href;
 const ECHARTS_PATH = new URL(ECHARTS_URL).pathname;
 const RENDERER_PATH = new URL('./assets/vendor/cosmos-webgl.js', self.registration.scope).pathname;
+// The drawer wall owns a second on-demand renderer; same cache-first rule, own budget.
+const APOTHECARY_URL = new URL('./assets/vendor/apothecary-webgl.js', self.registration.scope).href;
+const APOTHECARY_PATH = new URL(APOTHECARY_URL).pathname;
 const VENDOR_INFLIGHT = new Map();
 
 self.addEventListener('install', event => {
@@ -96,6 +102,9 @@ self.addEventListener('message', event => {
   }
   if (event.data?.type === 'CACHE_RENDERER') {
     event.waitUntil(cacheVisitedVendor(new URL('./assets/vendor/cosmos-webgl.js', self.registration.scope).href).catch(() => undefined));
+  }
+  if (event.data?.type === 'CACHE_APOTHECARY') {
+    event.waitUntil(cacheVisitedVendor(APOTHECARY_URL).catch(() => undefined));
   }
 });
 
@@ -201,7 +210,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(networkFirstNavigation(request));
     return;
   }
-  if (url.pathname === ECHARTS_PATH || url.pathname === RENDERER_PATH) {
+  if (url.pathname === ECHARTS_PATH || url.pathname === RENDERER_PATH || url.pathname === APOTHECARY_PATH) {
     event.respondWith(cacheVisitedVendor(request));
     return;
   }

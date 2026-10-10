@@ -18,6 +18,7 @@ const pairs = [
   'pages/formula-directory',
   'pages/cross-navigation',
   'pages/cosmos',
+  'pages/apothecary',
   'core/catalog-loader'
 ];
 

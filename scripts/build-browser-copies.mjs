@@ -14,6 +14,7 @@ export const BROWSER_COPY_PAIRS = Object.freeze([
   ['assets/js/pages/formula-directory.js', 'assets/js/pages/formula-directory.browser.js'],
   ['assets/js/pages/cross-navigation.js', 'assets/js/pages/cross-navigation.browser.js'],
   ['assets/js/pages/cosmos.js', 'assets/js/pages/cosmos.browser.js'],
+  ['assets/js/pages/apothecary.js', 'assets/js/pages/apothecary.browser.js'],
   ['assets/js/core/catalog-loader.js', 'assets/js/core/catalog-loader.browser.js']
 ]);
 

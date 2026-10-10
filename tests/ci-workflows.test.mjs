@@ -26,5 +26,10 @@ test('pages smoke waits for gh-pages and verifies the deployed shell version', (
   assert.match(smoke, /HERBAL_DATA_VERSION/);
   assert.match(smoke, /uses:\s*actions\/checkout@v4/);
   assert.match(smoke, /CACHE_VERSION/);
+  // 按需的两层渲染器都要真的能取到：缺席时线上会静默退回平面列表。
+  assert.match(smoke, /cosmos-webgl\.js/);
+  assert.match(smoke, /apothecary-webgl\.js/);
+  assert.match(smoke, /apothecary-layout\.js/);
+  assert.match(smoke, /HerbalApothecaryLayout/);
   assert.equal(smoke.includes('herbal-cosmos-v'), false, 'smoke must read the version from sw.js instead of hard-coding it');
 });

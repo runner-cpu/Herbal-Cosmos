@@ -37,6 +37,8 @@ jobs:
             router=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/core/exhibition-router.js?sha=${GITHUB_SHA}" || true)
             exhibition=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/pages/exhibition.js?sha=${GITHUB_SHA}" || true)
             renderer_status=$(curl --silent --show-error --location --max-time 20 --write-out '%{http_code}' --output /tmp/herbal-renderer.js "${site}assets/vendor/cosmos-webgl.js?sha=${GITHUB_SHA}" || true)
+            apothecary_status=$(curl --silent --show-error --location --max-time 20 --write-out '%{http_code}' --output /tmp/herbal-apothecary.js "${site}assets/vendor/apothecary-webgl.js?sha=${GITHUB_SHA}" || true)
+            layout=$(curl --fail --silent --show-error --location --max-time 20 "${site}assets/js/pages/apothecary-layout.js?sha=${GITHUB_SHA}" || true)
             worker=$(curl --fail --silent --show-error --location --max-time 20 "${site}sw.js?sha=${GITHUB_SHA}" || true)
             missing=$(curl --silent --show-error --location --max-time 20 --write-out '%{http_code}' --output /tmp/herbal-404.html "${site}definitely-not-a-page-${GITHUB_SHA}" || true)
             if grep -q '本草宇宙' <<<"$html" \
@@ -45,8 +47,11 @@ jobs:
               && grep -q 'HerbalCosmosEngine' <<<"$engine" \
               && grep -q 'HerbalExhibitionRouter' <<<"$router" \
               && grep -q 'HerbalExhibition' <<<"$exhibition" \
+              && grep -q 'HerbalApothecaryLayout' <<<"$layout" \
               && [[ "$renderer_status" == '200' ]] \
               && test -s /tmp/herbal-renderer.js \
+              && [[ "$apothecary_status" == '200' ]] \
+              && test -s /tmp/herbal-apothecary.js \
               && grep -q "$expected" <<<"$worker" \
               && grep -q '此页未入卷' /tmp/herbal-404.html \
               && [[ "$missing" == '404' ]]; then
