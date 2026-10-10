@@ -1,7 +1,7 @@
-/* 星云引擎 V2：光晕精灵预渲染 + 加色混合 + 景深 + 四种读法。
+/* 星云引擎 V3：球面粒子星球 + 光晕精灵预渲染 + 加色混合 + 球面景深 + 四种读法。
  * 与 runtime.js 解耦：几何、绘制、交互都收在这里，宿主只提供数据与回调。
  * 关键优化：把每帧 902 次 createRadialGradient 换成一次性的离屏精灵 + drawImage。
- * 分区映射、配色与景深数学在 cosmos-scene.js；岛屿几何在 cosmos-layout.js。
+ * 分区映射、配色与景深数学在 cosmos-scene.js；球面几何在 cosmos-layout.js。
  * 两者都先于本文件加载，缺失即视为装配错误。以 classic script 形式加载
  * （与 culture.js / insights.js 一致），暴露 window.HerbalCosmosEngine。 */
 (function () {
@@ -12,15 +12,20 @@
   const {
     REGION_OF_PROVINCE, REGION_COLORS, QI_COLORS, UNIFORM_COLOR, ETHNIC_COLOR, DIM_COLOR,
     NO_REGION, CLUSTER_ALL, READING_MODES, READING_LABELS, CLUSTER_LABELS, DEFAULT_READING,
-    GLOW_SIZE, GLOW_ALPHA_BY_THEME, DEPTH_RANGE, FOV, REVEAL, TRAIL_SAME, TRAIL_CROSS,
+    GLOW_SIZE, GLOW_ALPHA_BY_THEME, DEPTH_RANGE, FOV, SPHERE_RADIUS, SPHERE_SHELL, SPHERE_EXTENT, BACK_FADE, TILT_LIMIT,
+    CORE_SCALE, HALO_SCALE,
+    REVEAL, TRAIL_SAME, TRAIL_CROSS,
     FLY_MS, FRAME_MARGIN, FRAME_PAD, FRAME_MAX, TRAVEL_LIMIT,
     hexWithAlpha, regionOf, regionsOf, clusterOf, colorForReading, legendFor, particleBudget,
-    depthBlur, dustReveal, starReveal, createGlowSprite, supported,
-    drawIslandHalos, drawIslandCaptions, islandsWithCards
+    depthBlur, nearness, backFade, facingRotation, facingTilt, clampTilt, focusFor, makeDustShell,
+    dustReveal, starReveal, createGlowSprite, supported,
+    drawConstellationHalos, drawConstellationLabels, constellationsWithCards
   } = vocabulary;
-  // Herb-to-herb trails come from recorded prescriptions. Sampling keeps the
-  // line layer inside the frame budget without dropping the network's shape.
+  // Trails come from recorded prescriptions; sampling keeps the line layer
+  // inside the frame budget without dropping the network's shape.
   const TRAIL_LIMIT = 420;
+  const TAU = Math.PI * 2;
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
   function mount(canvas, host = {}) {
     const ctx = canvas.getContext('2d');
@@ -39,7 +44,7 @@
 
     let W = 0, H = 0, DPR = 1;
     let stars = [], dust = [];
-    let rotY = 0, targetRotY = 0, scale = 1, targetScale = 1;
+    let rotY = 0, targetRotY = 0, rotX = 0, targetRotX = 0, scale = 1, targetScale = 1;
     let dragging = false, lastX = 0, lastY = 0, moved = 0;
     let hoverId = null, focusedId = null;
     let running = false, animationFrame = 0, lastFrameAt = 0, disposed = false;
@@ -57,13 +62,12 @@
     let trailsEnabled = host.trails !== false;
     let cluster = CLUSTER_ALL;
     let flight = null;
-    // 上一帧名录层落笔的条目与被瞄准的岛在屏幕上的位置：让「每个分组都有名录」
-    // 和「穿梭后停在目标岛」可被断言，而不是只能靠肉眼看截图。
+    // 上一帧名牌层落笔的条目与被瞄准的星座在屏幕上的位置：让「每个分组都有名牌」
+    // 和「穿梭后停在目标星座」可被断言，而不是只能靠肉眼看截图。
     let captionsDrawn = [], aimedAt = null;
 
-    // The island a card currently belongs to, under the live reading. Both the
-    // captions and the travel buttons read this, so a button never points at a
-    // group the sky is not currently drawing.
+    // 一张卡当前属于哪块星座，随读法变化。名牌与穿梭按钮都读这里，
+    // 所以按钮永远指向球面上真的画着的那一块。
     function clusterKeyOf(star) {
       if (!star) return NO_REGION;
       if (reading === 'geography') return regionOfId.get(star.id) || NO_REGION;
@@ -80,7 +84,6 @@
       }
       return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-CN')).map(([key, count]) => ({ key, label: CLUSTER_LABELS[key] || key, count }));
     }
-    let anchorX = 0, anchorY = 0, targetAnchorX = 0, targetAnchorY = 0;
     let degradeLevel = 0;
     let revealed = false, revealStart = 0;
     let firstFrameMs = 0;
@@ -203,20 +206,7 @@
       });
       warmSprites();
       const count = Math.max(0, Math.round(budget().dust * (degradeLevel >= 1 ? 0.5 : 1)));
-      dust = [];
-      for (let i = 0; i < count; i += 1) {
-        const r = 260 + Math.random() * 240;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        dust.push({
-          x: r * Math.sin(phi) * Math.cos(theta),
-          y: r * Math.cos(phi) * Math.sin(theta) * 0.7,
-          z: r * Math.sin(phi) * Math.sin(theta),
-          s: Math.random() * 1.4 + 0.3,
-          a: Math.random() * 0.5 + 0.08,
-          tw: Math.random() * Math.PI * 2
-        });
-      }
+      dust = makeDustShell(count);
       materialize();
       setRelationPositions();
       invalidate();
@@ -229,24 +219,23 @@
       for (const star of stars) { star.x = star.tx; star.y = star.ty; star.z = star.tz; }
     }
 
-    // Two registrations share one node contract: the category islands, and the
-    // literature-region islands used by the distribution reading. The reading
-    // alone decides which one is on screen — a chosen cluster highlights its
-    // group inside that same layout instead of silently regrouping the sky.
+    // 两套登记共用同一份节点契约：按资料分类的星座，和文献分布读法按区域
+    // 重新分组的星座。读法自身决定球面上画哪一套——选中某块只是把它转到眼前，
+    // 不会悄悄改变球面的分组。
     function syncLayout() {
       const regional = reading === 'geography';
       readingLayout = regional ? regionNodes : layout.nodes;
       activeClusters = regional ? regionReading.clusters : layout.clusters || [];
     }
 
-    /* The field the camera must hold. Derived from the live reading instead of a
-       constant, and padded for the captions drawn outside the outermost cards,
-       so a reading with few groups is framed tighter than a busy one. */
+    /* The field the camera must hold. 球体是旋转对称的，所以取景与读法无关：
+       半径取自几何模块的 bounds()，再乘上透视下轮廓比几何半径大出来的那一点，
+       于是「整颗球都在画面里」这条规则只有一个来源。 */
     function fieldBounds() {
       const nodes = readingLayout?.length ? readingLayout : layout.nodes;
-      const box = layoutApi.bounds ? layoutApi.bounds(nodes, FRAME_PAD) : { spanX: 700, spanY: 420 };
-      const captions = activeClusters.reduce((widest, cluster) => Math.max(widest, cluster.radius * 2), 0) + 130;
-      return { spanX: Math.max(box.spanX, captions), spanY: Math.max(box.spanY, captions * 0.55) };
+      const sphere = layoutApi.bounds ? layoutApi.bounds(nodes, 1).radius : SPHERE_RADIUS;
+      const silhouette = sphere * SPHERE_EXTENT / SPHERE_RADIUS;
+      return { spanX: 2 * silhouette * FRAME_PAD + 34, spanY: 2 * silhouette * FRAME_PAD + 22 };
     }
 
     /* One framing rule for projection, anchoring and flights, so a cluster can
@@ -274,49 +263,22 @@
       materialize();
     }
 
-    // A cluster the viewer chose: the camera aims at its centroid while the
-    // rest of the field keeps its shape, so the flight reads as travel.
-    function centroidOf(ids) {
-      let x = 0, y = 0, z = 0, n = 0;
-      for (const star of stars) {
-        if (!ids.has(star.id)) continue;
-        x += star.x; y += star.y; z += star.z; n += 1;
-      }
-      if (!n) return { x: 0, y: 0, z: 0 };
-      return { x: x / n, y: y / n, z: z / n };
-    }
-
-    /* Where a travel destination is and how far in the camera should go. Read
-       from the island geometry the sky is drawn with, so the frame a flight
-       lands on is the frame the caption was measured against. */
+    /* 摄像机对准哪里：把目标星座的球冠轴转到观众眼前（方位角 + 俯仰），
+       缩放到刚好让这块星座铺满画布的大半。规则在场景词汇里，与取景同源。 */
     function anchorFor(key) {
-      if (key === CLUSTER_ALL) return { x: 0, y: 0, z: 0, scale: 1 };
-      const island = activeClusters.find(item => item.key === key);
-      if (!island) {
-        const ids = new Set(stars.filter(star => clusterKeyOf(star) === key).map(star => star.id));
-        if (!ids.size) return { x: 0, y: 0, z: 0, scale: 1 };
-        return { ...centroidOf(ids), scale: 1.6 };
-      }
-      // Enough magnification to read the island's own cards, capped so an
-      // eleven-card group is not blown up to the same size as a two-hundred one.
-      const field = refit();
-      const room = Math.min(W, H * 1.6) * 0.42;
-      const scale = Math.max(1.05, Math.min(3.2, room / Math.max(24, island.radius * field)));
-      return { x: island.x, y: island.y, z: 0, scale };
+      if (key === CLUSTER_ALL) return { rotation: 0, tilt: 0, scale: 1 };
+      const cap = activeClusters.find(item => item.key === key);
+      if (!cap) return { rotation: 0, tilt: 0, scale: 1 };
+      const room = Math.max(120, Math.min(W, H * 1.4) * 0.5);
+      return focusFor(cap.axis, cap.radius, { room, field: refit() });
     }
 
-    // Screen projection folds the camera yaw into x, so the anchor is derived
-    // from the live rotation: the chosen cluster stays under the viewer's eye
-    // even while the field is still turning.
+    /* 对准目标只有两件事：把目标轴转到眼前（两个角），再缩放到看清那球冠。 */
     function syncAnchor() {
       const focus = anchorFor(cluster);
-      if (focus.scale === 1) { targetAnchorX = 0; targetAnchorY = 0; targetScale = 1; return; }
-      const c = Math.cos(targetRotY), s = Math.sin(targetRotY);
-      const xr = focus.x * c + focus.z * s;
-      const fit = refit();
-      targetAnchorX = -xr * focus.scale * fit;
-      targetAnchorY = -focus.y * focus.scale * fit;
       targetScale = focus.scale;
+      targetRotY = focus.scale === 1 ? 0 : focus.rotation;
+      targetRotX = focus.scale === 1 ? 0 : focus.tilt;
     }
 
     function visible(star) {
@@ -324,10 +286,14 @@
     }
 
     function project(x, y, z) {
-      const c = Math.cos(rotY), s = Math.sin(rotY);
-      const xr = x * c + z * s, zr = -x * s + z * c;
-      const persp = FOV / (FOV + zr);
-      return { sx: W / 2 + xr * scale * frameFit * persp + anchorX, sy: H / 2 + y * scale * frameFit * persp + anchorY, persp, zr };
+      const cy = Math.cos(rotY), sy = Math.sin(rotY);
+      const xr = x * cy + z * sy, zr = -x * sy + z * cy;
+      // 第二轴：绕 X 的俯仰。只绕 Y 转的话，球面在屏幕上永远只是一条上下被压扁的
+      // 带子，星球无从谈起；加一个俯仰角，两极才真的在竖直方向上展开。
+      const cx = Math.cos(rotX), sx = Math.sin(rotX);
+      const yr = y * cx - zr * sx, depth = y * sx + zr * cx;
+      const persp = FOV / (FOV + depth);
+      return { sx: W / 2 + xr * scale * frameFit * persp, sy: H / 2 + yr * scale * frameFit * persp, persp, zr: depth };
     }
 
     function revealEnabled() {
@@ -349,30 +315,27 @@
       refit();
       if (revealEnabled()) {
         rotY += (targetRotY - rotY) * 0.06;
-        if (!dragging && !flight && !focusedId && !manuallyRotated) targetRotY = .18 * Math.sin(frameStart * .00006);
-      } else rotY = targetRotY;
+        rotX += (targetRotX - rotX) * 0.06;
+        // 空闲时缓慢自转：不做这件事，页面在没人操作时就完全静止，看不出是颗球。
+        if (!dragging && !flight && !focusedId && !manuallyRotated) {
+          targetRotY = rotY + 0.00035;
+          targetRotX = rotX + 0.00008;
+        }
+      } else { rotY = targetRotY; rotX = targetRotX; }
       if (flight) {
-        // Interstellar hop: ease rotation and framing toward the chosen cluster
-        // instead of cutting, so the field visibly travels under the camera.
+        // 绕球飞行：把目标星座的轴从当前朝向转到观众眼前，同时推近到能读清它。
+        // 两个角与缩放一起缓动，所以看起来是星球在眼前滚过去，而不是画面被切开。
         const t = Math.max(0, Math.min(1, (frameStart - flight.start) / Math.max(1, flight.duration)));
         const ease = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         rotY = flight.fromRot + (flight.toRot - flight.fromRot) * ease;
-        targetRotY = flight.toRot;
-        const anchor = anchorFor(flight.key);
-        const fit = refit();
-        const c = Math.cos(rotY), s = Math.sin(rotY);
-        const goalX = anchor.scale === 1 ? 0 : -(anchor.x * c + anchor.z * s) * anchor.scale * fit;
-        const goalY = anchor.scale === 1 ? 0 : -anchor.y * anchor.scale * fit;
-        anchorX = flight.fromX + (goalX - flight.fromX) * ease;
-        anchorY = flight.fromY + (goalY - flight.fromY) * ease;
-        scale = flight.fromScale + (anchor.scale - flight.fromScale) * ease;
-        targetAnchorX = goalX; targetAnchorY = goalY; targetScale = anchor.scale;
+        rotX = flight.fromTilt + (flight.toTilt - flight.fromTilt) * ease;
+        targetRotY = flight.toRot; targetRotX = flight.toTilt;
+        scale = flight.fromScale + (flight.toScale - flight.fromScale) * ease;
+        targetScale = flight.toScale;
         if (t >= 1) flight = null;
       } else if (revealEnabled()) {
         scale += (targetScale - scale) * 0.08;
-        anchorX += (targetAnchorX - anchorX) * 0.08;
-        anchorY += (targetAnchorY - anchorY) * 0.08;
-      } else { scale = targetScale; anchorX = targetAnchorX; anchorY = targetAnchorY; }
+      } else scale = targetScale;
       const particles = [];
 
       const dustFactor = dustReveal(elapsed);
@@ -396,25 +359,26 @@
         star.x += (star.tx - star.x) * .12; star.y += (star.ty - star.y) * .12; star.z += (star.tz - star.z) * .12;
         const p = project(star.x, star.y, star.z);
         star.screenX = p.sx; star.screenY = p.sy; star.persp = p.persp; star.zr = p.zr;
+        // 球面远近：近端的粒子更大更亮，被球体挡住的远端压暗。
+        star.fade = backFade(p.zr);
         star.viewed = viewed.has(star.id);
-        // The label pass reads the group each card is currently drawn in, so it
-        // can guarantee every island is named instead of labelling whichever
-        // cards happen to sit in the middle of the frame.
+        // The label pass reads each card's current group, so it can name every
+        // constellation instead of whichever cards sit near the frame centre.
         star.cluster = clusterKeyOf(star);
       }
-      // Island halos sit behind the cards: they are what turns a scatter of
-      // dots into named groups the moment the page paints, before any hover.
-      const islandAnchors = [];
-      for (const island of activeClusters) {
-        const spot = project(island.x, island.y, 0);
+      // 星座光晕贴在球冠中心轴上，随球一起转；它们是把一片散点读成有名字的
+      // 分组的第一层信息，在任何悬停之前就要成立。
+      const constellationAnchors = [];
+      for (const cap of activeClusters) {
+        const spot = project(cap.x, cap.y, cap.z);
         if (spot.zr > DEPTH_RANGE) continue;
-        islandAnchors.push({ island, ...spot, radius: island.radius * frameFit * scale * spot.persp });
+        const radius = SPHERE_RADIUS * Math.sin(cap.radius) * frameFit * scale * spot.persp;
+        constellationAnchors.push({ island: cap, ...spot, radius, fade: backFade(spot.zr) });
       }
-      drawIslandHalos(ctx, islandAnchors, island => (!focusedId || cluster === island.key ? 1 : 0.35));
+      drawConstellationHalos(ctx, constellationAnchors, cap => (focusedId && cluster !== cap.key ? 0.35 : 1));
       const shown = stars.filter(visible);
-      // Only the cards nearest each island's centre are offered to the label
-      // pass. Every island therefore gets named at least once, and the pass
-      // still decides the final collision-free subset.
+      // Only the cards nearest each constellation's centre are offered. Every
+      // constellation gets named, and the pass still picks a collision-free subset.
       const byCluster = new Map();
       for (const star of shown) {
         const list = byCluster.get(star.cluster);
@@ -422,7 +386,7 @@
       }
       const captionCandidates = [];
       for (const list of byCluster.values()) {
-        list.sort((a, b) => Math.hypot(a.x, a.z) - Math.hypot(b.x, b.z) || String(a.id).localeCompare(String(b.id)));
+        list.sort((a, b) => (b.fade - a.fade) || String(a.id).localeCompare(String(b.id)));
         captionCandidates.push(...list.slice(0, 3));
       }
       const labels = host.selectVisibleLabels?.(captionCandidates.length ? captionCandidates : shown, { width: W, height: H }, scale, { selectedHerb: selectedId, viewedHerbs: viewed });
@@ -468,12 +432,14 @@
           const factor = starReveal(i, stars.length, elapsed);
           if (factor <= 0) continue;
           const blur = degradeLevel >= 1 ? 0 : depthBlur(star.zr);
-          const core = Math.max(1.4, star.size * star.persp * scale);
-          const radius = core * 2.5 * (1 + blur * .4) * (0.3 + 0.7 * factor);
+          const core = Math.max(1.2, star.size * star.persp * scale * CORE_SCALE);
+          const radius = core * HALO_SCALE * (1 + blur * .4) * (0.3 + 0.7 * factor);
           const image = sprite(star.color);
-          ctx.globalAlpha = alpha * Math.min(1, star.persp) * (1 - blur * 0.7) * factor * emphasis(star);
+          ctx.globalAlpha = alpha * Math.min(1, star.persp) * (1 - blur * 0.7) * factor * emphasis(star) * star.fade;
+          // 核是粒子，光晕只是它的呼吸：只画光晕的话加色混合会把球面糊成一团亮斑。
           if (image) ctx.drawImage(image, star.screenX - radius, star.screenY - radius, radius * 2, radius * 2);
-          else { ctx.fillStyle = star.color; ctx.beginPath(); ctx.arc(star.screenX, star.screenY, radius, 0, Math.PI * 2); ctx.fill(); }
+          ctx.fillStyle = star.color;
+          ctx.beginPath(); ctx.arc(star.screenX, star.screenY, core, 0, Math.PI * 2); ctx.fill();
         }
         ctx.globalCompositeOperation = 'source-over';
         ctx.globalAlpha = 1;
@@ -486,16 +452,19 @@
         const factor = starReveal(i, stars.length, elapsed);
         if (factor <= 0) continue;
         const blur = degradeLevel >= 1 ? 0 : depthBlur(star.zr);
-        const core = Math.max(1.4, star.size * star.persp * scale) * (0.3 + 0.7 * factor);
+        const core = Math.max(1.2, star.size * star.persp * scale) * (0.3 + 0.7 * factor) * star.fade;
         ctx.fillStyle = star.color;
-        ctx.globalAlpha = Math.min(1, star.persp) * (1 - blur * 0.55) * factor * emphasis(star);
+        ctx.globalAlpha = Math.min(1, star.persp) * (1 - blur * 0.55) * factor * emphasis(star) * star.fade;
         if (webgl) particles.push({ x: star.screenX, y: star.screenY, size: core * 6, color: star.color, alpha: ctx.globalAlpha * .9 });
         else { ctx.beginPath(); ctx.arc(star.screenX, star.screenY, core, 0, Math.PI * 2); ctx.fill(); }
         ctx.globalAlpha = 1;
         const hovered = hoverId === star.id;
+        // 名字只给朝向观众的那半球，并且越靠球心越优先：球背面的名字既读不出，
+        // 又会把正面的星座糊成一片。
+        const front = star.fade > 0.72 && blur <= 0.55;
         const labelled = labelIds.size
-          ? (labelIds.has(star.id) || hovered || focusedId === star.id) && blur <= 0.55
-          : (hovered || (scale >= 1.8 && core > 2) || (star.herb && star.herb.food && scale > 1.25));
+          ? (labelIds.has(star.id) || hovered || focusedId === star.id) && front
+          : (hovered || (scale >= 1.8 && core > 2 && front) || (star.herb && star.herb.food && scale > 1.25 && front));
         if (labelled) {
           ctx.fillStyle = hovered ? '#F3D9A0' : 'rgba(232,224,207,.82)';
           ctx.font = hovered ? '600 12px "Noto Sans SC",sans-serif' : '400 11px "Noto Sans SC",sans-serif';
@@ -510,14 +479,14 @@
       }
       if (webgl) { try { webgl.render(particles, W, H); } catch (_) { fallback('增强画面中断，已恢复基础星图'); } }
 
-      // Captions last so no star can cover a name. The name is the group's own
-      // label from the data, and the count is the cards actually shown.
-      captionsDrawn = drawIslandCaptions(ctx, islandsWithCards(islandAnchors, shown), W, H, {
-        labelOf: island => CLUSTER_LABELS[island.key] || island.key,
+      // 星座名牌最后绘制，任何一颗星辰都盖不住它。名字来自数据本身，数量是当前
+      // 真正画出来的卡片数，所以筛选之后不会报出没有展示的卡片。
+      captionsDrawn = drawConstellationLabels(ctx, constellationsWithCards(constellationAnchors, shown), W, H, {
+        labelOf: cap => CLUSTER_LABELS[cap.key] || cap.key,
         activeKey: cluster,
         focused: Boolean(focusedId)
       }) || [];
-      const aimed = islandAnchors.find(anchor => anchor.island.key === cluster);
+      const aimed = constellationAnchors.find(anchor => anchor.island.key === cluster);
       aimedAt = aimed ? { key: aimed.island.key, x: aimed.sx, y: aimed.sy, radius: aimed.radius } : null;
 
       const frameMs = performance.now() - frameStart;
@@ -563,10 +532,11 @@
       cluster = CLUSTER_ALL; flight = null;
       syncLayout();
       categoryFilter = ''; regionFilters.clear();
-      targetRotY = 0; targetScale = 1.1; targetAnchorX = 0; targetAnchorY = 0;
+      // 选中的卡片被放到球的正前方（selectedPositions），所以相机只需要复位朝向。
+      targetRotY = 0; targetRotX = 0; targetScale = 1.1;
       setRelationPositions();
       if (!animate || !revealEnabled()) {
-        rotY = targetRotY; scale = targetScale; anchorX = targetAnchorX; anchorY = targetAnchorY;
+        rotY = targetRotY; rotX = targetRotX; scale = targetScale;
         for (const s of stars) { s.x = s.tx; s.y = s.ty; s.z = s.tz; }
       }
       host.onSelect?.(star.id, source);
@@ -603,7 +573,9 @@
       }
       if (dragging) {
         moved += Math.hypot(event.clientX - lastX, event.clientY - lastY);
+        // 横拖转方位角，竖拖抬俯仰：两个方向都能拖，才是在手里转一颗球。
         targetRotY += (event.clientX - lastX) * 0.006;
+        targetRotX = clampTilt(targetRotX + (event.clientY - lastY) * 0.005);
         manuallyRotated = true;
         flight = null;
         lastX = event.clientX; lastY = event.clientY;
@@ -652,8 +624,13 @@
     on('keydown', event => {
       if (event.key === '+' || event.key === '=') { targetScale = Math.min(2.4, targetScale + 0.2); event.preventDefault(); }
       if (event.key === '-') { targetScale = Math.max(0.5, targetScale - 0.2); event.preventDefault(); }
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        targetRotY += (event.key === 'ArrowLeft' ? -0.2 : 0.2); manuallyRotated = true; flight = null; focusedId = null; setRelationPositions(); event.preventDefault();
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        // 方向键与拖动同一套语义：左右转方位角，上下抬俯仰。
+        if (event.key === 'ArrowLeft') targetRotY -= 0.2;
+        if (event.key === 'ArrowRight') targetRotY += 0.2;
+        if (event.key === 'ArrowUp') targetRotX = clampTilt(targetRotX - 0.16);
+        if (event.key === 'ArrowDown') targetRotX = clampTilt(targetRotX + 0.16);
+        manuallyRotated = true; flight = null; focusedId = null; setRelationPositions(); event.preventDefault();
       }
       if (event.key === 'Enter') host.openSelected?.();
       invalidate();
@@ -686,24 +663,23 @@
       clearFocus() {
         focusedId = null; manuallyRotated = false; flight = null;
         cluster = CLUSTER_ALL;
-        targetRotY = 0; targetScale = 1; targetAnchorX = 0; targetAnchorY = 0;
+        targetRotY = 0; targetRotX = 0; targetScale = 1;
         setRelationPositions(); invalidate();
       },
       setFilter(category = '', regions = []) { categoryFilter = category; regionFilters = new Set(regions); invalidate(); return stars.filter(visible).length; },
-      // Cluster travel: choosing a group regroups the sky by that reading and
-      // flies the camera to the group, so the destination is a place in the map
-      // rather than a filter over it.
+      // 星座穿梭：把目标星座的球冠中心轴转到正前方并推近，于是目的地真的是
+      // 星球上的一个地方，而不是一次筛选。
       flyTo(key = CLUSTER_ALL) {
         syncLayout();
-        const next = key === CLUSTER_ALL || activeClusters.some(island => island.key === key) ? key : CLUSTER_ALL;
+        const next = key === CLUSTER_ALL || activeClusters.some(cap => cap.key === key) ? key : CLUSTER_ALL;
         focusedId = null; manuallyRotated = true; flight = null;
         categoryFilter = ''; regionFilters.clear();
         if (next === CLUSTER_ALL) {
           cluster = CLUSTER_ALL;
           syncLayout();
-          targetRotY = 0; targetScale = 1; targetAnchorX = 0; targetAnchorY = 0;
+          targetRotY = 0; targetRotX = 0; targetScale = 1;
           setRelationPositions();
-          if (!revealEnabled()) { rotY = targetRotY; scale = targetScale; anchorX = 0; anchorY = 0; }
+          if (!revealEnabled()) { rotY = targetRotY; rotX = targetRotX; scale = targetScale; }
           invalidate();
           return cluster;
         }
@@ -711,8 +687,14 @@
         syncLayout();
         setRelationPositions();
         syncAnchor();
-        flight = { key: next, start: performance.now(), duration: revealEnabled() ? FLY_MS : 0, fromRot: rotY, toRot: targetRotY, fromX: anchorX, fromY: anchorY, fromScale: scale };
-        if (!revealEnabled()) { rotY = targetRotY; scale = targetScale; anchorX = targetAnchorX; anchorY = targetAnchorY; flight = null; }
+        // 转最近的哪一边：方位角超过半圈就从另一侧绕过去，否则镜头会甩一整圈。
+        const delta = ((targetRotY - rotY) % TAU + TAU + Math.PI) % TAU - Math.PI;
+        const toRot = rotY + delta;
+        const toTilt = targetRotX;
+        targetRotY = toRot;
+        targetRotX = toTilt;
+        flight = { key: next, start: performance.now(), duration: revealEnabled() ? FLY_MS : 0, fromRot: rotY, toRot, fromTilt: rotX, toTilt, fromScale: scale, toScale: targetScale };
+        if (!revealEnabled()) { rotY = toRot; rotX = toTilt; scale = targetScale; flight = null; }
         invalidate();
         return cluster;
       },
@@ -725,8 +707,8 @@
       setRenderer(choice = 'auto') { rendererEpoch += 1; rendererChoice = choice; rendererAttempted = false; fallback(''); if (running) enhance(); },
       setReading(mode) {
         reading = READING_MODES.includes(mode) ? mode : DEFAULT_READING;
-        // The literature-distribution reading is the one that regroups cards
-        // into their recorded regions; every other reading keeps the disk.
+        // 文献分布是唯一会把卡片重新分成星座的读法；其余读法都保留同一颗球，
+        // 只换配色，所以「同一颗星球」这件事在任何读法下都成立。
         syncLayout();
         setRelationPositions();
         paint();
@@ -735,7 +717,7 @@
       setColorMode() { paint(); },
       clusters: clusterCounts,
       zoom(delta) { targetScale = Math.max(0.5, Math.min(2.4, targetScale + Number(delta || 0))); invalidate(); },
-      resetMotion() { if (!revealEnabled()) { targetRotY = rotY; scale = targetScale; anchorX = targetAnchorX; anchorY = targetAnchorY; setRelationPositions(); } invalidate(); },
+      resetMotion() { if (!revealEnabled()) { targetRotY = rotY; targetRotX = rotX; scale = targetScale; setRelationPositions(); } invalidate(); },
       beginReveal() { revealed = false; revealStart = performance.now(); },
       perf() {
         const avg = frameSamples.length ? frameSamples.reduce((sum, value) => sum + value, 0) / frameSamples.length : 0;
@@ -747,14 +729,16 @@
           reading,
           rotation: rotY,
           targetRotation: targetRotY,
+          tilt: rotX,
+          targetTilt: targetRotX,
           dragging,
           spriteReadyMs,
           renderer: canvas.dataset.renderer, rendererReason, running, scheduled: Boolean(animationFrame), frames,
           renderCostMs: Math.round(renderMs * 100) / 100, visibleCount: stars.filter(visible).length,
           nodeCount: stars.length, categoryFilter, regions: [...regionFilters], roam, focusedId, cluster,
           flight: Boolean(flight),
-          // 名录与被瞄准的岛：截图看不见的东西（哪个分组拿到了名录、穿梭后相机
-          // 是否真的停在目标岛上）只有报出来才能被浏览器用例断言。
+          // 名牌与被瞄准的星座：截图看不见的东西（哪个分组拿到了名牌、穿梭后相机
+          // 是否真的停在目标星座上）只有报出来才能被浏览器用例断言。
           captions: captionsDrawn, aimedAt, frameWidth: W, frameHeight: H,
           trailCount: trailsEnabled ? trails.length : 0,
           clusters: clusterCounts(),

@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v26-20261010-runtime-escaping';
+const CACHE_VERSION = 'herbal-cosmos-v27-20261010-particle-planet';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';

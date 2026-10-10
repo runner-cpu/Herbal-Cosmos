@@ -42,8 +42,8 @@ test('the star map exposes its readings with a single pressed state', async ({ p
   await expect(page.locator('#cosmosReadingLegend')).toBeHidden();
 });
 
-test('every island is named on the canvas and the names never overlap', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium', 'The caption layer is one canvas geometry; one desktop project is enough.');
+test('every constellation is named on the canvas and the names never overlap', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'The label layer is one canvas geometry; one desktop project is enough.');
   await page.goto('/?renderer=canvas#/home');
   await expect.poll(() => page.evaluate(() => Boolean(window.__HERBAL_DEBUG__?.cosmosPerf)), { timeout: 10_000 }).toBeTruthy();
   // 首屏揭示结束后再读，否则读到的是动画中间态。
@@ -62,7 +62,7 @@ test('every island is named on the canvas and the names never overlap', async ({
     expect(entry.label, 'the name comes from the data, not from invented copy').toBe(cluster.label + ' ' + entry.shown);
     expect(entry.shown, entry.label + ' must report the cards actually on screen').toBe(cluster.count);
     expect(entry.shown).toBeGreaterThan(0);
-    // 名牌必须落在画布内，否则最外侧的星团名字会被裁掉。
+    // 名牌必须落在画布内，否则最外侧的星座名字会被裁掉。
     expect(entry.x - entry.width / 2 - 5).toBeGreaterThanOrEqual(0);
     expect(entry.x + entry.width / 2 + 5).toBeLessThanOrEqual(report.width);
     expect(entry.y).toBeGreaterThanOrEqual(14);
@@ -76,7 +76,7 @@ test('every island is named on the canvas and the names never overlap', async ({
   }
 });
 
-test('travel lands the camera on the chosen island and brightens its name', async ({ page }, testInfo) => {
+test('travel turns the sphere so the chosen constellation lands in front of the viewer', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'One desktop project is enough to verify the flight target.');
   await page.goto('/?renderer=canvas#/home');
   await expect.poll(() => page.evaluate(() => Boolean(window.__HERBAL_DEBUG__?.cosmosPerf)), { timeout: 10_000 }).toBeTruthy();
@@ -94,12 +94,52 @@ test('travel lands the camera on the chosen island and brightens its name', asyn
     return { aimed: perf.aimedAt, captions: perf.captions, width: perf.frameWidth, height: perf.frameHeight };
   });
   expect(landed.aimed?.key).toBe(target);
-  // 穿梭的意义是目的地落在观众眼前，而不是仅仅高亮了一组卡片。
+  // 穿梭的意义是目的地转到观众眼前，而不是仅仅高亮了一组卡片：球面是旋转对称的，
+  // 所以「转到正前方」在屏幕上的表现就是星座中心落回画面正中。
   expect(Math.abs(landed.aimed.x - landed.width / 2) / landed.width).toBeLessThan(0.08);
   expect(Math.abs(landed.aimed.y - landed.height / 2) / landed.height).toBeLessThan(0.08);
   const active = landed.captions.filter(entry => entry.active);
   expect(active.map(entry => entry.key)).toEqual([target]);
   await expect(page.locator('#cosmosControls [data-cosmos-cluster="' + target + '"]')).toHaveAttribute('aria-pressed', 'true');
+
+  // 回到整颗星球：再次点击同一个按钮应该回到「全部」并且相机复位。
+  await buttons.first().click();
+  await expect.poll(async () => (await readingState(page)).perf.cluster).toBe('all');
+  const restored = await page.evaluate(() => {
+    const perf = window.__HERBAL_DEBUG__.cosmosPerf();
+    return { rotation: perf.rotation, targetRotation: perf.targetRotation };
+  });
+  expect(Math.abs(restored.targetRotation)).toBeLessThan(0.001);
+});
+
+test('the star map is a rotating sphere of cards, not a flat sheet', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Depth sampling only means something on the canvas renderer.');
+  await page.goto('/?renderer=canvas#/home');
+  await expect.poll(() => page.evaluate(() => Boolean(window.__HERBAL_DEBUG__?.cosmosPerf)), { timeout: 10_000 }).toBeTruthy();
+  await page.waitForTimeout(2600);
+  // 球面几何：每张卡的屏幕位置都落在以球心投影为中心的圆里，而且越靠球心的
+  // 卡片越小、越靠中点越大——这是一颗球在一张平面上的投影，不是一张平铺的网。
+  const depth = await page.evaluate(() => {
+    const canvas = document.getElementById('heroCanvas');
+    const off = document.createElement('canvas');
+    off.width = 320; off.height = 200;
+    const ctx = off.getContext('2d');
+    ctx.drawImage(canvas, 0, 0, 320, 200);
+    const data = ctx.getImageData(0, 0, 320, 200).data;
+    let lit = 0, total = 0, left = 0, right = 0;
+    for (let y = 0; y < 200; y += 1) for (let x = 0; x < 320; x += 1) {
+      const i = (y * 320 + x) * 4;
+      total += 1;
+      if (data[i + 3] > 40 && (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) > 25) {
+        lit += 1;
+        if (x < 160) left += 1; else right += 1;
+      }
+    }
+    return { litPct: 100 * lit / total, leftPct: lit ? 100 * left / lit : 0, rightPct: lit ? 100 * right / lit : 0 };
+  });
+  expect(depth.litPct, JSON.stringify(depth)).toBeGreaterThan(3);
+  // 球体在画面里是圆的：左右两半都应该有星，而不是空掉一半。
+  expect(Math.min(depth.leftPct, depth.rightPct), JSON.stringify(depth)).toBeGreaterThan(20);
 });
 
 test('the reading and travel controls are not buried behind a collapsed panel', async ({ page }) => {

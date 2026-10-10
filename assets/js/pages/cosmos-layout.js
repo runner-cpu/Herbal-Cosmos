@@ -1,12 +1,12 @@
-/* Editorial star positions, never measured geography or affinity.
- * Every reading returns nodes keyed exactly { category, id, x, y, z } plus the
- * island list the camera travels to, so filters, picking, labels and cluster
- * travel all read one geometry.
+/* 星图几何：星海是一颗球，不是一个平面。
  *
- * A group occupies an island whose area grows with how many cards it holds: a
- * one-card group is a dot and a two-hundred-card group is a wide field. Card
- * density therefore stays even across the sky instead of every group being
- * smeared over an identical disk. */
+ * 每张知识卡是球面上的一颗粒子，按黄金角均匀铺开，所以任意视角下卡片密度都
+ * 一致——这是「粒子星球」能看清的前提。同一分组的卡片聚成一块球冠，像星座一样
+ * 连成一片；球冠的球面面积与卡片数成正比，因此最大的分组也只是球面上更大的一块，
+ * 而不是把卡片挤成一团。
+ *
+ * 每次读法都返回同一份节点契约 { category, id, x, y, z }，另加 clusters（球冠的
+ * 中心轴、角半径与卡片数），摄像机绕球心旋转把目标星座转到正前方。 */
 (function (root) {
   'use strict';
   function hash(value) {
@@ -16,26 +16,123 @@
     return (n >>> 0) / 4294967296;
   }
 
-  // One flat disk: u spans the screen axis, v is tilted into depth so the scene
-  // still reads as a three-dimensional galaxy while it rotates. The tilt is
-  // deliberately shallow — an almost edge-on disk squashes the field into a
-  // band and doubles the on-screen star density for no extra information.
-  const DISK = Object.freeze({ tiltSin: 0.72, tiltCos: 0.694, golden: 2.399963229728653 });
-  /* Island geometry. `floor` is the area all islands share, so an island radius
-     is sqrt(floor * count / total) and every island holds the same number of
-     cards per unit area. `gap` is the empty band kept between two islands for
-     their captions and the picking radius around them; `boundary` is the flat
-     ellipse the islands relax inside, matching the wide hero canvas; `relax`
-     and `growth` drive the packing, `trials` bounds it. `lift` is the vertical
-     jitter that makes the disk read as a volume: it is deliberately kept far
-     below the in-plane spacing, because any vertical offset also closes the
-     on-screen gap between two neighbours while the field turns. */
-  const ISLAND = Object.freeze({ floor: 48_000, gap: 9, boundary: 1.45, relax: 320, growth: 1.06, trials: 6, lift: 2 });
+  /* 球面参数。radius 是球面半径；golden 是黄金角，用来在球面与球冠内均匀铺点；
+     gap 是两块球冠之间留的角间隙（弧度）；relax/trials 驱动球冠中心的松弛，
+     保证大分组不会把相邻的小分组盖住。 */
+  const SPHERE = Object.freeze({ radius: 240, golden: 2.399963229728653, gap: 0.05, relax: 260, growth: 1.12, trials: 5, shell: 1.75 });
   const REGION_ORDER = Object.freeze(['青藏', '西北', '北方', '西南', '东南']);
   const UNKNOWN_CLUSTER = '无分布记录';
 
-  function diskPoint(u, v, hy = 0) {
-    return { x: u, y: v * DISK.tiltSin + hy, z: v * DISK.tiltCos };
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  function normalize(v) {
+    const length = Math.hypot(v.x, v.y, v.z) || 1;
+    return { x: v.x / length, y: v.y / length, z: v.z / length };
+  }
+  function fibonacciDirection(index, total) {
+    if (total <= 1) return { x: 0, y: 1, z: 0 };
+    const y = 1 - 2 * ((index + 0.5) / total);
+    const r = Math.sqrt(Math.max(0, 1 - y * y));
+    const theta = index * SPHERE.golden;
+    return { x: Math.cos(theta) * r, y, z: Math.sin(theta) * r };
+  }
+  // 一块球冠在球面上的面积是 2πR²(1-cosθ)；让面积与卡片数成正比，就得到下面的角半径。
+  function capSin(count, total) {
+    return Math.sqrt(clamp(count / Math.max(1, total), 0, 1));
+  }
+  function tangentBasis(axis) {
+    const helper = Math.abs(axis.y) > 0.9 ? { x: 1, y: 0, z: 0 } : { x: 0, y: 1, z: 0 };
+    const e1 = normalize({ x: axis.y * helper.z - axis.z * helper.y, y: axis.z * helper.x - axis.x * helper.z, z: axis.x * helper.y - axis.y * helper.x });
+    const e2 = { x: axis.y * e1.z - axis.z * e1.y, y: axis.z * e1.x - axis.x * e1.z, z: axis.x * e1.y - axis.y * e1.x };
+    return { e1, e2 };
+  }
+
+  /* 球冠中心的排布：先按黄金角均匀撒在球面上（与卡片同一套均匀分布），
+     再把重叠的球冠沿着大圆推开，直到每对中心之间至少隔开两个角半径加间隙。
+     固定的球面装不下时就整体收紧角半径（growth），而不是让某一块盖住别人。 */
+  function placeConstellations(groups) {
+    const total = Math.max(1, groups.length);
+    const axes = groups.map((_, index) => fibonacciDirection(index, total));
+    let radii = groups.map(group => group.sinTheta);
+    for (let trial = 0; trial < SPHERE.trials; trial += 1) {
+      for (let step = 0; step < SPHERE.relax; step += 1) {
+        const cool = 1 - step / SPHERE.relax;
+        for (let i = 0; i < axes.length; i += 1) {
+          for (let j = i + 1; j < axes.length; j += 1) {
+            const a = axes[i], b = axes[j];
+            const dot = clamp(a.x * b.x + a.y * b.y + a.z * b.z, -1, 1);
+            const angle = Math.acos(dot);
+            const want = Math.asin(clamp(radii[i], 0, 1)) + Math.asin(clamp(radii[j], 0, 1)) + SPHERE.gap;
+            if (angle >= want) continue;
+            // 沿大圆方向各退一半；两块中心重合时给一个人为方向，避免除零。
+            const push = (want - angle) * 0.5 * (0.35 + 0.65 * cool);
+            let tx = b.x - a.x * dot, ty = b.y - a.y * dot, tz = b.z - a.z * dot;
+            if (Math.hypot(tx, ty, tz) < 1e-6) { tx = 1; ty = 0; tz = 0; }
+            const t = normalize({ x: tx, y: ty, z: tz });
+            axes[i] = normalize({ x: a.x - t.x * push, y: a.y - t.y * push, z: a.z - t.z * push });
+            axes[j] = normalize({ x: b.x + t.x * push, y: b.y + t.y * push, z: b.z + t.z * push });
+          }
+        }
+      }
+      let worst = Infinity;
+      for (let i = 0; i < axes.length; i += 1) {
+        for (let j = i + 1; j < axes.length; j += 1) {
+          const a = axes[i], b = axes[j];
+          const angle = Math.acos(clamp(a.x * b.x + a.y * b.y + a.z * b.z, -1, 1));
+          const gap = angle - Math.asin(clamp(radii[i], 0, 1)) - Math.asin(clamp(radii[j], 0, 1));
+          if (gap < worst) worst = gap;
+        }
+      }
+      if (axes.length < 2 || worst >= SPHERE.gap * 0.5) break;
+      radii = radii.map(sin => Math.min(1, sin / SPHERE.growth));
+    }
+    return axes.map((axis, index) => ({ key: groups[index].key, axis, radius: Math.asin(clamp(radii[index], 0, 1)) }));
+  }
+
+  /* 一张卡在球冠里的位置：把球冠按球面面积正投影到切平面，平面内点用向日葵
+     铺开（任意张数下间距都均匀），再投影回球面。等面积投影保证密度处处一致。 */
+  function sphereOf(nodes = [], keyOf, rankOf) {
+    const buckets = new Map();
+    for (const node of nodes) {
+      const key = keyOf(node) || UNKNOWN_CLUSTER;
+      if (!buckets.has(key)) buckets.set(key, []);
+      buckets.get(key).push(node);
+    }
+    const total = Math.max(1, nodes.length);
+    const groups = [...buckets.entries()]
+      .map(([key, members]) => ({ key, members, count: members.length, sinTheta: capSin(members.length, total) }))
+      .sort((a, b) => b.count - a.count || String(a.key).localeCompare(String(b.key), 'zh-CN'));
+    const placed = placeConstellations(groups);
+    const byKey = new Map(placed.map(item => [item.key, item]));
+    const caps = new Map();
+    for (const group of groups) {
+      const members = rankOf ? rankOf(group) : group.members;
+      const placedGroup = byKey.get(group.key);
+      const { e1, e2 } = tangentBasis(placedGroup.axis);
+      const radius = SPHERE.radius;
+      const points = new Map();
+      members.forEach((member, index) => {
+        const sin = Math.min(0.999, group.sinTheta * Math.sqrt((index + 0.5) / members.length));
+        const angle = index * SPHERE.golden;
+        const u = sin * Math.cos(angle), v = sin * Math.sin(angle), w = Math.sqrt(Math.max(0, 1 - sin * sin));
+        points.set(member.id, {
+          x: radius * (placedGroup.axis.x * w + e1.x * u + e2.x * v),
+          y: radius * (placedGroup.axis.y * w + e1.y * u + e2.y * v),
+          z: radius * (placedGroup.axis.z * w + e1.z * u + e2.z * v)
+        });
+      });
+      caps.set(group.key, { key: group.key, count: group.count, radius: placedGroup.radius, axis: placedGroup.axis, points });
+    }
+    const positioned = nodes.map(node => {
+      const cap = caps.get(keyOf(node) || UNKNOWN_CLUSTER);
+      const point = cap?.points.get(node.id) || { x: 0, y: 0, z: -SPHERE.radius };
+      return { id: node.id, category: node.category, x: point.x, y: point.y, z: point.z };
+    });
+    const clusters = [...caps.values()].map(cap => ({
+      key: cap.key, count: cap.count, radius: cap.radius,
+      axis: cap.axis,
+      x: cap.axis.x * SPHERE.radius, y: cap.axis.y * SPHERE.radius, z: cap.axis.z * SPHERE.radius
+    }));
+    return { nodes: positioned, clusters };
   }
 
   function hubWeights(unique, formulas = []) {
@@ -50,127 +147,28 @@
     return hub;
   }
 
-  function radiusOf(count, total) {
-    return Math.sqrt((ISLAND.floor * Math.max(0, count)) / Math.max(1, total));
-  }
-
-  /* Islands are relaxed inside a flat ellipse until no two overlap by more than
-     `gap`, growing the ellipse until every island fits. Islands are seeded on a
-     ring in size order and relaxed as unordered pairs, so the result depends
-     only on the group names and counts — never on the order records arrive in. */
-  function placeIslands(groups) {
-    let ax = 360;
-    let ay = Math.round(ax / ISLAND.boundary);
-    let placed = [];
-    for (let trial = 0; trial < ISLAND.trials; trial += 1) {
-      placed = groups.map((group, index) => {
-        const angle = (index / Math.max(1, groups.length)) * Math.PI * 2;
-        return Object.assign({}, group, { x: Math.cos(angle) * ax * 0.55, y: Math.sin(angle) * ay * 0.55 });
-      });
-      for (let step = 0; step < ISLAND.relax; step += 1) {
-        const cool = 1 - step / ISLAND.relax;
-        for (let i = 0; i < placed.length; i += 1) {
-          for (let j = i + 1; j < placed.length; j += 1) {
-            const a = placed[i], b = placed[j];
-            let dx = b.x - a.x, dy = b.y - a.y;
-            let d = Math.hypot(dx, dy);
-            if (d === 0) { dx = 1; dy = 0; d = 1; }
-            const want = a.radius + b.radius + ISLAND.gap;
-            if (d >= want) continue;
-            const push = ((want - d) / 2) * (0.4 + 0.6 * cool);
-            const ux = (dx / d) * push, uy = (dy / d) * push;
-            a.x -= ux; a.y -= uy; b.x += ux; b.y += uy;
-          }
-          // Keep every island inside the ellipse, including its own radius.
-          const island = placed[i];
-          const limitX = Math.max(1, ax - island.radius);
-          const limitY = Math.max(1, ay - island.radius);
-          const overflow = Math.hypot(island.x / limitX, island.y / limitY);
-          if (overflow > 1) { island.x /= overflow; island.y /= overflow; }
-        }
-      }
-      let worst = Infinity;
-      for (let i = 0; i < placed.length; i += 1) {
-        for (let j = i + 1; j < placed.length; j += 1) {
-          const gap = Math.hypot(placed[j].x - placed[i].x, placed[j].y - placed[i].y) - placed[i].radius - placed[j].radius;
-          if (gap < worst) worst = gap;
-        }
-      }
-      if (placed.length < 2 || worst >= ISLAND.gap * 0.5) break;
-      ax = Math.round(ax * ISLAND.growth);
-      ay = Math.round(ay * ISLAND.growth);
-    }
-    return placed;
-  }
-
-  /* Group cards into islands, then lay each island out as a golden-angle
-     sunflower so spacing is even at every island size and no two cards can land
-     on one point. `rankOf` orders the members of one island, which is how the
-     centre of an island can mean something. */
-  function islandsOf(nodes = [], keyOf, rankOf) {
-    const buckets = new Map();
-    for (const node of nodes) {
-      const key = keyOf(node) || UNKNOWN_CLUSTER;
-      if (!buckets.has(key)) buckets.set(key, []);
-      buckets.get(key).push(node);
-    }
-    const total = Math.max(1, nodes.length);
-    const groups = [...buckets.entries()]
-      .map(([key, members]) => ({ key, members, count: members.length, radius: radiusOf(members.length, total) }))
-      .sort((a, b) => b.count - a.count || String(a.key).localeCompare(String(b.key), 'zh-CN'));
-    const placed = placeIslands(groups);
-    const byKey = new Map(placed.map(island => [island.key, island]));
-    const slot = new Map();
-    for (const island of placed) {
-      const members = rankOf ? rankOf(island) : island.members;
-      members.forEach((member, index) => slot.set(member.id, { index, count: members.length }));
-    }
-    const positioned = nodes.map(node => {
-      const island = byKey.get(keyOf(node) || UNKNOWN_CLUSTER);
-      const place = slot.get(node.id) || { index: 0, count: 1 };
-      const reach = place.count > 1 ? island.radius * Math.sqrt((place.index + 0.5) / place.count) : 0;
-      // Each island gets its own phase so no two islands repeat one pattern; the
-      // per-card jitter stays tiny because the sunflower already breaks the grid
-      // and a wider offset measurably closes the gap between neighbours.
-      const drift = hash(island.key) * Math.PI * 2 + place.index * DISK.golden + (hash(node.id + ':drift') - 0.5) * 0.02;
-      const lift = (hash(node.id + ':lift') - 0.5) * ISLAND.lift;
-      return Object.assign({ id: node.id, category: node.category }, diskPoint(
-        island.x + reach * Math.cos(drift),
-        island.y + reach * Math.sin(drift),
-        lift
-      ));
-    });
-    const clusters = placed.map(island => ({
-      key: island.key, count: island.count, radius: island.radius, x: island.x, y: island.y
-    }));
-    return { nodes: positioned, clusters };
-  }
-
   function build(herbs = [], formulas = []) {
     const unique = new Map(herbs.filter(h => h?.id && !['formula-material', 'directory-only'].includes(h.kind)).map(h => [h.id, h]));
     const list = [...unique.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
     const hub = hubWeights(unique, formulas);
     const decorated = list.map(h => ({ id: h.id, category: h.cat || '类别未录入', hub: hub.get(h.id) || 0 }));
-    const shaped = islandsOf(decorated, node => node.category, island => {
-      // Cards recorded in the most source formulas sit nearest their island's
-      // centre, so one reading of the sky also shows what the archive's
-      // prescriptions keep returning to. Ties fall back to the card id.
-      return [...island.members].sort((a, b) => b.hub - a.hub || String(a.id).localeCompare(String(b.id)));
+    // 记载它的方剂越多，就越靠近星座中心：一整颗星球上，中心是资料反复回到的那几味。
+    const shaped = sphereOf(decorated, node => node.category, group => {
+      return [...group.members].sort((a, b) => b.hub - a.hub || String(a.id).localeCompare(String(b.id)));
     });
     const edges = formulas.flatMap(f => [...new Set((f.herbs || []).map(m => Array.isArray(m) ? m[0] : m.id))].filter(id => unique.has(id)).map(id => ({ source: f.id, target: id, type: 'ingredient', formulaId: f.id })));
     return { nodes: shaped.nodes, edges, clusters: shaped.clusters };
   }
 
-  /* Same node contract, regrouped into the literature regions the archive
-     records. Cards with no recorded province form their own island instead of
-     being guessed into a region. */
+  /* 同一份节点契约，按文献记录的区域重新分组成星座。没有登记省份的卡片自成
+     一块球冠，而不是被猜进某个区。 */
   function regionKey(node, resolve) {
     const key = resolve(node);
     return REGION_ORDER.includes(key) ? key : UNKNOWN_CLUSTER;
   }
 
   function regionLayout(nodes = [], resolve = () => '') {
-    return islandsOf(nodes, node => regionKey(node, resolve));
+    return sphereOf(nodes, node => regionKey(node, resolve));
   }
 
   function regionPositions(nodes = [], resolve = () => '') {
@@ -212,29 +210,31 @@
     related.delete(id);
     return { formulas: [...formulas].sort(), ids: [...related].sort() };
   }
+
+  /* 选中一味本草：把它放到球的正前方，相关卡片在它周围铺成一小圈，
+     于是「这颗星和谁一起被记载」在一个视角里读完，其余星辰留在球面上作背景。 */
   function selectedPositions(layout, id) {
     const ids = relations(layout, id).ids;
+    const radius = SPHERE.radius;
     return layout.nodes.map(n => {
-      if (n.id === id) return { ...n, x: 0, y: 0, z: -35 };
+      if (n.id === id) return { ...n, x: 0, y: 0, z: -radius };
       const i = ids.indexOf(n.id);
       if (i < 0) return { ...n };
       const angle = i / Math.max(1, ids.length) * Math.PI * 2;
-      return { ...n, x: Math.cos(angle) * 120, y: Math.sin(angle) * 100, z: 0 };
+      const ring = radius * 0.46;
+      return { ...n, x: Math.cos(angle) * ring, y: Math.sin(angle) * ring, z: -radius * 0.86 };
     });
   }
 
-  /* How much room the field needs, as the horizontal support that survives
-     rotation plus the vertical extent. The camera fits to this instead of to a
-     constant, so a reading with fewer islands is framed tighter rather than
-     floating in the middle of an empty frame. */
+  /* 摄像机要框住的球面范围。球体是旋转对称的，所以「在任意视角下都留在画面内」
+     等价于把整颗球装进去：水平与竖直方向都是直径，也就是半径的两倍。
+     返回 radius 供调用方按同一尺寸取景，避免两处各写一份半径。 */
   function bounds(nodes = [], pad = 1) {
-    let spanX = 0, spanY = 0;
-    for (const node of nodes) {
-      spanX = Math.max(spanX, Math.hypot(node.x, node.z));
-      spanY = Math.max(spanY, Math.abs(node.y));
-    }
-    return { spanX: 2 * spanX * pad, spanY: 2 * spanY * pad };
+    let radius = 0;
+    for (const node of nodes) radius = Math.max(radius, Math.hypot(node.x, node.y, node.z));
+    radius = Math.max(radius, 1);
+    return { spanX: 2 * radius * pad, spanY: 2 * radius * pad, radius };
   }
 
-  root.HerbalCosmosLayout = { hash, build, relations, selectedPositions, regionPositions, regionLayout, islandsOf, bounds, cooccurrence, REGION_ORDER, UNKNOWN_CLUSTER, ISLAND };
+  root.HerbalCosmosLayout = { hash, build, relations, selectedPositions, regionPositions, regionLayout, sphereOf, bounds, cooccurrence, REGION_ORDER, UNKNOWN_CLUSTER, SPHERE };
 })(typeof window === 'undefined' ? globalThis : window);
