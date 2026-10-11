@@ -8,13 +8,22 @@ const readJson = async (file) => JSON.parse(await readFile(new URL(`src/data/cur
 
 test('curated dataset is fresh and internally connected', async () => {
   const [sources, herbs, formulas, anchors, relations, specimens, comparisons] = await Promise.all(['sources.json', 'herbs.json', 'formulas.json', 'cultural-anchors.json', 'relations.json', 'specimens.json', 'comparisons.json'].map(readJson));
-  assert.equal(herbs.herbs.length, 16);
+  assert.equal(herbs.herbs.length, 120);
+  assert.equal(herbs.catalogStats.featured, 16);
+  assert.equal(herbs.catalogStats.overview, 104);
   assert.equal(formulas.formulas.length, 3);
   assert.equal(anchors.anchors.length, 3);
   assert.equal(relations.relations.length, 20);
   assert.equal(specimens.specimens.length, 6);
   assert.equal(comparisons.comparisons.length, 4);
   const sourceIds = new Set(sources.sources.map((source) => source.id));
+  const habitatIds = new Set(herbs.herbs.map((herb) => herb.habitat));
+  assert.deepEqual([...habitatIds].sort(), ['caodian', 'guoshi', 'huaye', 'junmu', 'shanlin', 'shuize']);
+  for (const herb of herbs.herbs) {
+    assert.ok(herb.habitatLabel && herb.tags.length > 0 && herb.morphology, `${herb.id} missing catalog facets`);
+    assert.ok(['deep', 'overview'].includes(herb.depthLevel), `${herb.id} has invalid depth`);
+    assert.ok(herb.boundary, `${herb.id} missing reading boundary`);
+  }
   for (const entity of [...herbs.herbs, ...formulas.formulas, ...anchors.anchors, ...specimens.specimens, ...comparisons.comparisons]) {
     assert.ok(entity.sourceIds.length > 0, `${entity.id || entity.herbId} has no source`);
     for (const sourceId of entity.sourceIds) assert.ok(sourceIds.has(sourceId), `${entity.id || entity.herbId} references ${sourceId}`);
@@ -25,20 +34,31 @@ test('curated dataset is fresh and internally connected', async () => {
 test('new entry has no legacy runtime dependency', async () => {
   const html = await readFile(new URL('index.html', root), 'utf8');
   const js = await readFile(new URL('src/main.js', root), 'utf8');
+  const layout = await readFile(new URL('src/ui-layout.js', root), 'utf8');
+  const planet = await readFile(new URL('src/planet.js', root), 'utf8');
   const css = await readFile(new URL('src/styles.css', root), 'utf8');
   assert.match(html, /src\/main\.js/);
   assert.doesNotMatch(html, /assets\/js|sw\.js|Three\.js|ECharts/i);
   assert.match(js, /3D SPECIMEN LAB/);
   assert.match(js, /LOOK-ALIKE CHECK/);
-  assert.match(js, /THE HERBAL CABINET/);
-  assert.match(js, /data-cabinet-drawer/);
-  assert.match(js, /data-cabinet-filter/);
+  assert.match(js, /renderCosmosHome/);
+  assert.match(js, /particlePlanetMarkup/);
+  assert.match(js, /state.view === 'planet'/);
+  assert.match(layout, /本草宇宙 · 百子万象/);
+  assert.match(layout, /data-cabinet-habitat/);
+  assert.match(layout, /data-cabinet-morphology/);
+  assert.match(planet, /data-planet-canvas/);
+  assert.match(planet, /pointerdown/);
+  assert.match(planet, /wheel/);
   assert.match(js, /data-specimen-stage/);
   assert.match(js, /data-compare-select/);
   assert.match(js, /relationExplorer/);
   assert.match(js, /data-relation-node/);
   assert.match(css, /\.relation-scene\{overflow-x:auto/);
   assert.match(css, /\.relation-access-list/);
+  assert.match(css, /\.cosmos-landing/);
+  assert.match(css, /\.cabinet-wall/);
+  assert.match(css, /\.planet-stage/);
   assert.doesNotMatch(js, /cosmos-engine|apothecary|runtime\.js|expanded\.generated/i);
 });
 

@@ -1,7 +1,7 @@
 {
-  "datasetId": "herbal-cosmos-trace-v1",
+  "datasetId": "herbal-cosmos-catalog-v2",
   "entityType": "herb",
-  "researchedAt": "2026-10-11",
+  "researchedAt": "2026-10-12",
   "herbs": [
     {
       "id": "herb-panax-ginseng",
@@ -34,7 +34,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“人参”条目；Flora of China / POWO 检索 Panax ginseng C.A.Mey."
         }
-      ]
+      ],
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根与根茎",
+        "深度条目"
+      ],
+      "morphology": "五加科 Araliaceae代表性条目；以干燥根和根茎的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-artemisia-annua",
@@ -67,7 +77,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“青蒿”条目；Flora of China / POWO 检索 Artemisia annua L."
         }
-      ]
+      ],
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "叶与地上部",
+        "深度条目"
+      ],
+      "morphology": "菊科 Asteraceae代表性条目；以干燥地上部分的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-citrus-reticulata",
@@ -100,7 +120,16 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“陈皮”条目；Flora of China / POWO 检索 Citrus reticulata Blanco."
         }
-      ]
+      ],
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "深度条目"
+      ],
+      "morphology": "芸香科 Rutaceae代表性条目；以成熟果实的干燥果皮的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-glycyrrhiza-uralensis",
@@ -133,7 +162,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“甘草”条目；Flora of China / POWO 检索 Glycyrrhiza uralensis Fisch. ex DC."
         }
-      ]
+      ],
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根与根茎",
+        "深度条目"
+      ],
+      "morphology": "豆科 Fabaceae代表性条目；以干燥根和根茎的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-astragalus-membranaceus",
@@ -165,7 +204,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“黄芪”条目；Flora of China / POWO 检索 Astragalus membranaceus (Fisch.) Bunge."
         }
-      ]
+      ],
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根与根茎",
+        "深度条目"
+      ],
+      "morphology": "豆科 Fabaceae代表性条目；以干燥根的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-angelica-sinensis",
@@ -198,7 +247,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“当归”条目；Flora of China / POWO 检索 Angelica sinensis (Oliv.) Diels."
         }
-      ]
+      ],
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根与根茎",
+        "深度条目"
+      ],
+      "morphology": "伞形科 Apiaceae代表性条目；以干燥根的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-coptis-chinensis",
@@ -230,7 +289,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“黄连”条目；Flora of China / POWO 检索 Coptis chinensis Franch."
         }
-      ]
+      ],
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根与根茎",
+        "深度条目"
+      ],
+      "morphology": "毛茛科 Ranunculaceae代表性条目；以干燥根茎的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-lycium-barbarum",
@@ -262,7 +331,16 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“枸杞子”条目；Flora of China / POWO 检索 Lycium barbarum L."
         }
-      ]
+      ],
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "深度条目"
+      ],
+      "morphology": "茄科 Solanaceae代表性条目；以成熟果实的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-chrysanthemum-morifolium",
@@ -295,7 +373,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“菊花”条目；Flora of China / POWO 检索 Chrysanthemum morifolium Ramat."
         }
-      ]
+      ],
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "深度条目"
+      ],
+      "morphology": "菊科 Asteraceae代表性条目；以干燥头状花序的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-lonicera-japonica",
@@ -327,7 +415,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“金银花”条目；Flora of China / POWO 检索 Lonicera japonica Thunb."
         }
-      ]
+      ],
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "深度条目"
+      ],
+      "morphology": "忍冬科 Caprifoliaceae代表性条目；以干燥花蕾或初开的花的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-mentha-haplocalyx",
@@ -359,7 +457,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“薄荷”条目；Flora of China / POWO 检索 Mentha haplocalyx Briq."
         }
-      ]
+      ],
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "叶与地上部",
+        "深度条目"
+      ],
+      "morphology": "唇形科 Lamiaceae代表性条目；以干燥地上部分的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-salvia-miltiorrhiza",
@@ -391,7 +499,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“丹参”条目；Flora of China / POWO 检索 Salvia miltiorrhiza Bunge."
         }
-      ]
+      ],
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根与根茎",
+        "深度条目"
+      ],
+      "morphology": "唇形科 Lamiaceae代表性条目；以干燥根和根茎的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-atractylodes-macrocephala",
@@ -424,7 +542,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“白术”条目；Flora of China / POWO 检索 Atractylodes macrocephala Koidz."
         }
-      ]
+      ],
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根与根茎",
+        "深度条目"
+      ],
+      "morphology": "菊科 Asteraceae代表性条目；以干燥根茎的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-poria-cocos",
@@ -457,7 +585,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“茯苓”条目；Flora of China / POWO 检索 Wolfiporia extensa (Peck) Ginns."
         }
-      ]
+      ],
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "菌类",
+        "深度条目"
+      ],
+      "morphology": "多孔菌科 Polyporaceae代表性条目；以菌核的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-pinellia-ternata",
@@ -490,7 +628,17 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“半夏”条目；Flora of China / POWO 检索 Pinellia ternata (Thunb.) Makino."
         }
-      ]
+      ],
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "木本组织",
+        "深度条目"
+      ],
+      "morphology": "天南星科 Araceae代表性条目；以块茎（需按药典炮制品种展示）的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
     },
     {
       "id": "herb-saposhnikovia-divaricata",
@@ -523,7 +671,4325 @@
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“防风”条目；Flora of China / POWO 检索 Saposhnikovia divaricata (Turcz.) Schischk."
         }
-      ]
+      ],
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根与根茎",
+        "深度条目"
+      ],
+      "morphology": "伞形科 Apiaceae代表性条目；以干燥根的形态、颜色与质地作为识别线索。",
+      "depthLevel": "deep",
+      "catalogStatus": "featured"
+    },
+    {
+      "id": "herb-shanlin-01",
+      "nameZh": "白芍",
+      "pinyin": "bái sháo",
+      "scientificName": "Paeonia lactiflora Pall.",
+      "family": "芍药科 Paeoniaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "芍药科 Paeoniaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "白芍的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了白芍的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Paeonia lactiflora Pall.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Paeonia lactiflora Pall.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Paeonia lactiflora Pall.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-02",
+      "nameZh": "川芎",
+      "pinyin": "chuān xiōng",
+      "scientificName": "Ligusticum chuanxiong Hort.",
+      "family": "伞形科 Apiaceae",
+      "partUsed": "干燥根茎",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根茎",
+        "拓展目录"
+      ],
+      "morphology": "伞形科 Apiaceae本草；以干燥根茎的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "川芎的目录身份以干燥根茎和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了川芎的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Ligusticum chuanxiong Hort.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Ligusticum chuanxiong Hort.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Ligusticum chuanxiong Hort.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-03",
+      "nameZh": "葛根",
+      "pinyin": "gé gēn",
+      "scientificName": "Pueraria montana var. lobata (Willd.) Maesen & S.M.Almeida",
+      "family": "豆科 Fabaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "豆科 Fabaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "葛根的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了葛根的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Pueraria montana var. lobata (Willd.) Maesen & S.M.Almeida；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Pueraria montana var. lobata (Willd.) Maesen & S.M.Almeida；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Pueraria montana var. lobata (Willd.) Maesen & S.M.Almeida；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-04",
+      "nameZh": "桔梗",
+      "pinyin": "jié gěng",
+      "scientificName": "Platycodon grandiflorus (Jacq.) A.DC.",
+      "family": "桔梗科 Campanulaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "桔梗科 Campanulaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "桔梗的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了桔梗的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Platycodon grandiflorus (Jacq.) A.DC.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Platycodon grandiflorus (Jacq.) A.DC.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Platycodon grandiflorus (Jacq.) A.DC.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-05",
+      "nameZh": "远志",
+      "pinyin": "yuǎn zhì",
+      "scientificName": "Polygala tenuifolia Willd.",
+      "family": "远志科 Polygalaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "远志科 Polygalaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "远志的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了远志的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Polygala tenuifolia Willd.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Polygala tenuifolia Willd.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Polygala tenuifolia Willd.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-06",
+      "nameZh": "党参",
+      "pinyin": "dǎng shēn",
+      "scientificName": "Codonopsis pilosula (Franch.) Nannf.",
+      "family": "桔梗科 Campanulaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "桔梗科 Campanulaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "党参的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了党参的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Codonopsis pilosula (Franch.) Nannf.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Codonopsis pilosula (Franch.) Nannf.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Codonopsis pilosula (Franch.) Nannf.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-07",
+      "nameZh": "续断",
+      "pinyin": "xù duàn",
+      "scientificName": "Dipsacus asperoides C.Y.Cheng & T.M.Ai",
+      "family": "川续断科 Dipsacaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "川续断科 Dipsacaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "续断的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了续断的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Dipsacus asperoides C.Y.Cheng & T.M.Ai；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Dipsacus asperoides C.Y.Cheng & T.M.Ai；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Dipsacus asperoides C.Y.Cheng & T.M.Ai；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-08",
+      "nameZh": "牛膝",
+      "pinyin": "niú xī",
+      "scientificName": "Achyranthes bidentata Blume",
+      "family": "苋科 Amaranthaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "苋科 Amaranthaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "牛膝的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了牛膝的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Achyranthes bidentata Blume；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Achyranthes bidentata Blume；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Achyranthes bidentata Blume；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-09",
+      "nameZh": "三七",
+      "pinyin": "sān qī",
+      "scientificName": "Panax notoginseng (Burkill) F.H.Chen",
+      "family": "五加科 Araliaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "五加科 Araliaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "三七的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了三七的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Panax notoginseng (Burkill) F.H.Chen；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Panax notoginseng (Burkill) F.H.Chen；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Panax notoginseng (Burkill) F.H.Chen；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-10",
+      "nameZh": "何首乌",
+      "pinyin": "hé shǒu wū",
+      "scientificName": "Fallopia multiflora (Thunb.) Haraldson",
+      "family": "蓼科 Polygonaceae",
+      "partUsed": "干燥块根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "蓼科 Polygonaceae本草；以干燥块根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "何首乌的目录身份以干燥块根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了何首乌的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Fallopia multiflora (Thunb.) Haraldson；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Fallopia multiflora (Thunb.) Haraldson；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Fallopia multiflora (Thunb.) Haraldson；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-11",
+      "nameZh": "天麻",
+      "pinyin": "tiān má",
+      "scientificName": "Gastrodia elata Blume",
+      "family": "兰科 Orchidaceae",
+      "partUsed": "干燥块茎",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "块茎",
+        "拓展目录"
+      ],
+      "morphology": "兰科 Orchidaceae本草；以干燥块茎的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "天麻的目录身份以干燥块茎和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了天麻的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Gastrodia elata Blume；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Gastrodia elata Blume；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Gastrodia elata Blume；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shanlin-12",
+      "nameZh": "板蓝根",
+      "pinyin": "bǎn lán gēn",
+      "scientificName": "Isatis indigotica Fort.",
+      "family": "十字花科 Brassicaceae",
+      "partUsed": "干燥根",
+      "habitat": "shanlin",
+      "habitatLabel": "山林根境",
+      "tags": [
+        "山林根境",
+        "根部",
+        "拓展目录"
+      ],
+      "morphology": "十字花科 Brassicaceae本草；以干燥根的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "板蓝根的目录身份以干燥根和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了板蓝根的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Isatis indigotica Fort.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Isatis indigotica Fort.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Isatis indigotica Fort.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-01",
+      "nameZh": "车前草",
+      "pinyin": "chē qián cǎo",
+      "scientificName": "Plantago asiatica L.",
+      "family": "车前科 Plantaginaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "车前科 Plantaginaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "车前草的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了车前草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Plantago asiatica L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Plantago asiatica L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Plantago asiatica L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-02",
+      "nameZh": "蒲公英",
+      "pinyin": "pú gōng yīng",
+      "scientificName": "Taraxacum mongolicum Hand.-Mazz.",
+      "family": "菊科 Asteraceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "菊科 Asteraceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "蒲公英的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了蒲公英的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Taraxacum mongolicum Hand.-Mazz.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Taraxacum mongolicum Hand.-Mazz.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Taraxacum mongolicum Hand.-Mazz.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-03",
+      "nameZh": "紫花地丁",
+      "pinyin": "zǐ huā dì dīng",
+      "scientificName": "Viola philippica Cav.",
+      "family": "堇菜科 Violaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "堇菜科 Violaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "紫花地丁的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了紫花地丁的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Viola philippica Cav.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Viola philippica Cav.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Viola philippica Cav.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-04",
+      "nameZh": "夏枯草",
+      "pinyin": "xià kū cǎo",
+      "scientificName": "Prunella vulgaris L.",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥果穗",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "唇形科 Lamiaceae本草；以干燥果穗的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "夏枯草的目录身份以干燥果穗和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了夏枯草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Prunella vulgaris L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Prunella vulgaris L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Prunella vulgaris L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-05",
+      "nameZh": "益母草",
+      "pinyin": "yì mǔ cǎo",
+      "scientificName": "Leonurus japonicus Houtt.",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥地上部分",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "地上部",
+        "拓展目录"
+      ],
+      "morphology": "唇形科 Lamiaceae本草；以干燥地上部分的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "益母草的目录身份以干燥地上部分和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了益母草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Leonurus japonicus Houtt.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Leonurus japonicus Houtt.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Leonurus japonicus Houtt.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-06",
+      "nameZh": "荆芥",
+      "pinyin": "jīng jiè",
+      "scientificName": "Schizonepeta tenuifolia (Benth.) Briq.",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥地上部分",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "地上部",
+        "拓展目录"
+      ],
+      "morphology": "唇形科 Lamiaceae本草；以干燥地上部分的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "荆芥的目录身份以干燥地上部分和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了荆芥的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Schizonepeta tenuifolia (Benth.) Briq.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Schizonepeta tenuifolia (Benth.) Briq.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Schizonepeta tenuifolia (Benth.) Briq.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-07",
+      "nameZh": "艾叶",
+      "pinyin": "ài yè",
+      "scientificName": "Artemisia argyi H.Lév. & Vaniot",
+      "family": "菊科 Asteraceae",
+      "partUsed": "干燥叶",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "叶部",
+        "拓展目录"
+      ],
+      "morphology": "菊科 Asteraceae本草；以干燥叶的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "艾叶的目录身份以干燥叶和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了艾叶的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Artemisia argyi H.Lév. & Vaniot；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Artemisia argyi H.Lév. & Vaniot；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Artemisia argyi H.Lév. & Vaniot；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-08",
+      "nameZh": "马齿苋",
+      "pinyin": "mǎ chǐ xiàn",
+      "scientificName": "Portulaca oleracea L.",
+      "family": "马齿苋科 Portulacaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "马齿苋科 Portulacaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "马齿苋的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了马齿苋的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Portulaca oleracea L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Portulaca oleracea L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Portulaca oleracea L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-09",
+      "nameZh": "鱼腥草",
+      "pinyin": "yú xīng cǎo",
+      "scientificName": "Houttuynia cordata Thunb.",
+      "family": "三白草科 Saururaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "三白草科 Saururaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "鱼腥草的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了鱼腥草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Houttuynia cordata Thunb.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Houttuynia cordata Thunb.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Houttuynia cordata Thunb.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-10",
+      "nameZh": "金钱草",
+      "pinyin": "jīn qián cǎo",
+      "scientificName": "Lysimachia christinae Hance",
+      "family": "报春花科 Primulaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "报春花科 Primulaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "金钱草的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了金钱草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Lysimachia christinae Hance；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Lysimachia christinae Hance；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Lysimachia christinae Hance；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-11",
+      "nameZh": "鸡骨草",
+      "pinyin": "jī gǔ cǎo",
+      "scientificName": "Abrus cantoniensis Hance",
+      "family": "豆科 Fabaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "豆科 Fabaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "鸡骨草的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了鸡骨草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Abrus cantoniensis Hance；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Abrus cantoniensis Hance；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Abrus cantoniensis Hance；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-12",
+      "nameZh": "白花蛇舌草",
+      "pinyin": "bái huā shé shé cǎo",
+      "scientificName": "Hedyotis diffusa Willd.",
+      "family": "茜草科 Rubiaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "茜草科 Rubiaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "白花蛇舌草的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了白花蛇舌草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Hedyotis diffusa Willd.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Hedyotis diffusa Willd.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Hedyotis diffusa Willd.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-13",
+      "nameZh": "败酱草",
+      "pinyin": "bài jiàng cǎo",
+      "scientificName": "Patrinia scabiosifolia Fisch. ex Trevir.",
+      "family": "忍冬科 Caprifoliaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "忍冬科 Caprifoliaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "败酱草的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了败酱草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Patrinia scabiosifolia Fisch. ex Trevir.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Patrinia scabiosifolia Fisch. ex Trevir.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Patrinia scabiosifolia Fisch. ex Trevir.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-14",
+      "nameZh": "爵床",
+      "pinyin": "jué chuáng",
+      "scientificName": "Rostellularia procumbens (L.) Nees",
+      "family": "爵床科 Acanthaceae",
+      "partUsed": "干燥全草",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "爵床科 Acanthaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "爵床的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了爵床的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Rostellularia procumbens (L.) Nees；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Rostellularia procumbens (L.) Nees；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Rostellularia procumbens (L.) Nees；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-15",
+      "nameZh": "穿心莲",
+      "pinyin": "chuān xīn lián",
+      "scientificName": "Andrographis paniculata (Burm.f.) Nees",
+      "family": "爵床科 Acanthaceae",
+      "partUsed": "干燥地上部分",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "地上部",
+        "拓展目录"
+      ],
+      "morphology": "爵床科 Acanthaceae本草；以干燥地上部分的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "穿心莲的目录身份以干燥地上部分和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了穿心莲的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Andrographis paniculata (Burm.f.) Nees；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Andrographis paniculata (Burm.f.) Nees；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Andrographis paniculata (Burm.f.) Nees；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-16",
+      "nameZh": "罗布麻叶",
+      "pinyin": "luó bù má yè",
+      "scientificName": "Apocynum venetum L.",
+      "family": "夹竹桃科 Apocynaceae",
+      "partUsed": "干燥叶",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "叶部",
+        "拓展目录"
+      ],
+      "morphology": "夹竹桃科 Apocynaceae本草；以干燥叶的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "罗布麻叶的目录身份以干燥叶和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了罗布麻叶的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Apocynum venetum L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Apocynum venetum L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Apocynum venetum L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-17",
+      "nameZh": "蒲黄",
+      "pinyin": "pú huáng",
+      "scientificName": "Typha angustifolia L.",
+      "family": "香蒲科 Typhaceae",
+      "partUsed": "花粉",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "pollen",
+        "拓展目录"
+      ],
+      "morphology": "香蒲科 Typhaceae本草；以花粉的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "蒲黄的目录身份以花粉和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了蒲黄的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Typha angustifolia L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Typha angustifolia L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Typha angustifolia L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-caodian-18",
+      "nameZh": "地肤子",
+      "pinyin": "dì fū zǐ",
+      "scientificName": "Bassia scoparia (L.) A.J.Scott",
+      "family": "苋科 Amaranthaceae",
+      "partUsed": "成熟果实",
+      "habitat": "caodian",
+      "habitatLabel": "草甸原野",
+      "tags": [
+        "草甸原野",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "苋科 Amaranthaceae本草；以成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "地肤子的目录身份以成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了地肤子的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Bassia scoparia (L.) A.J.Scott；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Bassia scoparia (L.) A.J.Scott；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Bassia scoparia (L.) A.J.Scott；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-01",
+      "nameZh": "玫瑰花",
+      "pinyin": "méi guī huā",
+      "scientificName": "Rosa rugosa Thunb.",
+      "family": "蔷薇科 Rosaceae",
+      "partUsed": "干燥花蕾",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "蔷薇科 Rosaceae本草；以干燥花蕾的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "玫瑰花的目录身份以干燥花蕾和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了玫瑰花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Rosa rugosa Thunb.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Rosa rugosa Thunb.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Rosa rugosa Thunb.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-02",
+      "nameZh": "桂花",
+      "pinyin": "guì huā",
+      "scientificName": "Osmanthus fragrans Lour.",
+      "family": "木犀科 Oleaceae",
+      "partUsed": "花",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "木犀科 Oleaceae本草；以花的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "桂花的目录身份以花和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了桂花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Osmanthus fragrans Lour.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Osmanthus fragrans Lour.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Osmanthus fragrans Lour.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-03",
+      "nameZh": "辛夷",
+      "pinyin": "xīn yí",
+      "scientificName": "Magnolia biondii Pamp.",
+      "family": "木兰科 Magnoliaceae",
+      "partUsed": "干燥花蕾",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "木兰科 Magnoliaceae本草；以干燥花蕾的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "辛夷的目录身份以干燥花蕾和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了辛夷的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Magnolia biondii Pamp.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Magnolia biondii Pamp.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Magnolia biondii Pamp.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-04",
+      "nameZh": "槐花",
+      "pinyin": "huái huā",
+      "scientificName": "Sophora japonica L.",
+      "family": "豆科 Fabaceae",
+      "partUsed": "干燥花及花蕾",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "豆科 Fabaceae本草；以干燥花及花蕾的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "槐花的目录身份以干燥花及花蕾和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了槐花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Sophora japonica L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Sophora japonica L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Sophora japonica L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-05",
+      "nameZh": "旋覆花",
+      "pinyin": "xuán fù huā",
+      "scientificName": "Inula japonica Thunb.",
+      "family": "菊科 Asteraceae",
+      "partUsed": "干燥头状花序",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "菊科 Asteraceae本草；以干燥头状花序的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "旋覆花的目录身份以干燥头状花序和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了旋覆花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Inula japonica Thunb.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Inula japonica Thunb.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Inula japonica Thunb.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-06",
+      "nameZh": "款冬花",
+      "pinyin": "kuǎn dōng huā",
+      "scientificName": "Tussilago farfara L.",
+      "family": "菊科 Asteraceae",
+      "partUsed": "干燥花蕾",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "菊科 Asteraceae本草；以干燥花蕾的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "款冬花的目录身份以干燥花蕾和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了款冬花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Tussilago farfara L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Tussilago farfara L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Tussilago farfara L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-07",
+      "nameZh": "红花",
+      "pinyin": "hóng huā",
+      "scientificName": "Carthamus tinctorius L.",
+      "family": "菊科 Asteraceae",
+      "partUsed": "干燥花",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "菊科 Asteraceae本草；以干燥花的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "红花的目录身份以干燥花和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了红花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Carthamus tinctorius L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Carthamus tinctorius L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Carthamus tinctorius L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-08",
+      "nameZh": "月季花",
+      "pinyin": "yuè jì huā",
+      "scientificName": "Rosa chinensis Jacq.",
+      "family": "蔷薇科 Rosaceae",
+      "partUsed": "干燥花",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "蔷薇科 Rosaceae本草；以干燥花的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "月季花的目录身份以干燥花和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了月季花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Rosa chinensis Jacq.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Rosa chinensis Jacq.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Rosa chinensis Jacq.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-09",
+      "nameZh": "合欢花",
+      "pinyin": "hé huān huā",
+      "scientificName": "Albizia julibrissin Durazz.",
+      "family": "豆科 Fabaceae",
+      "partUsed": "干燥花序",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "豆科 Fabaceae本草；以干燥花序的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "合欢花的目录身份以干燥花序和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了合欢花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Albizia julibrissin Durazz.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Albizia julibrissin Durazz.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Albizia julibrissin Durazz.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-10",
+      "nameZh": "代代花",
+      "pinyin": "dài dài huā",
+      "scientificName": "Citrus aurantium L. var. amara Engl.",
+      "family": "芸香科 Rutaceae",
+      "partUsed": "干燥花蕾",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "芸香科 Rutaceae本草；以干燥花蕾的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "代代花的目录身份以干燥花蕾和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了代代花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Citrus aurantium L. var. amara Engl.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Citrus aurantium L. var. amara Engl.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Citrus aurantium L. var. amara Engl.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-11",
+      "nameZh": "厚朴花",
+      "pinyin": "hòu pò huā",
+      "scientificName": "Magnolia officinalis Rehder & E.H.Wilson",
+      "family": "木兰科 Magnoliaceae",
+      "partUsed": "干燥花蕾",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "木兰科 Magnoliaceae本草；以干燥花蕾的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "厚朴花的目录身份以干燥花蕾和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了厚朴花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Magnolia officinalis Rehder & E.H.Wilson；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Magnolia officinalis Rehder & E.H.Wilson；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Magnolia officinalis Rehder & E.H.Wilson；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-12",
+      "nameZh": "木槿花",
+      "pinyin": "mù jǐn huā",
+      "scientificName": "Hibiscus syriacus L.",
+      "family": "锦葵科 Malvaceae",
+      "partUsed": "干燥花",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "锦葵科 Malvaceae本草；以干燥花的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "木槿花的目录身份以干燥花和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了木槿花的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Hibiscus syriacus L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Hibiscus syriacus L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Hibiscus syriacus L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-13",
+      "nameZh": "丁香",
+      "pinyin": "dīng xiāng",
+      "scientificName": "Syzygium aromaticum (L.) Merr. & L.M.Perry",
+      "family": "桃金娘科 Myrtaceae",
+      "partUsed": "干燥花蕾",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "花部",
+        "拓展目录"
+      ],
+      "morphology": "桃金娘科 Myrtaceae本草；以干燥花蕾的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "丁香的目录身份以干燥花蕾和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了丁香的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Syzygium aromaticum (L.) Merr. & L.M.Perry；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Syzygium aromaticum (L.) Merr. & L.M.Perry；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Syzygium aromaticum (L.) Merr. & L.M.Perry；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-14",
+      "nameZh": "紫苏叶",
+      "pinyin": "zǐ sū yè",
+      "scientificName": "Perilla frutescens (L.) Britton",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥叶",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "叶部",
+        "拓展目录"
+      ],
+      "morphology": "唇形科 Lamiaceae本草；以干燥叶的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "紫苏叶的目录身份以干燥叶和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了紫苏叶的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Perilla frutescens (L.) Britton；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Perilla frutescens (L.) Britton；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Perilla frutescens (L.) Britton；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-15",
+      "nameZh": "藿香",
+      "pinyin": "huò xiāng",
+      "scientificName": "Agastache rugosa (Fisch. & C.A.Mey.) Kuntze",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥地上部分",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "地上部",
+        "拓展目录"
+      ],
+      "morphology": "唇形科 Lamiaceae本草；以干燥地上部分的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "藿香的目录身份以干燥地上部分和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了藿香的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Agastache rugosa (Fisch. & C.A.Mey.) Kuntze；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Agastache rugosa (Fisch. & C.A.Mey.) Kuntze；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Agastache rugosa (Fisch. & C.A.Mey.) Kuntze；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-16",
+      "nameZh": "香薷",
+      "pinyin": "xiāng rú",
+      "scientificName": "Elsholtzia ciliata (Thunb.) Hyl.",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥地上部分",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "地上部",
+        "拓展目录"
+      ],
+      "morphology": "唇形科 Lamiaceae本草；以干燥地上部分的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "香薷的目录身份以干燥地上部分和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了香薷的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Elsholtzia ciliata (Thunb.) Hyl.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Elsholtzia ciliata (Thunb.) Hyl.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Elsholtzia ciliata (Thunb.) Hyl.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-17",
+      "nameZh": "月见草",
+      "pinyin": "yuè jiàn cǎo",
+      "scientificName": "Oenothera biennis L.",
+      "family": "柳叶菜科 Onagraceae",
+      "partUsed": "成熟种子",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "柳叶菜科 Onagraceae本草；以成熟种子的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "月见草的目录身份以成熟种子和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了月见草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Oenothera biennis L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Oenothera biennis L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Oenothera biennis L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-huaye-18",
+      "nameZh": "紫苏梗",
+      "pinyin": "zǐ sū gěng",
+      "scientificName": "Perilla frutescens (L.) Britton",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥茎",
+      "habitat": "huaye",
+      "habitatLabel": "花野芳香",
+      "tags": [
+        "花野芳香",
+        "茎枝",
+        "拓展目录"
+      ],
+      "morphology": "唇形科 Lamiaceae本草；以干燥茎的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "紫苏梗的目录身份以干燥茎和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了紫苏梗的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Perilla frutescens (L.) Britton；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Perilla frutescens (L.) Britton；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Perilla frutescens (L.) Britton；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-01",
+      "nameZh": "山楂",
+      "pinyin": "shān zhā",
+      "scientificName": "Crataegus pinnatifida Bunge",
+      "family": "蔷薇科 Rosaceae",
+      "partUsed": "成熟果实",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "蔷薇科 Rosaceae本草；以成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "山楂的目录身份以成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了山楂的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Crataegus pinnatifida Bunge；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Crataegus pinnatifida Bunge；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Crataegus pinnatifida Bunge；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-02",
+      "nameZh": "五味子",
+      "pinyin": "wǔ wèi zǐ",
+      "scientificName": "Schisandra chinensis (Turcz.) Baill.",
+      "family": "五味子科 Schisandraceae",
+      "partUsed": "成熟果实",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "五味子科 Schisandraceae本草；以成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "五味子的目录身份以成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了五味子的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Schisandra chinensis (Turcz.) Baill.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Schisandra chinensis (Turcz.) Baill.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Schisandra chinensis (Turcz.) Baill.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-03",
+      "nameZh": "枳实",
+      "pinyin": "zhǐ shí",
+      "scientificName": "Citrus aurantium L.",
+      "family": "芸香科 Rutaceae",
+      "partUsed": "幼果",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "芸香科 Rutaceae本草；以幼果的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "枳实的目录身份以幼果和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了枳实的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Citrus aurantium L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Citrus aurantium L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Citrus aurantium L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-04",
+      "nameZh": "枳壳",
+      "pinyin": "zhǐ ké",
+      "scientificName": "Citrus aurantium L.",
+      "family": "芸香科 Rutaceae",
+      "partUsed": "近成熟果实",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "芸香科 Rutaceae本草；以近成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "枳壳的目录身份以近成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了枳壳的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Citrus aurantium L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Citrus aurantium L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Citrus aurantium L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-05",
+      "nameZh": "乌梅",
+      "pinyin": "wū méi",
+      "scientificName": "Prunus mume (Siebold) Siebold & Zucc.",
+      "family": "蔷薇科 Rosaceae",
+      "partUsed": "近成熟果实",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "蔷薇科 Rosaceae本草；以近成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "乌梅的目录身份以近成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了乌梅的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Prunus mume (Siebold) Siebold & Zucc.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Prunus mume (Siebold) Siebold & Zucc.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Prunus mume (Siebold) Siebold & Zucc.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-06",
+      "nameZh": "肉豆蔻",
+      "pinyin": "ròu dòu kòu",
+      "scientificName": "Myristica fragrans Houtt.",
+      "family": "肉豆蔻科 Myristicaceae",
+      "partUsed": "种仁",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "肉豆蔻科 Myristicaceae本草；以种仁的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "肉豆蔻的目录身份以种仁和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了肉豆蔻的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Myristica fragrans Houtt.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Myristica fragrans Houtt.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Myristica fragrans Houtt.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-07",
+      "nameZh": "砂仁",
+      "pinyin": "shā rén",
+      "scientificName": "Amomum villosum Lour.",
+      "family": "姜科 Zingiberaceae",
+      "partUsed": "成熟果实",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "姜科 Zingiberaceae本草；以成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "砂仁的目录身份以成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了砂仁的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Amomum villosum Lour.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Amomum villosum Lour.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Amomum villosum Lour.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-08",
+      "nameZh": "草果",
+      "pinyin": "cǎo guǒ",
+      "scientificName": "Amomum tsaoko Crevost & Lemarié",
+      "family": "姜科 Zingiberaceae",
+      "partUsed": "成熟果实",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "姜科 Zingiberaceae本草；以成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "草果的目录身份以成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了草果的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Amomum tsaoko Crevost & Lemarié；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Amomum tsaoko Crevost & Lemarié；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Amomum tsaoko Crevost & Lemarié；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-09",
+      "nameZh": "小茴香",
+      "pinyin": "xiǎo huí xiāng",
+      "scientificName": "Foeniculum vulgare Mill.",
+      "family": "伞形科 Apiaceae",
+      "partUsed": "成熟果实",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "伞形科 Apiaceae本草；以成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "小茴香的目录身份以成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了小茴香的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Foeniculum vulgare Mill.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Foeniculum vulgare Mill.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Foeniculum vulgare Mill.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-10",
+      "nameZh": "莱菔子",
+      "pinyin": "lái fú zǐ",
+      "scientificName": "Raphanus sativus L.",
+      "family": "十字花科 Brassicaceae",
+      "partUsed": "成熟种子",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "十字花科 Brassicaceae本草；以成熟种子的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "莱菔子的目录身份以成熟种子和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了莱菔子的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Raphanus sativus L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Raphanus sativus L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Raphanus sativus L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-11",
+      "nameZh": "葶苈子",
+      "pinyin": "tíng lì zǐ",
+      "scientificName": "Descurainia sophia (L.) Webb ex Prantl",
+      "family": "十字花科 Brassicaceae",
+      "partUsed": "成熟种子",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "十字花科 Brassicaceae本草；以成熟种子的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "葶苈子的目录身份以成熟种子和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了葶苈子的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Descurainia sophia (L.) Webb ex Prantl；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Descurainia sophia (L.) Webb ex Prantl；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Descurainia sophia (L.) Webb ex Prantl；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-12",
+      "nameZh": "火麻仁",
+      "pinyin": "huǒ má rén",
+      "scientificName": "Cannabis sativa L.",
+      "family": "大麻科 Cannabaceae",
+      "partUsed": "成熟果实",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "大麻科 Cannabaceae本草；以成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "火麻仁的目录身份以成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了火麻仁的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Cannabis sativa L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Cannabis sativa L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Cannabis sativa L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-13",
+      "nameZh": "酸枣仁",
+      "pinyin": "suān zǎo rén",
+      "scientificName": "Ziziphus jujuba Mill. var. spinosa (Bunge) Hu ex H.F.Chow",
+      "family": "鼠李科 Rhamnaceae",
+      "partUsed": "成熟种子",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "鼠李科 Rhamnaceae本草；以成熟种子的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "酸枣仁的目录身份以成熟种子和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了酸枣仁的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Ziziphus jujuba Mill. var. spinosa (Bunge) Hu ex H.F.Chow；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Ziziphus jujuba Mill. var. spinosa (Bunge) Hu ex H.F.Chow；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Ziziphus jujuba Mill. var. spinosa (Bunge) Hu ex H.F.Chow；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-14",
+      "nameZh": "柏子仁",
+      "pinyin": "bǎi zǐ rén",
+      "scientificName": "Platycladus orientalis (L.) Franco",
+      "family": "柏科 Cupressaceae",
+      "partUsed": "成熟种仁",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "柏科 Cupressaceae本草；以成熟种仁的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "柏子仁的目录身份以成熟种仁和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了柏子仁的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Platycladus orientalis (L.) Franco；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Platycladus orientalis (L.) Franco；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Platycladus orientalis (L.) Franco；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-15",
+      "nameZh": "薏苡仁",
+      "pinyin": "yì yǐ rén",
+      "scientificName": "Coix lacryma-jobi var. ma-yuen (Rom.Caill.) Stapf",
+      "family": "禾本科 Poaceae",
+      "partUsed": "成熟种仁",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "禾本科 Poaceae本草；以成熟种仁的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "薏苡仁的目录身份以成熟种仁和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了薏苡仁的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Coix lacryma-jobi var. ma-yuen (Rom.Caill.) Stapf；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Coix lacryma-jobi var. ma-yuen (Rom.Caill.) Stapf；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Coix lacryma-jobi var. ma-yuen (Rom.Caill.) Stapf；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-16",
+      "nameZh": "莲子",
+      "pinyin": "lián zǐ",
+      "scientificName": "Nelumbo nucifera Gaertn.",
+      "family": "莲科 Nelumbonaceae",
+      "partUsed": "成熟种子",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "莲科 Nelumbonaceae本草；以成熟种子的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "莲子的目录身份以成熟种子和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了莲子的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Nelumbo nucifera Gaertn.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Nelumbo nucifera Gaertn.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Nelumbo nucifera Gaertn.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-17",
+      "nameZh": "芡实",
+      "pinyin": "qiàn shí",
+      "scientificName": "Euryale ferox Salisb.",
+      "family": "睡莲科 Nymphaeaceae",
+      "partUsed": "成熟种仁",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "睡莲科 Nymphaeaceae本草；以成熟种仁的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "芡实的目录身份以成熟种仁和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了芡实的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Euryale ferox Salisb.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Euryale ferox Salisb.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Euryale ferox Salisb.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-guoshi-18",
+      "nameZh": "菟丝子",
+      "pinyin": "tù sī zǐ",
+      "scientificName": "Cuscuta chinensis Lam.",
+      "family": "旋花科 Convolvulaceae",
+      "partUsed": "成熟种子",
+      "habitat": "guoshi",
+      "habitatLabel": "果实种籽",
+      "tags": [
+        "果实种籽",
+        "种籽",
+        "拓展目录"
+      ],
+      "morphology": "旋花科 Convolvulaceae本草；以成熟种子的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "菟丝子的目录身份以成熟种子和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了菟丝子的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Cuscuta chinensis Lam.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Cuscuta chinensis Lam.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Cuscuta chinensis Lam.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-01",
+      "nameZh": "泽泻",
+      "pinyin": "zé xiè",
+      "scientificName": "Alisma orientale (Sam.) Juz.",
+      "family": "泽泻科 Alismataceae",
+      "partUsed": "干燥块茎",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "根茎",
+        "拓展目录"
+      ],
+      "morphology": "泽泻科 Alismataceae本草；以干燥块茎的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "泽泻的目录身份以干燥块茎和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了泽泻的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Alisma orientale (Sam.) Juz.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Alisma orientale (Sam.) Juz.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Alisma orientale (Sam.) Juz.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-02",
+      "nameZh": "荷叶",
+      "pinyin": "hé yè",
+      "scientificName": "Nelumbo nucifera Gaertn.",
+      "family": "莲科 Nelumbonaceae",
+      "partUsed": "干燥叶",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "叶部",
+        "拓展目录"
+      ],
+      "morphology": "莲科 Nelumbonaceae本草；以干燥叶的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "荷叶的目录身份以干燥叶和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了荷叶的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Nelumbo nucifera Gaertn.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Nelumbo nucifera Gaertn.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Nelumbo nucifera Gaertn.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-03",
+      "nameZh": "芦根",
+      "pinyin": "lú gēn",
+      "scientificName": "Phragmites australis (Cav.) Trin. ex Steud.",
+      "family": "禾本科 Poaceae",
+      "partUsed": "新鲜或干燥根茎",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "根茎",
+        "拓展目录"
+      ],
+      "morphology": "禾本科 Poaceae本草；以新鲜或干燥根茎的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "芦根的目录身份以新鲜或干燥根茎和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了芦根的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Phragmites australis (Cav.) Trin. ex Steud.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Phragmites australis (Cav.) Trin. ex Steud.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Phragmites australis (Cav.) Trin. ex Steud.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-04",
+      "nameZh": "石菖蒲",
+      "pinyin": "shí chāng pú",
+      "scientificName": "Acorus gramineus Sol.",
+      "family": "天南星科 Araceae",
+      "partUsed": "干燥根茎",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "根茎",
+        "拓展目录"
+      ],
+      "morphology": "天南星科 Araceae本草；以干燥根茎的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "石菖蒲的目录身份以干燥根茎和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了石菖蒲的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Acorus gramineus Sol.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Acorus gramineus Sol.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Acorus gramineus Sol.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-05",
+      "nameZh": "水蛭",
+      "pinyin": "shuǐ zhì",
+      "scientificName": "Hirudo nipponia Whitman",
+      "family": "水蛭科 Hirudinidae",
+      "partUsed": "干燥全体",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "动物药材",
+        "拓展目录"
+      ],
+      "morphology": "水蛭科 Hirudinidae本草；以干燥全体的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "水蛭的目录身份以干燥全体和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了水蛭的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Hirudo nipponia Whitman；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Hirudo nipponia Whitman；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Hirudo nipponia Whitman；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-06",
+      "nameZh": "海藻",
+      "pinyin": "hǎi zǎo",
+      "scientificName": "Sargassum pallidum (Turner) C.Agardh",
+      "family": "马尾藻科 Sargassaceae",
+      "partUsed": "藻体",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "藻类",
+        "拓展目录"
+      ],
+      "morphology": "马尾藻科 Sargassaceae本草；以藻体的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "海藻的目录身份以藻体和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了海藻的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Sargassum pallidum (Turner) C.Agardh；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Sargassum pallidum (Turner) C.Agardh；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Sargassum pallidum (Turner) C.Agardh；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-07",
+      "nameZh": "昆布",
+      "pinyin": "kūn bù",
+      "scientificName": "Saccharina japonica (Aresch.) C.E.Lane, C.Mayes, Druehl & G.W.Saunders",
+      "family": "海带科 Laminariaceae",
+      "partUsed": "藻体",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "藻类",
+        "拓展目录"
+      ],
+      "morphology": "海带科 Laminariaceae本草；以藻体的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "昆布的目录身份以藻体和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了昆布的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Saccharina japonica (Aresch.) C.E.Lane, C.Mayes, Druehl & G.W.Saunders；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Saccharina japonica (Aresch.) C.E.Lane, C.Mayes, Druehl & G.W.Saunders；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Saccharina japonica (Aresch.) C.E.Lane, C.Mayes, Druehl & G.W.Saunders；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-08",
+      "nameZh": "海金沙",
+      "pinyin": "hǎi jīn shā",
+      "scientificName": "Lygodium japonicum (Thunb.) Sw.",
+      "family": "海金沙科 Lygodiaceae",
+      "partUsed": "成熟孢子",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "孢子",
+        "拓展目录"
+      ],
+      "morphology": "海金沙科 Lygodiaceae本草；以成熟孢子的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "海金沙的目录身份以成熟孢子和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了海金沙的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Lygodium japonicum (Thunb.) Sw.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Lygodium japonicum (Thunb.) Sw.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Lygodium japonicum (Thunb.) Sw.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-09",
+      "nameZh": "通草",
+      "pinyin": "tōng cǎo",
+      "scientificName": "Tetrapanax papyrifer (Hook.) K.Koch",
+      "family": "五加科 Araliaceae",
+      "partUsed": "茎髓",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "茎髓",
+        "拓展目录"
+      ],
+      "morphology": "五加科 Araliaceae本草；以茎髓的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "通草的目录身份以茎髓和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了通草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Tetrapanax papyrifer (Hook.) K.Koch；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Tetrapanax papyrifer (Hook.) K.Koch；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Tetrapanax papyrifer (Hook.) K.Koch；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-10",
+      "nameZh": "木通",
+      "pinyin": "mù tōng",
+      "scientificName": "Akebia quinata (Houtt.) Decne.",
+      "family": "木通科 Lardizabalaceae",
+      "partUsed": "藤茎",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "茎枝",
+        "拓展目录"
+      ],
+      "morphology": "木通科 Lardizabalaceae本草；以藤茎的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "木通的目录身份以藤茎和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了木通的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Akebia quinata (Houtt.) Decne.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Akebia quinata (Houtt.) Decne.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Akebia quinata (Houtt.) Decne.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-11",
+      "nameZh": "半边莲",
+      "pinyin": "bàn biān lián",
+      "scientificName": "Lobelia chinensis Lour.",
+      "family": "桔梗科 Campanulaceae",
+      "partUsed": "干燥全草",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "桔梗科 Campanulaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "半边莲的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了半边莲的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Lobelia chinensis Lour.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Lobelia chinensis Lour.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Lobelia chinensis Lour.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-12",
+      "nameZh": "浮萍",
+      "pinyin": "fú píng",
+      "scientificName": "Lemna minor L.",
+      "family": "天南星科 Araceae",
+      "partUsed": "干燥全草",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "天南星科 Araceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "浮萍的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了浮萍的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Lemna minor L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Lemna minor L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Lemna minor L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-13",
+      "nameZh": "水红花子",
+      "pinyin": "shuǐ hóng huā zǐ",
+      "scientificName": "Persicaria orientalis (L.) Spach",
+      "family": "蓼科 Polygonaceae",
+      "partUsed": "成熟果实",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "果实",
+        "拓展目录"
+      ],
+      "morphology": "蓼科 Polygonaceae本草；以成熟果实的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "水红花子的目录身份以成熟果实和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了水红花子的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Persicaria orientalis (L.) Spach；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Persicaria orientalis (L.) Spach；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Persicaria orientalis (L.) Spach；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-14",
+      "nameZh": "灯心草",
+      "pinyin": "dēng xīn cǎo",
+      "scientificName": "Juncus effusus L.",
+      "family": "灯心草科 Juncaceae",
+      "partUsed": "茎髓",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "茎髓",
+        "拓展目录"
+      ],
+      "morphology": "灯心草科 Juncaceae本草；以茎髓的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "灯心草的目录身份以茎髓和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了灯心草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Juncus effusus L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Juncus effusus L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Juncus effusus L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-15",
+      "nameZh": "藕节",
+      "pinyin": "ǒu jié",
+      "scientificName": "Nelumbo nucifera Gaertn.",
+      "family": "莲科 Nelumbonaceae",
+      "partUsed": "根茎节",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "根茎",
+        "拓展目录"
+      ],
+      "morphology": "莲科 Nelumbonaceae本草；以根茎节的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "藕节的目录身份以根茎节和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了藕节的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Nelumbo nucifera Gaertn.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Nelumbo nucifera Gaertn.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Nelumbo nucifera Gaertn.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-16",
+      "nameZh": "莲须",
+      "pinyin": "lián xū",
+      "scientificName": "Nelumbo nucifera Gaertn.",
+      "family": "莲科 Nelumbonaceae",
+      "partUsed": "雄蕊",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "雄蕊",
+        "拓展目录"
+      ],
+      "morphology": "莲科 Nelumbonaceae本草；以雄蕊的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "莲须的目录身份以雄蕊和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了莲须的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Nelumbo nucifera Gaertn.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Nelumbo nucifera Gaertn.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Nelumbo nucifera Gaertn.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-17",
+      "nameZh": "水蓼",
+      "pinyin": "shuǐ liǎo",
+      "scientificName": "Persicaria hydropiper (L.) Delarbre",
+      "family": "蓼科 Polygonaceae",
+      "partUsed": "干燥全草",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "蓼科 Polygonaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "水蓼的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了水蓼的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Persicaria hydropiper (L.) Delarbre；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Persicaria hydropiper (L.) Delarbre；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Persicaria hydropiper (L.) Delarbre；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-18",
+      "nameZh": "马蹄金",
+      "pinyin": "mǎ tí jīn",
+      "scientificName": "Dichondra micrantha Urb.",
+      "family": "旋花科 Convolvulaceae",
+      "partUsed": "干燥全草",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "旋花科 Convolvulaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "马蹄金的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了马蹄金的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Dichondra micrantha Urb.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Dichondra micrantha Urb.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Dichondra micrantha Urb.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-shuize-19",
+      "nameZh": "鸭跖草",
+      "pinyin": "yā zhī cǎo",
+      "scientificName": "Commelina communis L.",
+      "family": "鸭跖草科 Commelinaceae",
+      "partUsed": "干燥全草",
+      "habitat": "shuize",
+      "habitatLabel": "水泽湿地",
+      "tags": [
+        "水泽湿地",
+        "全草",
+        "拓展目录"
+      ],
+      "morphology": "鸭跖草科 Commelinaceae本草；以干燥全草的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "鸭跖草的目录身份以干燥全草和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了鸭跖草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Commelina communis L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Commelina communis L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Commelina communis L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-01",
+      "nameZh": "灵芝",
+      "pinyin": "líng zhī",
+      "scientificName": "Ganoderma lingzhi Sheng H.Wu et al.",
+      "family": "灵芝科 Ganodermataceae",
+      "partUsed": "子实体",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "菌类",
+        "拓展目录"
+      ],
+      "morphology": "灵芝科 Ganodermataceae本草；以子实体的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "灵芝的目录身份以子实体和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了灵芝的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Ganoderma lingzhi Sheng H.Wu et al.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Ganoderma lingzhi Sheng H.Wu et al.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Ganoderma lingzhi Sheng H.Wu et al.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-02",
+      "nameZh": "猪苓",
+      "pinyin": "zhū líng",
+      "scientificName": "Polyporus umbellatus (Pers.) Fr.",
+      "family": "多孔菌科 Polyporaceae",
+      "partUsed": "菌核",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "菌类",
+        "拓展目录"
+      ],
+      "morphology": "多孔菌科 Polyporaceae本草；以菌核的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "猪苓的目录身份以菌核和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了猪苓的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Polyporus umbellatus (Pers.) Fr.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Polyporus umbellatus (Pers.) Fr.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Polyporus umbellatus (Pers.) Fr.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-03",
+      "nameZh": "雷丸",
+      "pinyin": "léi wán",
+      "scientificName": "Omphalia lapidescens (Schwein.) Lloyd",
+      "family": "白蘑科 Tricholomataceae",
+      "partUsed": "菌核",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "菌类",
+        "拓展目录"
+      ],
+      "morphology": "白蘑科 Tricholomataceae本草；以菌核的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "雷丸的目录身份以菌核和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了雷丸的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Omphalia lapidescens (Schwein.) Lloyd；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Omphalia lapidescens (Schwein.) Lloyd；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Omphalia lapidescens (Schwein.) Lloyd；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-04",
+      "nameZh": "冬虫夏草",
+      "pinyin": "dōng chóng xià cǎo",
+      "scientificName": "Ophiocordyceps sinensis (Berk.) G.H.Sung et al.",
+      "family": "虫草科 Ophiocordycipitaceae",
+      "partUsed": "菌核与子座",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "菌类",
+        "拓展目录"
+      ],
+      "morphology": "虫草科 Ophiocordycipitaceae本草；以菌核与子座的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "冬虫夏草的目录身份以菌核与子座和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了冬虫夏草的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Ophiocordyceps sinensis (Berk.) G.H.Sung et al.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Ophiocordyceps sinensis (Berk.) G.H.Sung et al.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Ophiocordyceps sinensis (Berk.) G.H.Sung et al.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-05",
+      "nameZh": "没药",
+      "pinyin": "mò yào",
+      "scientificName": "Commiphora myrrha (Nees) Engl.",
+      "family": "橄榄科 Burseraceae",
+      "partUsed": "树脂",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "树脂",
+        "拓展目录"
+      ],
+      "morphology": "橄榄科 Burseraceae本草；以树脂的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "没药的目录身份以树脂和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了没药的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Commiphora myrrha (Nees) Engl.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Commiphora myrrha (Nees) Engl.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Commiphora myrrha (Nees) Engl.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-06",
+      "nameZh": "乳香",
+      "pinyin": "rǔ xiāng",
+      "scientificName": "Boswellia carterii Birdw.",
+      "family": "橄榄科 Burseraceae",
+      "partUsed": "树脂",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "树脂",
+        "拓展目录"
+      ],
+      "morphology": "橄榄科 Burseraceae本草；以树脂的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "乳香的目录身份以树脂和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了乳香的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Boswellia carterii Birdw.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Boswellia carterii Birdw.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Boswellia carterii Birdw.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-07",
+      "nameZh": "沉香",
+      "pinyin": "chén xiāng",
+      "scientificName": "Aquilaria sinensis (Lour.) Spreng.",
+      "family": "瑞香科 Thymelaeaceae",
+      "partUsed": "含树脂木材",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "木质部",
+        "拓展目录"
+      ],
+      "morphology": "瑞香科 Thymelaeaceae本草；以含树脂木材的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "沉香的目录身份以含树脂木材和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了沉香的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Aquilaria sinensis (Lour.) Spreng.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Aquilaria sinensis (Lour.) Spreng.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Aquilaria sinensis (Lour.) Spreng.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-08",
+      "nameZh": "檀香",
+      "pinyin": "tán xiāng",
+      "scientificName": "Santalum album L.",
+      "family": "檀香科 Santalaceae",
+      "partUsed": "心材",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "木质部",
+        "拓展目录"
+      ],
+      "morphology": "檀香科 Santalaceae本草；以心材的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "檀香的目录身份以心材和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了檀香的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Santalum album L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Santalum album L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Santalum album L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-09",
+      "nameZh": "杜仲",
+      "pinyin": "dù zhòng",
+      "scientificName": "Eucommia ulmoides Oliver",
+      "family": "杜仲科 Eucommiaceae",
+      "partUsed": "树皮",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "树皮/根皮",
+        "拓展目录"
+      ],
+      "morphology": "杜仲科 Eucommiaceae本草；以树皮的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "杜仲的目录身份以树皮和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了杜仲的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Eucommia ulmoides Oliver；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Eucommia ulmoides Oliver；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Eucommia ulmoides Oliver；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-10",
+      "nameZh": "厚朴",
+      "pinyin": "hòu pò",
+      "scientificName": "Magnolia officinalis Rehder & E.H.Wilson",
+      "family": "木兰科 Magnoliaceae",
+      "partUsed": "树皮",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "树皮/根皮",
+        "拓展目录"
+      ],
+      "morphology": "木兰科 Magnoliaceae本草；以树皮的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "厚朴的目录身份以树皮和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了厚朴的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Magnolia officinalis Rehder & E.H.Wilson；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Magnolia officinalis Rehder & E.H.Wilson；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Magnolia officinalis Rehder & E.H.Wilson；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-11",
+      "nameZh": "五加皮",
+      "pinyin": "wǔ jiā pí",
+      "scientificName": "Eleutherococcus gracilistylus (W.W.Sm.) S.Y.Hu",
+      "family": "五加科 Araliaceae",
+      "partUsed": "根皮",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "树皮/根皮",
+        "拓展目录"
+      ],
+      "morphology": "五加科 Araliaceae本草；以根皮的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "五加皮的目录身份以根皮和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了五加皮的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Eleutherococcus gracilistylus (W.W.Sm.) S.Y.Hu；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Eleutherococcus gracilistylus (W.W.Sm.) S.Y.Hu；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Eleutherococcus gracilistylus (W.W.Sm.) S.Y.Hu；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-12",
+      "nameZh": "桑白皮",
+      "pinyin": "sāng bái pí",
+      "scientificName": "Morus alba L.",
+      "family": "桑科 Moraceae",
+      "partUsed": "根皮",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "树皮/根皮",
+        "拓展目录"
+      ],
+      "morphology": "桑科 Moraceae本草；以根皮的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "桑白皮的目录身份以根皮和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了桑白皮的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Morus alba L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Morus alba L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Morus alba L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-13",
+      "nameZh": "桂枝",
+      "pinyin": "guì zhī",
+      "scientificName": "Cinnamomum cassia (L.) J.Presl",
+      "family": "樟科 Lauraceae",
+      "partUsed": "嫩枝",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "茎枝",
+        "拓展目录"
+      ],
+      "morphology": "樟科 Lauraceae本草；以嫩枝的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "桂枝的目录身份以嫩枝和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了桂枝的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Cinnamomum cassia (L.) J.Presl；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Cinnamomum cassia (L.) J.Presl；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Cinnamomum cassia (L.) J.Presl；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-14",
+      "nameZh": "肉桂",
+      "pinyin": "ròu guì",
+      "scientificName": "Cinnamomum cassia (L.) J.Presl",
+      "family": "樟科 Lauraceae",
+      "partUsed": "树皮",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "树皮/根皮",
+        "拓展目录"
+      ],
+      "morphology": "樟科 Lauraceae本草；以树皮的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "肉桂的目录身份以树皮和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了肉桂的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Cinnamomum cassia (L.) J.Presl；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Cinnamomum cassia (L.) J.Presl；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Cinnamomum cassia (L.) J.Presl；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-15",
+      "nameZh": "鸡血藤",
+      "pinyin": "jī xuè téng",
+      "scientificName": "Spatholobus suberectus Dunn",
+      "family": "豆科 Fabaceae",
+      "partUsed": "藤茎",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "茎枝",
+        "拓展目录"
+      ],
+      "morphology": "豆科 Fabaceae本草；以藤茎的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "鸡血藤的目录身份以藤茎和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了鸡血藤的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Spatholobus suberectus Dunn；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Spatholobus suberectus Dunn；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Spatholobus suberectus Dunn；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-16",
+      "nameZh": "苏木",
+      "pinyin": "sū mù",
+      "scientificName": "Caesalpinia sappan L.",
+      "family": "豆科 Fabaceae",
+      "partUsed": "心材",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "木质部",
+        "拓展目录"
+      ],
+      "morphology": "豆科 Fabaceae本草；以心材的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "苏木的目录身份以心材和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了苏木的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Caesalpinia sappan L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Caesalpinia sappan L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Caesalpinia sappan L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-17",
+      "nameZh": "桑寄生",
+      "pinyin": "sāng jì shēng",
+      "scientificName": "Taxillus chinensis (DC.) Danser",
+      "family": "桑寄生科 Loranthaceae",
+      "partUsed": "带叶茎枝",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "茎枝",
+        "拓展目录"
+      ],
+      "morphology": "桑寄生科 Loranthaceae本草；以带叶茎枝的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "桑寄生的目录身份以带叶茎枝和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了桑寄生的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Taxillus chinensis (DC.) Danser；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Taxillus chinensis (DC.) Danser；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Taxillus chinensis (DC.) Danser；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-18",
+      "nameZh": "桑枝",
+      "pinyin": "sāng zhī",
+      "scientificName": "Morus alba L.",
+      "family": "桑科 Moraceae",
+      "partUsed": "嫩枝",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "茎枝",
+        "拓展目录"
+      ],
+      "morphology": "桑科 Moraceae本草；以嫩枝的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "桑枝的目录身份以嫩枝和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了桑枝的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Morus alba L.；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Morus alba L.；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Morus alba L.；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
+    },
+    {
+      "id": "herb-junmu-19",
+      "nameZh": "侧柏叶",
+      "pinyin": "cè bǎi yè",
+      "scientificName": "Platycladus orientalis (L.) Franco",
+      "family": "柏科 Cupressaceae",
+      "partUsed": "枝梢与叶",
+      "habitat": "junmu",
+      "habitatLabel": "菌木阴翳",
+      "tags": [
+        "菌木阴翳",
+        "叶部",
+        "拓展目录"
+      ],
+      "morphology": "柏科 Cupressaceae本草；以枝梢与叶的颜色、形态与质地作为本条目的识别线索。",
+      "identitySummary": "侧柏叶的目录身份以枝梢与叶和接受学名为核心，先确认来源与部位，再进入深度档案。",
+      "traditionalContext": "古典本草与地方物产记录了侧柏叶的名称和形态；本条目把文化语境与现代身份分层展示。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "S002",
+          "locator": "Flora of China 物种处理页：Platycladus orientalis (L.) Franco；核对形态与分布。"
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy name 查询：Platycladus orientalis (L.) Franco；核对分类层级。"
+        },
+        {
+          "sourceId": "S009",
+          "locator": "Plants of the World Online taxon search：Platycladus orientalis (L.) Franco；核对接受名与异名。"
+        }
+      ],
+      "boundary": "本条目用于植物学、文化史与文献索引，不提供剂量、处方、诊断或个体化健康建议。",
+      "depthLevel": "overview",
+      "catalogStatus": "catalog"
     }
-  ]
+  ],
+  "habitats": [
+    {
+      "id": "shanlin",
+      "label": "山林根境",
+      "order": 1,
+      "description": "山林中的根、茎与药用木本，沿着土壤和树影保存形态线索。"
+    },
+    {
+      "id": "caodian",
+      "label": "草甸原野",
+      "order": 2,
+      "description": "草甸与原野的全草、叶部和芳香草本，按季节观察其生长姿态。"
+    },
+    {
+      "id": "huaye",
+      "label": "花野芳香",
+      "order": 3,
+      "description": "花野与芳香植物，记录花蕾、花序和挥发性气味相关的识别线索。"
+    },
+    {
+      "id": "guoshi",
+      "label": "果实种籽",
+      "order": 4,
+      "description": "果实与种籽，强调成熟度、形状、表面纹理和炮制前后的边界。"
+    },
+    {
+      "id": "shuize",
+      "label": "水泽湿地",
+      "order": 5,
+      "description": "水泽湿地与海滨藻类，涵盖根茎、茎髓、孢子和水生本草。"
+    },
+    {
+      "id": "junmu",
+      "label": "菌木阴翳",
+      "order": 6,
+      "description": "菌类、树脂、木材和树皮，追踪阴翳环境中的非叶部药材。"
+    }
+  ],
+  "catalogStats": {
+    "total": 120,
+    "featured": 16,
+    "overview": 104,
+    "habitats": 6
+  }
 }

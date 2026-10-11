@@ -1,12 +1,14 @@
 import { relationExplorer } from './relations.js';
+import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js';
+import { particlePlanetMarkup, mountParticlePlanet } from './planet.js';
 
 const ROOT = './src/data/curated/';
-const state = { view: 'home', herbId: 'herb-artemisia-annua', stage: 'specimen', nodeId: 'herb-artemisia-annua', query: '', libraryType: 'all', compareId: '', cabinetFilter: 'all' };
+const state = { view: 'home', herbId: 'herb-artemisia-annua', stage: 'specimen', nodeId: 'herb-artemisia-annua', query: '', libraryType: 'all', libraryHabitat: 'all', libraryDepth: 'all', compareId: '', cabinetFilter: 'all', cabinetHabitat: 'forest', cabinetMorphology: 'all' };
 let data = null;
 
 function applyHash() {
   const value = window.location.hash.replace(/^#/, '');
-  if (['home', 'trace', 'library'].includes(value)) state.view = value;
+  if (['home', 'cabinet', 'planet', 'trace', 'library'].includes(value)) state.view = value;
 }
 
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -107,7 +109,7 @@ function relationMap(item) {
 }
 
 function header() {
-  return `<header class="site-header"><a class="brand" href="#home" data-view="home" aria-label="返回百子柜首页"><span class="brand-seal">一</span><span><strong>本草宇宙</strong><small>HERBAL COSMOS · TRACE</small></span></a><nav class="main-nav" aria-label="主导航"><button class="nav-button ${state.view === 'home' ? 'active' : ''}" data-view="home">百子柜</button><button class="nav-button ${state.view === 'trace' ? 'active' : ''}" data-view="trace">一味档案</button><button class="nav-button ${state.view === 'library' ? 'active' : ''}" data-view="library">拓展资料库</button></nav><span class="header-note">一味之证 / 研究版</span></header>`;
+  return renderCosmosHeader(state);
 }
 
 const CABINET_FILTERS = [
@@ -150,10 +152,11 @@ function cabinetSection() {
 }
 
 function home() {
-  const chain = chainFor(selectedHerb());
-  const featured = herbs().slice(0, 6);
-  const relationMap = relationExplorer({ herbs: herbs(), formulas: data.formulas.formulas, anchors: anchors(), sources: sources(), relations: data.relations.relations }, { focusId: selectedHerb().id, activeRelationId: state.relationFocus, maxRelations: 14 });
-  return `<main class="home-view">${cabinetSection()}<section class="home-relation" aria-label="本草证据关系星图"><div class="section-heading"><div><span class="section-index">02 / FOLLOW THE EVIDENCE</span><h2>从抽屉，走到一张关系星图</h2></div><button class="text-button" data-view="trace">打开一味档案 →</button></div>${relationMap}</section><section class="hero hero-secondary"><div class="hero-copy"><p class="kicker">EVIDENCE TRACE · 03</p><h2>一味本草，<br /><em>怎样留下证据？</em></h2><p class="hero-lead">从抽屉里的植物身份，到典籍里的名字，再到一张方剂和一段现代研究史。把复杂的知识拆成一条可以亲手追踪的路径。</p><div class="hero-actions"><button class="primary-button" data-view="trace" data-start>进入一味档案 <span>↗</span></button><button class="text-button" data-view="library">打开拓展资料库</button></div><div class="hero-footnote"><span class="status-dot"></span> 公开来源 · 文化与植物学阅读 · 不提供医疗建议</div></div><div class="hero-trace" aria-label="四层证据链预览"><div class="trace-caption"><span>一条证据链</span><span>READ THE TRACE</span></div><div class="mini-chain">${chain.map((node, index) => `<div class="mini-node ${index === 0 ? 'selected' : ''}"><span class="mini-number">${node.number}</span><strong>${esc(node.label)}</strong><b>${esc(node.title)}</b><small>${esc(node.meta)}</small></div>${index < chain.length - 1 ? '<span class="mini-link" aria-hidden="true">→</span>' : ''}`).join('')}</div><div class="trace-baseline"><span>植物实体</span><span>文献记录</span><span>组成关系</span><span>当代回响</span></div></div></section><section class="home-proof"><div><span class="section-index">04 / WHY</span><h2>先认清对象，<br />再谈它的故事。</h2></div><p>本草名称可能指植物、部位、炮制品或历史称呼。追踪台把这些层次拆开，用户每点击一次，都能看到它从哪份资料来、能说明什么、不能说明什么。</p><div class="proof-stats"><div><strong>${herbs().length}</strong><span>味重新检索本草</span></div><div><strong>${data.relations.relations.length}</strong><span>条有来源关系</span></div><div><strong>${sources().length}</strong><span>个公开来源入口</span></div></div></section><section class="featured-strip"><div class="section-heading"><div><span class="section-index">05 / START WITH A SPECIMEN</span><h2>从一株具体的草木开始</h2></div><button class="text-button" data-view="trace">打开完整追踪台 →</button></div><div class="specimen-row">${featured.map((item, index) => `<button class="specimen-chip ${index === 0 ? 'first' : ''}" data-herb="${item.id}" data-view="trace"><span class="chip-mark">${esc(item.nameZh.slice(0, 1))}</span><span><b>${esc(item.nameZh)}</b><small>${esc(item.scientificName)}</small></span><span class="chip-arrow">↗</span></button>`).join('')}</div></section></main>`;
+  return renderCosmosHome(data);
+}
+
+function cabinetPage() {
+  return renderHabitatCabinet(data, state);
 }
 
 function trace() {
@@ -169,14 +172,32 @@ function trace() {
 
 function library() {
   const query = state.query.trim().toLowerCase();
-  const items = [...herbs().map((item) => ({ type: '本草', title: item.nameZh, meta: item.scientificName, body: item.identitySummary, sourceIds: item.sourceIds })), ...data.formulas.formulas.map((item) => ({ type: '方剂', title: item.nameZh, meta: item.textualOrigin, body: item.relationLabel, sourceIds: item.sourceIds })), ...anchors().map((item) => ({ type: '文化锚点', title: item.titleZh, meta: item.period, body: item.summary, sourceIds: item.sourceIds }))].filter((item) => (state.libraryType === 'all' || item.type === state.libraryType) && (!query || `${item.title} ${item.meta} ${item.body}`.toLowerCase().includes(query)));
-  return `<main class="library-view"><div class="page-intro library-intro"><div><p class="kicker">OPEN LIBRARY · SOURCE FIRST</p><h1>资料库</h1><p>完整目录按实体、关系和来源分层。这里可以查找内容，但每一条事实都要回到公开出处。</p></div><button class="quiet-button" data-view="trace">← 回到追踪台</button></div><div class="library-toolbar"><label class="search-box wide"><span>⌕</span><input data-library-search value="${esc(state.query)}" placeholder="搜索本草、方剂、典籍或来源关键词" /></label><div class="filter-tabs">${['all', '本草', '方剂', '文化锚点'].map((value) => `<button class="filter-tab ${state.libraryType === value ? 'active' : ''}" data-library-type="${value}">${value === 'all' ? '全部' : value}</button>`).join('')}</div></div><div class="library-summary"><span>当前结果 <b>${items.length}</b></span><span>数据集 ${esc(data.herbs.datasetId)}</span><span>重新检索于 ${esc(data.herbs.researchedAt)}</span></div><div class="library-grid">${items.map((item) => `<article class="library-item"><div class="library-item-top"><span class="type-tag">${esc(item.type)}</span><span class="item-count">${item.sourceIds.length} 来源</span></div><h2>${esc(item.title)}</h2><p class="library-meta">${esc(item.meta)}</p><p>${esc(item.body)}</p><details><summary>查看来源</summary>${renderSources(item.sourceIds)}</details></article>`).join('') || '<div class="empty-state"><strong>没有匹配项</strong><p>换一个关键词，或清除筛选重新浏览。</p></div>'}</div></main>`;
+  const habitatLabels = [...new Set(herbs().map((item) => item.habitatLabel).filter(Boolean))];
+  const herbItems = herbs().map((item) => ({ type: '本草', title: item.nameZh, meta: item.scientificName, body: item.identitySummary, sourceIds: item.sourceIds, habitat: item.habitatLabel || '', depth: item.depthLevel || '', tags: item.tags || [], part: item.partUsed || '' }));
+  const items = [...herbItems, ...data.formulas.formulas.map((item) => ({ type: '方剂', title: item.nameZh, meta: item.textualOrigin, body: item.relationLabel, sourceIds: item.sourceIds, habitat: '', depth: '', tags: [], part: '' })), ...anchors().map((item) => ({ type: '文化锚点', title: item.titleZh, meta: item.period, body: item.summary, sourceIds: item.sourceIds, habitat: '', depth: '', tags: [], part: '' }))].filter((item) => (state.libraryType === 'all' || item.type === state.libraryType) && (state.libraryHabitat === 'all' || item.habitat === state.libraryHabitat) && (state.libraryDepth === 'all' || item.depth === state.libraryDepth) && (!query || `${item.title} ${item.meta} ${item.body} ${item.habitat} ${item.part} ${item.tags.join(' ')}`.toLowerCase().includes(query)));
+  const habitatOptions = `<option value="all">全部生境</option>${habitatLabels.map((label) => `<option value="${esc(label)}" ${state.libraryHabitat === label ? 'selected' : ''}>${esc(label)}</option>`).join('')}`;
+  const depthOptions = `<option value="all">全部深度</option><option value="deep" ${state.libraryDepth === 'deep' ? 'selected' : ''}>深度条目 · 16</option><option value="overview" ${state.libraryDepth === 'overview' ? 'selected' : ''}>拓展条目 · 104</option>`;
+  return `<main class="library-view"><div class="page-intro library-intro"><div><p class="kicker">OPEN LIBRARY · 120 HERBS / SOURCE FIRST</p><h1>资料库</h1><p>从六类生境进入全量目录，再按形态、部位和深度级别收拢视线。每一条事实都保留公开来源和阅读边界。</p></div><button class="quiet-button" data-view="trace">← 回到一味档案</button></div><div class="library-toolbar"><label class="search-box wide"><span>⌕</span><input data-library-search value="${esc(state.query)}" placeholder="搜索本草、方剂、学名、形态或来源关键词" /></label><div class="filter-tabs">${['all', '本草', '方剂', '文化锚点'].map((value) => `<button class="filter-tab ${state.libraryType === value ? 'active' : ''}" data-library-type="${value}">${value === 'all' ? '全部' : value}</button>`).join('')}</div><div class="library-selects"><label>生境<select data-library-habitat>${habitatOptions}</select></label><label>深度<select data-library-depth>${depthOptions}</select></label></div></div><div class="library-summary"><span>当前结果 <b>${items.length}</b></span><span>全量本草 <b>${herbs().length}</b></span><span>数据集 ${esc(data.herbs.datasetId)}</span><span>重新检索于 ${esc(data.herbs.researchedAt)}</span></div><div class="library-grid">${items.map((item) => `<article class="library-item"><div class="library-item-top"><span class="type-tag">${esc(item.type)}</span><span class="item-count">${item.sourceIds.length} 来源</span></div><h2>${esc(item.title)}</h2><p class="library-meta">${esc(item.meta)}</p>${item.habitat ? `<div class="library-facets"><span>${esc(item.habitat)}</span><span>${esc(item.depth === 'deep' ? '深度条目' : '拓展条目')}</span><span>${esc(item.part)}</span></div>` : ''}<p>${esc(item.body)}</p>${item.tags.length ? `<p class="library-tags">${item.tags.slice(0, 4).map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>` : ''}<details><summary>查看来源</summary>${renderSources(item.sourceIds)}</details></article>`).join('') || '<div class="empty-state"><strong>没有匹配项</strong><p>换一个关键词，或清除筛选重新浏览。</p></div>'}</div></main>`;
 }
 
 function render() {
   if (!data) return;
-  const content = state.view === 'trace' ? trace() : state.view === 'library' ? library() : home();
-  document.querySelector('#app').innerHTML = `${header()}${content}<footer class="site-footer"><span>本草宇宙 · 一味之证</span><span>无需账号 · 无遥测 · 资料用于文化与植物学阅读，不构成医疗建议</span><span>数据集 ${esc(data.herbs.datasetId)}</span></footer><dialog class="share-dialog" id="shareDialog"><button class="dialog-close" data-close-dialog aria-label="关闭">×</button><p class="kicker">RELATION POSTER</p><h2>${esc(selectedHerb().nameZh)}的证据链</h2><p>把本次阅读中的四个节点保存为一张可分享的 SVG 海报。</p><div class="poster-preview"><span>${esc(selectedHerb().nameZh)}</span><b>植物 → 典籍 → 方剂 → 回响</b><small>本草宇宙 · ${esc(data.herbs.researchedAt)}</small></div><button class="primary-button" data-download-poster>下载 SVG 海报</button></dialog>`;
+  const content = state.view === 'trace' ? trace() : state.view === 'library' ? library() : state.view === 'cabinet' ? cabinetPage() : state.view === 'planet' ? planet() : home();
+  document.querySelector('#app').innerHTML = `${header()}${content}<footer class="site-footer"><span>本草宇宙 · 百子万象</span><span>无需账号 · 无遥测 · 资料用于文化与植物学阅读，不构成医疗建议</span><span>${esc(data.herbs.catalogStats?.total || herbs().length)} 味目录 · ${esc(data.herbs.datasetId)}</span></footer><dialog class="share-dialog" id="shareDialog"><button class="dialog-close" data-close-dialog aria-label="关闭">×</button><p class="kicker">RELATION POSTER</p><h2>${esc(selectedHerb().nameZh)}的证据链</h2><p>把本次阅读中的四个节点保存为一张可分享的 SVG 海报。</p><div class="poster-preview"><span>${esc(selectedHerb().nameZh)}</span><b>植物 → 典籍 → 方剂 → 回响</b><small>本草宇宙 · ${esc(data.herbs.researchedAt)}</small></div><button class="primary-button" data-download-poster>下载 SVG 海报</button></dialog>`;
+  if (state.view === 'planet') {
+    mountParticlePlanet(document.querySelector('[data-planet-root]'), herbs(), {
+      activeHabitat: state.planetHabitat || 'all',
+      selectedId: state.planetHerbId || '',
+      onSelect: (item) => { state.planetHerbId = item.id; },
+      onTrace: (item) => { state.herbId = item.id; state.view = 'trace'; state.nodeId = item.id; state.stage = 'specimen'; render(); },
+      onFilter: (value) => { state.planetHabitat = value; },
+      onSearch: (value) => { state.query = value; },
+    });
+  }
+}
+
+function planet() {
+  return particlePlanetMarkup({ items: herbs(), activeHabitat: state.planetHabitat || 'all', query: state.query || '', selectedId: state.planetHerbId || '' });
 }
 
 function posterSvg(item) {
@@ -193,12 +214,23 @@ function bind() {
     const herbButton = event.target.closest('[data-herb]');
     const cabinetDrawer = event.target.closest('[data-cabinet-drawer]');
     const cabinetFilter = event.target.closest('[data-cabinet-filter]');
+    const habitatZone = event.target.closest('[data-cabinet-habitat]');
+    const morphologyTab = event.target.closest('[data-cabinet-morphology]');
     const relationNode = event.target.closest('[data-relation-node]');
     const relationEdge = event.target.closest('[data-relation-id]');
     const node = event.target.closest('[data-node]');
     const stage = event.target.closest('[data-stage]');
     const filter = event.target.closest('[data-library-type]');
     if (cabinetDrawer) { state.herbId = cabinetDrawer.dataset.herb; state.nodeId = state.herbId; state.stage = 'specimen'; state.compareId = ''; render(); return; }
+    if (habitatZone) {
+      state.cabinetHabitat = habitatZone.dataset.cabinetHabitat;
+      state.cabinetMorphology = 'all';
+      const first = herbs().find((entry) => habitatFor(entry).id === state.cabinetHabitat);
+      if (first) { state.herbId = first.id; state.nodeId = first.id; state.stage = 'specimen'; }
+      render();
+      return;
+    }
+    if (morphologyTab) { state.cabinetMorphology = morphologyTab.dataset.cabinetMorphology; render(); return; }
     if (cabinetFilter) {
       state.cabinetFilter = cabinetFilter.dataset.cabinetFilter;
       const visible = herbs().filter((entry) => state.cabinetFilter === 'all' || cabinetCategory(entry) === state.cabinetFilter);
@@ -210,7 +242,7 @@ function bind() {
       render();
       return;
     }
-    if (event.target.closest('[data-cabinet-reset]')) { state.herbId = herbs()[0].id; state.nodeId = state.herbId; state.stage = 'specimen'; state.cabinetFilter = 'all'; render(); return; }
+    if (event.target.closest('[data-cabinet-reset]')) { state.herbId = herbs()[0].id; state.nodeId = state.herbId; state.stage = 'specimen'; state.cabinetFilter = 'all'; state.cabinetHabitat = habitatFor(herbs()[0]).id; state.cabinetMorphology = 'all'; render(); return; }
     if (relationNode) {
       const id = relationNode.dataset.relationNode;
       const herb = find(herbs(), id);
@@ -255,7 +287,11 @@ function bind() {
     if (event.target.closest('[data-download-poster]')) { const blob = new Blob([posterSvg(selectedHerb())], { type: 'image/svg+xml' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = `本草关系海报-${selectedHerb().nameZh}.svg`; link.click(); URL.revokeObjectURL(url); return; }
   });
   window.addEventListener('popstate', () => { applyHash(); state.query = ''; state.compareOpen = false; render(); });
-  app.addEventListener('change', (event) => { if (event.target.matches('[data-compare-select]')) { state.compareId = event.target.value; state.compareOpen = true; render(); document.querySelector('.compare-lab')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
+  app.addEventListener('change', (event) => {
+    if (event.target.matches('[data-compare-select]')) { state.compareId = event.target.value; state.compareOpen = true; render(); document.querySelector('.compare-lab')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    if (event.target.matches('[data-library-habitat]')) { state.libraryHabitat = event.target.value; render(); return; }
+    if (event.target.matches('[data-library-depth]')) { state.libraryDepth = event.target.value; render(); }
+  });
   app.addEventListener('input', (event) => { if (event.target.matches('[data-herb-search], [data-library-search]')) { state.query = event.target.value; render(); const input = document.querySelector(`[data-${state.view === 'library' ? 'library' : 'herb'}-search]`); input?.focus(); input?.setSelectionRange(state.query.length, state.query.length); } });
   app.addEventListener('pointerdown', (event) => { const stage = event.target.closest('[data-specimen-stage]'); const model = stage?.querySelector('[data-specimen-model]'); if (!stage || !model) return; stage.setPointerCapture?.(event.pointerId); const startX = event.clientX; const startY = event.clientY; const baseX = Number(model.dataset.rx || 0); const baseY = Number(model.dataset.ry || 0); const move = (moveEvent) => { model.dataset.rx = baseX + (moveEvent.clientY - startY) * -0.35; model.dataset.ry = baseY + (moveEvent.clientX - startX) * 0.45; model.style.setProperty('--rx', `${model.dataset.rx}deg`); model.style.setProperty('--ry', `${model.dataset.ry}deg`); }; const up = () => { stage.removeEventListener('pointermove', move); stage.removeEventListener('pointerup', up); }; stage.addEventListener('pointermove', move); stage.addEventListener('pointerup', up, { once: true }); });
   app.addEventListener('keydown', (event) => {

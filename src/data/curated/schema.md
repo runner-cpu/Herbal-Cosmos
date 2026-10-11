@@ -29,3 +29,16 @@
 3. 所有实体必须含 `boundary`；来源必须含 `accessedAt`。
 4. 前台不得把 `traditionalContext`、`textualOrigin` 或 `summary` 直接渲染为疗效、诊断或用药推荐。
 5. 新增或更新内容要重新访问来源并更新访问日期，不复制旧 UI 的卡片字段或文案。
+
+## 生境目录字段（v2）
+
+`herbs.json` 现在以“一个主生境 + 多标签”扩展目录。新增本草只需追加对象，不需要修改页面结构：
+
+- `habitat`：唯一主生境 ID（`shanlin`、`caodian`、`huaye`、`guoshi`、`shuize`、`junmu`）。
+- `habitatLabel`：面向用户的生境名称。
+- `tags`：形态、药用部位、文化或研究状态标签；不用于再次分柜。
+- `morphology`：植物或药材识形线索，保持与疗效叙述分离。
+- `depthLevel`：`deep`（首批深度档案）或 `overview`（目录索引条目）。
+- `catalogStatus`：`featured`（百子柜精品）或 `catalog`（资料库与粒子星球拓展条目）。
+
+首批目录目标为约 120 味：16 味 `deep/featured` 与 104 味 `overview/catalog`。所有条目仍需有 `sourceIds`、逐条 `sourceRefs` 和 `boundary`；新增条目可直接挂入既有六类生境。
