@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { relationExplorerModel } from '../src/relations.js';
 
 const root = new URL('..', import.meta.url);
 const readJson = async (file) => JSON.parse(await readFile(new URL(`src/data/curated/${file}`, root), 'utf8'));
@@ -24,11 +25,27 @@ test('curated dataset is fresh and internally connected', async () => {
 test('new entry has no legacy runtime dependency', async () => {
   const html = await readFile(new URL('index.html', root), 'utf8');
   const js = await readFile(new URL('src/main.js', root), 'utf8');
+  const css = await readFile(new URL('src/styles.css', root), 'utf8');
   assert.match(html, /src\/main\.js/);
   assert.doesNotMatch(html, /assets\/js|sw\.js|Three\.js|ECharts/i);
   assert.match(js, /3D SPECIMEN LAB/);
   assert.match(js, /LOOK-ALIKE CHECK/);
+  assert.match(js, /THE HERBAL CABINET/);
+  assert.match(js, /data-cabinet-drawer/);
+  assert.match(js, /data-cabinet-filter/);
   assert.match(js, /data-specimen-stage/);
   assert.match(js, /data-compare-select/);
+  assert.match(js, /relationExplorer/);
+  assert.match(js, /data-relation-node/);
+  assert.match(css, /\.relation-scene\{overflow-x:auto/);
+  assert.match(css, /\.relation-access-list/);
   assert.doesNotMatch(js, /cosmos-engine|apothecary|runtime\.js|expanded\.generated/i);
+});
+
+test('relation explorer keeps public sources visible in the evidence lane', async () => {
+  const [sources, herbs, formulas, anchors, relations] = await Promise.all(['sources.json', 'herbs.json', 'formulas.json', 'cultural-anchors.json', 'relations.json'].map(readJson));
+  const model = relationExplorerModel({ herbs: herbs.herbs, formulas: formulas.formulas, anchors: anchors.anchors, sources: sources.sources, relations: relations.relations }, { focusId: 'herb-artemisia-annua', maxRelations: 14 });
+  assert.ok(model.visibleRelations.length > 0);
+  assert.ok(model.nodes.some((node) => node.type === 'source'), 'focused graph should expose citation nodes');
+  assert.ok(model.graphRelations.some((relation) => relation.synthetic && relation.to === 'S005'), 'citation edge should point to the Nobel source');
 });
