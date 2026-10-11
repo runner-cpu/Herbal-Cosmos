@@ -1,0 +1,89 @@
+{
+  "datasetId": "herbal-cosmos-trace-v1",
+  "entityType": "cultural-anchor",
+  "researchedAt": "2026-10-11",
+  "anchors": [
+    {
+      "id": "anchor-shennong-bencao-jing",
+      "titleZh": "《神农本草经》：早期本草分类的文献锚点",
+      "period": "东汉至魏晋间成书与整理传统",
+      "kind": "classical-text",
+      "summary": "以药物名录、产地、性味与传统分类建立早期本草知识的文本坐标；后世本草不断引述、校补和重编。",
+      "relatedEntityIds": [
+        "herb-panax-ginseng",
+        "herb-glycyrrhiza-uralensis",
+        "herb-artemisia-annua"
+      ],
+      "evidenceStatus": "historical-text",
+      "sourceIds": [
+        "S010",
+        "S007"
+      ],
+      "boundary": "成书年代和具体篇章存在版本学讨论；项目展示的是文化史锚点，不把古代分类当作现代医学证据。",
+      "sourceRefs": [
+        {
+          "sourceId": "S010",
+          "locator": "Chinese Text Project：检索《神农本草经》书名和章节；UNESCO Memory of the World 传统医学文献遗产索引"
+        },
+        {
+          "sourceId": "S007",
+          "locator": "Chinese Text Project：检索《神农本草经》书名和章节；UNESCO Memory of the World 传统医学文献遗产索引"
+        }
+      ]
+    },
+    {
+      "id": "anchor-bencao-gangmu",
+      "titleZh": "《本草纲目》：跨地域物种与药材知识的汇编",
+      "period": "明代万历年间刊行（1596）",
+      "kind": "encyclopedic-text",
+      "summary": "李时珍汇集前代本草、地方物产与自身考订，形成影响深远的药物学知识文本；适合作为“名称—形态—文献”关系的历史节点。",
+      "relatedEntityIds": [
+        "herb-citrus-reticulata",
+        "herb-chrysanthemum-morifolium",
+        "herb-lycium-barbarum"
+      ],
+      "evidenceStatus": "historical-text + heritage-register",
+      "sourceIds": [
+        "S011",
+        "S007"
+      ],
+      "boundary": "古籍中的药物记载受时代知识和版本影响；项目不把古籍描述直接转换成现代功效。",
+      "sourceRefs": [
+        {
+          "sourceId": "S011",
+          "locator": "Chinese Text Project：检索《本草纲目》书名和卷次；UNESCO Memory of the World 文献遗产索引"
+        },
+        {
+          "sourceId": "S007",
+          "locator": "Chinese Text Project：检索《本草纲目》书名和卷次；UNESCO Memory of the World 文献遗产索引"
+        }
+      ]
+    },
+    {
+      "id": "anchor-tu-youyou-artemisinin",
+      "titleZh": "屠呦呦与青蒿素：传统文献线索进入现代科研",
+      "period": "20 世纪 60—70 年代研究，2015 年诺贝尔生理学或医学奖",
+      "kind": "modern-research-history",
+      "summary": "屠呦呦团队从传统文献和实验研究中推进青蒿素发现，诺贝尔奖事实页记录了这一研究史节点。项目将它作为知识转译案例，而非疗效宣传。",
+      "relatedEntityIds": [
+        "herb-artemisia-annua"
+      ],
+      "evidenceStatus": "award-record",
+      "sourceIds": [
+        "S005",
+        "S008"
+      ],
+      "boundary": "青蒿植物、青蒿提取物和青蒿素药物需要分别理解；项目不提供抗疟药物选择或使用指导。",
+      "sourceRefs": [
+        {
+          "sourceId": "S005",
+          "locator": "Nobel Prize 2015 Tu Youyou Facts：青蒿素研究历史段落；WHO Traditional Medicine Strategy：证据与安全边界章节"
+        },
+        {
+          "sourceId": "S008",
+          "locator": "Nobel Prize 2015 Tu Youyou Facts：青蒿素研究历史段落；WHO Traditional Medicine Strategy：证据与安全边界章节"
+        }
+      ]
+    }
+  ]
+}

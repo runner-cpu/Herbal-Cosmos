@@ -1,0 +1,529 @@
+{
+  "datasetId": "herbal-cosmos-trace-v1",
+  "entityType": "herb",
+  "researchedAt": "2026-10-11",
+  "herbs": [
+    {
+      "id": "herb-panax-ginseng",
+      "nameZh": "人参",
+      "pinyin": "rén shēn",
+      "scientificName": "Panax ginseng C.A.Mey.",
+      "family": "五加科 Araliaceae",
+      "partUsed": "干燥根和根茎",
+      "identitySummary": "多年生草本；药典条目以 Panax ginseng 的干燥根和根茎为身份核心。",
+      "traditionalContext": "在本草传统中常被置于补益类语境，古籍也记录其名称、产地和形态。此处只展示知识史，不把传统分类改写成现代疗效。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S004",
+        "S009"
+      ],
+      "boundary": "人参产品存在物种、部位、炮制与质量差异；页面不提供剂量、替代治疗或个体化建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“人参”条目；Flora of China / POWO 检索 Panax ginseng C.A.Mey."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“人参”条目；Flora of China / POWO 检索 Panax ginseng C.A.Mey."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“人参”条目；Flora of China / POWO 检索 Panax ginseng C.A.Mey."
+        }
+      ]
+    },
+    {
+      "id": "herb-artemisia-annua",
+      "nameZh": "青蒿",
+      "pinyin": "qīng hāo",
+      "scientificName": "Artemisia annua L.",
+      "family": "菊科 Asteraceae",
+      "partUsed": "干燥地上部分",
+      "identitySummary": "一年生芳香草本；项目将青蒿的植物身份与青蒿素研究史分开呈现。",
+      "traditionalContext": "古典本草记有青蒿名称和性状；20 世纪研究从传统文献线索中发展出青蒿素研究。",
+      "evidenceStatus": "official-monograph + botanical-reference + award-record",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S005",
+        "S009"
+      ],
+      "boundary": "青蒿与青蒿素不是同一概念；诺奖记录用于历史时间线，不构成个人用药建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“青蒿”条目；Flora of China / POWO 检索 Artemisia annua L."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“青蒿”条目；Flora of China / POWO 检索 Artemisia annua L."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“青蒿”条目；Flora of China / POWO 检索 Artemisia annua L."
+        }
+      ]
+    },
+    {
+      "id": "herb-citrus-reticulata",
+      "nameZh": "陈皮",
+      "pinyin": "chén pí",
+      "scientificName": "Citrus reticulata Blanco",
+      "family": "芸香科 Rutaceae",
+      "partUsed": "成熟果实的干燥果皮",
+      "identitySummary": "陈皮是成熟柑橘果皮经干燥和陈化形成的药材名称，需与新鲜果皮区分。",
+      "traditionalContext": "本草文献和药典均强调来源、成熟度与陈化语境；页面只呈现名称、部位和文献关系。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S006",
+        "S009"
+      ],
+      "boundary": "陈皮、青皮和普通食用橘皮并非同一标准；不提供食疗或治疗建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“陈皮”条目；Flora of China / POWO 检索 Citrus reticulata Blanco."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“陈皮”条目；Flora of China / POWO 检索 Citrus reticulata Blanco."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“陈皮”条目；Flora of China / POWO 检索 Citrus reticulata Blanco."
+        }
+      ]
+    },
+    {
+      "id": "herb-glycyrrhiza-uralensis",
+      "nameZh": "甘草",
+      "pinyin": "gān cǎo",
+      "scientificName": "Glycyrrhiza uralensis Fisch. ex DC.",
+      "family": "豆科 Fabaceae",
+      "partUsed": "干燥根和根茎",
+      "identitySummary": "豆科甘草属多年生草本；项目以药典规定基原和根、根茎部位作节点身份。",
+      "traditionalContext": "甘草在古典方剂中常作为组成节点出现；这种配伍史不表示现代处方推荐。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S006",
+        "S009"
+      ],
+      "boundary": "长期或大剂量摄入甘草相关产品可能存在风险；页面不作自我用药、剂量或相互作用判断。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“甘草”条目；Flora of China / POWO 检索 Glycyrrhiza uralensis Fisch. ex DC."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“甘草”条目；Flora of China / POWO 检索 Glycyrrhiza uralensis Fisch. ex DC."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“甘草”条目；Flora of China / POWO 检索 Glycyrrhiza uralensis Fisch. ex DC."
+        }
+      ]
+    },
+    {
+      "id": "herb-astragalus-membranaceus",
+      "nameZh": "黄芪",
+      "pinyin": "huáng qí",
+      "scientificName": "Astragalus membranaceus (Fisch.) Bunge",
+      "family": "豆科 Fabaceae",
+      "partUsed": "干燥根",
+      "identitySummary": "多年生草本；黄芪药材身份以 Astragalus membranaceus 基原及干燥根为核心。",
+      "traditionalContext": "传统本草把黄芪置于补益和产地叙述中；本项目只保留可定位的名称与文献语境。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "boundary": "物种和产地会影响成分与质量；传统分类不等于对现代疗效的证明。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“黄芪”条目；Flora of China / POWO 检索 Astragalus membranaceus (Fisch.) Bunge."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“黄芪”条目；Flora of China / POWO 检索 Astragalus membranaceus (Fisch.) Bunge."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“黄芪”条目；Flora of China / POWO 检索 Astragalus membranaceus (Fisch.) Bunge."
+        }
+      ]
+    },
+    {
+      "id": "herb-angelica-sinensis",
+      "nameZh": "当归",
+      "pinyin": "dāng guī",
+      "scientificName": "Angelica sinensis (Oliv.) Diels",
+      "family": "伞形科 Apiaceae",
+      "partUsed": "干燥根",
+      "identitySummary": "多年生草本；项目将当归根部的药材身份与古典方剂关系分别建模。",
+      "traditionalContext": "历代本草以产地、根形和部位描述当归；页面只展示历史记录和来源。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S006",
+        "S009"
+      ],
+      "boundary": "当归与其他 Angelica 属植物存在混淆风险；不提供孕期、疾病或处方建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“当归”条目；Flora of China / POWO 检索 Angelica sinensis (Oliv.) Diels."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“当归”条目；Flora of China / POWO 检索 Angelica sinensis (Oliv.) Diels."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“当归”条目；Flora of China / POWO 检索 Angelica sinensis (Oliv.) Diels."
+        }
+      ]
+    },
+    {
+      "id": "herb-coptis-chinensis",
+      "nameZh": "黄连",
+      "pinyin": "huáng lián",
+      "scientificName": "Coptis chinensis Franch.",
+      "family": "毛茛科 Ranunculaceae",
+      "partUsed": "干燥根茎",
+      "identitySummary": "多年生小草本；药材节点以 Coptis chinensis 根茎为基原身份。",
+      "traditionalContext": "本草文献常从色泽、产地和根茎形态记录黄连；这些记录属于历史分类语境。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "boundary": "黄连苦味和传统属性不是现代适应证；不提供口服、外用或剂量建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“黄连”条目；Flora of China / POWO 检索 Coptis chinensis Franch."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“黄连”条目；Flora of China / POWO 检索 Coptis chinensis Franch."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“黄连”条目；Flora of China / POWO 检索 Coptis chinensis Franch."
+        }
+      ]
+    },
+    {
+      "id": "herb-lycium-barbarum",
+      "nameZh": "枸杞子",
+      "pinyin": "gǒu qǐ zǐ",
+      "scientificName": "Lycium barbarum L.",
+      "family": "茄科 Solanaceae",
+      "partUsed": "成熟果实",
+      "identitySummary": "枸杞子是宁夏枸杞等 Lycium 植物成熟果实的药材名称，项目保留物种与部位信息。",
+      "traditionalContext": "本草和地方物产记录把枸杞与产地、果实形态联系起来；页面不将食用文化等同医疗效果。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "boundary": "商品枸杞来源和加工方式可能不同；不提供保健、相互作用或替代治疗建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“枸杞子”条目；Flora of China / POWO 检索 Lycium barbarum L."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“枸杞子”条目；Flora of China / POWO 检索 Lycium barbarum L."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“枸杞子”条目；Flora of China / POWO 检索 Lycium barbarum L."
+        }
+      ]
+    },
+    {
+      "id": "herb-chrysanthemum-morifolium",
+      "nameZh": "菊花",
+      "pinyin": "jú huā",
+      "scientificName": "Chrysanthemum morifolium Ramat.",
+      "family": "菊科 Asteraceae",
+      "partUsed": "干燥头状花序",
+      "identitySummary": "栽培菊的干燥头状花序；不同商品类型在颜色、产地和加工上有差异。",
+      "traditionalContext": "菊花同时出现在花卉文化和本草文献中；项目将观赏、饮用与药材身份分开。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S006",
+        "S009"
+      ],
+      "boundary": "菊花茶、观赏菊和药典药材不必然同质；页面不提供饮用量或治疗判断。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“菊花”条目；Flora of China / POWO 检索 Chrysanthemum morifolium Ramat."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“菊花”条目；Flora of China / POWO 检索 Chrysanthemum morifolium Ramat."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“菊花”条目；Flora of China / POWO 检索 Chrysanthemum morifolium Ramat."
+        }
+      ]
+    },
+    {
+      "id": "herb-lonicera-japonica",
+      "nameZh": "金银花",
+      "pinyin": "jīn yín huā",
+      "scientificName": "Lonicera japonica Thunb.",
+      "family": "忍冬科 Caprifoliaceae",
+      "partUsed": "干燥花蕾或初开的花",
+      "identitySummary": "忍冬属植物的花蕾和初开花形成药材节点；金银花与山银花需按标准区分。",
+      "traditionalContext": "“金银”名称来自花色变化的文化观察；古籍和药典记录其部位与来源。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "boundary": "金银花与山银花不是可任意互换的名称；不作抗感染或自疗建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“金银花”条目；Flora of China / POWO 检索 Lonicera japonica Thunb."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“金银花”条目；Flora of China / POWO 检索 Lonicera japonica Thunb."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“金银花”条目；Flora of China / POWO 检索 Lonicera japonica Thunb."
+        }
+      ]
+    },
+    {
+      "id": "herb-mentha-haplocalyx",
+      "nameZh": "薄荷",
+      "pinyin": "bò he",
+      "scientificName": "Mentha haplocalyx Briq.",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥地上部分",
+      "identitySummary": "唇形科芳香草本；药材以 Mentha haplocalyx 地上部分为身份节点。",
+      "traditionalContext": "薄荷兼具香草、饮食和本草文化位置；页面只呈现其名称、植物身份与文献关系。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "boundary": "薄荷精油与干燥药材不是同一剂型；不提供儿童、孕期或精油使用建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“薄荷”条目；Flora of China / POWO 检索 Mentha haplocalyx Briq."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“薄荷”条目；Flora of China / POWO 检索 Mentha haplocalyx Briq."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“薄荷”条目；Flora of China / POWO 检索 Mentha haplocalyx Briq."
+        }
+      ]
+    },
+    {
+      "id": "herb-salvia-miltiorrhiza",
+      "nameZh": "丹参",
+      "pinyin": "dān shēn",
+      "scientificName": "Salvia miltiorrhiza Bunge",
+      "family": "唇形科 Lamiaceae",
+      "partUsed": "干燥根和根茎",
+      "identitySummary": "唇形科多年生草本；红色根部是名称和图像识别的重要线索。",
+      "traditionalContext": "本草以根色和形态记录丹参；“丹”是文化命名线索，不是疗效承诺。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "boundary": "丹参与抗凝药等可能存在临床关注点；页面不提供联合用药或停药建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“丹参”条目；Flora of China / POWO 检索 Salvia miltiorrhiza Bunge."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“丹参”条目；Flora of China / POWO 检索 Salvia miltiorrhiza Bunge."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“丹参”条目；Flora of China / POWO 检索 Salvia miltiorrhiza Bunge."
+        }
+      ]
+    },
+    {
+      "id": "herb-atractylodes-macrocephala",
+      "nameZh": "白术",
+      "pinyin": "bái zhú",
+      "scientificName": "Atractylodes macrocephala Koidz.",
+      "family": "菊科 Asteraceae",
+      "partUsed": "干燥根茎",
+      "identitySummary": "菊科多年生草本；白术在古典方剂中作为组成节点出现，项目按根茎身份记录。",
+      "traditionalContext": "白术的“术”名与产地、炮制和方剂传统相连；展示用于理解配伍结构。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S006",
+        "S009"
+      ],
+      "boundary": "苍术与白术属于不同药材；不提供健脾、减重或剂量建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“白术”条目；Flora of China / POWO 检索 Atractylodes macrocephala Koidz."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“白术”条目；Flora of China / POWO 检索 Atractylodes macrocephala Koidz."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“白术”条目；Flora of China / POWO 检索 Atractylodes macrocephala Koidz."
+        }
+      ]
+    },
+    {
+      "id": "herb-poria-cocos",
+      "nameZh": "茯苓",
+      "pinyin": "fú líng",
+      "scientificName": "Wolfiporia extensa (Peck) Ginns",
+      "family": "多孔菌科 Polyporaceae",
+      "partUsed": "菌核",
+      "identitySummary": "真菌菌核类药材；项目保留其与植物类本草不同的生物学身份。",
+      "traditionalContext": "茯苓在本草中以菌核形态、产地和方剂配伍被记录；不把“淡渗”术语当作现代作用机制。",
+      "evidenceStatus": "official-monograph + botanical-reference",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S006",
+        "S009"
+      ],
+      "boundary": "茯苓为真菌药材且商品规格多样；页面不提供利尿、睡眠或疾病建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“茯苓”条目；Flora of China / POWO 检索 Wolfiporia extensa (Peck) Ginns."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“茯苓”条目；Flora of China / POWO 检索 Wolfiporia extensa (Peck) Ginns."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“茯苓”条目；Flora of China / POWO 检索 Wolfiporia extensa (Peck) Ginns."
+        }
+      ]
+    },
+    {
+      "id": "herb-pinellia-ternata",
+      "nameZh": "半夏",
+      "pinyin": "bàn xià",
+      "scientificName": "Pinellia ternata (Thunb.) Makino",
+      "family": "天南星科 Araceae",
+      "partUsed": "块茎（需按药典炮制品种展示）",
+      "identitySummary": "天南星科草本；半夏原品与法半夏、姜半夏等炮制名称必须分开。",
+      "traditionalContext": "半夏在二陈汤等古典方剂中形成清晰的配伍关系；这里记录的是文献结构。",
+      "evidenceStatus": "official-monograph + botanical-reference + historical-text",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S006",
+        "S009"
+      ],
+      "boundary": "未经规范炮制的半夏存在刺激和毒性风险；页面不提供采集、炮制或服用建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“半夏”条目；Flora of China / POWO 检索 Pinellia ternata (Thunb.) Makino."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“半夏”条目；Flora of China / POWO 检索 Pinellia ternata (Thunb.) Makino."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“半夏”条目；Flora of China / POWO 检索 Pinellia ternata (Thunb.) Makino."
+        }
+      ]
+    },
+    {
+      "id": "herb-saposhnikovia-divaricata",
+      "nameZh": "防风",
+      "pinyin": "fáng fēng",
+      "scientificName": "Saposhnikovia divaricata (Turcz.) Schischk.",
+      "family": "伞形科 Apiaceae",
+      "partUsed": "干燥根",
+      "identitySummary": "伞形科单种属多年生草本；防风根是玉屏风散关系中的一个组成节点。",
+      "traditionalContext": "古籍以名称和产地记录防风；项目只解释其在方剂文本中的位置。",
+      "evidenceStatus": "official-monograph + botanical-reference + historical-text",
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S006",
+        "S009"
+      ],
+      "boundary": "伞形科近缘植物可能造成误认；页面不作驱风、过敏或感染方面的医疗建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S001",
+          "locator": "2020版《中国药典》一部“防风”条目；Flora of China / POWO 检索 Saposhnikovia divaricata (Turcz.) Schischk."
+        },
+        {
+          "sourceId": "S002",
+          "locator": "2020版《中国药典》一部“防风”条目；Flora of China / POWO 检索 Saposhnikovia divaricata (Turcz.) Schischk."
+        },
+        {
+          "sourceId": "S009",
+          "locator": "2020版《中国药典》一部“防风”条目；Flora of China / POWO 检索 Saposhnikovia divaricata (Turcz.) Schischk."
+        }
+      ]
+    }
+  ]
+}

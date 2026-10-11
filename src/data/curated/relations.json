@@ -1,0 +1,264 @@
+{
+  "datasetId": "herbal-cosmos-trace-v1",
+  "entityType": "relation",
+  "researchedAt": "2026-10-11",
+  "relations": [
+    {
+      "id": "rel-ginseng-shennong",
+      "from": "herb-panax-ginseng",
+      "to": "anchor-shennong-bencao-jing",
+      "type": "recorded-in",
+      "label": "早期本草名录记录",
+      "evidenceStatus": "contextual",
+      "sourceIds": [
+        "S010",
+        "S007"
+      ],
+      "boundary": "文化史关系，不等同疗效证据。"
+    },
+    {
+      "id": "rel-licorice-shennong",
+      "from": "herb-glycyrrhiza-uralensis",
+      "to": "anchor-shennong-bencao-jing",
+      "type": "recorded-in",
+      "label": "早期本草名录记录",
+      "evidenceStatus": "contextual",
+      "sourceIds": [
+        "S010",
+        "S007"
+      ],
+      "boundary": "古籍分类仅作历史语境。"
+    },
+    {
+      "id": "rel-qinghao-shennong",
+      "from": "herb-artemisia-annua",
+      "to": "anchor-shennong-bencao-jing",
+      "type": "recorded-in",
+      "label": "本草名称与性状线索",
+      "evidenceStatus": "contextual",
+      "sourceIds": [
+        "S010",
+        "S007"
+      ],
+      "boundary": "不将古籍描述解释为现代用药建议。"
+    },
+    {
+      "id": "rel-chenpi-bencao",
+      "from": "herb-citrus-reticulata",
+      "to": "anchor-bencao-gangmu",
+      "type": "described-by",
+      "label": "形态、来源与名称汇编",
+      "evidenceStatus": "contextual",
+      "sourceIds": [
+        "S011",
+        "S007"
+      ],
+      "boundary": "版本和产地描述需回到原书核对。"
+    },
+    {
+      "id": "rel-chrysanthemum-bencao",
+      "from": "herb-chrysanthemum-morifolium",
+      "to": "anchor-bencao-gangmu",
+      "type": "described-by",
+      "label": "花卉与本草双重语境",
+      "evidenceStatus": "contextual",
+      "sourceIds": [
+        "S011",
+        "S007"
+      ],
+      "boundary": "观赏和药材身份分开。"
+    },
+    {
+      "id": "rel-goji-bencao",
+      "from": "herb-lycium-barbarum",
+      "to": "anchor-bencao-gangmu",
+      "type": "described-by",
+      "label": "果实与产地记录",
+      "evidenceStatus": "contextual",
+      "sourceIds": [
+        "S011",
+        "S007"
+      ],
+      "boundary": "地方物产记录不等同保健结论。"
+    },
+    {
+      "id": "rel-qinghao-tu",
+      "from": "herb-artemisia-annua",
+      "to": "anchor-tu-youyou-artemisinin",
+      "type": "research-lineage",
+      "label": "传统线索进入现代研究史",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S005"
+      ],
+      "boundary": "青蒿与青蒿素、药物与植物需分开理解。"
+    },
+    {
+      "id": "rel-si-jun-ginseng",
+      "from": "herb-panax-ginseng",
+      "to": "formula-si-jun-zi-tang",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S012"
+      ],
+      "boundary": "只展示经典文本组成，不提供剂量或适应证。"
+    },
+    {
+      "id": "rel-si-jun-baizhu",
+      "from": "herb-atractylodes-macrocephala",
+      "to": "formula-si-jun-zi-tang",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S012"
+      ],
+      "boundary": "版本和炮制差异需专业核对。"
+    },
+    {
+      "id": "rel-si-jun-fuling",
+      "from": "herb-poria-cocos",
+      "to": "formula-si-jun-zi-tang",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S012"
+      ],
+      "boundary": "菌核药材身份不等同现代利尿建议。"
+    },
+    {
+      "id": "rel-si-jun-licorice",
+      "from": "herb-glycyrrhiza-uralensis",
+      "to": "formula-si-jun-zi-tang",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S012"
+      ],
+      "boundary": "不提供自我用药指导。"
+    },
+    {
+      "id": "rel-erchen-banxia",
+      "from": "herb-pinellia-ternata",
+      "to": "formula-er-chen-tang",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S012"
+      ],
+      "boundary": "半夏必须区分炮制品种。"
+    },
+    {
+      "id": "rel-erchen-chenpi",
+      "from": "herb-citrus-reticulata",
+      "to": "formula-er-chen-tang",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S012"
+      ],
+      "boundary": "陈皮与普通橘皮不作任意替代。"
+    },
+    {
+      "id": "rel-erchen-fuling",
+      "from": "herb-poria-cocos",
+      "to": "formula-er-chen-tang",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S012"
+      ],
+      "boundary": "只展示文本关系。"
+    },
+    {
+      "id": "rel-erchen-licorice",
+      "from": "herb-glycyrrhiza-uralensis",
+      "to": "formula-er-chen-tang",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S012"
+      ],
+      "boundary": "不提供止咳、祛痰或剂量建议。"
+    },
+    {
+      "id": "rel-yuping-huangqi",
+      "from": "herb-astragalus-membranaceus",
+      "to": "formula-yu-ping-feng-san",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S013"
+      ],
+      "boundary": "传统组成不是现代免疫或预防结论。"
+    },
+    {
+      "id": "rel-yuping-baizhu",
+      "from": "herb-atractylodes-macrocephala",
+      "to": "formula-yu-ping-feng-san",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S013"
+      ],
+      "boundary": "不提供适应证或服用建议。"
+    },
+    {
+      "id": "rel-yuping-fangfeng",
+      "from": "herb-saposhnikovia-divaricata",
+      "to": "formula-yu-ping-feng-san",
+      "type": "ingredient-of",
+      "label": "方剂组成",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S001",
+        "S013"
+      ],
+      "boundary": "不把传统术语转换成医疗承诺。"
+    },
+    {
+      "id": "rel-qinghao-nobel-source",
+      "from": "anchor-tu-youyou-artemisinin",
+      "to": "S005",
+      "type": "supported-by",
+      "label": "诺奖事实页支持时间线",
+      "evidenceStatus": "verified-direct",
+      "sourceIds": [
+        "S005"
+      ],
+      "boundary": "事实页只支持研究史节点。"
+    },
+    {
+      "id": "rel-all-policy-boundary",
+      "from": "anchor-tu-youyou-artemisinin",
+      "to": "S008",
+      "type": "bounded-by",
+      "label": "传统知识展示的证据与安全边界",
+      "evidenceStatus": "contextual",
+      "sourceIds": [
+        "S008"
+      ],
+      "boundary": "政策文件不是个体化医疗建议。"
+    }
+  ]
+}

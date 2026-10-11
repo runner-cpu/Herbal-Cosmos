@@ -1,0 +1,12 @@
+{
+  "datasetId": "herbal-cosmos-trace-specimens-v1",
+  "researchedAt": "2026-10-11",
+  "specimens": [
+    {"herbId":"herb-artemisia-annua","shape":"leaf-spray","label":"羽状叶簇","cues":["一年生草本","叶片二至三回羽状分裂","气味具有芳香线索"],"sourceIds":["S002","S009"],"boundary":"这是植物形态识别练习，不替代专业鉴定。"},
+    {"herbId":"herb-panax-ginseng","shape":"root-crown","label":"掌状复叶与纺锤根","cues":["叶在茎端轮生","掌状复叶","主根纺锤形或圆柱形"],"sourceIds":["S001","S002","S009"],"boundary":"野生、栽培和加工品的外观会有差异。"},
+    {"herbId":"herb-citrus-reticulata","shape":"peel-ribbon","label":"卷曲果皮","cues":["成熟柑橘果皮","外表面橙红至红棕","内表面有油室小点"],"sourceIds":["S001","S002","S009"],"boundary":"陈皮与普通鲜橘皮、青皮不是同一标准。"},
+    {"herbId":"herb-chrysanthemum-morifolium","shape":"flower-head","label":"干燥头状花序","cues":["菊科头状花序","舌状花与管状花组成","不同商品类型颜色有别"],"sourceIds":["S001","S002","S009"],"boundary":"观赏菊、饮用菊与药典药材需要按来源区分。"},
+    {"herbId":"herb-atractylodes-macrocephala","shape":"root-rhizome","label":"结节根茎","cues":["根茎呈不规则结节状","断面有棕黄色油点","与苍术基原不同"],"sourceIds":["S001","S002","S009"],"boundary":"外观练习不等于药材真伪鉴定。"},
+    {"herbId":"herb-lonicera-japonica","shape":"paired-buds","label":"成对花蕾","cues":["花蕾细长略弯曲","初开花色由白转黄","药典名称与山银花分开"],"sourceIds":["S001","S002","S009"],"boundary":"金银花与山银花不能仅凭颜色互相替代。"}
+  ]
+}

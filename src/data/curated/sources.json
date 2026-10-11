@@ -1,0 +1,149 @@
+{
+  "datasetId": "herbal-cosmos-trace-v1",
+  "researchedAt": "2026-10-11",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "中华人民共和国药典（2020年版）一部",
+      "publisher": "国家药典委员会",
+      "url": "https://www.chp.org.cn/",
+      "accessedAt": "2026-10-11",
+      "locator": "一部药材和饮片条目：人参、青蒿、陈皮、甘草、黄芪、当归、黄连、枸杞子、菊花、金银花、薄荷、丹参、白术、茯苓、半夏、防风",
+      "evidenceType": "official-monograph",
+      "scope": "药材名称、植物基原、药用部位、性状和炮制名称的权威核对入口",
+      "boundary": "本项目只摘录身份与历史语境；不展示剂量、处方建议或疗效结论。"
+    },
+    {
+      "id": "S002",
+      "title": "Flora of China / 中国植物志英文版",
+      "publisher": "Missouri Botanical Garden 与 Harvard University Herbaria",
+      "url": "https://www.efloras.org/",
+      "accessedAt": "2026-10-11",
+      "locator": "Flora of China 物种处理页（按学名检索各物种的形态、分布与异名）",
+      "evidenceType": "botanical-reference",
+      "scope": "科学名称、科属、形态和自然分布",
+      "boundary": "植物学信息不等同于药理、临床或安全性结论。"
+    },
+    {
+      "id": "S003",
+      "title": "NCBI Taxonomy Browser",
+      "publisher": "U.S. National Library of Medicine / National Center for Biotechnology Information",
+      "url": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi",
+      "accessedAt": "2026-10-11",
+      "locator": "使用各物种学名作为 name 查询参数，核对分类层级和同物异名",
+      "evidenceType": "taxonomy-database",
+      "scope": "分类学身份和名称拼写",
+      "boundary": "数据库分类状态可能更新；项目记录的是本次访问时的快照。"
+    },
+    {
+      "id": "S009",
+      "title": "Plants of the World Online",
+      "publisher": "Royal Botanic Gardens, Kew",
+      "url": "https://powo.science.kew.org/",
+      "accessedAt": "2026-10-11",
+      "locator": "站内 Taxon search：按各物种学名核对接受名、异名与全球分布；Kew 站点可能对自动请求返回 403，但浏览器可公开访问",
+      "evidenceType": "botanical-reference",
+      "scope": "全球植物名录、接受名和分布信息",
+      "boundary": "Kew 名录用于植物分类与分布核对，不提供药效或安全判断。"
+    },
+    {
+      "id": "S010",
+      "title": "《神农本草经》原文索引",
+      "publisher": "Chinese Text Project",
+      "url": "https://ctext.org/shen-nong-ben-cao-jing",
+      "accessedAt": "2026-10-11",
+      "locator": "书名页与篇章索引；用于核对早期本草条目和版本说明",
+      "evidenceType": "historical-text",
+      "scope": "《神农本草经》的公开古籍入口",
+      "boundary": "电子文本不是唯一底本；页面只作文献史展示。"
+    },
+    {
+      "id": "S011",
+      "title": "《本草纲目》原文索引",
+      "publisher": "Chinese Text Project",
+      "url": "https://ctext.org/ben-cao-gang-mu",
+      "accessedAt": "2026-10-11",
+      "locator": "书名页与卷次索引；用于核对药材条目和引文位置",
+      "evidenceType": "historical-text",
+      "scope": "《本草纲目》的公开古籍入口",
+      "boundary": "版本、卷次和断句需与影印本交叉核对。"
+    },
+    {
+      "id": "S012",
+      "title": "《太平惠民和剂局方》原文索引",
+      "publisher": "Chinese Text Project",
+      "url": "https://ctext.org/taiping-hui-min-he-ji-ju-fang",
+      "accessedAt": "2026-10-11",
+      "locator": "方剂书名页与条目索引：四君子汤、二陈汤",
+      "evidenceType": "historical-text",
+      "scope": "宋代方书的公开古籍入口",
+      "boundary": "古籍方名与组成用于历史关系展示，不作为现代处方。"
+    },
+    {
+      "id": "S013",
+      "title": "《丹溪心法》原文索引",
+      "publisher": "Chinese Text Project",
+      "url": "https://ctext.org/dan-xi-xin-fa",
+      "accessedAt": "2026-10-11",
+      "locator": "方书书名页与条目索引：玉屏风散传统组成",
+      "evidenceType": "historical-text",
+      "scope": "元代医籍的公开古籍入口",
+      "boundary": "古籍版本和后世传抄可能不同；不提供临床建议。"
+    },
+    {
+      "id": "S004",
+      "title": "Asian Ginseng",
+      "publisher": "National Center for Complementary and Integrative Health (NCCIH)",
+      "url": "https://www.nccih.nih.gov/health/asian-ginseng",
+      "accessedAt": "2026-10-11",
+      "locator": "Asian ginseng 页面中的名称、传统使用背景和安全信息段落",
+      "evidenceType": "government-health-information",
+      "scope": "人参的现代公众健康信息背景",
+      "boundary": "NCCIH 明确提示研究结果有限且产品差异明显；本项目不做个体化健康建议。"
+    },
+    {
+      "id": "S005",
+      "title": "The Nobel Prize in Physiology or Medicine 2015: Tu Youyou – Facts",
+      "publisher": "Nobel Prize Outreach",
+      "url": "https://www.nobelprize.org/prizes/medicine/2015/tu/facts/",
+      "accessedAt": "2026-10-11",
+      "locator": "Tu Youyou facts：从传统文献线索到青蒿素研究的历史节点",
+      "evidenceType": "award-record",
+      "scope": "屠呦呦与青蒿素研究的可核验时间线",
+      "boundary": "诺奖事实记录不等于对青蒿本身的疗效或自用建议。"
+    },
+    {
+      "id": "S006",
+      "title": "Chinese Text Project（中国哲学书电子化计划）",
+      "publisher": "Chinese Text Project",
+      "url": "https://ctext.org/",
+      "accessedAt": "2026-10-11",
+      "locator": "先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索",
+      "evidenceType": "historical-text",
+      "scope": "古典文献书名、成书时代与可定位原文入口",
+      "boundary": "电子化文本的版本和断句需与馆藏或影印本交叉核对；项目只作文化史展示。"
+    },
+    {
+      "id": "S007",
+      "title": "Memory of the World",
+      "publisher": "UNESCO",
+      "url": "https://www.unesco.org/en/memory-world",
+      "accessedAt": "2026-10-11",
+      "locator": "Memory of the World 项目索引中关于传统医学文献遗产的条目",
+      "evidenceType": "heritage-register",
+      "scope": "本草文献作为文献遗产的公共文化背景",
+      "boundary": "文化遗产登记不证明任何医疗效果。"
+    },
+    {
+      "id": "S008",
+      "title": "WHO Traditional Medicine Strategy: 2014–2023",
+      "publisher": "World Health Organization",
+      "url": "https://www.who.int/publications/i/item/9789241506096",
+      "accessedAt": "2026-10-11",
+      "locator": "策略文件中关于传统医学知识、质量、安全和证据边界的章节",
+      "evidenceType": "policy-document",
+      "scope": "传统知识展示时的质量、安全、证据和监管边界",
+      "boundary": "政策框架不替代药品说明书、专业诊疗或当地法规。"
+    }
+  ]
+}

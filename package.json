@@ -1,34 +1,12 @@
 {
-  "name": "herbal-cosmos",
+  "name": "herbal-cosmos-trace",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
+  "description": "本草宇宙·一味之证：证据链交互展",
   "scripts": {
-    "build:cosmos": "node scripts/build-cosmos-renderer.mjs",
-    "build:apothecary": "node scripts/build-apothecary-renderer.mjs",
-    "build:catalog": "node scripts/build-herb-catalog.mjs",
-    "build:food": "node scripts/build-food-medicine.mjs",
-    "build:expanded": "node scripts/build-expanded-data.mjs",
-    "build:data": "npm run build:catalog && npm run build:food && npm run build:expanded",
-    "build:browser": "node scripts/build-browser-copies.mjs",
-    "check:browser-copies": "node scripts/build-browser-copies.mjs --check",
-    "restore:catalog-candidates": "node scripts/restore-legacy-candidates.mjs",
-    "test": "node --test tests/*.test.mjs",
-    "test:unit": "node --test tests/*.test.mjs",
-    "validate:catalog": "node scripts/validate-catalog.mjs",
-    "validate:expanded": "node scripts/validate-expanded-data.mjs",
-    "validate:ethnic": "node scripts/validate-ethnic-data.mjs",
-    "validate:data": "npm run validate:catalog && npm run validate:expanded && npm run validate:ethnic",
-    "validate:app": "node scripts/validate-web-app.mjs",
-    "check:inline": "node scripts/check-inline-runtime.mjs",
-    "test:browser": "playwright test",
-    "test:browser:ci": "playwright test --project=chromium --project=mobile",
-    "test:browser:compat": "playwright test tests/browser/navigation.spec.js tests/browser/progressive-rendering.spec.js --project=firefox --project=webkit"
-  },
-  "devDependencies": {
-    "@playwright/test": "1.63.0",
-    "esbuild": "0.28.2"
-  },
-  "dependencies": {
-    "three": "0.186.1"
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/new-app.test.mjs",
+    "serve": "node scripts/serve.mjs"
   }
 }

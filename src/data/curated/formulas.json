@@ -1,0 +1,96 @@
+{
+  "datasetId": "herbal-cosmos-trace-v1",
+  "entityType": "formula",
+  "researchedAt": "2026-10-11",
+  "formulas": [
+    {
+      "id": "formula-si-jun-zi-tang",
+      "nameZh": "四君子汤",
+      "pinyin": "sì jūn zǐ tāng",
+      "textualOrigin": "《太平惠民和剂局方》所载方名与组成传统",
+      "composition": [
+        "herb-panax-ginseng",
+        "herb-atractylodes-macrocephala",
+        "herb-poria-cocos",
+        "herb-glycyrrhiza-uralensis"
+      ],
+      "relationLabel": "由四味本草组成的经典方剂文本节点",
+      "evidenceStatus": "historical-text + official-monograph",
+      "sourceIds": [
+        "S001",
+        "S012",
+        "S008"
+      ],
+      "boundary": "这里只呈现历史组成关系，不展示剂量、适应证、加减或临床推荐；需由专业人士核对具体版本。",
+      "sourceRefs": [
+        {
+          "sourceId": "S012",
+          "locator": "《太平惠民和剂局方》四君子汤条；2020版《中国药典》一部所列四味药材身份"
+        },
+        {
+          "sourceId": "S001",
+          "locator": "《太平惠民和剂局方》四君子汤条；2020版《中国药典》一部所列四味药材身份"
+        }
+      ]
+    },
+    {
+      "id": "formula-er-chen-tang",
+      "nameZh": "二陈汤",
+      "pinyin": "èr chén tāng",
+      "textualOrigin": "《太平惠民和剂局方》所载方名与组成传统",
+      "composition": [
+        "herb-pinellia-ternata",
+        "herb-citrus-reticulata",
+        "herb-poria-cocos",
+        "herb-glycyrrhiza-uralensis"
+      ],
+      "relationLabel": "以半夏、陈皮、茯苓、甘草构成的方剂文本节点",
+      "evidenceStatus": "historical-text + official-monograph",
+      "sourceIds": [
+        "S001",
+        "S012",
+        "S008"
+      ],
+      "boundary": "半夏需按规范炮制；页面不提供祛痰、止咳、服用或配伍建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S012",
+          "locator": "《太平惠民和剂局方》二陈汤条；2020版《中国药典》一部所列四味药材身份"
+        },
+        {
+          "sourceId": "S001",
+          "locator": "《太平惠民和剂局方》二陈汤条；2020版《中国药典》一部所列四味药材身份"
+        }
+      ]
+    },
+    {
+      "id": "formula-yu-ping-feng-san",
+      "nameZh": "玉屏风散",
+      "pinyin": "yù píng fēng sǎn",
+      "textualOrigin": "《丹溪心法》传统方名与三味组成关系",
+      "composition": [
+        "herb-astragalus-membranaceus",
+        "herb-atractylodes-macrocephala",
+        "herb-saposhnikovia-divaricata"
+      ],
+      "relationLabel": "由黄芪、白术、防风组成的方剂文本节点",
+      "evidenceStatus": "historical-text + official-monograph",
+      "sourceIds": [
+        "S001",
+        "S013",
+        "S008"
+      ],
+      "boundary": "古典方剂版本和现代制剂可能存在差异；页面不提供免疫、过敏或预防性使用建议。",
+      "sourceRefs": [
+        {
+          "sourceId": "S013",
+          "locator": "《丹溪心法》玉屏风散条；2020版《中国药典》一部所列三味药材身份"
+        },
+        {
+          "sourceId": "S001",
+          "locator": "《丹溪心法》玉屏风散条；2020版《中国药典》一部所列三味药材身份"
+        }
+      ]
+    }
+  ]
+}
