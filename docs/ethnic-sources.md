@@ -4,7 +4,7 @@
 
 ## 口径
 
-**本批通过的 9 条（覆盖 8 味药、12 个「药材 × 体系」组合）全部来自同行评议研究文献，不是药典、不是体系收录认定，也不是机构名录。**
+**本批通过的 9 条覆盖 8 味药、11 个「药材 × 体系」组合，全部来自同行评议研究文献，不是药典、不是体系收录认定，也不是机构名录。**
 
 这一点必须说清楚：`approved` 在本项目里只表示「这条对照线索有一篇可访问的、同行评议的文献支持」，不等于「该民族医药体系正式收载这味药」。页面上呈现的也是这一层含义，措辞统一为「文献中记载 / 有记载」。
 
@@ -26,7 +26,7 @@
 | 余甘子 | 藏医药 | [Frontiers in Pharmacology (2026) · PMC13385120](https://pmc.ncbi.nlm.nih.gov/articles/PMC13385120/) | “Phyllanthus emblica L. (PE) is a botanical drug widely used in several traditional medical systems, including Tibetan and Uyghur medicine.” |
 | 余甘子 | 维吾尔医药 | [Frontiers in Pharmacology (2026) · PMC13385120](https://pmc.ncbi.nlm.nih.gov/articles/PMC13385120/) | 同上句 |
 
-同日复核：以上 9 个 URL 全部返回 HTTP 200。
+同日复核：以上表格引用的 9 个 URL（PMC11899446、PMC12301304、PMC9038101、PMC9050497、PMC10986185、PMC9292578、PMC9254149、PMC13002580、PMC13385120）全部返回 HTTP 200。
 
 ## 为什么要拆条
 

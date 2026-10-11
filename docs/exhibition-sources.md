@@ -26,7 +26,7 @@ An edge exposes a role only when an assertion exists for the same case and herb.
 
 [中国非物质文化遗产网：中药炮制技术](https://www.ihchina.cn/project_details/14788.html), project 442, code Ⅸ-3, 2006 first batch. Controller read by public HTTP; implementer additionally fetched it via `Invoke-WebRequest` and read the decoded project introduction, historical paragraph and institution fields before writing processing descriptions. Applicant 中国中医科学院; protector 中国中医科学院中药研究所. The first paragraph supports processing into 饮片 under traditional theory, accumulated methods/techniques and traditional tools. The history paragraph supports literature records, including 《本草经集注》《雷公炮炙论》. Project text also identifies inheritance/protection needs. The 7-node/6-edge scene represents these as project relationships, not a universal mandatory 净制→切制→炮炙 pipeline. No historical practitioner count is presented as a 2026 statistic, and no mentor lineage is invented.
 
-Nine ethnic correspondence entries (8 herbs, 12 herb-system pairs) now carry peer-reviewed sources; the remaining 29 stay in review. Their per-claim sources, quoted sentences and scope limits are recorded in [ethnic-sources](ethnic-sources.md). The two sourced heritage cases above approve no candidate and fabricate no herb links.
+Nine ethnic correspondence entries (8 herbs, 11 herb-system pairs) now carry peer-reviewed sources; the remaining 29 stay in review. Their per-claim sources, quoted sentences and scope limits are recorded in [ethnic-sources](ethnic-sources.md). The two sourced heritage cases above approve no candidate and fabricate no herb links.
 
 ## Reading note and access
 
