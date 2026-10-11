@@ -8,72 +8,83 @@
  *   approved —— 已有可访问来源，可在星云、知识卡与传承展区呈现
  *   review   —— 待补来源，只在覆盖报告中可见
  *
+ * 现存 approved 来源全部是同行评议研究文献（PMC 全文），不是药典或体系收录认定。
+ * 同一味药在不同体系里各自独立成条，因此一条审核不通过不会连带压暗另一个体系。
+ *
  * 注：本馆知识卡按中医本草框架编目（四气、五味、归经与资料分类均为汉地方案）。
  *     民族对照只说明"还见于其他体系"，不改变原有编目口径，也不等于体系收载认定。 */
 window.ETHNIC_CORRESPONDENCE = [
   {
     herbId: 'open-4547aaf7fe62',
     herbName: '诃子',
-    systems: ['tibetan', 'mongolian'],
-    note: '在藏医药与蒙古医药文献中均有记载的常用药材。',
-    source: { title: '', url: '' },
-    status: 'review'
+    systems: ['tibetan'],
+    note: '藏医药文献中记载的常用药材。来源是同行评议研究，记述诃子是其研究的藏医药药材对象。',
+    source: { title: 'Animals (2025) · Tibetan medicine Terminalia chebula', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11899446/' },
+    status: 'approved'
+  },
+  {
+    herbId: 'open-4547aaf7fe62',
+    herbName: '诃子',
+    systems: ['mongolian'],
+    note: '蒙古医药文献中记载的常用药材。来源是同行评议研究，记述诃子与制草乌构成蒙古医药的经典药对。',
+    source: { title: 'Frontiers in Pharmacology (2025) · Mongolian medicine Zhicaowu–Hezi herb pair', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12301304/' },
+    status: 'approved'
   },
   {
     herbId: 'open-91b2193137e8',
     herbName: '翼首草',
     systems: ['tibetan'],
-    note: '藏医药文献中记载的高原药材。',
-    source: { title: '', url: '' },
-    status: 'review'
+    note: '藏医药文献中记载的高原药材。来源是同行评议综述，记述其见于《四部医典》与《晶珠本草》等藏医药典籍。',
+    source: { title: 'RSC Advances (2021) · Pterocephalus hookeri review', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9038101/' },
+    status: 'approved'
   },
   {
     herbId: 'open-89674717be7b',
     herbName: '独一味',
     systems: ['tibetan'],
-    note: '藏医药文献中记载的高原药材。',
-    source: { title: '', url: '' },
-    status: 'review'
+    note: '藏医药文献中记载的高原药材。来源是同行评议综述，记述其在藏医药中沿用逾千年。',
+    source: { title: 'RSC Advances (2020) · Lamiophlomis rotata review', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9050497/' },
+    status: 'approved'
   },
   {
     herbId: 'open-ee284eac912e',
     herbName: '红景天',
     systems: ['tibetan'],
-    note: '藏医药文献中记载的高原药材。',
-    source: { title: '', url: '' },
-    status: 'review'
+    note: '藏医药文献中记载的高原药材，来源给出藏语名 སྲོ་མོ་དམར་པོ།。该来源记述的物种是大花红景天（Rhodiola crenulata），本馆知识卡的拉丁名作 Rhodiola rosea，两者是否同一药材待核。',
+    source: { title: 'Frontiers in Pharmacology (2024) · Traditional Tibetan medicine in lung diseases', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10986185/' },
+    status: 'approved'
   },
   {
     herbId: 'open-88aa79dc3e86',
     herbName: '菊苣',
     systems: ['uyghur'],
-    note: '维吾尔医药文献中记载的药材。',
-    source: { title: '', url: '' },
-    status: 'review'
+    note: '维吾尔医药文献中记载的药材。来源是同行评议研究，称菊苣为中国维吾尔族习用药材，并给出维吾尔语名 kasni。',
+    source: { title: 'Frontiers in Nutrition (2022) · Chicory quality-control markers', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9292578/' },
+    status: 'approved'
   },
   {
     herbId: 'open-aebd1c705d07',
     herbName: '黑种草子',
     systems: ['uyghur'],
-    note: '维吾尔医药文献中记载的药材。',
-    source: { title: '', url: '' },
-    status: 'review'
+    note: '维吾尔医药文献中记载的药材。来源是同行评议研究，以腺毛黑种草（Nigella glandulifera）种子为维吾尔医药药材。',
+    source: { title: 'RSC Advances (2022) · Nigella glandulifera seed constituents', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9254149/' },
+    status: 'approved'
   },
   {
     herbId: 'open-6a20da163f2b',
     herbName: '沙棘',
     systems: ['tibetan', 'mongolian'],
-    note: '在藏医药与蒙古医药文献中均有记载的常用药材。',
-    source: { title: '', url: '' },
-    status: 'review'
+    note: '在藏医药与蒙古医药文献中均有记载的常用药材。来源是同行评议综述，分别记述两体系的应用与典籍记载，蒙古语名 Chiqirigan。',
+    source: { title: 'Frontiers in Pharmacology (2026) · Sea buckthorn ethnopharmacology review', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC13002580/' },
+    status: 'approved'
   },
   {
     herbId: 'open-e01c5fa72aa1',
     herbName: '余甘子',
     systems: ['tibetan', 'uyghur'],
-    note: '在藏医药与维吾尔医药文献中均有记载。',
-    source: { title: '', url: '' },
-    status: 'review'
+    note: '在藏医药与维吾尔医药文献中均有记载。来源是同行评议研究，明确将余甘子（Phyllanthus emblica）列为两体系使用的药材。',
+    source: { title: 'Frontiers in Pharmacology (2026) · Phyllanthus emblica extract', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC13385120/' },
+    status: 'approved'
   },
   {
     herbId: 'open-b48432da0f27',

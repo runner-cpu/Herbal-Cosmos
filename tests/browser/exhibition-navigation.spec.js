@@ -18,8 +18,18 @@ test('archive secondary links reach their one existing workspace and preserve da
   }
   const imageCount = await page.evaluate(() => String(window.HERBAL_DATA_COVERAGE.imageBacked));
   await expect(page.locator('#homeKpis strong')).toHaveText(['902', '8,818', '100', imageCount]);
-  await page.goto('/#/heritage');
-  await expect(page.locator('.culture-local-nav a[href*="heritage-together"]')).toHaveCount(0);
+  // #/heritage 不带锚点会被路由成展区「传一艺」，文化长卷本身要看 section=culture。
+  await page.goto('/#/herbs?section=culture&anchor=heritage-culture');
+  await expect(page.locator('#heritage-culture')).toBeVisible();
+  // 「共同的本草」只在门禁通过至少一条民族对照时才出现，数量随数据走。
+  const approved = await page.evaluate(() => (window.ETHNIC_CORRESPONDENCE || []).filter(item => item.status === 'approved').length);
+  await expect(page.locator('.culture-local-nav a[href*="heritage-together"]')).toHaveCount(approved ? 1 : 0);
+  if (approved) {
+    await expect(page.locator('#heritage-together')).toBeVisible();
+    await expect(page.locator('#heritage-together h2')).toHaveText('共同的本草');
+  } else {
+    await expect(page.locator('#heritage-together')).toHaveCount(0);
+  }
   expect(errors).toEqual([]);
 });
 

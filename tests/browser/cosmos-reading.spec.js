@@ -19,15 +19,19 @@ test('the star map exposes its readings with a single pressed state', async ({ p
   await page.locator('[data-cosmos-collapse]').click();
   await expect(page.locator('#cosmosControls [data-cosmos-readings]')).toBeVisible();
   const buttons = page.locator('#cosmosControls [data-cosmos-reading]');
-  await expect(buttons).toHaveCount(3);
-  await expect(page.locator('#cosmosControls [data-cosmos-reading="ethnic"]')).toHaveCount(0);
+  // 读法数量由门禁状态决定：有 approved 民族对照条目才多出「民族对照」。
+  const approved = await page.evaluate(() => (window.ETHNIC_CORRESPONDENCE || []).filter(item => item.status === 'approved').length);
+  const modes = approved ? ['category', 'geography', 'nature', 'ethnic'] : ['category', 'geography', 'nature'];
+  await expect(buttons).toHaveCount(modes.length);
+  await expect(page.locator('#cosmosControls [data-cosmos-reading="ethnic"]')).toHaveCount(approved ? 1 : 0);
 
   const initial = await readingState(page);
   expect(initial.reading).toBe('category');
   expect(initial.perf.paletteCount).toBeGreaterThan(1);
   expect(initial.pressed.filter(item => item.pressed === 'true').map(item => item.mode)).toEqual(['category']);
 
-  for (const mode of ['geography', 'nature']) {
+  for (const mode of ['geography', 'nature', 'ethnic']) {
+    if (!modes.includes(mode)) continue;
     await page.locator(`#cosmosControls [data-cosmos-reading="${mode}"]`).click();
     const state = await readingState(page);
     expect(state.reading).toBe(mode);
@@ -36,6 +40,7 @@ test('the star map exposes its readings with a single pressed state', async ({ p
     await expect(page.locator('#cosmosReadingLegend')).toBeVisible();
     if (mode === 'geography') await expect(page.locator('#cosmosReadingLegend')).toContainText('青藏');
     if (mode === 'nature') await expect(page.locator('#cosmosReadingLegend')).toContainText('大寒');
+    if (mode === 'ethnic') await expect(page.locator('#cosmosReadingLegend')).toContainText('有对照线索');
   }
 
   await page.locator('#cosmosControls [data-cosmos-reading="category"]').click();
