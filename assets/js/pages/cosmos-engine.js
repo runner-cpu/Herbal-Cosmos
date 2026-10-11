@@ -389,7 +389,7 @@
         list.sort((a, b) => (b.fade - a.fade) || String(a.id).localeCompare(String(b.id)));
         captionCandidates.push(...list.slice(0, 3));
       }
-      const labels = host.selectVisibleLabels?.(captionCandidates.length ? captionCandidates : shown, { width: W, height: H }, scale, { selectedHerb: selectedId, viewedHerbs: viewed });
+      const labels = host.selectVisibleLabels?.(captionCandidates.length ? captionCandidates : shown, { width: W, height: H }, scale, { selectedHerb: selectedId, viewedHerbs: viewed, reading, roam });
       const labelIds = new Set((labels || []).map(item => item.id));
       const alpha = glowAlpha();
       const relatedIds = new Set(focusedId ? layoutApi.relations(layout, focusedId).ids : []);
@@ -529,6 +529,7 @@
       const star = stars.find(item => item.id === id);
       if (!star) return;
       focusedId = star.id;
+      trailsEnabled = true;
       cluster = CLUSTER_ALL; flight = null;
       syncLayout();
       categoryFilter = ''; regionFilters.clear();
@@ -662,6 +663,7 @@
       toggleFavorite(id) { host.toggleFavorite?.(id); },
       clearFocus() {
         focusedId = null; manuallyRotated = false; flight = null;
+        trailsEnabled = roam;
         cluster = CLUSTER_ALL;
         targetRotY = 0; targetRotX = 0; targetScale = 1;
         setRelationPositions(); invalidate();
@@ -699,7 +701,7 @@
         return cluster;
       },
       setRoam(enabled) {
-        roam = Boolean(enabled); canvas.dataset.roam = String(roam);
+        roam = Boolean(enabled); trailsEnabled = roam || Boolean(focusedId); canvas.dataset.roam = String(roam);
         const pointers = [...activePointers.keys()]; activePointers.clear();
         pointers.forEach(id => { if (canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id); });
         dragging = false; pinchDistance = 0; moved = 20; invalidate();

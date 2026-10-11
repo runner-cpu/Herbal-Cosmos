@@ -331,6 +331,8 @@ function render(options={}){
     viewedIds: () => { try{const value=JSON.parse(storageRead('herbal_viewed','[]'));return Array.isArray(value)?value:[];}catch(e){return [];} },
     selectedId: () => store.selectedHerb?.id || null,
     motionAllowed: () => window.HerbalCosmos?.animate !== false,
+    // 星轨是漫游和点选后的解释层；首屏先把 902 颗星作为一颗可读的球体呈现。
+    trails: false,
     selectVisibleLabels: (...args) => window.HerbalCosmos?.selectVisibleLabels?.(...args) || [],
     onSelect: (id, source) => setSelected(id, { source }),
     onPick: herb => window.dispatchEvent(new CustomEvent('herbal:cosmos-selection',{detail:{herb,imageMarkup:herbImage(herb),imageCreditMarkup:imageCredit(herb),sourcesMarkup:sourceLinks(herb)}})),

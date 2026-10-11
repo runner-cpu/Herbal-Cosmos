@@ -28,7 +28,8 @@
   const READING_MODES = Object.freeze(['category', 'geography', 'nature', 'ethnic']);
   const READING_LABELS = Object.freeze({ category: '资料分类', geography: '文献分布', nature: '药性', ethnic: '民族对照' });
   const CLUSTER_LABELS = Object.freeze({ 青藏: '青藏', 西北: '西北', 北方: '北方', 西南: '西南', 东南: '东南', [NO_REGION]: '未录分布' });
-  const DEFAULT_READING = 'category';
+  // 首屏默认先让访客读到“本草从哪里来”，分类与药性收进漫游态。
+  const DEFAULT_READING = 'geography';
   const GLOW_SIZE = 128;
   const GLOW_ALPHA_BY_THEME = Object.freeze({ day: 0.5, night: 1, ink: 0.72 });
   /* 视野与景深。球面半径由几何模块（cosmos-layout.js，先于本文件加载）给出，

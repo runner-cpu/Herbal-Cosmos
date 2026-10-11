@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'herbal-cosmos-v28-20261010-ethnic-sources';
+const CACHE_VERSION = 'herbal-cosmos-v29-20261011-v9-story';
 const PRECACHE = CACHE_VERSION + '-shell';
 const IMAGE_CACHE = CACHE_VERSION + '-images';
 const CATALOG_CACHE = CACHE_VERSION + '-catalog';

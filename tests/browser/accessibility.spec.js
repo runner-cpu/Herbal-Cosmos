@@ -46,7 +46,7 @@ test('forced colors keeps the star map controls and reading state readable', asy
   await page.goto('/#/home');
   await page.locator('[data-cosmos-collapse]').click();
   await expect(page.locator('#cosmosControls [data-cosmos-readings]')).toBeVisible();
-  await expect(page.locator('#cosmosControls [data-cosmos-reading="category"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#cosmosControls [data-cosmos-reading="geography"]')).toHaveAttribute('aria-pressed', 'true');
   // 高对比模式下读法按钮不能再靠颜色区分，必须保留可见边框与文字。
   const surface = await page.evaluate(() => {
     const button = document.querySelector('#cosmosControls [data-cosmos-reading="category"]');

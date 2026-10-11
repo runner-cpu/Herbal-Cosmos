@@ -180,3 +180,199 @@
  #exhibitionRoot .exhibit-note-actions,#exhibitionRoot .exhibit-object-list{display:none}
  #exhibitionRoot .exhibit-note{break-inside:avoid}
 }
+
+/* ===== V9 首屏视觉收敛 =====
+   The grid already separates the editorial copy from the star field. These
+   finishing rules make that split legible at a glance: the copy reads like a
+   museum entry label, while the right column carries the depth and wonder. */
+.page[data-route="home"] .hero#cosmosHero {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(68% 108% at 76% 46%, rgba(54, 111, 88, .36), transparent 68%),
+    radial-gradient(48% 86% at 18% 18%, rgba(9, 47, 37, .92), transparent 78%),
+    #071D17;
+}
+.page[data-route="home"] .hero#cosmosHero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(4, 20, 15, .82) 0%, rgba(4, 20, 15, .38) 34%, transparent 67%),
+    radial-gradient(42% 72% at 73% 46%, transparent 0 56%, rgba(3, 17, 13, .48) 100%);
+}
+.page[data-route="home"] .hero#cosmosHero .hero-overlay {
+  position: relative;
+  z-index: 3;
+}
+.page[data-route="home"] .hero#cosmosHero .hero-overlay::before {
+  content: '';
+  display: block;
+  width: 42px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #D0A24C, rgba(208, 162, 76, 0));
+}
+.page[data-route="home"] .hero-overlay .exhibit-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #D9B978;
+  font-size: 11px;
+  letter-spacing: .16em;
+  line-height: 1.5;
+}
+.page[data-route="home"] .hero-overlay h1 {
+  max-width: 8ch;
+  text-wrap: balance;
+  text-shadow: 0 3px 26px rgba(0, 0, 0, .28);
+}
+.page[data-route="home"] .hero-overlay .tagline {
+  max-width: 31ch;
+  color: rgba(229, 239, 231, .78);
+}
+.page[data-route="home"] .hero-overlay .cta-row {
+  margin-top: 26px;
+}
+.page[data-route="home"] .hero-overlay .cta {
+  min-height: 44px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .18);
+}
+.page[data-route="home"] .hero-overlay .cta.solid {
+  color: #172C23;
+  box-shadow: 0 8px 24px rgba(208, 162, 76, .2);
+}
+.page[data-route="home"] .hero#cosmosHero .cosmos-scene {
+  position: relative;
+}
+.page[data-route="home"] .hero#cosmosHero .cosmos-scene::before {
+  content: '';
+  position: absolute;
+  inset: 20px 2% 168px;
+  border: 1px solid rgba(180, 218, 196, .12);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse at 50% 46%, rgba(91, 157, 126, .1), transparent 58%);
+  box-shadow: 0 0 100px rgba(95, 174, 139, .1), inset 0 0 90px rgba(4, 28, 21, .44);
+}
+.page[data-route="home"] .hero#cosmosHero .cosmos-scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(ellipse at 52% 44%, transparent 0 45%, rgba(3, 19, 14, .28) 82%, rgba(3, 17, 13, .62) 100%);
+}
+.page[data-route="home"] .hero#cosmosHero .hero-hint {
+  position: relative;
+  z-index: 3;
+  max-width: 58ch;
+  color: rgba(209, 225, 215, .62);
+}
+
+/* Navigation needs to feel like a fixed instrument panel, not a second hero. */
+header {
+  background: linear-gradient(180deg, #0D382D 0%, #0B2F26 100%);
+  border-bottom: 1px solid rgba(208, 162, 76, .2);
+  transition: background .2s ease, box-shadow .2s ease;
+}
+header.is-scrolled {
+  background: rgba(8, 29, 23, .94);
+  box-shadow: 0 8px 24px rgba(2, 14, 10, .22);
+  backdrop-filter: blur(14px);
+}
+.brand {
+  min-height: 44px;
+  border-radius: 5px;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.brand:hover { opacity: .9; transform: translateY(-1px); }
+#mainNav > a,
+.my-herbal-link {
+  position: relative;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: .04em;
+}
+#mainNav > a::after,
+.my-herbal-link::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--jin);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .2s ease;
+}
+#mainNav > a:hover::after,
+#mainNav > a[aria-current="page"]::after,
+.my-herbal-link:hover::after,
+.my-herbal-link[aria-current="page"]::after { transform: scaleX(1); }
+#mainNav > a[aria-current="page"],
+.my-herbal-link[aria-current="page"] { color: #F3D9A0; }
+.searchbox:focus-within {
+  border-color: rgba(224, 185, 99, .75);
+  background: rgba(255, 255, 255, .14);
+  box-shadow: 0 0 0 3px rgba(208, 162, 76, .14);
+}
+.saved-drawer-toggle,
+.theme-toggle,
+.hamburger { transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+.saved-drawer-toggle:hover,
+.theme-toggle:hover,
+.hamburger:hover { transform: translateY(-1px); }
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  .page[data-route="home"] .hero#cosmosHero {
+    grid-template-columns: minmax(250px, .9fr) minmax(0, 1.7fr);
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+  .page[data-route="home"] .hero-overlay .tagline { max-width: 27ch; }
+}
+@media (max-width: 768px) {
+  header.is-scrolled { background: #091F18; }
+  .nav-inner { height: 54px; min-height: 54px; padding-top: 0; padding-bottom: 0; gap: 6px; flex-wrap: nowrap; overflow: visible; }
+  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 6px 8px; }
+  .my-herbal-link { flex: none; min-height: 40px; padding: 5px 0; font-size: 10px; }
+  .searchbox { order: initial; width: auto; margin-left: 0; flex: 1 1 auto; min-width: 20px; }
+  .searchbox input { min-width: 0; }
+  #mainNav { top: var(--nav-open-top, 54px); border-top: 1px solid rgba(208, 162, 76, .22); backdrop-filter: blur(14px); }
+  #mainNav > a::after, .my-herbal-link::after { display: none; }
+  .page[data-route="home"] .hero#cosmosHero::before { background: linear-gradient(180deg, rgba(4, 20, 15, .72), rgba(4, 20, 15, .2) 48%, rgba(4, 20, 15, .66)); }
+  .page[data-route="home"] .hero#cosmosHero .hero-overlay::before { margin-bottom: 12px; }
+  .page[data-route="home"] .hero#cosmosHero .hero-overlay { text-shadow: 0 2px 20px rgba(0, 0, 0, .34); }
+  .page[data-route="home"] .hero#cosmosHero .cosmos-scene::before { inset: 26px 0 142px; opacity: .58; }
+  .page[data-route="home"] .hero#cosmosHero .cosmos-scene::after { background: radial-gradient(ellipse at 50% 38%, transparent 0 36%, rgba(3, 17, 13, .5) 86%, rgba(3, 17, 13, .72) 100%); }
+}
+@media (max-width: 600px) {
+  .nav-inner { gap: 5px; padding-left: 10px; padding-right: 10px; }
+  .brand { flex: 0 1 auto; min-width: 0; gap: 5px; }
+  .brand-mark { width: 30px; height: 30px; }
+  .brand .t { font-size: 13px; letter-spacing: 1px; white-space: nowrap; }
+  .my-herbal-link { display: inline-flex; align-items: center; justify-content: center; min-width: 38px; }
+  .searchbox { min-width: 44px; flex: 1 1 44px; padding-left: 7px; padding-right: 7px; }
+  .searchbox input { width: 100%; min-width: 0; }
+  .saved-drawer-toggle, .theme-toggle, .hamburger { flex: 0 0 44px; width: 44px; min-width: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  header, .brand, .saved-drawer-toggle, .theme-toggle, .hamburger,
+  #mainNav > a::after, .my-herbal-link::after { transition: none; }
+}
+
+/* 当代锚点：只在“传一艺”章节出现，作为长卷通往图鉴与现实世界的尾声。 */
+.exhibit-story-today{display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.65fr);gap:clamp(28px,5vw,76px);margin:48px 0 0;padding:48px 0 0;border-top:1px solid var(--line)}
+.exhibit-story-today h2{margin:8px 0 10px;font:700 clamp(25px,3vw,38px)/1.25 var(--serif);color:var(--qing)}
+.exhibit-story-today>div>p{max-width:30ch;margin:0;font-size:13px;line-height:1.9;color:var(--ink-2)}
+.exhibit-story-today ol{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.exhibit-story-today li{display:grid;grid-template-columns:42px minmax(0,1fr);gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.exhibit-story-today li>span{font:700 12px/1.3 Georgia,serif;color:var(--cinnabar);letter-spacing:.08em}.exhibit-story-today li p{margin:0;font-size:13px;line-height:1.9;color:var(--ink-2)}.exhibit-story-today li b{color:var(--qing)}.exhibit-story-today li a{color:var(--celadon);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.exhibit-story-note{grid-column:2;margin:14px 0 0!important;font-size:11px!important;color:var(--ink-2)!important}
+@media(max-width:768px){.exhibit-story-today{grid-template-columns:1fr;gap:26px;margin-top:34px;padding-top:34px}.exhibit-story-today>div>p{max-width:48ch}.exhibit-story-note{grid-column:1}.exhibit-story-today li{grid-template-columns:32px minmax(0,1fr);gap:10px}.exhibit-story-today li a{display:inline-block;margin-top:4px}}

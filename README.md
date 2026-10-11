@@ -1,8 +1,8 @@
 # 本草宇宙 · 一草一世界
 
-中华医药文化交互展 V7。三个主入口：漫游星海、文化长卷、本草图鉴；我的本草作为收藏、足迹、练习与阅读札记工具。认识一味本草、读懂一条关系、打开具体出处，然后留下自己的理解。
+中华本草文化交互展 V9。三个主入口：漫游星海、文化长卷、本草图鉴；我的本草作为收藏、足迹、练习与阅读札记工具。认识一味本草、读懂一条关系、打开具体出处，然后留下自己的理解。
 
-[在线展馆](https://runner-cpu.github.io/Herbal-Cosmos/) · [网站职责](docs/website-framework.md) · [文化框架与证据](docs/competition-framework.md) · [三分钟演示](docs/competition-presentation.md) · [V7本地验收报告](reports/2026-10-09-v7-release.md)
+[在线展馆](https://runner-cpu.github.io/Herbal-Cosmos/) · [网站职责](docs/website-framework.md) · [文化框架与证据](docs/competition-framework.md) · [三分钟演示](docs/competition-presentation.md) · [V7本地验收基线](reports/2026-10-09-v7-release.md)
 
 下载完整仓库后可双击 index.html 阅读与查询。完整动画、离线安装与增强渲染推荐 HTTP(S)：
 
@@ -26,7 +26,7 @@ node scripts/serve-local.mjs 4188
 
 ## 数据与证据
 
-UI V7 与数据版本10（2026-10-08）分开。构建报告：[数据覆盖](reports/data-coverage.json)、[名称待审](reports/catalog-review.json)、[民族候选](reports/ethnic-coverage.json)。
+UI V9 与数据版本10（2026-10-08）分开。构建报告：[数据覆盖](reports/data-coverage.json)、[名称待审](reports/catalog-review.json)、[民族候选](reports/ethnic-coverage.json)。
 
 | 层级 | 保留规模 | 边界 |
 |---|---:|---|

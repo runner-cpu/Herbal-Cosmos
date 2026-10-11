@@ -15,7 +15,7 @@ const engine = factory(sandbox.window);
 
 test('cosmos engine exposes four readings with distinct colour functions', () => {
   assert.deepEqual(engine.READING_MODES, ['category', 'geography', 'nature', 'ethnic']);
-  assert.equal(engine.DEFAULT_READING, 'category');
+  assert.equal(engine.DEFAULT_READING, 'geography');
   assert.equal(engine.colorForReading({ cat: '补虚药' }, 'category', { categoryColor: () => '#111111' }), '#111111');
   assert.equal(engine.colorForReading({ cat: '补虚药' }, 'category', { uniform: true }), engine.UNIFORM_COLOR);
   assert.equal(engine.colorForReading({ qi: '大寒' }, 'nature'), engine.QI_COLORS['大寒']);

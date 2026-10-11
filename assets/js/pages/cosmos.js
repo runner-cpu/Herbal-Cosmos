@@ -24,6 +24,7 @@ export function effectLegendMarkup() {
 }
 
 export const READING_LABELS = { category: '资料分类', geography: '文献分布', nature: '药性', ethnic: '民族对照' };
+export const DEFAULT_READING = 'geography';
 
 /* The island the viewer can travel to. Offered for the groups big enough to be
    a destination; the long tail of one-card categories is reachable by搜索 and by
@@ -39,9 +40,10 @@ export function clusterControlsMarkup() {
 
 export function clusterButtonMarkup(item = {}) {
   const label = String(item.label || item.key || '');
+  const key = String(item.key || label);
   const count = Number(item.count || 0);
   const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-  return '<button type="button" data-cosmos-cluster="' + escape(label) + '" aria-pressed="false">'
+  return '<button type="button" data-cosmos-cluster="' + escape(key) + '" aria-pressed="false">'
     + escape(label) + '<b>' + count + '</b></button>';
 }
 
@@ -56,7 +58,7 @@ export function availableReadings() {
 
 export function readingControlsMarkup(readings = availableReadings()) {
   return '<div class="cosmos-readings" role="group" aria-label="星图着色读法" data-cosmos-readings>'
-    + readings.map((id, index) => '<button type="button" data-cosmos-reading="' + id + '" aria-pressed="' + (index === 0) + '">' + (READING_LABELS[id] || id) + '</button>').join('')
+    + readings.map(id => '<button type="button" data-cosmos-reading="' + id + '" aria-pressed="' + (id === DEFAULT_READING) + '">' + (READING_LABELS[id] || id) + '</button>').join('')
     + '</div>';
 }
 
@@ -98,7 +100,7 @@ function priority(star, state = {}) {
 }
 
 export function selectVisibleLabels(stars = [], viewport = { width: 1280, height: 720 }, scale = 1, state = {}) {
-  const limit = scale < 1.25 ? 18 : scale < 1.8 ? 40 : 90;
+  const limit = state.reading === 'geography' && !state.roam ? 6 : (scale < 1.25 ? 18 : scale < 1.8 ? 40 : 90);
   const deduped = new Map();
   stars.forEach(star => {
     const id = star.herb?.id || star.id;

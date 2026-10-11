@@ -26,9 +26,9 @@ test('the star map exposes its readings with a single pressed state', async ({ p
   await expect(page.locator('#cosmosControls [data-cosmos-reading="ethnic"]')).toHaveCount(approved ? 1 : 0);
 
   const initial = await readingState(page);
-  expect(initial.reading).toBe('category');
+  expect(initial.reading).toBe('geography');
   expect(initial.perf.paletteCount).toBeGreaterThan(1);
-  expect(initial.pressed.filter(item => item.pressed === 'true').map(item => item.mode)).toEqual(['category']);
+  expect(initial.pressed.filter(item => item.pressed === 'true').map(item => item.mode)).toEqual(['geography']);
 
   for (const mode of ['geography', 'nature', 'ethnic']) {
     if (!modes.includes(mode)) continue;
@@ -244,7 +244,7 @@ test('the ethnic reading stays hidden until the correspondence gate has approved
     expect(buttons, 'no approved entries means no ethnic reading').toBe(0);
     // ?read=ethnic 也不能把用户带到一个空读法上。
     await page.goto('/#/home?read=ethnic');
-    expect((await readingState(page)).reading).toBe('category');
+    expect((await readingState(page)).reading).toBe('geography');
   } else {
     expect(buttons).toBe(1);
   }
