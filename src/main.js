@@ -3,6 +3,9 @@ import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor 
 import { particlePlanetMarkup, mountParticlePlanet } from './planet.js';
 
 const ROOT = './src/data/curated/';
+// Keep the catalog cache key independent from the application shell. GitHub Pages
+// can retain a previously fetched JSON response even after the JS bundle updates.
+const DATA_VERSION = 'catalog-v2-20261012';
 const state = { view: 'home', herbId: 'herb-artemisia-annua', stage: 'specimen', nodeId: 'herb-artemisia-annua', query: '', libraryType: 'all', libraryHabitat: 'all', libraryDepth: 'all', compareId: '', cabinetFilter: 'all', cabinetHabitat: 'forest', cabinetMorphology: 'all' };
 let data = null;
 
@@ -317,7 +320,7 @@ function bind() {
 async function boot() {
   applyHash();
   const files = ['sources.json', 'herbs.json', 'formulas.json', 'cultural-anchors.json', 'relations.json', 'specimens.json', 'comparisons.json'];
-  const values = await Promise.all(files.map((file) => fetch(`${ROOT}${file}`).then((response) => { if (!response.ok) throw new Error(`${file}: ${response.status}`); return response.json(); })));
+  const values = await Promise.all(files.map((file) => fetch(`${ROOT}${file}?v=${DATA_VERSION}`, { cache: 'reload' }).then((response) => { if (!response.ok) throw new Error(`${file}: ${response.status}`); return response.json(); })));
   data = { sources: values[0], herbs: values[1], formulas: values[2], anchors: values[3], relations: values[4], specimens: values[5], comparisons: values[6] };
   render();
   bind();
