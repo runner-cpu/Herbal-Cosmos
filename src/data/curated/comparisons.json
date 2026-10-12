@@ -1,10 +1,163 @@
 {
-  "datasetId": "herbal-cosmos-trace-comparisons-v1",
-  "researchedAt": "2026-10-11",
+  "datasetId": "herbal-cosmos-trace-comparisons-v2",
+  "researchedAt": "2026-10-13",
   "comparisons": [
-    {"id":"cmp-chenpi-qingpi","title":"陈皮 / 青皮","left":{"id":"herb-citrus-reticulata","nameZh":"陈皮","latin":"Citrus reticulata Blanco","part":"成熟果实的干燥果皮","shape":"peel-ribbon"},"right":{"id":"external-qingpi","nameZh":"青皮","latin":"Citrus reticulata 果实幼果或未成熟果皮","part":"幼果或未成熟果皮","shape":"peel-young"},"differences":["陈皮强调成熟果皮与陈化名称；青皮强调未成熟果实或果皮。","颜色、气味和表面油室只能作为辅助线索，不能单独判定。","两者在药典名称和使用语境中分开记录。"],"sourceIds":["S001","S002","S009"],"boundary":"相似外观不代表可以替代；需要合规的药材鉴定和来源凭证。"},
-    {"id":"cmp-jinyinhua-shanyinhua","title":"金银花 / 山银花","left":{"id":"herb-lonicera-japonica","nameZh":"金银花","latin":"Lonicera japonica Thunb.","part":"干燥花蕾或初开的花","shape":"paired-buds"},"right":{"id":"external-shanyinhua","nameZh":"山银花","latin":"Lonicera macranthoides / L. hypoglauca / L. confusa 等","part":"干燥花蕾或初开的花","shape":"paired-buds"},"differences":["金银花以 Lonicera japonica 为核心基原；山银花对应其他忍冬属物种。","两者花蕾形态相近，物种、产地和药典名称是更可靠的区分层。","“银花”并不是一个可以忽略物种差异的总称；山银花也不是单一物种名称。"],"sourceIds":["S001","S002","S009"],"boundary":"需要专业植物学或药材鉴定，页面不提供现场鉴别结论。"},
-    {"id":"cmp-baizhu-cangzhu","title":"白术 / 苍术","left":{"id":"herb-atractylodes-macrocephala","nameZh":"白术","latin":"Atractylodes macrocephala Koidz.","part":"干燥根茎","shape":"root-rhizome"},"right":{"id":"external-cangzhu","nameZh":"苍术","latin":"Atractylodes lancea / A. chinensis 根茎","part":"干燥根茎","shape":"root-rhizome"},"differences":["白术与苍术属于同属近缘植物，但基原物种不同。","根茎断面、气味和表面纹理可帮助观察，最终仍需来源和标准核验。","历史名称相近，不能把“术”直接视为同一种药材。"],"sourceIds":["S001","S002","S009"],"boundary":"页面用于认识差异维度，不作为真伪鉴定或购买依据。"},
-    {"id":"cmp-renshen-dangshen","title":"人参 / 党参","left":{"id":"herb-panax-ginseng","nameZh":"人参","latin":"Panax ginseng C.A.Mey.","part":"干燥根和根茎","shape":"root-crown"},"right":{"id":"external-dangshen","nameZh":"党参","latin":"Codonopsis pilosula / C. tangshen / C. tubulosa 等","part":"干燥根","shape":"long-root"},"differences":["人参属于人参属，党参属于党参属，学名和科属首先不同。","人参常见掌状复叶线索；党参为桔梗科藤本，叶形与根形不同。","党参在药典语境中涉及多个 Codonopsis 基原；商品外观还可能受切片、炮制和加工影响，不能只凭图片下结论。"],"sourceIds":["S001","S002","S003","S009"],"boundary":"相似名称不代表同一物种；需要专业鉴定和合规来源。"}
+    {
+      "id": "cmp-chenpi-qingpi",
+      "title": "陈皮 / 青皮",
+      "left": {
+        "id": "herb-citrus-reticulata",
+        "nameZh": "陈皮",
+        "latin": "Citrus reticulata Blanco",
+        "part": "成熟果实的干燥果皮",
+        "shape": "peel-ribbon"
+      },
+      "right": {
+        "id": "external-qingpi",
+        "nameZh": "青皮",
+        "latin": "Citrus reticulata 果实幼果或未成熟果皮",
+        "part": "幼果或未成熟果皮",
+        "shape": "peel-young",
+        "image": {
+          "status": "ready",
+          "path": "./src/assets/comparisons/external-qingpi.jpg",
+          "sourceUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/513211349/medium.jpg",
+          "occurrenceUrl": "https://www.inaturalist.org/taxa/1611056",
+          "dataset": "iNaturalist taxon photo",
+          "creator": "(c) patanat, some rights reserved (CC BY-NC)",
+          "rightsHolder": "",
+          "license": "https://creativecommons.org/licenses/by-nc/4.0/"
+        }
+      },
+      "differences": [
+        "陈皮强调成熟果皮与陈化名称；青皮强调未成熟果实或果皮。",
+        "颜色、气味和表面油室只能作为辅助线索，不能单独判定。",
+        "两者在药典名称和使用语境中分开记录。"
+      ],
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S009"
+      ],
+      "boundary": "相似外观不代表可以替代；需要合规的药材鉴定和来源凭证。"
+    },
+    {
+      "id": "cmp-jinyinhua-shanyinhua",
+      "title": "金银花 / 山银花",
+      "left": {
+        "id": "herb-lonicera-japonica",
+        "nameZh": "金银花",
+        "latin": "Lonicera japonica Thunb.",
+        "part": "干燥花蕾或初开的花",
+        "shape": "paired-buds"
+      },
+      "right": {
+        "id": "external-shanyinhua",
+        "nameZh": "山银花",
+        "latin": "Lonicera macranthoides / L. hypoglauca / L. confusa 等",
+        "part": "干燥花蕾或初开的花",
+        "shape": "paired-buds",
+        "image": {
+          "status": "ready",
+          "path": "./src/assets/comparisons/external-shanyinhua.jpg",
+          "sourceUrl": "https://static.inaturalist.org/photos/226148863/medium.jpg",
+          "occurrenceUrl": "https://www.inaturalist.org/taxa/1576219",
+          "dataset": "iNaturalist taxon photo",
+          "creator": "(c) 曾云保, all rights reserved, uploaded by 曾云保",
+          "rightsHolder": "",
+          "license": ""
+        }
+      },
+      "differences": [
+        "金银花以 Lonicera japonica 为核心基原；山银花对应其他忍冬属物种。",
+        "两者花蕾形态相近，物种、产地和药典名称是更可靠的区分层。",
+        "“银花”并不是一个可以忽略物种差异的总称；山银花也不是单一物种名称。"
+      ],
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S009"
+      ],
+      "boundary": "需要专业植物学或药材鉴定，页面不提供现场鉴别结论。"
+    },
+    {
+      "id": "cmp-baizhu-cangzhu",
+      "title": "白术 / 苍术",
+      "left": {
+        "id": "herb-atractylodes-macrocephala",
+        "nameZh": "白术",
+        "latin": "Atractylodes macrocephala Koidz.",
+        "part": "干燥根茎",
+        "shape": "root-rhizome"
+      },
+      "right": {
+        "id": "external-cangzhu",
+        "nameZh": "苍术",
+        "latin": "Atractylodes lancea / A. chinensis 根茎",
+        "part": "干燥根茎",
+        "shape": "root-rhizome",
+        "image": {
+          "status": "ready",
+          "path": "./src/assets/comparisons/external-cangzhu.jpg",
+          "sourceUrl": "https://static.inaturalist.org/photos/28545417/medium.jpg",
+          "occurrenceUrl": "https://www.inaturalist.org/taxa/786048",
+          "dataset": "iNaturalist taxon photo",
+          "creator": "(c) snv2, all rights reserved, uploaded by snv2",
+          "rightsHolder": "",
+          "license": ""
+        }
+      },
+      "differences": [
+        "白术与苍术属于同属近缘植物，但基原物种不同。",
+        "根茎断面、气味和表面纹理可帮助观察，最终仍需来源和标准核验。",
+        "历史名称相近，不能把“术”直接视为同一种药材。"
+      ],
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S009"
+      ],
+      "boundary": "页面用于认识差异维度，不作为真伪鉴定或购买依据。"
+    },
+    {
+      "id": "cmp-renshen-dangshen",
+      "title": "人参 / 党参",
+      "left": {
+        "id": "herb-panax-ginseng",
+        "nameZh": "人参",
+        "latin": "Panax ginseng C.A.Mey.",
+        "part": "干燥根和根茎",
+        "shape": "root-crown"
+      },
+      "right": {
+        "id": "external-dangshen",
+        "nameZh": "党参",
+        "latin": "Codonopsis pilosula / C. tangshen / C. tubulosa 等",
+        "part": "干燥根",
+        "shape": "long-root",
+        "image": {
+          "status": "ready",
+          "path": "./src/assets/comparisons/external-dangshen.jpg",
+          "sourceUrl": "https://static.inaturalist.org/photos/544892776/medium.jpg",
+          "occurrenceUrl": "https://www.inaturalist.org/taxa/706415",
+          "dataset": "iNaturalist taxon photo",
+          "creator": "(c) 虫虫, all rights reserved, uploaded by 虫虫",
+          "rightsHolder": "",
+          "license": ""
+        }
+      },
+      "differences": [
+        "人参属于人参属，党参属于党参属，学名和科属首先不同。",
+        "人参常见掌状复叶线索；党参为桔梗科藤本，叶形与根形不同。",
+        "党参在药典语境中涉及多个 Codonopsis 基原；商品外观还可能受切片、炮制和加工影响，不能只凭图片下结论。"
+      ],
+      "sourceIds": [
+        "S001",
+        "S002",
+        "S003",
+        "S009"
+      ],
+      "boundary": "相似名称不代表同一物种；需要专业鉴定和合规来源。"
+    }
   ]
 }

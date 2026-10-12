@@ -87,7 +87,7 @@ function shapeLabel(item = {}) {
 function herbImage(data, item, className = '') {
   const image = data?.images?.images?.find((entry) => entry.herbId === item?.id && entry.status === 'ready');
   if (!image) return `<span class="drawer-image drawer-image-missing" aria-hidden="true">本</span>`;
-  return `<span class="drawer-image ${className}"><img src="${esc(image.path)}" alt="" loading="lazy" decoding="async" /></span>`;
+  return `<span class="drawer-image ${className}" data-image-open="${esc(item.id)}"><img src="${esc(image.path)}" alt="${esc(item.nameZh)}植物照片" loading="lazy" decoding="async" /></span>`;
 }
 
 function drawer(data, item, index, selected) {

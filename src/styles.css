@@ -148,3 +148,36 @@
 .planet-detail-image img{height:100%;object-fit:cover}
 .planet-detail-image figcaption{opacity:1;font-size:8px}
 @media(max-width:700px){.drawer-image{width:40px;height:40px}.cabinet-reading .reading-image{height:180px}.specimen-inline-image{width:92px;height:78px}.library-image{height:170px}}
+
+/* Image evidence interactions: every field photograph opens its provenance card. */
+[data-image-open]{cursor:zoom-in}
+.image-lightbox{width:min(1080px,calc(100% - 28px));max-width:1080px;padding:0;border:0;background:transparent;color:var(--ink);overflow:visible}
+.image-lightbox::backdrop{background:rgba(8,14,21,.74);backdrop-filter:blur(8px)}
+.image-lightbox-card{position:relative;display:grid;grid-template-columns:minmax(0,1.28fr) minmax(260px,.72fr);min-height:520px;background:var(--paper);box-shadow:0 32px 100px rgba(0,0,0,.4)}
+.image-lightbox-visual{display:flex;min-height:520px;flex-direction:column;justify-content:center;padding:24px;background:#171e29}
+.image-lightbox-image{display:block;width:100%;height:460px;object-fit:contain;background:#101720}
+.image-lightbox-caption{margin:10px 0 0;color:rgba(246,240,230,.65);font-size:10px;line-height:1.5}
+.image-lightbox-meta{padding:48px 34px 30px;background:var(--paper)}
+.image-lightbox-meta h2{margin:0 0 6px;font-size:44px;font-weight:500}
+.image-lightbox-latin{margin:0 0 24px;color:var(--muted);font-size:12px;font-style:italic}
+.image-lightbox-meta dl{margin:0;border-top:1px solid var(--line)}
+.image-lightbox-meta dl div{display:grid;grid-template-columns:75px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--soft)}
+.image-lightbox-meta dt{color:var(--muted);font-size:10px}.image-lightbox-meta dd{margin:0;color:#4f4840;font-size:11px;line-height:1.5;word-break:break-word}
+.image-lightbox-links{display:grid;gap:8px;margin-top:25px}.image-lightbox-links a{color:var(--cinnabar);font-size:11px;text-underline-offset:4px}
+.image-lightbox-boundary{margin:28px 0 0;padding:12px;border-left:2px solid var(--cinnabar);background:var(--paper-deep);color:var(--muted);font-size:10px;line-height:1.7}
+.image-lightbox-empty{display:grid;place-content:center;justify-items:center;min-height:520px;padding:24px;background:#171e29;color:#d8cfc2;text-align:center}.image-lightbox-empty span{font-size:48px;color:#e6a176}.image-lightbox-empty p{font-size:12px}
+.image-lightbox .dialog-close{z-index:2;top:12px;right:14px;color:#f7f2e9;background:rgba(8,14,21,.4);border-radius:50%;width:31px;height:31px;line-height:1}
+
+/* Photo-led look-alike comparison. */
+.compare-side{position:relative;display:flex;min-width:0;flex-direction:column;padding:18px;border:1px solid var(--line);background:var(--white)}
+.compare-side.current{border-color:var(--cinnabar);box-shadow:inset 0 3px var(--cinnabar)}
+.compare-image{width:100%;height:170px;margin:0 0 14px;border:0;background:#ded5c8}.compare-image img{height:100%;object-fit:cover}.compare-image figcaption{opacity:1;font-size:8px}.compare-image-missing{display:grid;place-content:center;justify-items:center;color:var(--cinnabar);background:var(--paper-deep);font-family:Georgia,serif}.compare-image-missing span{font-size:34px}.compare-image-missing small{margin-top:5px;color:var(--muted);font-family:inherit;font-size:10px}
+.compare-silhouette{position:absolute;top:145px;right:29px;width:46px;height:46px;opacity:.18;transform:scale(.58)}
+
+/* “看图识本草” keeps the quiz adjacent to the full catalog and reuses source-backed images. */
+.image-quiz{margin:0 0 28px;padding:26px;border:1px solid #2a5360;background:linear-gradient(120deg,#102a37,#17243d 70%,#201f37);color:#edf0e8;box-shadow:0 20px 44px rgba(12,31,40,.16)}
+.image-quiz-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:28px}.image-quiz-heading .panel-label{color:#e6a176}.image-quiz-heading h2{margin:0 0 8px;color:#f4efe5;font-size:35px}.image-quiz-heading p{max-width:620px;margin:0;color:#a5bbb6;font-size:12px;line-height:1.7}.image-quiz-score{display:grid;justify-items:center;min-width:66px;padding:8px 12px;border:1px solid rgba(230,161,118,.45);color:#d5e1db}.image-quiz-score b{font-family:Georgia,serif;color:#e6a176;font-size:28px;font-weight:500}.image-quiz-score span{font-size:9px;letter-spacing:.12em}
+.image-quiz-grid{display:grid;grid-template-columns:minmax(250px,.85fr) minmax(0,1.15fr);gap:24px;margin-top:24px}.image-quiz-photo{position:relative;min-height:290px;padding:9px;border:1px solid rgba(226,218,204,.22);background:#0b1723}.quiz-image{height:270px;border:0}.quiz-image img{height:100%;object-fit:cover}.quiz-image figcaption{display:none}.image-quiz-blind{position:absolute;right:17px;bottom:16px;padding:5px 7px;background:rgba(8,14,21,.7);color:#dce6e0;font-size:9px;letter-spacing:.08em}.image-quiz-options{display:flex;flex-direction:column}.image-quiz-prompt{margin:0 0 13px;color:#e9ddd0;font-family:Georgia,serif;font-size:18px}.quiz-option{display:flex;align-items:center;gap:12px;width:100%;margin-bottom:7px;padding:12px 13px;border:1px solid rgba(226,218,204,.2);background:rgba(255,255,255,.035);color:#ecf0e9;text-align:left;font-size:12px;transition:background .2s ease,border-color .2s ease,transform .2s ease}.quiz-option span{color:#e6a176;font-size:10px}.quiz-option:hover:not(:disabled),.quiz-option:focus-visible:not(:disabled){border-color:#e6a176;background:rgba(230,161,118,.12);transform:translateX(4px)}.quiz-option.correct{border-color:#7fc9ae;background:rgba(127,201,174,.15)}.quiz-option.wrong{border-color:#db8a6d;background:rgba(219,138,109,.12)}.quiz-option:disabled{cursor:default}.image-quiz-result{min-height:58px;margin-top:7px;padding:11px 0;border-top:1px solid rgba(226,218,204,.18);color:#9eb4ae;font-size:11px;line-height:1.6}.image-quiz-result strong{color:#efb496;font-size:12px}.image-quiz-result p{margin:4px 0 10px;color:#cad8d1}.image-quiz-result:not(.is-visible){display:flex;align-items:center}
+.library-intro .intro-actions{align-items:center;flex-wrap:wrap}
+@media(max-width:800px){.image-lightbox-card{grid-template-columns:1fr}.image-lightbox-visual{min-height:300px;padding:15px}.image-lightbox-image{height:330px}.image-lightbox-meta{padding:28px 22px 25px}.image-lightbox-meta h2{font-size:35px}.image-quiz-grid{grid-template-columns:1fr}.image-quiz-photo{min-height:240px}.quiz-image{height:220px}}
+@media(max-width:600px){.image-lightbox{width:calc(100% - 18px)}.image-lightbox-visual{min-height:240px}.image-lightbox-image{height:250px}.image-lightbox-meta{padding:25px 18px 20px}.image-quiz{padding:18px}.image-quiz-heading{gap:12px}.image-quiz-heading h2{font-size:28px}.image-quiz-heading p{font-size:11px}.image-quiz-score{min-width:53px}.compare-image{height:130px}}

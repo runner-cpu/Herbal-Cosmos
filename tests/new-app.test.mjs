@@ -20,6 +20,10 @@ test('curated dataset is fresh and internally connected', async () => {
   assert.equal(images.summary.ready, 120);
   assert.equal(images.images.filter((entry) => entry.status === 'ready').length, herbs.herbs.length);
   await Promise.all(images.images.map((entry) => access(new URL(entry.path.replace('./', ''), root))));
+  const comparisonSides = comparisons.comparisons.flatMap((comparison) => [comparison.left, comparison.right]);
+  const comparisonPhotos = comparisonSides.filter((side) => side.image?.status === 'ready');
+  assert.equal(comparisonPhotos.length, 4, 'all external look-alike sides should have a real photo');
+  await Promise.all(comparisonPhotos.map((side) => access(new URL(side.image.path.replace('./', ''), root))));
   const sourceIds = new Set(sources.sources.map((source) => source.id));
   const habitatIds = new Set(herbs.herbs.map((herb) => herb.habitat));
   assert.deepEqual([...habitatIds].sort(), ['caodian', 'guoshi', 'huaye', 'junmu', 'shanlin', 'shuize']);
@@ -61,6 +65,10 @@ test('new entry has no legacy runtime dependency', async () => {
   assert.match(planet, /wheel/);
   assert.match(js, /data-specimen-stage/);
   assert.match(js, /data-compare-select/);
+  assert.match(js, /imageLightbox/);
+  assert.match(js, /data-image-quiz-open/);
+  assert.match(js, /data-image-quiz-answer/);
+  assert.match(js, /compare-image/);
   assert.match(js, /relationExplorer/);
   assert.match(js, /data-relation-node/);
   assert.match(css, /\.relation-scene\{overflow-x:auto/);
@@ -68,6 +76,8 @@ test('new entry has no legacy runtime dependency', async () => {
   assert.match(css, /\.cosmos-landing/);
   assert.match(css, /\.cabinet-wall/);
   assert.match(css, /\.planet-stage/);
+  assert.match(css, /\.image-lightbox/);
+  assert.match(css, /\.image-quiz/);
   assert.doesNotMatch(js, /cosmos-engine|apothecary|runtime\.js|expanded\.generated/i);
 });
 
