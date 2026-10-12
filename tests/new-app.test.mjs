@@ -23,6 +23,8 @@ test('curated dataset is fresh and internally connected', async () => {
     assert.ok(herb.habitatLabel && herb.tags.length > 0 && herb.morphology, `${herb.id} missing catalog facets`);
     assert.ok(['deep', 'overview'].includes(herb.depthLevel), `${herb.id} has invalid depth`);
     assert.ok(herb.boundary, `${herb.id} missing reading boundary`);
+    const refs = new Set((herb.sourceRefs || []).map((ref) => ref.sourceId));
+    for (const sourceId of herb.sourceIds) assert.ok(refs.has(sourceId), `${herb.id} missing locator for ${sourceId}`);
   }
   for (const entity of [...herbs.herbs, ...formulas.formulas, ...anchors.anchors, ...specimens.specimens, ...comparisons.comparisons]) {
     assert.ok(entity.sourceIds.length > 0, `${entity.id || entity.herbId} has no source`);

@@ -72,10 +72,16 @@ export function renderCosmosHome(data) {
 function morphologies(items) {
   const values = new Map();
   items.forEach((item) => {
-    const morphology = (Array.isArray(item.tags) && item.tags[1]) || item.form || (item.partUsed || '').split(' · ')[0] || '其他';
+    const morphology = shapeLabel(item);
     values.set(morphology, (values.get(morphology) || 0) + 1);
   });
   return [...values.entries()].sort((a, b) => b[1] - a[1]);
+}
+
+function shapeLabel(item = {}) {
+  const tags = Array.isArray(item.tags) ? item.tags : [];
+  const excluded = new Set([item.habitatLabel, '深度条目', '拓展目录', '精选条目', '目录条目']);
+  return tags.find((tag) => tag && !excluded.has(tag)) || item.form || item.partUsed || '形态待补';
 }
 
 function drawer(item, index, selected) {
@@ -90,13 +96,13 @@ export function renderHabitatCabinet(data, state = {}) {
   const activeHabitat = HABITATS.find((habitat) => habitat.id === activeId) || HABITATS[0];
   const habitatItems = herbs.filter((item) => habitatFor(item).id === activeHabitat.id);
   const activeMorph = state.cabinetMorphology || 'all';
-  const visible = habitatItems.filter((item) => activeMorph === 'all' || ((Array.isArray(item.tags) && item.tags[1]) || item.form || item.partUsed || '').includes(activeMorph));
+  const visible = habitatItems.filter((item) => activeMorph === 'all' || shapeLabel(item).includes(activeMorph));
   const selected = visible.find((item) => item.id === state.herbId) || visible[0] || habitatItems[0] || herbs[0];
   const morphs = morphologies(habitatItems);
   const habitatButtons = HABITATS.map((habitat) => `<button class="habitat-zone ${habitat.id === activeHabitat.id ? 'is-active' : ''}" data-cabinet-habitat="${habitat.id}" aria-pressed="${habitat.id === activeHabitat.id}"><span class="zone-number">${String(HABITATS.indexOf(habitat) + 1).padStart(2, '0')}</span>${glyph(habitat)}<span><strong>${esc(habitat.name)}</strong><small>${esc(habitat.note)}</small></span><b>${countFor(data, habitat.id)}</b></button>`).join('');
   const morphologyButtons = [['all', '全部形态', habitatItems.length], ...morphs.map(([label, count]) => [label, label, count])].map(([value, label, count]) => `<button class="morphology-tab ${activeMorph === value ? 'is-active' : ''}" data-cabinet-morphology="${esc(value)}" aria-pressed="${activeMorph === value}">${esc(label)} <b>${count}</b></button>`).join('');
   const selectedHabitat = selected ? habitatFor(selected) : activeHabitat;
-  const selectedShape = (Array.isArray(selected?.tags) && selected.tags[1]) || selected?.form || selected?.partUsed || '形态待补';
+  const selectedShape = shapeLabel(selected);
   return `<main class="cabinet-page" aria-labelledby="cabinet-page-title"><div class="cabinet-page-intro"><div><p class="kicker">THE DAY SIDE · HABITAT CABINET</p><h1 id="cabinet-page-title">一面百子柜，<br /><em>六种生境。</em></h1><p>先按本草生长的地方进入，再以形态子类收拢视线。每一味只归入一个主柜，标签记录它的部位、形态与文化线索。</p></div><div class="cabinet-index"><span>百</span><small>HABITAT<br />INDEX</small></div></div><section class="cabinet-wall" aria-label="六类生境百子柜"><div class="habitat-zones">${habitatButtons}</div><div class="cabinet-stage"><div class="cabinet-stage-header"><div><span class="section-index">${String(HABITATS.indexOf(activeHabitat) + 1).padStart(2, '0')} / ${esc(activeHabitat.short)}</span><h2>${esc(activeHabitat.name)}</h2><p>${esc(activeHabitat.note)} · ${habitatItems.length} 味入柜</p></div><div class="cabinet-stage-key"><i></i><span>点击抽屉查看一味档案</span></div></div><div class="morphology-tabs" role="toolbar" aria-label="按形态子类筛选">${morphologyButtons}</div><div class="drawer-shelf" aria-live="polite">${visible.length ? visible.map((item, index) => drawer(item, index, item.id === selected?.id)).join('') : '<p class="cabinet-empty">这一类形态还在补录，换一枚标签继续探索。</p>'}</div><div class="shelf-foot"><span>主生境唯一归属 · 标签可叠加</span><span>${visible.length} / ${habitatItems.length} 可见</span></div></div></section><aside class="cabinet-reading" aria-live="polite">${selected ? `<div class="reading-kicker"><span>DRAWER OPEN</span><b>${String(herbs.indexOf(selected) + 1).padStart(3, '0')}</b></div><div class="reading-mark">${glyph(selectedHabitat)}</div><p class="reading-habitat">${esc(selectedHabitat.name)} · ${esc(selectedShape)}</p><h2>${esc(selected.nameZh)}</h2><p class="reading-latin">${esc(selected.scientificName || '')}</p><p class="reading-summary">${esc(selected.identitySummary || selected.summary || '这味本草的深度档案正在补录。')}</p><dl>${[['药用部位', selected.partUsed || '待补'], ['数据状态', selected.catalogStatus || selected.evidenceStatus || '精选'], ['标签', Array.isArray(selected.tags) ? selected.tags.join(' · ') : '形态 · 生境']].map(([label, value]) => `<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl><div class="reading-actions"><button class="primary-button compact" data-view="trace" data-herb="${esc(selected.id)}">打开一味档案 <span>↗</span></button><button class="quiet-button" data-cabinet-reset>重置视线</button></div><p class="reading-boundary">${esc(selected.boundary || '资料用于文化与植物学阅读，不构成医疗建议。')}</p>` : '<p>请选择一个抽屉。</p>'}</aside><div class="cabinet-page-footer"><span>本草宇宙 · 百子万象</span><span>从一处生境，进入一味证据</span><button class="text-button" data-view="planet">夜间去粒子星球 →</button></div></main>`;
 }
 

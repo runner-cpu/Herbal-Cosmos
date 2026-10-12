@@ -33,6 +33,14 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“人参”条目；Flora of China / POWO 检索 Panax ginseng C.A.Mey."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S004",
+          "locator": "Asian Ginseng；Asian ginseng 页面中的名称、传统使用背景和安全信息段落"
         }
       ],
       "habitat": "shanlin",
@@ -76,6 +84,14 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“青蒿”条目；Flora of China / POWO 检索 Artemisia annua L."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S005",
+          "locator": "The Nobel Prize in Physiology or Medicine 2015: Tu Youyou – Facts；Tu Youyou facts：从传统文献线索到青蒿素研究的历史节点"
         }
       ],
       "habitat": "caodian",
@@ -119,12 +135,21 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“陈皮”条目；Flora of China / POWO 检索 Citrus reticulata Blanco."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S006",
+          "locator": "Chinese Text Project（中国哲学书电子化计划）；先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索"
         }
       ],
       "habitat": "guoshi",
       "habitatLabel": "果实种籽",
       "tags": [
         "果实种籽",
+        "果皮",
         "深度条目"
       ],
       "morphology": "芸香科 Rutaceae代表性条目；以成熟果实的干燥果皮的形态、颜色与质地作为识别线索。",
@@ -161,6 +186,14 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“甘草”条目；Flora of China / POWO 检索 Glycyrrhiza uralensis Fisch. ex DC."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S006",
+          "locator": "Chinese Text Project（中国哲学书电子化计划）；先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索"
         }
       ],
       "habitat": "shanlin",
@@ -203,6 +236,10 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“黄芪”条目；Flora of China / POWO 检索 Astragalus membranaceus (Fisch.) Bunge."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
         }
       ],
       "habitat": "shanlin",
@@ -246,6 +283,14 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“当归”条目；Flora of China / POWO 检索 Angelica sinensis (Oliv.) Diels."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S006",
+          "locator": "Chinese Text Project（中国哲学书电子化计划）；先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索"
         }
       ],
       "habitat": "shanlin",
@@ -288,6 +333,10 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“黄连”条目；Flora of China / POWO 检索 Coptis chinensis Franch."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
         }
       ],
       "habitat": "shanlin",
@@ -330,12 +379,17 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“枸杞子”条目；Flora of China / POWO 检索 Lycium barbarum L."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
         }
       ],
       "habitat": "guoshi",
       "habitatLabel": "果实种籽",
       "tags": [
         "果实种籽",
+        "成熟果实",
         "深度条目"
       ],
       "morphology": "茄科 Solanaceae代表性条目；以成熟果实的形态、颜色与质地作为识别线索。",
@@ -372,6 +426,14 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“菊花”条目；Flora of China / POWO 检索 Chrysanthemum morifolium Ramat."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S006",
+          "locator": "Chinese Text Project（中国哲学书电子化计划）；先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索"
         }
       ],
       "habitat": "huaye",
@@ -414,6 +476,10 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“金银花”条目；Flora of China / POWO 检索 Lonicera japonica Thunb."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
         }
       ],
       "habitat": "huaye",
@@ -456,6 +522,10 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“薄荷”条目；Flora of China / POWO 检索 Mentha haplocalyx Briq."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
         }
       ],
       "habitat": "caodian",
@@ -498,6 +568,10 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“丹参”条目；Flora of China / POWO 检索 Salvia miltiorrhiza Bunge."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
         }
       ],
       "habitat": "shanlin",
@@ -541,6 +615,14 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“白术”条目；Flora of China / POWO 检索 Atractylodes macrocephala Koidz."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S006",
+          "locator": "Chinese Text Project（中国哲学书电子化计划）；先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索"
         }
       ],
       "habitat": "shanlin",
@@ -584,6 +666,14 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“茯苓”条目；Flora of China / POWO 检索 Wolfiporia extensa (Peck) Ginns."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S006",
+          "locator": "Chinese Text Project（中国哲学书电子化计划）；先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索"
         }
       ],
       "habitat": "junmu",
@@ -627,13 +717,21 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“半夏”条目；Flora of China / POWO 检索 Pinellia ternata (Thunb.) Makino."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S006",
+          "locator": "Chinese Text Project（中国哲学书电子化计划）；先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索"
         }
       ],
       "habitat": "shuize",
       "habitatLabel": "水泽湿地",
       "tags": [
         "水泽湿地",
-        "木本组织",
+        "块茎",
         "深度条目"
       ],
       "morphology": "天南星科 Araceae代表性条目；以块茎（需按药典炮制品种展示）的形态、颜色与质地作为识别线索。",
@@ -670,6 +768,14 @@
         {
           "sourceId": "S009",
           "locator": "2020版《中国药典》一部“防风”条目；Flora of China / POWO 检索 Saposhnikovia divaricata (Turcz.) Schischk."
+        },
+        {
+          "sourceId": "S003",
+          "locator": "NCBI Taxonomy Browser；使用各物种学名作为 name 查询参数，核对分类层级和同物异名"
+        },
+        {
+          "sourceId": "S006",
+          "locator": "Chinese Text Project（中国哲学书电子化计划）；先秦至近代医籍和本草典籍的原文索引；按书名、篇名检索"
         }
       ],
       "habitat": "shanlin",
@@ -1842,7 +1948,7 @@
       "habitatLabel": "草甸原野",
       "tags": [
         "草甸原野",
-        "pollen",
+        "花粉",
         "拓展目录"
       ],
       "morphology": "香蒲科 Typhaceae本草；以花粉的颜色、形态与质地作为本条目的识别线索。",

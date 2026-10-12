@@ -142,17 +142,29 @@ export function mountParticlePlanet(root, items = [], options = {}) {
   let resizeObserver;
 
   const filtered = () => points.filter(({ item }) => state.habitat === 'all' || normaliseHabitat(item) === state.habitat).filter(({ item }) => !state.query.trim() || itemText(item).includes(state.query.trim().toLowerCase()));
+  const ensureSelection = () => {
+    const visible = filtered();
+    if (!visible.some(({ item }) => item.id === state.selectedId)) {
+      const next = visible[0]?.item || null;
+      state.selectedId = next?.id || '';
+      root.dataset.planetSelected = state.selectedId;
+      if (detail) detail.innerHTML = detailMarkup(next, Boolean(next));
+    }
+    return visible;
+  };
   const notify = () => options.onStateChange?.({ habitat: state.habitat, query: state.query, selectedId: state.selectedId, zoom: state.zoom, rotationX: state.rotationX, rotationY: state.rotationY });
   const select = (item) => {
     if (!item) return;
     state.selectedId = item.id;
     if (detail) detail.innerHTML = detailMarkup(item, true);
     root.dataset.planetSelected = item.id || '';
+    renderFallback();
     options.onSelect?.(item);
     notify();
     draw();
   };
   const updateFilter = () => {
+    const visible = ensureSelection();
     root.querySelectorAll('[data-planet-habitat]').forEach((button) => {
       const active = button.dataset.planetHabitat === state.habitat;
       button.classList.toggle('active', active);
@@ -285,7 +297,7 @@ export function mountParticlePlanet(root, items = [], options = {}) {
     else if (event.key === 'ArrowUp') { state.rotationX -= .12; draw(); }
     else if (event.key === 'ArrowDown') { state.rotationX += .12; draw(); }
   };
-  const onSearch = (event) => { state.query = event.target.value; renderFallback(); const countNode = root.querySelector('[data-planet-count]'); if (countNode) countNode.textContent = `${filtered().length} 粒子`; draw(); options.onSearch?.(state.query); notify(); };
+  const onSearch = (event) => { state.query = event.target.value; ensureSelection(); renderFallback(); const countNode = root.querySelector('[data-planet-count]'); if (countNode) countNode.textContent = `${filtered().length} 粒子`; draw(); options.onSearch?.(state.query); notify(); };
   const onRootClick = (event) => {
     const habitat = event.target.closest('[data-planet-habitat]');
     const fallbackButton = event.target.closest('[data-planet-fallback-id]');
@@ -293,7 +305,7 @@ export function mountParticlePlanet(root, items = [], options = {}) {
     const trace = event.target.closest('[data-planet-trace]');
     if (habitat) { state.habitat = habitat.dataset.planetHabitat || 'all'; root.dataset.planetActive = state.habitat; updateFilter(); return; }
     if (fallbackButton) { select(catalog.find((item) => item.id === fallbackButton.dataset.planetFallbackId)); return; }
-    if (close) { state.selectedId = ''; root.dataset.planetSelected = ''; if (detail) detail.innerHTML = detailMarkup(null); draw(); notify(); return; }
+    if (close) { state.selectedId = ''; root.dataset.planetSelected = ''; if (detail) detail.innerHTML = detailMarkup(null); renderFallback(); draw(); notify(); return; }
     if (trace) { const item = catalog.find((entry) => entry.id === trace.dataset.planetTrace); if (item) options.onTrace?.(item); }
   };
   canvas?.addEventListener('pointerdown', onPointerDown);
@@ -306,7 +318,7 @@ export function mountParticlePlanet(root, items = [], options = {}) {
   root.addEventListener('input', onSearch);
   root.addEventListener('click', onRootClick);
   if (window.ResizeObserver) { resizeObserver = new ResizeObserver(resize); resizeObserver.observe(canvas?.parentElement || root); } else window.addEventListener('resize', resize);
-  renderFallback(); resize();
+  ensureSelection(); renderFallback(); resize();
   if (!reduced) { state.velocityY = .0007; frame = requestAnimationFrame(draw); }
   return () => {
     cancelAnimationFrame(frame); resizeObserver?.disconnect(); window.removeEventListener('resize', resize); canvas?.removeEventListener('pointerdown', onPointerDown); canvas?.removeEventListener('pointermove', onPointerMove); canvas?.removeEventListener('pointerup', onPointerUp); canvas?.removeEventListener('pointercancel', onPointerUp); canvas?.removeEventListener('click', onClick); canvas?.removeEventListener('wheel', onWheel); canvas?.removeEventListener('keydown', onKey); root.removeEventListener('input', onSearch); root.removeEventListener('click', onRootClick);

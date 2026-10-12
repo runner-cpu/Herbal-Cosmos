@@ -1,6 +1,6 @@
 import { relationExplorer } from './relations.js';
-import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js';
-import { particlePlanetMarkup, mountParticlePlanet } from './planet.js';
+import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js?v=catalog-v2-20261012';
+import { particlePlanetMarkup, mountParticlePlanet } from './planet.js?v=catalog-v2-20261012';
 
 const ROOT = './src/data/curated/';
 // Keep the catalog cache key independent from the application shell. GitHub Pages
@@ -8,6 +8,7 @@ const ROOT = './src/data/curated/';
 const DATA_VERSION = 'catalog-v2-20261012';
 const state = { view: 'home', herbId: 'herb-artemisia-annua', stage: 'specimen', nodeId: 'herb-artemisia-annua', query: '', libraryType: 'all', libraryHabitat: 'all', libraryDepth: 'all', compareId: '', cabinetFilter: 'all', cabinetHabitat: 'forest', cabinetMorphology: 'all' };
 let data = null;
+let disposePlanet = null;
 
 function applyHash() {
   const value = window.location.hash.replace(/^#/, '');
@@ -177,7 +178,7 @@ function library() {
   const query = state.query.trim().toLowerCase();
   const habitatLabels = [...new Set(herbs().map((item) => item.habitatLabel).filter(Boolean))];
   const herbItems = herbs().map((item) => ({ type: '本草', title: item.nameZh, meta: item.scientificName, body: item.identitySummary, sourceIds: item.sourceIds, habitat: item.habitatLabel || '', depth: item.depthLevel || '', tags: item.tags || [], part: item.partUsed || '' }));
-  const items = [...herbItems, ...data.formulas.formulas.map((item) => ({ type: '方剂', title: item.nameZh, meta: item.textualOrigin, body: item.relationLabel, sourceIds: item.sourceIds, habitat: '', depth: '', tags: [], part: '' })), ...anchors().map((item) => ({ type: '文化锚点', title: item.titleZh, meta: item.period, body: item.summary, sourceIds: item.sourceIds, habitat: '', depth: '', tags: [], part: '' }))].filter((item) => (state.libraryType === 'all' || item.type === state.libraryType) && (state.libraryHabitat === 'all' || item.habitat === state.libraryHabitat) && (state.libraryDepth === 'all' || item.depth === state.libraryDepth) && (!query || `${item.title} ${item.meta} ${item.body} ${item.habitat} ${item.part} ${item.tags.join(' ')}`.toLowerCase().includes(query)));
+  const items = [...herbItems, ...data.formulas.formulas.map((item) => ({ type: '方剂', title: item.nameZh, meta: item.textualOrigin, body: item.relationLabel, sourceIds: item.sourceIds, habitat: '', depth: '', tags: [], part: '' })), ...anchors().map((item) => ({ type: '文化锚点', title: item.titleZh, meta: item.period, body: item.summary, sourceIds: item.sourceIds, habitat: '', depth: '', tags: [], part: '' }))].filter((item) => (state.libraryType === 'all' || item.type === state.libraryType) && (state.libraryHabitat === 'all' || item.habitat === state.libraryHabitat) && (state.libraryDepth === 'all' || item.depth === state.libraryDepth) && (!query || `${item.title} ${item.meta} ${item.body} ${item.habitat} ${item.part} ${item.tags.join(' ')} ${sourceList(item.sourceIds).map((source) => `${source.title} ${source.publisher} ${source.locator}`).join(' ')}`.toLowerCase().includes(query)));
   const habitatOptions = `<option value="all">全部生境</option>${habitatLabels.map((label) => `<option value="${esc(label)}" ${state.libraryHabitat === label ? 'selected' : ''}>${esc(label)}</option>`).join('')}`;
   const depthOptions = `<option value="all">全部深度</option><option value="deep" ${state.libraryDepth === 'deep' ? 'selected' : ''}>深度条目 · 16</option><option value="overview" ${state.libraryDepth === 'overview' ? 'selected' : ''}>拓展条目 · 104</option>`;
   return `<main class="library-view"><div class="page-intro library-intro"><div><p class="kicker">OPEN LIBRARY · 120 HERBS / SOURCE FIRST</p><h1>资料库</h1><p>从六类生境进入全量目录，再按形态、部位和深度级别收拢视线。每一条事实都保留公开来源和阅读边界。</p></div><button class="quiet-button" data-view="trace">← 回到一味档案</button></div><div class="library-toolbar"><label class="search-box wide"><span>⌕</span><input data-library-search value="${esc(state.query)}" placeholder="搜索本草、方剂、学名、形态或来源关键词" /></label><div class="filter-tabs">${['all', '本草', '方剂', '文化锚点'].map((value) => `<button class="filter-tab ${state.libraryType === value ? 'active' : ''}" data-library-type="${value}">${value === 'all' ? '全部' : value}</button>`).join('')}</div><div class="library-selects"><label>生境<select data-library-habitat>${habitatOptions}</select></label><label>深度<select data-library-depth>${depthOptions}</select></label></div></div><div class="library-summary"><span>当前结果 <b>${items.length}</b></span><span>全量本草 <b>${herbs().length}</b></span><span>数据集 ${esc(data.herbs.datasetId)}</span><span>重新检索于 ${esc(data.herbs.researchedAt)}</span></div><div class="library-grid">${items.map((item) => `<article class="library-item"><div class="library-item-top"><span class="type-tag">${esc(item.type)}</span><span class="item-count">${item.sourceIds.length} 来源</span></div><h2>${esc(item.title)}</h2><p class="library-meta">${esc(item.meta)}</p>${item.habitat ? `<div class="library-facets"><span>${esc(item.habitat)}</span><span>${esc(item.depth === 'deep' ? '深度条目' : '拓展条目')}</span><span>${esc(item.part)}</span></div>` : ''}<p>${esc(item.body)}</p>${item.tags.length ? `<p class="library-tags">${item.tags.slice(0, 4).map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>` : ''}<details><summary>查看来源</summary>${renderSources(item.sourceIds)}</details></article>`).join('') || '<div class="empty-state"><strong>没有匹配项</strong><p>换一个关键词，或清除筛选重新浏览。</p></div>'}</div></main>`;
@@ -185,10 +186,12 @@ function library() {
 
 function render() {
   if (!data) return;
+  disposePlanet?.();
+  disposePlanet = null;
   const content = state.view === 'trace' ? trace() : state.view === 'library' ? library() : state.view === 'cabinet' ? cabinetPage() : state.view === 'planet' ? planet() : home();
   document.querySelector('#app').innerHTML = `${header()}${content}<footer class="site-footer"><span>本草宇宙 · 百子万象</span><span>无需账号 · 无遥测 · 资料用于文化与植物学阅读，不构成医疗建议</span><span>${esc(data.herbs.catalogStats?.total || herbs().length)} 味目录 · ${esc(data.herbs.datasetId)}</span></footer><dialog class="share-dialog" id="shareDialog"><button class="dialog-close" data-close-dialog aria-label="关闭">×</button><p class="kicker">RELATION POSTER</p><h2>${esc(selectedHerb().nameZh)}的证据链</h2><p>把本次阅读中的四个节点保存为一张可分享的 SVG 海报。</p><div class="poster-preview"><span>${esc(selectedHerb().nameZh)}</span><b>植物 → 典籍 → 方剂 → 回响</b><small>本草宇宙 · ${esc(data.herbs.researchedAt)}</small></div><button class="primary-button" data-download-poster>下载 SVG 海报</button></dialog>`;
   if (state.view === 'planet') {
-    mountParticlePlanet(document.querySelector('[data-planet-root]'), herbs(), {
+    disposePlanet = mountParticlePlanet(document.querySelector('[data-planet-root]'), herbs(), {
       activeHabitat: state.planetHabitat || 'all',
       selectedId: state.planetHerbId || '',
       onSelect: (item) => { state.planetHerbId = item.id; },
@@ -279,7 +282,7 @@ function bind() {
       document.querySelector('[data-relation-explorer]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-    if (view) { state.view = view.dataset.view; if (herbButton) { state.herbId = herbButton.dataset.herb; state.compareId = ''; } if (state.view === 'trace') { state.nodeId = state.herbId; state.stage = 'specimen'; } state.query = ''; if (window.location.hash !== `#${state.view}`) history.pushState({ view: state.view }, '', `#${state.view}`); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (view) { const previousView = state.view; state.view = view.dataset.view; if (herbButton) { state.herbId = herbButton.dataset.herb; state.compareId = ''; } if (state.view === 'trace') { state.nodeId = state.herbId; state.stage = 'specimen'; } if (state.view === 'cabinet' && previousView !== 'cabinet') { state.cabinetHabitat = habitatFor(selectedHerb()).id; state.cabinetMorphology = 'all'; } state.query = ''; if (window.location.hash !== `#${state.view}`) history.pushState({ view: state.view }, '', `#${state.view}`); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     if (herbButton) { state.herbId = herbButton.dataset.herb; state.compareId = ''; state.view = 'trace'; state.nodeId = state.herbId; state.stage = 'specimen'; render(); return; }
     if (stage) { state.stage = stage.dataset.stage; state.nodeId = stage.dataset.node; render(); return; }
     if (node) { state.nodeId = node.dataset.node; state.stage = node.dataset.stage; render(); return; }

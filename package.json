@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "本草宇宙·一味之证：证据链交互展",
+  "description": "本草宇宙·百子万象：生境百子柜与粒子星球本草图谱",
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test tests/new-app.test.mjs",
