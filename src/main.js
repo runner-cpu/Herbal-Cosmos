@@ -1,11 +1,11 @@
 import { relationExplorer } from './relations.js';
-import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js?v=cabinet-v3-20261012';
-import { particlePlanetMarkup, mountParticlePlanet } from './planet.js?v=cabinet-v3-20261012';
+import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js?v=images-v1-20261013';
+import { particlePlanetMarkup, mountParticlePlanet } from './planet.js?v=images-v1-20261013';
 
 const ROOT = './src/data/curated/';
 // Keep the catalog cache key independent from the application shell. GitHub Pages
 // can retain a previously fetched JSON response even after the JS bundle updates.
-const DATA_VERSION = 'cabinet-v3-20261012';
+const DATA_VERSION = 'images-v1-20261013';
 const state = { view: 'home', herbId: 'herb-artemisia-annua', stage: 'specimen', nodeId: 'herb-artemisia-annua', query: '', libraryType: 'all', libraryHabitat: 'all', libraryDepth: 'all', compareId: '', cabinetFilter: 'all', cabinetHabitat: 'forest', cabinetMorphology: 'all' };
 let data = null;
 let disposePlanet = null;
@@ -25,13 +25,19 @@ const sourceList = (ids = []) => ids.map((id) => sources().find((source) => sour
 const firstFormula = (id) => data.formulas.formulas.find((formula) => formula.composition.includes(id));
 const firstAnchor = (id, kind) => anchors().find((anchor) => anchor.relatedEntityIds.includes(id) && (!kind || anchor.kind === kind));
 const specimenFor = (id) => data.specimens.specimens.find((item) => item.herbId === id);
+const imageFor = (item) => item?.image || data?.images?.images?.find((entry) => entry.herbId === item?.id && entry.status === 'ready');
+const herbImage = (item, className = '', loading = 'lazy') => {
+  const image = imageFor(item);
+  if (!image) return `<div class="herb-image herb-image-missing ${className}" aria-label="${esc(item?.nameZh || '本草')}图片待补"><span>本</span></div>`;
+  return `<figure class="herb-image ${className}"><img src="${esc(image.path)}" alt="${esc(item.nameZh)}植物照片" loading="${loading}" decoding="async" /><figcaption>${esc(image.creator || image.dataset || 'GBIF 公开观测')}</figcaption></figure>`;
+};
 
 function specimenLab(item) {
   const specimen = specimenFor(item.id);
   if (!specimen) {
-    return `<section class="specimen-lab"><div class="specimen-stage specimen-empty" aria-label="${esc(item.nameZh)}暂未建立结构化标本"><div class="empty-specimen-mark">待补</div><span class="stage-hint">本轮精选目录暂未建模</span></div><div class="specimen-copy"><span class="panel-label">3D SPECIMEN LAB</span><h3>${esc(item.nameZh)}的识别线索</h3><p>这味本草已经进入证据链，但结构化标本仍在补录。先查看右侧身份资料和来源，再回到相似药材辨别器。</p><div class="specimen-boundary">暂不生成默认模型，避免把其他物种的形态误套到当前本草。</div></div></section>`;
+    return `<section class="specimen-lab"><div class="specimen-stage specimen-empty" aria-label="${esc(item.nameZh)}植物照片">${herbImage(item, 'specimen-photo', 'eager')}<span class="stage-hint">公开植物观测 · 可用于形态初识</span></div><div class="specimen-copy"><span class="panel-label">FIELD IMAGE · 识形照片</span><h3>${esc(item.nameZh)}的识别线索</h3><p>先用植物照片建立形态直觉，再结合基原、部位和公开来源核对身份。照片用于初步识别，不替代专业鉴定。</p><div class="specimen-boundary">当前条目暂无结构化交互标本，已保留公开观测图片作为视觉入口。</div></div></section>`;
   }
-  return `<section class="specimen-lab"><div class="specimen-stage" data-specimen-stage tabindex="0" role="img" aria-label="可拖动旋转的${esc(item.nameZh)}结构化标本"><div class="specimen-model shape-${esc(specimen.shape)}" data-specimen-model><span class="model-layer layer-a"></span><span class="model-layer layer-b"></span><span class="model-layer layer-c"></span><span class="model-label">${esc(specimen.label)}</span></div><span class="stage-axis axis-x"></span><span class="stage-axis axis-y"></span><span class="stage-hint">拖动旋转 · 方向键微调</span></div><div class="specimen-copy"><span class="panel-label">3D SPECIMEN LAB</span><h3>${esc(item.nameZh)}的识别线索</h3><p>把平面名称变成可以观察的结构。这个标本是根据公开植物志和药典描述生成的交互模型，不是照片，也不替代专业鉴定。</p><ul>${specimen.cues.map((cue) => `<li>${esc(cue)}</li>`).join('')}</ul><div class="specimen-boundary">${esc(specimen.boundary)}</div></div></section>`;
+  return `<section class="specimen-lab"><div class="specimen-stage" data-specimen-stage tabindex="0" role="img" aria-label="可拖动旋转的${esc(item.nameZh)}结构化标本"><div class="specimen-model shape-${esc(specimen.shape)}" data-specimen-model><span class="model-layer layer-a"></span><span class="model-layer layer-b"></span><span class="model-layer layer-c"></span><span class="model-label">${esc(specimen.label)}</span></div><span class="stage-axis axis-x"></span><span class="stage-axis axis-y"></span><span class="stage-hint">拖动旋转 · 方向键微调</span></div><div class="specimen-copy"><span class="panel-label">3D SPECIMEN LAB · FIELD IMAGE</span>${herbImage(item, 'specimen-inline-image')}<h3>${esc(item.nameZh)}的识别线索</h3><p>把平面名称变成可以观察的结构。这个标本是根据公开植物志和药典描述生成的交互模型，旁侧照片来自公开植物观测，用于交叉核对形态。</p><ul>${specimen.cues.map((cue) => `<li>${esc(cue)}</li>`).join('')}</ul><div class="specimen-boundary">${esc(specimen.boundary)}</div></div></section>`;
 }
 
 function compareLab() {
@@ -138,11 +144,11 @@ function trace() {
 function library() {
   const query = state.query.trim().toLowerCase();
   const habitatLabels = [...new Set(herbs().map((item) => item.habitatLabel).filter(Boolean))];
-  const herbItems = herbs().map((item) => ({ type: '本草', title: item.nameZh, meta: item.scientificName, body: item.identitySummary, sourceIds: item.sourceIds, habitat: item.habitatLabel || '', depth: item.depthLevel || '', tags: item.tags || [], part: item.partUsed || '' }));
+  const herbItems = herbs().map((item) => ({ type: '本草', title: item.nameZh, meta: item.scientificName, body: item.identitySummary, sourceIds: item.sourceIds, habitat: item.habitatLabel || '', depth: item.depthLevel || '', tags: item.tags || [], part: item.partUsed || '', herb: item }));
   const items = [...herbItems, ...data.formulas.formulas.map((item) => ({ type: '方剂', title: item.nameZh, meta: item.textualOrigin, body: item.relationLabel, sourceIds: item.sourceIds, habitat: '', depth: '', tags: [], part: '' })), ...anchors().map((item) => ({ type: '文化锚点', title: item.titleZh, meta: item.period, body: item.summary, sourceIds: item.sourceIds, habitat: '', depth: '', tags: [], part: '' }))].filter((item) => (state.libraryType === 'all' || item.type === state.libraryType) && (state.libraryHabitat === 'all' || item.habitat === state.libraryHabitat) && (state.libraryDepth === 'all' || item.depth === state.libraryDepth) && (!query || `${item.title} ${item.meta} ${item.body} ${item.habitat} ${item.part} ${item.tags.join(' ')} ${sourceList(item.sourceIds).map((source) => `${source.title} ${source.publisher} ${source.locator}`).join(' ')}`.toLowerCase().includes(query)));
   const habitatOptions = `<option value="all">全部生境</option>${habitatLabels.map((label) => `<option value="${esc(label)}" ${state.libraryHabitat === label ? 'selected' : ''}>${esc(label)}</option>`).join('')}`;
   const depthOptions = `<option value="all">全部深度</option><option value="deep" ${state.libraryDepth === 'deep' ? 'selected' : ''}>深度条目 · 16</option><option value="overview" ${state.libraryDepth === 'overview' ? 'selected' : ''}>拓展条目 · 104</option>`;
-  return `<main class="library-view"><div class="page-intro library-intro"><div><p class="kicker">OPEN LIBRARY · 120 HERBS / SOURCE FIRST</p><h1>资料库</h1><p>从六类生境进入全量目录，再按形态、部位和深度级别收拢视线。每一条事实都保留公开来源和阅读边界。</p></div><button class="quiet-button" data-view="trace">← 回到一味档案</button></div><div class="library-toolbar"><label class="search-box wide"><span>⌕</span><input data-library-search value="${esc(state.query)}" placeholder="搜索本草、方剂、学名、形态或来源关键词" /></label><div class="filter-tabs">${['all', '本草', '方剂', '文化锚点'].map((value) => `<button class="filter-tab ${state.libraryType === value ? 'active' : ''}" data-library-type="${value}">${value === 'all' ? '全部' : value}</button>`).join('')}</div><div class="library-selects"><label>生境<select data-library-habitat>${habitatOptions}</select></label><label>深度<select data-library-depth>${depthOptions}</select></label></div></div><div class="library-summary"><span>当前结果 <b>${items.length}</b></span><span>全量本草 <b>${herbs().length}</b></span><span>数据集 ${esc(data.herbs.datasetId)}</span><span>重新检索于 ${esc(data.herbs.researchedAt)}</span></div><div class="library-grid">${items.map((item) => `<article class="library-item"><div class="library-item-top"><span class="type-tag">${esc(item.type)}</span><span class="item-count">${item.sourceIds.length} 来源</span></div><h2>${esc(item.title)}</h2><p class="library-meta">${esc(item.meta)}</p>${item.habitat ? `<div class="library-facets"><span>${esc(item.habitat)}</span><span>${esc(item.depth === 'deep' ? '深度条目' : '拓展条目')}</span><span>${esc(item.part)}</span></div>` : ''}<p>${esc(item.body)}</p>${item.tags.length ? `<p class="library-tags">${item.tags.slice(0, 4).map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>` : ''}<details><summary>查看来源</summary>${renderSources(item.sourceIds)}</details></article>`).join('') || '<div class="empty-state"><strong>没有匹配项</strong><p>换一个关键词，或清除筛选重新浏览。</p></div>'}</div></main>`;
+  return `<main class="library-view"><div class="page-intro library-intro"><div><p class="kicker">OPEN LIBRARY · 120 HERBS / SOURCE FIRST</p><h1>资料库</h1><p>从六类生境进入全量目录，再按形态、部位和深度级别收拢视线。每一条事实都保留公开来源和阅读边界。</p></div><button class="quiet-button" data-view="trace">← 回到一味档案</button></div><div class="library-toolbar"><label class="search-box wide"><span>⌕</span><input data-library-search value="${esc(state.query)}" placeholder="搜索本草、方剂、学名、形态或来源关键词" /></label><div class="filter-tabs">${['all', '本草', '方剂', '文化锚点'].map((value) => `<button class="filter-tab ${state.libraryType === value ? 'active' : ''}" data-library-type="${value}">${value === 'all' ? '全部' : value}</button>`).join('')}</div><div class="library-selects"><label>生境<select data-library-habitat>${habitatOptions}</select></label><label>深度<select data-library-depth>${depthOptions}</select></label></div></div><div class="library-summary"><span>当前结果 <b>${items.length}</b></span><span>全量本草 <b>${herbs().length}</b></span><span>数据集 ${esc(data.herbs.datasetId)}</span><span>重新检索于 ${esc(data.herbs.researchedAt)}</span></div><div class="library-grid">${items.map((item) => `<article class="library-item">${item.herb ? herbImage(item.herb, 'library-image') : ''}<div class="library-item-top"><span class="type-tag">${esc(item.type)}</span><span class="item-count">${item.sourceIds.length} 来源</span></div><h2>${esc(item.title)}</h2><p class="library-meta">${esc(item.meta)}</p>${item.habitat ? `<div class="library-facets"><span>${esc(item.habitat)}</span><span>${esc(item.depth === 'deep' ? '深度条目' : '拓展条目')}</span><span>${esc(item.part)}</span></div>` : ''}<p>${esc(item.body)}</p>${item.tags.length ? `<p class="library-tags">${item.tags.slice(0, 4).map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>` : ''}<details><summary>查看来源</summary>${renderSources(item.sourceIds)}</details></article>`).join('') || '<div class="empty-state"><strong>没有匹配项</strong><p>换一个关键词，或清除筛选重新浏览。</p></div>'}</div></main>`;
 }
 
 function render() {
@@ -285,9 +291,11 @@ function bind() {
 
 async function boot() {
   applyHash();
-  const files = ['sources.json', 'herbs.json', 'formulas.json', 'cultural-anchors.json', 'relations.json', 'specimens.json', 'comparisons.json'];
+  const files = ['sources.json', 'herbs.json', 'formulas.json', 'cultural-anchors.json', 'relations.json', 'specimens.json', 'comparisons.json', 'herb-images.json'];
   const values = await Promise.all(files.map((file) => fetch(`${ROOT}${file}?v=${DATA_VERSION}`, { cache: 'reload' }).then((response) => { if (!response.ok) throw new Error(`${file}: ${response.status}`); return response.json(); })));
-  data = { sources: values[0], herbs: values[1], formulas: values[2], anchors: values[3], relations: values[4], specimens: values[5], comparisons: values[6] };
+  data = { sources: values[0], herbs: values[1], formulas: values[2], anchors: values[3], relations: values[4], specimens: values[5], comparisons: values[6], images: values[7] };
+  const imageMap = new Map(data.images.images.map((entry) => [entry.herbId, entry]));
+  data.herbs.herbs.forEach((herb) => { herb.image = imageMap.get(herb.id) || null; });
   render();
   bind();
 }

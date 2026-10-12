@@ -125,3 +125,26 @@
 /* Full catalog facets keep the 120-item library scannable. */
 .library-selects{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.library-selects label{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:10px}.library-selects select{min-width:125px;padding:8px 10px;border:1px solid var(--line);background:var(--white);color:var(--ink);font-size:11px}.library-facets{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0;color:var(--cinnabar);font-size:10px}.library-facets span{padding:4px 6px;border:1px solid var(--soft);background:rgba(181,74,58,.04)}.library-tags{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0 0}.library-tags span{padding:3px 6px;border-radius:99px;background:var(--paper-deep);color:var(--muted);font-size:9px}.library-summary{flex-wrap:wrap;row-gap:8px}
 @media(max-width:700px){.library-selects{display:grid;grid-template-columns:1fr 1fr}.library-selects label{display:grid;gap:4px}.library-selects select{width:100%;min-width:0}.library-facets span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+/* Every catalog item gets a visual anchor from the local field-image set. */
+.herb-image{position:relative;overflow:hidden;margin:0;background:#ded5c8;border:1px solid rgba(21,23,24,.14)}
+.herb-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.86) contrast(.96)}
+.herb-image figcaption{position:absolute;right:0;bottom:0;left:0;padding:5px 7px;background:linear-gradient(transparent,rgba(21,23,24,.72));color:#fffdf8;font-size:8px;line-height:1.2;opacity:0;transition:opacity .2s ease}
+.herb-image:hover figcaption,.herb-image:focus-within figcaption{opacity:1}
+.herb-image-missing{display:grid;place-items:center;color:rgba(181,74,58,.8);font-family:Georgia,serif;font-size:22px}
+.drawer-image{display:block;width:46px;height:46px;flex:none;overflow:hidden;border:1px solid rgba(21,23,24,.16);background:#d9d0c4}
+.drawer-image img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.82)}
+.cabinet-reading .reading-image{width:100%;height:154px;margin:0 0 18px;border-color:rgba(21,23,24,.12)}
+.cabinet-reading .reading-image img{height:100%}
+.specimen-stage .specimen-photo{position:absolute;inset:16px 16px 34px;z-index:0;border:0;background:#d8d0c5;transform:rotate(-1deg);box-shadow:0 12px 28px rgba(66,47,31,.16)}
+.specimen-stage .specimen-photo img{height:100%;object-fit:cover;opacity:.74;mix-blend-mode:multiply}
+.specimen-stage .specimen-photo figcaption{opacity:1;font-size:8px}
+.specimen-stage .specimen-photo+.stage-hint{z-index:2}
+.specimen-inline-image{width:104px;height:88px;float:right;margin:0 0 10px 14px;transform:rotate(2deg);box-shadow:0 9px 18px rgba(66,47,31,.12)}
+.specimen-inline-image figcaption{display:none}
+.library-image{height:150px;margin:-1px -1px 18px;border:0;border-bottom:1px solid var(--line)}
+.library-image img{height:100%}
+.planet-detail-image{height:150px;margin:18px 0 12px;border:1px solid #cfc4b7;background:#e5ddd2}
+.planet-detail-image img{height:100%;object-fit:cover}
+.planet-detail-image figcaption{opacity:1;font-size:8px}
+@media(max-width:700px){.drawer-image{width:40px;height:40px}.cabinet-reading .reading-image{height:180px}.specimen-inline-image{width:92px;height:78px}.library-image{height:170px}}

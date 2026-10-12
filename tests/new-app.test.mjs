@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { relationExplorerModel } from '../src/relations.js';
 
 const root = new URL('..', import.meta.url);
 const readJson = async (file) => JSON.parse(await readFile(new URL(`src/data/curated/${file}`, root), 'utf8'));
 
 test('curated dataset is fresh and internally connected', async () => {
-  const [sources, herbs, formulas, anchors, relations, specimens, comparisons] = await Promise.all(['sources.json', 'herbs.json', 'formulas.json', 'cultural-anchors.json', 'relations.json', 'specimens.json', 'comparisons.json'].map(readJson));
+  const [sources, herbs, formulas, anchors, relations, specimens, comparisons, images] = await Promise.all(['sources.json', 'herbs.json', 'formulas.json', 'cultural-anchors.json', 'relations.json', 'specimens.json', 'comparisons.json', 'herb-images.json'].map(readJson));
   assert.equal(herbs.herbs.length, 120);
   assert.equal(herbs.catalogStats.featured, 16);
   assert.equal(herbs.catalogStats.overview, 104);
@@ -16,6 +16,10 @@ test('curated dataset is fresh and internally connected', async () => {
   assert.equal(relations.relations.length, 20);
   assert.equal(specimens.specimens.length, 6);
   assert.equal(comparisons.comparisons.length, 4);
+  assert.equal(images.summary.total, 120);
+  assert.equal(images.summary.ready, 120);
+  assert.equal(images.images.filter((entry) => entry.status === 'ready').length, herbs.herbs.length);
+  await Promise.all(images.images.map((entry) => access(new URL(entry.path.replace('./', ''), root))));
   const sourceIds = new Set(sources.sources.map((source) => source.id));
   const habitatIds = new Set(herbs.herbs.map((herb) => herb.habitat));
   assert.deepEqual([...habitatIds].sort(), ['caodian', 'guoshi', 'huaye', 'junmu', 'shanlin', 'shuize']);
