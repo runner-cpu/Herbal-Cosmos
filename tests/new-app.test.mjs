@@ -47,8 +47,11 @@ test('new entry has no legacy runtime dependency', async () => {
   assert.match(js, /particlePlanetMarkup/);
   assert.match(js, /state.view === 'planet'/);
   assert.match(layout, /本草宇宙 · 百子万象/);
+  assert.match(layout, /cosmos-route-map/);
+  assert.match(layout, /cabinet-console/);
   assert.match(layout, /data-cabinet-habitat/);
   assert.match(layout, /data-cabinet-morphology/);
+  assert.match(layout, /data-compare-herb/);
   assert.match(planet, /data-planet-canvas/);
   assert.match(planet, /pointerdown/);
   assert.match(planet, /wheel/);

@@ -1,11 +1,11 @@
 import { relationExplorer } from './relations.js';
-import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js?v=81736ca';
-import { particlePlanetMarkup, mountParticlePlanet } from './planet.js?v=81736ca';
+import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js?v=cabinet-v3-20261012';
+import { particlePlanetMarkup, mountParticlePlanet } from './planet.js?v=cabinet-v3-20261012';
 
 const ROOT = './src/data/curated/';
 // Keep the catalog cache key independent from the application shell. GitHub Pages
 // can retain a previously fetched JSON response even after the JS bundle updates.
-const DATA_VERSION = '81736ca';
+const DATA_VERSION = 'cabinet-v3-20261012';
 const state = { view: 'home', herbId: 'herb-artemisia-annua', stage: 'specimen', nodeId: 'herb-artemisia-annua', query: '', libraryType: 'all', libraryHabitat: 'all', libraryDepth: 'all', compareId: '', cabinetFilter: 'all', cabinetHabitat: 'forest', cabinetMorphology: 'all' };
 let data = null;
 let disposePlanet = null;
@@ -116,45 +116,6 @@ function header() {
   return renderCosmosHeader(state);
 }
 
-const CABINET_FILTERS = [
-  ['all', '全部'],
-  ['root', '根 · 根茎'],
-  ['flower', '花 · 花蕾'],
-  ['fruit', '果 · 果皮'],
-  ['leaf', '叶 · 地上'],
-  ['fungus', '菌核'],
-];
-
-function cabinetCategory(item) {
-  const text = `${item.partUsed || ''} ${item.nameZh || ''}`;
-  if (/菌核/.test(text)) return 'fungus';
-  if (/花|花蕾|头状/.test(text)) return 'flower';
-  if (/果|果皮/.test(text)) return 'fruit';
-  if (/根|根茎|块茎/.test(text)) return 'root';
-  return 'leaf';
-}
-
-function cabinetGlyph(item) {
-  const category = cabinetCategory(item);
-  const letter = category === 'root' ? '根' : category === 'flower' ? '花' : category === 'fruit' ? '果' : category === 'fungus' ? '菌' : '叶';
-  return `<span class="drawer-glyph glyph-${category}" aria-hidden="true"><i></i><b>${letter}</b></span>`;
-}
-
-function cabinetSection() {
-  const featured = herbs();
-  const filtered = featured.filter((item) => state.cabinetFilter === 'all' || cabinetCategory(item) === state.cabinetFilter);
-  const selected = selectedHerb();
-  const selectedCategory = cabinetCategory(selected);
-  const selectedIndex = featured.findIndex((item) => item.id === selected.id) + 1;
-  const filterButtons = CABINET_FILTERS.map(([value, label]) => `<button class="cabinet-filter ${state.cabinetFilter === value ? 'active' : ''}" data-cabinet-filter="${value}" aria-pressed="${state.cabinetFilter === value}">${label}<span>${value === 'all' ? featured.length : featured.filter((item) => cabinetCategory(item) === value).length}</span></button>`).join('');
-  const drawers = filtered.map((item) => {
-    const index = featured.indexOf(item) + 1;
-    const active = item.id === selected.id;
-    return `<button class="cabinet-drawer ${active ? 'active' : ''}" data-cabinet-drawer data-herb="${item.id}" style="--drawer-order:${index}" aria-label="打开${esc(item.nameZh)}档案" aria-pressed="${active}"><span class="drawer-number">${String(index).padStart(2, '0')}</span>${cabinetGlyph(item)}<span class="drawer-name">${esc(item.nameZh)}</span><span class="drawer-latin">${esc(item.pinyin)}</span><span class="drawer-handle"><i></i><em>取阅</em></span></button>`;
-  }).join('');
-  return `<section class="cabinet-hero" id="cabinet" aria-labelledby="cabinet-title"><div class="cabinet-intro"><div><p class="kicker">THE HERBAL CABINET · 01</p><h1 id="cabinet-title">先抽出一味，<br /><em>再读它的来处。</em></h1><p class="cabinet-lead">把十六味精选本草放回一面数字百子柜。拖动不需要模型，点击一格就能抽出它的植物身份、形态线索和证据链。</p></div><div class="cabinet-meta"><span class="cabinet-meta-mark">百</span><div><b>本草柜 · 甲辑</b><small>16 味精品 · 公开来源重检</small></div></div></div><div class="cabinet-toolbar"><div class="cabinet-filters" role="toolbar" aria-label="按药用部位筛选">${filterButtons}</div><span class="cabinet-status"><i></i>当前抽出：<b>${esc(selected.nameZh)}</b></span></div><div class="cabinet-body"><div class="cabinet-rack" aria-label="十六味精选本草抽屉墙"><div class="rack-crown"><span>本草百子柜</span><small>精选条目 · 点击抽屉</small></div><div class="drawer-grid">${drawers || '<p class="cabinet-empty">这一类暂未收录，换一个部位看看。</p>'}</div><div class="rack-foot"><span>一味一证 · 每格都有出处</span><span>01 — ${String(featured.length).padStart(2, '0')}</span></div></div><aside class="cabinet-card" aria-live="polite"><div class="cabinet-card-top"><span>已抽出 · ${String(selectedIndex).padStart(2, '0')}</span><span class="cabinet-card-type">${selectedCategory}</span></div><div class="cabinet-card-glyph">${cabinetGlyph(selected)}</div><p class="cabinet-card-kicker">${esc(selected.pinyin)} · ${esc(selected.family)}</p><h2>${esc(selected.nameZh)}</h2><p class="cabinet-card-latin">${esc(selected.scientificName)}</p><p class="cabinet-card-summary">${esc(selected.identitySummary)}</p><dl class="cabinet-card-facts"><div><dt>药用部位</dt><dd>${esc(selected.partUsed)}</dd></div><div><dt>证据状态</dt><dd>${esc(selected.evidenceStatus)}</dd></div></dl><div class="cabinet-card-actions"><button class="primary-button compact" data-view="trace" data-herb="${selected.id}">打开一味档案 <span>↗</span></button><button class="quiet-button" data-cabinet-reset>回到第一格</button></div><p class="cabinet-card-boundary">${esc(selected.boundary)}</p></aside></div><div class="cabinet-extension"><div><span class="section-index">02 / BEYOND THE CABINET</span><h2>柜里是精选，柜外是完整目录。</h2><p>想继续查找方剂、典籍和来源，进入开放资料库；全部内容都可以回到公开出处。</p></div><button class="text-button" data-view="library">打开拓展资料库 →</button></div></section>`;
-}
-
 function home() {
   return renderCosmosHome(data);
 }
@@ -224,10 +185,12 @@ function bind() {
     const morphologyTab = event.target.closest('[data-cabinet-morphology]');
     const relationNode = event.target.closest('[data-relation-node]');
     const relationEdge = event.target.closest('[data-relation-id]');
+    const compareHerb = event.target.closest('[data-compare-herb]');
     const node = event.target.closest('[data-node]');
     const stage = event.target.closest('[data-stage]');
     const filter = event.target.closest('[data-library-type]');
     if (cabinetDrawer) { state.herbId = cabinetDrawer.dataset.herb; state.nodeId = state.herbId; state.stage = 'specimen'; state.compareId = ''; render(); return; }
+    if (compareHerb) { state.herbId = compareHerb.dataset.compareHerb; state.nodeId = state.herbId; state.stage = 'specimen'; state.view = 'trace'; state.compareOpen = true; state.compareId = ''; if (window.location.hash !== '#trace') history.pushState({ view: 'trace' }, '', '#trace'); render(); document.querySelector('.compare-lab')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     if (habitatZone) {
       state.cabinetHabitat = habitatZone.dataset.cabinetHabitat;
       state.cabinetMorphology = 'all';
