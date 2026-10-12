@@ -1,11 +1,11 @@
 import { relationExplorer } from './relations.js';
-import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js?v=catalog-v2-20261012';
-import { particlePlanetMarkup, mountParticlePlanet } from './planet.js?v=catalog-v2-20261012';
+import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js?v=81736ca';
+import { particlePlanetMarkup, mountParticlePlanet } from './planet.js?v=81736ca';
 
 const ROOT = './src/data/curated/';
 // Keep the catalog cache key independent from the application shell. GitHub Pages
 // can retain a previously fetched JSON response even after the JS bundle updates.
-const DATA_VERSION = 'catalog-v2-20261012';
+const DATA_VERSION = '81736ca';
 const state = { view: 'home', herbId: 'herb-artemisia-annua', stage: 'specimen', nodeId: 'herb-artemisia-annua', query: '', libraryType: 'all', libraryHabitat: 'all', libraryDepth: 'all', compareId: '', cabinetFilter: 'all', cabinetHabitat: 'forest', cabinetMorphology: 'all' };
 let data = null;
 let disposePlanet = null;
