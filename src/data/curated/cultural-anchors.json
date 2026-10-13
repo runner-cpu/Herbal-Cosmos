@@ -36,7 +36,7 @@
       "titleZh": "《本草纲目》：跨地域物种与药材知识的汇编",
       "period": "明代万历年间刊行（1596）",
       "kind": "encyclopedic-text",
-      "summary": "李时珍汇集前代本草、地方物产与自身考订，形成影响深远的药物学知识文本；适合作为“名称—形态—文献”关系的历史节点。",
+      "summary": "李时珍汇集前代本草、地方物产与自身考订，形成影响深远的药物学知识文本；适合作为“名称 · 形态 · 文献”关系的历史节点。",
       "relatedEntityIds": [
         "herb-citrus-reticulata",
         "herb-chrysanthemum-morifolium",
@@ -62,7 +62,7 @@
     {
       "id": "anchor-tu-youyou-artemisinin",
       "titleZh": "屠呦呦与青蒿素：传统文献线索进入现代科研",
-      "period": "20 世纪 60—70 年代研究，2015 年诺贝尔生理学或医学奖",
+      "period": "20 世纪 60 至 70 年代研究，2015 年诺贝尔生理学或医学奖",
       "kind": "modern-research-history",
       "summary": "屠呦呦团队从传统文献和实验研究中推进青蒿素发现，诺贝尔奖事实页记录了这一研究史节点。项目将它作为知识转译案例，而非疗效宣传。",
       "relatedEntityIds": [

@@ -60,6 +60,8 @@ test('new entry has no legacy runtime dependency', async () => {
   assert.match(layout, /data-cabinet-habitat/);
   assert.match(layout, /data-cabinet-morphology/);
   assert.match(layout, /data-compare-herb/);
+  assert.match(layout, /drawer-cavity/);
+  assert.match(layout, /向左抽出一格/);
   assert.match(planet, /data-planet-canvas/);
   assert.match(planet, /pointerdown/);
   assert.match(planet, /wheel/);
@@ -69,6 +71,9 @@ test('new entry has no legacy runtime dependency', async () => {
   assert.match(js, /data-image-quiz-open/);
   assert.match(js, /data-image-quiz-answer/);
   assert.match(js, /compare-image/);
+  assert.match(js, /16 FEATURED \/ 104 EXPANDED/);
+  assert.match(js, /library-featured-grid/);
+  assert.match(js, /data-library-quick-habitat/);
   assert.match(js, /relationExplorer/);
   assert.match(js, /data-relation-node/);
   assert.match(css, /\.relation-scene\{overflow-x:auto/);
@@ -78,6 +83,8 @@ test('new entry has no legacy runtime dependency', async () => {
   assert.match(css, /\.planet-stage/);
   assert.match(css, /\.image-lightbox/);
   assert.match(css, /\.image-quiz/);
+  assert.match(css, /translate3d\(-46px,-10px,112px\)/);
+  assert.match(css, /\.library-featured-grid/);
   assert.doesNotMatch(js, /cosmos-engine|apothecary|runtime\.js|expanded\.generated/i);
 });
 
