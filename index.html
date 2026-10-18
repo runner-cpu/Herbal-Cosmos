@@ -4,26 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0b141f" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="light" />
     <meta name="robots" content="index,follow" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="description" content="本草宇宙 · 百子万象：从六类生境百子柜到一颗可旋转的粒子星球，探索 120 味本草及其公开证据。" />
     <link rel="canonical" href="https://runner-cpu.github.io/Herbal-Cosmos/" />
+    <meta property="og:site_name" content="本草宇宙 · 百子万象" />
+    <meta property="og:locale" content="zh_CN" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="本草宇宙 · 百子万象" />
     <meta property="og:description" content="六类生境百子柜与可旋转粒子星球，探索 120 味本草及其公开证据。" />
     <meta property="og:url" content="https://runner-cpu.github.io/Herbal-Cosmos/" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://runner-cpu.github.io/Herbal-Cosmos/src/assets/share/og-cover.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="本草宇宙分享卡：深蓝夜空中的粒子星球与「本草宇宙 · 百子万象」标题" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="本草宇宙 · 百子万象" />
     <meta name="twitter:description" content="六类生境百子柜与可旋转粒子星球，探索 120 味本草及其公开证据。" />
+    <meta name="twitter:image" content="https://runner-cpu.github.io/Herbal-Cosmos/src/assets/share/og-cover.jpg" />
+    <meta name="twitter:image:alt" content="本草宇宙分享卡：粒子星球与百子万象标题" />
     <title>本草宇宙 · 百子万象</title>
-    <link rel="stylesheet" href="./src/styles.css?v=redesign-v1-20261013" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "本草宇宙 · 百子万象",
+        "alternateName": "Herbal Cosmos",
+        "url": "https://runner-cpu.github.io/Herbal-Cosmos/",
+        "description": "以百子柜与粒子星球两种空间，呈现 120 味本草的形态、生境、典籍与公开来源。",
+        "inLanguage": "zh-CN",
+        "publisher": {
+          "@type": "Organization",
+          "name": "本草宇宙项目组",
+          "url": "https://runner-cpu.github.io/Herbal-Cosmos/#curation"
+        }
+      }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23b54a3a'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f5f0e8' text-anchor='middle'%3E%E6%9C%AC%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./src/styles.css?v=redesign-v1-20261018-3" />
   </head>
   <body>
     <a class="skip-link" href="#app">跳到主要内容</a>
-    <div id="app" aria-live="polite">
+    <div id="app" tabindex="-1">
       <div class="loading-screen"><span class="loading-mark">本</span><p>正在打开本草档案</p></div>
     </div>
-    <script type="module" src="./src/main.js?v=redesign-v1-20261013"></script>
+    <noscript><p style="padding:12vh 8vw;font-family:system-ui,'PingFang SC',sans-serif">本草宇宙需要启用 JavaScript 才能加载 120 味本草档案。</p></noscript>
+    <p id="announcer" class="sr-only" role="status"></p>
+    <script type="module" src="./src/main.js?v=redesign-v1-20261018-3"></script>
   </body>
 </html>

@@ -25,24 +25,26 @@
 
 | 页面 | Hash | 负责什么 | 主要文件 |
 | --- | --- | --- | --- |
-| 宇宙首页 | `#home` | 解释昼夜双世界和四条入口 | `src/ui-layout.js` |
+| 宇宙首页 | `#home` | 解释昼夜双世界、四条入口和三条中国故事锚点 | `src/ui-layout.js` |
 | 百子柜 | `#cabinet` | 按生境、形态筛选并抽出一味本草 | `src/ui-layout.js`、`src/styles.css` |
 | 粒子星球 | `#planet` | 旋转、缩放和点击 120 粒子 | `src/planet.js`、`src/main.js` |
 | 一味档案 | `#trace` | 识形台、证据链、来源抽屉、相似药材 | `src/main.js`、`src/relations.js` |
 | 资料库 | `#library` | 16 味精品 + 104 味拓展的筛选目录 | `src/main.js`、`src/styles.css` |
+| 项目说明 | `#curation` | 定位、数据精度、构建方式、无障碍、演示路径、已知不足 | `src/main.js`、`src/styles.css` |
 
-路由采用 `location.hash`，没有服务端路由。新增页面前先判断是否真的需要新舞台；优先把功能接入已有五页，避免首页堆叠入口。
+路由采用 `location.hash`，没有服务端路由。无法识别的哈希会回到首页并显示一条提示。新增页面前先判断是否真的需要新舞台；优先把功能接入已有页面，避免首页堆叠入口。
 
 ## 3. 关键代码入口
 
-- `index.html`：静态入口、样式和模块脚本版本号。修改 JS/CSS 后必须同步更新查询参数，避免 Pages 缓存旧资源。
-- `src/main.js`：数据加载、全局状态、五个页面渲染、事件代理、图片灯箱、看图识本草和结构化标本拖动。
+- `index.html`：静态入口、OG/Twitter 分享卡、JSON-LD、样式和模块脚本版本号。修改 JS/CSS 后必须同步更新查询参数，避免 Pages 缓存旧资源。
+- `src/main.js`：数据加载、全局状态、六个页面渲染、事件代理、图片灯箱、看图识本草和结构化标本拖动。
 - `src/ui-layout.js`：品牌头部、首页、百子柜、六类生境常量和柜墙 HTML。
 - `src/planet.js`：Canvas 粒子星球、指针拖拽、滚轮/触控缩放、键盘交互和无 Canvas 时的目录回退。
 - `src/relations.js`：关系星图模型和可访问的 HTML 关系列表；不要把来源支持边误写成药材关系。
-- `src/styles.css`：全站视觉系统、响应式布局、柜墙透视、粒子星球和资料库样式。品牌变量在文件顶部和重构追加区均有定义，修改前先搜索现有选择器。
+- `src/styles.css`：全站视觉系统、响应式布局、柜墙透视、粒子星球、资料库样式和打印样式。品牌变量在文件顶部和重构追加区均有定义，修改前先搜索现有选择器。
 - `src/data/curated/schema.md`：数据契约和展示边界，任何新增数据先按这里校验。
 - `scripts/build.mjs`：读取全部静态 JSON 做最小构建检查，不会生成新的 bundle。
+- `scripts/make-og-cover.py`：用当前数据计数渲染 1200×630 分享卡到 `src/assets/share/og-cover.jpg`；数据计数变化后重跑一次。
 - `tests/new-app.test.mjs`：数据完整性、图片资产、关系来源、旧运行时依赖和关键 DOM/CSS 契约。
 
 ## 4. 数据现状和新增规则
@@ -50,13 +52,15 @@
 `src/data/curated/` 当前包含：
 
 - `herbs.json`：120 味本草；16 味 `deep/featured`，104 味 `overview/catalog`。
-- `herb-images.json`：120 条本草图片，当前全部 `ready`，路径指向 `src/assets/herbs/`。
-- `sources.json`：13 个公开来源，实体和关系均通过 ID 引用。
+- `herb-images.json`：120 条本草图片，当前全部 `ready`，路径指向 `src/assets/herbs/`，每条都带 `width`/`height` 以免图片加载时抖动。
+- `sources.json`：14 个公开来源，实体和关系均通过 ID 引用。
 - `formulas.json`：3 首方剂。
 - `cultural-anchors.json`：3 个文化/研究史锚点。
 - `relations.json`：20 条可视化关系。
 - `specimens.json`：6 个结构化识形台标本。
 - `comparisons.json`：4 组相似药材对照；四组均有真实照片。
+
+注意：120 味中只有 3 味登记了古典文本锚点、8 味登记了方剂组成、1 味登记了现代研究史节点。证据链只渲染真实存在的节点，缺口用 `.chain-gap-note` 明说，不要用“待补”占位节点伪造完整度。另有 7 组同物种不同药用部位共用同一条公开观测照片，灯箱会主动说明复用关系；新增图片时不要为了“每味一张”而虚构来源。
 
 新增本草时必须遵守：
 
@@ -80,14 +84,17 @@
 - 复杂可视化旁边要有可读的 HTML/键盘路径：关系星图有 `.relation-access-list`，星球有回退列表，标本支持方向键。
 - 不引入渐变球、装饰性光斑、无意义的大卡片或营销式 Hero；信息密度要服务于查找和比较。
 - `prefers-reduced-motion` 下关闭或缩短移动、抽屉和页面进入动画。
+- `@media print` 下隐藏导航、抽屉和交互舞台，只保留可读的档案、来源和关系列表；新增页面时补一条打印规则。
+- 图片一律写 `width`/`height`；新增 `<img>` 时同时提供 `loading` 与 `decoding`，首屏外不要用 `eager`。
 
 ## 6. 推荐执行顺序
 
 ### P0：先保证可交付
 
 1. 运行完整检查，确认当前基线没有回归。
-2. 用 Chrome/Playwright 检查 `#home`、`#cabinet`、`#planet`、`#trace`、`#library` 的桌面和 390px 移动端截图。
+2. 用 Chrome/Playwright 检查 `#home`、`#cabinet`、`#planet`、`#trace`、`#library`、`#curation` 的桌面和 390px 移动端截图。
 3. 优先修复会阻塞演示的问题：白屏、数据加载失败、抽屉被裁切、移动端横向溢出、图片 404、来源按钮无响应。
+4. 改完 JS/CSS 后同步提升 `index.html`、`src/main.js` 里的 `?v=` 版本号，否则线上会继续命中旧缓存。
 
 ### P1：按评委视角打磨
 
@@ -156,11 +163,22 @@ git -c http.proxy= -c https.proxy= -c 'http.https://github.com.proxy=' push orig
 
 ## 9. 当前版本记录
 
-- 当前提交：`8fb00bd feat: refine cabinet depth and library curation`
-- 当前资源版本：`redesign-v1-20261013`
+- 当前提交：`fdf4bb8 docs: add team handoff guide`（本文件本次修改尚未提交）
+- 当前资源版本：`redesign-v1-20261018-3`
 - 当前 Pages 分支：`gh-pages`
 - 当前在线入口：<https://runner-cpu.github.io/Herbal-Cosmos/>
 - 现有设计背景：`docs/rebuild-plan.md`
 - 关系星图说明：`docs/relations-redesign.md`
+- 演示与答辩脚本：`docs/competition-presentation.md`
+
+### 2026-10-18 变更摘要（本轮）
+
+- 证据链改为只渲染真实登记的节点，并新增 `.chain-gap-note` 说明缺口；海报同步只画真实节点。
+- 新增 `#curation` 项目说明页：定位、三层数据精度、构建方式、无障碍、三分钟路径、已知不足、14 个来源。
+- 首页新增“后来走到了哪里”中国故事带：1596《本草纲目》刊行、2015 青蒿素诺奖、WHO ICD-11 传统医学章节，均只陈述可核实事实。
+- 16 味精品的 72 条 `sourceRefs` 定位按来源重写，不再在药典、植物志、POWE、NCBI 之间复制同一段药典描述。
+- 新增 1200×630 分享卡 `src/assets/share/og-cover.jpg`，OG/Twitter 元数据与 JSON-LD 同步更新。
+- 所有 120 条图片补 `width`/`height`；灯箱披露同物种不同药用部位共用同一观测照片的 7 组情况。
+- `color-scheme` 修正为 `light`，新增打印样式、带品牌与五条返回路径的 `404.html`，未知哈希回到首页并提示。
 
 接手时先从 P0 开始；如果发现现状与本文档不一致，以仓库实际代码和通过的测试为准，并在本文件的“当前版本记录”中补一条变更说明。

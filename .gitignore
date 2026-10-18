@@ -3,7 +3,9 @@ scripts/__pycache__/
 .superpowers/
 output/review/
 node_modules/
+.tmp/
 .tmp-v3/
+.playwright-mcp/
 test-results/
 playwright-report/
 .mimosa/

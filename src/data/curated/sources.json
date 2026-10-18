@@ -144,6 +144,17 @@
       "evidenceType": "policy-document",
       "scope": "传统知识展示时的质量、安全、证据和监管边界",
       "boundary": "政策框架不替代药品说明书、专业诊疗或当地法规。"
+    },
+    {
+      "id": "S014",
+      "title": "ICD-11：传统医学章节常见问题",
+      "publisher": "World Health Organization",
+      "url": "https://www.who.int/standards/classifications/frequently-asked-questions/traditional-medicine",
+      "accessedAt": "2026-10-18",
+      "locator": "“Traditional medicine” 常见问题页：ICD-11 是否包含传统医学章节、章节范围与可选双重编码说明",
+      "evidenceType": "classification-faq",
+      "scope": "传统医学知识进入国际分类体系的当代节点，以及该章节的适用范围",
+      "boundary": "世界卫生组织明确说明该章节不评判也不背书任何传统医学实践的有效性，仅用于可选的双重编码；项目据此只陈述分类事实。"
     }
   ]
 }

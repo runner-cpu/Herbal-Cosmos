@@ -76,7 +76,9 @@ function project(point, rotationX, rotationY, radius, width, height, zoom) {
 function detailMarkup(item, selected = false) {
   if (!item) return '<div class="planet-detail-empty"><span class="planet-detail-orbit">◎</span><p>点击任意粒子，打开一味本草的星际档案。</p></div>';
   const tags = Array.isArray(item.tags) ? item.tags : (item.tags ? String(item.tags).split(/[，,、|]/).filter(Boolean) : []);
-  const image = item.image?.status === 'ready' ? `<figure class="planet-detail-image" data-image-open="${esc(item.id || '')}" tabindex="0" role="button" aria-label="放大查看${esc(item.nameZh || '本草')}照片"><img src="${esc(item.image.path)}" alt="${esc(item.nameZh || '本草')}植物照片" loading="lazy" decoding="async" /><figcaption>${esc(item.image.creator || 'GBIF 公开观测')} · 点击放大</figcaption></figure>` : '';
+  // Intrinsic dimensions keep the detail panel from jumping while the photo loads.
+  const size = item.image?.width && item.image?.height ? ` width="${item.image.width}" height="${item.image.height}"` : '';
+  const image = item.image?.status === 'ready' ? `<figure class="planet-detail-image" data-image-open="${esc(item.id || '')}" tabindex="0" role="button" aria-label="放大查看${esc(item.nameZh || '本草')}照片"><img src="${esc(item.image.path)}" alt="${esc(item.nameZh || '本草')}植物照片"${size} loading="lazy" decoding="async" /><figcaption>${esc(item.image.creator || 'GBIF 公开观测')} · 点击放大</figcaption></figure>` : '';
   return `<div class="planet-detail-head"><span class="planet-detail-kicker">PARTICLE PROFILE · ${esc(habitatLabel(item))}</span><button class="planet-detail-close" type="button" data-planet-close aria-label="关闭粒子详情">×</button></div>${image}<div class="planet-detail-orb" style="--planet-orb:${esc(HABITAT_COLORS[normaliseHabitat(item)] || HABITAT_COLORS.unknown)}"><span>${esc((item.nameZh || '本').slice(0, 1))}</span></div><h2>${esc(item.nameZh || '未命名本草')}</h2><p class="planet-detail-latin">${esc(item.scientificName || item.pinyin || '')}</p><p class="planet-detail-summary">${esc(item.identitySummary || item.morphology || '这味本草的身份资料正在补录。')}</p><dl class="planet-detail-facts"><div><dt>主生境</dt><dd>${esc(habitatLabel(item))}</dd></div><div><dt>药用部位</dt><dd>${esc(item.partUsed || '待补')}</dd></div><div><dt>目录级别</dt><dd>${esc(item.depthLevel || item.catalogStatus || '拓展条目')}</dd></div></dl>${tags.length ? `<div class="planet-detail-tags">${tags.slice(0, 6).map((tag) => `<span>${esc(tag)}</span>`).join('')}</div>` : ''}<p class="planet-detail-boundary">${esc(item.boundary || '本页用于本草识别与文化阅读，不替代专业鉴定或医疗建议。')}</p><button type="button" class="planet-detail-action" data-planet-trace="${esc(item.id || '')}">打开一味档案 <span>↗</span></button>`;
 }
 
@@ -87,7 +89,7 @@ export function particlePlanetMarkup({ items = [], activeHabitat = 'all', query 
   const list = Array.isArray(items) ? items : [];
   const count = list.length;
   const filters = HABITATS.map((habitat) => `<button type="button" class="planet-filter ${activeHabitat === habitat.id ? 'active' : ''}" data-planet-habitat="${habitat.id}" aria-pressed="${activeHabitat === habitat.id}"><i style="--planet-filter-color:${habitat.color}"></i>${habitat.label}<b>${list.filter((item) => normaliseHabitat(item) === habitat.id).length}</b></button>`).join('');
-  return `<section class="planet-view" data-planet-root data-planet-active="${esc(activeHabitat)}" data-planet-selected="${esc(selectedId)}" aria-labelledby="planet-title"><div class="planet-intro"><div><p class="planet-kicker">PARTICLE PLANET · 02</p><h1 id="planet-title">一颗星球，<em>百子万象。</em></h1><p class="planet-lead">每一味本草都是星球上的一个粒子。按生境着色，拖动旋转、滚轮缩放，点击任意粒子打开它的一味档案。</p></div><div class="planet-count"><strong>${count || '0'}</strong><span>味本草粒子<br />一颗总星球</span></div></div><div class="planet-toolbar"><label class="planet-search"><span aria-hidden="true">⌕</span><input type="search" data-planet-search value="${esc(query)}" placeholder="搜索本草名称、学名或标签" aria-label="搜索粒子星球" /></label><div class="planet-filters" role="toolbar" aria-label="按生境筛选"><button type="button" class="planet-filter ${activeHabitat === 'all' ? 'active' : ''}" data-planet-habitat="all" aria-pressed="${activeHabitat === 'all'}">全部<b>${count}</b></button>${filters}</div></div><div class="planet-layout"><div class="planet-stage-wrap"><div class="planet-stage" data-planet-stage><canvas data-planet-canvas data-planet-interaction="rotate zoom select" data-planet-rotate data-planet-zoom data-planet-select tabindex="0" role="img" aria-label="可拖拽旋转的本草粒子星球"></canvas><div class="planet-stage-hud"><span><i class="planet-live-dot"></i> LIVE CATALOG</span><span data-planet-count>${count} 粒子</span></div><div class="planet-stage-hint">拖动旋转 · 滚轮缩放 · 点击粒子</div></div><div class="planet-fallback" data-planet-fallback aria-label="粒子星球键盘目录"></div></div><aside class="planet-detail" data-planet-detail aria-live="polite">${detailMarkup(list.find((item) => item.id === selectedId))}</aside></div><p class="planet-boundary-note">粒子位置仅用于浏览，不表达药效或重要性排序。主生境唯一，多标签可扩展；完整出处请进入一味档案。</p></section>`;
+  return `<section class="planet-view" data-planet-root data-planet-active="${esc(activeHabitat)}" data-planet-selected="${esc(selectedId)}" aria-labelledby="planet-title"><div class="planet-intro"><div><p class="planet-kicker">PARTICLE PLANET · 02</p><h1 id="planet-title">一颗星球，<em>百子万象。</em></h1><p class="planet-lead">每一味本草都是星球上的一个粒子。按生境着色，拖动旋转、滚轮缩放，点击任意粒子打开它的一味档案。</p></div><div class="planet-count"><strong>${count || '0'}</strong><span>味本草粒子<br />一颗总星球</span></div></div><div class="planet-toolbar"><label class="planet-search"><span aria-hidden="true">⌕</span><input type="search" data-planet-search value="${esc(query)}" placeholder="搜索本草名称、学名或标签" aria-label="搜索粒子星球" /></label><div class="planet-filters" role="toolbar" aria-label="按生境筛选"><button type="button" class="planet-filter ${activeHabitat === 'all' ? 'active' : ''}" data-planet-habitat="all" aria-pressed="${activeHabitat === 'all'}">全部<b>${count}</b></button>${filters}</div></div><div class="planet-layout"><div class="planet-stage-wrap"><div class="planet-stage" data-planet-stage><canvas data-planet-canvas data-planet-interaction="rotate zoom select" data-planet-rotate data-planet-zoom data-planet-select tabindex="0" role="img" aria-label="可拖拽旋转的本草粒子星球"></canvas><div class="planet-stage-hud"><span><i class="planet-live-dot"></i> LIVE CATALOG</span><span data-planet-count>${count} 粒子</span></div><div class="planet-stage-hint">拖动旋转 · 滚轮缩放 · 点击粒子</div></div><button type="button" class="planet-fallback-toggle" data-planet-fallback-toggle aria-expanded="false" aria-controls="planet-fallback">⌨ 键盘目录 <b>${count} 味</b></button><div class="planet-fallback" id="planet-fallback" data-planet-fallback role="region" aria-label="粒子星球键盘目录"></div></div><aside class="planet-detail" data-planet-detail aria-label="粒子详情">${detailMarkup(list.find((item) => item.id === selectedId))}</aside><p class="sr-only" role="status" data-planet-status></p></div><p class="planet-boundary-note">粒子位置仅用于浏览，不表达药效或重要性排序。主生境唯一，多标签可扩展；完整出处请进入一味档案。</p></section>`;
 }
 
 /** Convenience adapter for the app's shared `data` + `state` shape. */
@@ -117,6 +119,11 @@ export function mountParticlePlanet(root, items = [], options = {}) {
   const canvas = root.querySelector('[data-planet-canvas]');
   const fallback = root.querySelector('[data-planet-fallback]');
   const detail = root.querySelector('[data-planet-detail]');
+  // Canvas can be unavailable (blocked GPU, headless browser, locked-down
+  // webview). Fall back to the text catalog instead of an empty stage.
+  const context2d = canvas?.getContext('2d') || null;
+  const canvasAvailable = Boolean(context2d);
+  if (!canvasAvailable) root.classList.add('is-canvas-fallback');
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const state = {
     habitat: root.dataset.planetActive || 'all',
@@ -154,11 +161,13 @@ export function mountParticlePlanet(root, items = [], options = {}) {
     return visible;
   };
   const notify = () => options.onStateChange?.({ habitat: state.habitat, query: state.query, selectedId: state.selectedId, zoom: state.zoom, rotationX: state.rotationX, rotationY: state.rotationY });
+  const announce = (text) => { const node = root.querySelector('[data-planet-status]'); if (node) node.textContent = text; };
   const select = (item) => {
     if (!item) return;
     state.selectedId = item.id;
     if (detail) detail.innerHTML = detailMarkup(item, true);
     root.dataset.planetSelected = item.id || '';
+    announce(`已选择${item.nameZh || '这味本草'}，${habitatLabel(item)}`);
     renderFallback();
     options.onSelect?.(item);
     notify();
@@ -174,6 +183,7 @@ export function mountParticlePlanet(root, items = [], options = {}) {
     if (fallback) renderFallback();
     const countNode = root.querySelector('[data-planet-count]');
     if (countNode) countNode.textContent = `${filtered().length} 粒子`;
+    announce(`筛选${state.habitat === 'all' ? '全部生境' : HABITATS.find((entry) => entry.id === state.habitat)?.label || ''}，${filtered().length} 味`);
     draw();
     options.onFilter?.(state.habitat);
     notify();
@@ -184,22 +194,23 @@ export function mountParticlePlanet(root, items = [], options = {}) {
     fallback.innerHTML = `<div class="planet-fallback-head"><span>键盘目录</span><b>${visible.length} 味</b></div>${visible.map(({ item }) => `<button type="button" class="planet-fallback-item ${item.id === state.selectedId ? 'active' : ''}" data-planet-fallback-id="${esc(item.id)}"><span class="planet-fallback-dot" style="--planet-particle:${HABITAT_COLORS[normaliseHabitat(item)] || HABITAT_COLORS.unknown}"></span><span><b>${esc(item.nameZh || '未命名')}</b><small>${esc(item.scientificName || item.pinyin || '')}</small></span></button>`).join('') || '<p class="planet-fallback-empty">没有匹配的粒子。试试其他生境或关键词。</p>'}`;
   };
   const resize = () => {
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    width = Math.max(280, rect.width || canvas.parentElement?.clientWidth || 600);
-    height = Math.max(360, rect.height || 560);
+    if (!canvas || !canvasAvailable) return;
+    // Size the bitmap from the CSS box; the stylesheet owns the display size
+    // (100% of the stage), so inline pixel sizes would pin the canvas and
+    // overflow narrow viewports.
+    const host = canvas.parentElement;
+    const rect = host?.getBoundingClientRect();
+    width = Math.max(280, Math.round(rect?.width || host?.clientWidth || 600));
+    height = Math.max(360, Math.round(rect?.height || 560));
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-    canvas.getContext('2d')?.setTransform(dpr, 0, 0, dpr, 0, 0);
+    context2d.setTransform(dpr, 0, 0, dpr, 0, 0);
     draw();
   };
   const draw = () => {
-    if (!canvas || !width || !height) return;
-    const context = canvas.getContext('2d');
-    if (!context) return;
+    if (!canvas || !canvasAvailable || !width || !height) return;
+    const context = context2d;
     context.clearRect(0, 0, width, height);
     const radius = Math.min(width, height) * 0.39;
     const gradient = context.createRadialGradient(width * 0.41, height * 0.38, radius * 0.08, width * 0.5, height * 0.5, radius * 1.04);
@@ -302,9 +313,16 @@ export function mountParticlePlanet(root, items = [], options = {}) {
   const onRootClick = (event) => {
     const habitat = event.target.closest('[data-planet-habitat]');
     const fallbackButton = event.target.closest('[data-planet-fallback-id]');
+    const fallbackToggle = event.target.closest('[data-planet-fallback-toggle]');
     const close = event.target.closest('[data-planet-close]');
     const trace = event.target.closest('[data-planet-trace]');
     if (habitat) { state.habitat = habitat.dataset.planetHabitat || 'all'; root.dataset.planetActive = state.habitat; updateFilter(); return; }
+    if (fallbackToggle) {
+      const open = root.classList.toggle('is-fallback-open');
+      fallbackToggle.setAttribute('aria-expanded', String(open));
+      if (open) announce(`键盘目录已展开，${filtered().length} 味`);
+      return;
+    }
     if (fallbackButton) { select(catalog.find((item) => item.id === fallbackButton.dataset.planetFallbackId)); return; }
     if (close) { state.selectedId = ''; root.dataset.planetSelected = ''; if (detail) detail.innerHTML = detailMarkup(null); renderFallback(); draw(); notify(); return; }
     if (trace) { const item = catalog.find((entry) => entry.id === trace.dataset.planetTrace); if (item) options.onTrace?.(item); }
@@ -318,9 +336,11 @@ export function mountParticlePlanet(root, items = [], options = {}) {
   canvas?.addEventListener('keydown', onKey);
   root.addEventListener('input', onSearch);
   root.addEventListener('click', onRootClick);
-  if (window.ResizeObserver) { resizeObserver = new ResizeObserver(resize); resizeObserver.observe(canvas?.parentElement || root); } else window.addEventListener('resize', resize);
+  if (canvasAvailable) {
+    if (window.ResizeObserver) { resizeObserver = new ResizeObserver(resize); resizeObserver.observe(canvas?.parentElement || root); } else window.addEventListener('resize', resize);
+  }
   ensureSelection(); renderFallback(); resize();
-  if (!reduced) { state.velocityY = .0007; frame = requestAnimationFrame(draw); }
+  if (!reduced && canvasAvailable) { state.velocityY = .0007; frame = requestAnimationFrame(draw); }
   return () => {
     cancelAnimationFrame(frame); resizeObserver?.disconnect(); window.removeEventListener('resize', resize); canvas?.removeEventListener('pointerdown', onPointerDown); canvas?.removeEventListener('pointermove', onPointerMove); canvas?.removeEventListener('pointerup', onPointerUp); canvas?.removeEventListener('pointercancel', onPointerUp); canvas?.removeEventListener('click', onClick); canvas?.removeEventListener('wheel', onWheel); canvas?.removeEventListener('keydown', onKey); root.removeEventListener('input', onSearch); root.removeEventListener('click', onRootClick);
   };

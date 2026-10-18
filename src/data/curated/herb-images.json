@@ -14,7 +14,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "flower sun",
       "rightsHolder": "flower sun",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 205,
+      "height": 500
     },
     {
       "herbId": "herb-artemisia-annua",
@@ -27,7 +29,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "cantti01",
       "rightsHolder": "cantti01",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-citrus-reticulata",
@@ -40,7 +44,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "susanwmbell",
       "rightsHolder": "susanwmbell",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-glycyrrhiza-uralensis",
@@ -53,7 +59,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Виктор Фрицлер",
       "rightsHolder": "Виктор Фрицлер",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 376
     },
     {
       "herbId": "herb-astragalus-membranaceus",
@@ -66,7 +74,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "kenhe",
       "rightsHolder": "kenhe",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-angelica-sinensis",
@@ -79,7 +89,9 @@
       "dataset": "Harvard University Herbaria: All Records",
       "creator": "Qiuling Wang",
       "rightsHolder": "President and Fellows of Harvard College",
-      "license": "https://huh.harvard.edu/access-digital-reproductions-works-public-domain"
+      "license": "https://huh.harvard.edu/access-digital-reproductions-works-public-domain",
+      "width": 427,
+      "height": 640
     },
     {
       "herbId": "herb-coptis-chinensis",
@@ -92,7 +104,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "misakinokukuru",
       "rightsHolder": "misakinokukuru",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-lycium-barbarum",
@@ -105,7 +119,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Eske",
       "rightsHolder": "Eske",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-chrysanthemum-morifolium",
@@ -118,7 +134,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Thoodi Harsha",
       "rightsHolder": "Thoodi Harsha",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-lonicera-japonica",
@@ -131,7 +149,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Stacy Jackson",
       "rightsHolder": "Stacy Jackson",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 219,
+      "height": 500
     },
     {
       "herbId": "herb-mentha-haplocalyx",
@@ -144,7 +164,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Kallum McDonald",
       "rightsHolder": "Kallum McDonald",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/"
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-salvia-miltiorrhiza",
@@ -157,7 +179,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "zcguoxia",
       "rightsHolder": "zcguoxia",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-atractylodes-macrocephala",
@@ -170,7 +194,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "江国彬",
       "rightsHolder": "江国彬",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-poria-cocos",
@@ -183,7 +209,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Rosa-Lee Brace",
       "rightsHolder": "Denver Botanic Gardens, Sam Mitchel Herbarium of Fungi (DBG-DBG)",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/"
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "width": 640,
+      "height": 436
     },
     {
       "herbId": "herb-pinellia-ternata",
@@ -196,7 +224,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "happy0502",
       "rightsHolder": "happy0502",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-saposhnikovia-divaricata",
@@ -209,7 +239,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "zcguoxia",
       "rightsHolder": "zcguoxia",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-shanlin-01",
@@ -222,7 +254,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "bobbieannette",
       "rightsHolder": "bobbieannette",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 447,
+      "height": 500
     },
     {
       "herbId": "herb-shanlin-02",
@@ -235,7 +269,9 @@
       "dataset": "Tropicos",
       "creator": "MBG",
       "rightsHolder": "MBG",
-      "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/"
+      "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "width": 480,
+      "height": 640
     },
     {
       "herbId": "herb-shanlin-03",
@@ -248,7 +284,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "岸本年郎",
       "rightsHolder": "岸本年郎",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-shanlin-04",
@@ -261,7 +299,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "olitola",
       "rightsHolder": "olitola",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-shanlin-05",
@@ -274,7 +314,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "红梅",
       "rightsHolder": "红梅",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-shanlin-06",
@@ -287,7 +329,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "管牧山",
       "rightsHolder": "管牧山",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-shanlin-07",
@@ -300,7 +344,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "桃子",
       "rightsHolder": "桃子",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-shanlin-08",
@@ -313,7 +359,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Jared Gorrell",
       "rightsHolder": "Jared Gorrell",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-shanlin-09",
@@ -326,7 +374,9 @@
       "dataset": "Tropicos",
       "creator": "Tom Incrocci and Claire Cohen",
       "rightsHolder": "MBG",
-      "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/"
+      "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "width": 640,
+      "height": 504
     },
     {
       "herbId": "herb-shanlin-10",
@@ -339,7 +389,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "daniel1110501",
       "rightsHolder": "daniel1110501",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-shanlin-11",
@@ -352,7 +404,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Heran Wang",
       "rightsHolder": "Heran Wang",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 427,
+      "height": 500
     },
     {
       "herbId": "herb-shanlin-12",
@@ -365,7 +419,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Jeroen Hoek",
       "rightsHolder": "Jeroen Hoek",
-      "license": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc-nd/4.0/",
+      "width": 480,
+      "height": 640
     },
     {
       "herbId": "herb-caodian-01",
@@ -378,7 +434,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "nature_clab_6",
       "rightsHolder": "nature_clab_6",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-02",
@@ -391,7 +449,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Hugo Sun",
       "rightsHolder": "Hugo Sun",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-03",
@@ -404,7 +464,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Hiroki Shudo",
       "rightsHolder": "Hiroki Shudo",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-caodian-04",
@@ -417,7 +479,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "lebedeva_na",
       "rightsHolder": "lebedeva_na",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-05",
@@ -430,7 +494,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "yating",
       "rightsHolder": "yating",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-06",
@@ -443,7 +509,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Leon, C.J.; Lin, Y-L.",
       "rightsHolder": "Royal Botanic Gardens, Kew",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 480,
+      "height": 640
     },
     {
       "herbId": "herb-caodian-07",
@@ -456,7 +524,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "黃麗陵/詩晴",
       "rightsHolder": "黃麗陵/詩晴",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-08",
@@ -469,7 +539,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Тимур Савченко",
       "rightsHolder": "Тимур Савченко",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-09",
@@ -482,7 +554,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Steve Wu",
       "rightsHolder": "Steve Wu",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 281
     },
     {
       "herbId": "herb-caodian-10",
@@ -495,7 +569,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "老山敬德",
       "rightsHolder": "老山敬德",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-11",
@@ -508,7 +584,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Balslev, H.; Poopath, M.; Yooprasert, S.; Karaket, P.; Thaotawin, P.; Kladwong, P.; Rujichaipimon, W.; Sutjaritjai, N.; Aarre, J.",
       "rightsHolder": "Royal Botanic Gardens, Kew",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 480,
+      "height": 640
     },
     {
       "herbId": "herb-caodian-12",
@@ -521,7 +599,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "samchen0515",
       "rightsHolder": "samchen0515",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-caodian-13",
@@ -534,7 +614,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Violetta Dzizyurova",
       "rightsHolder": "Violetta Dzizyurova",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-14",
@@ -547,7 +629,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "SONU KUMAR",
       "rightsHolder": "SONU KUMAR",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-15",
@@ -560,7 +644,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "danish",
       "rightsHolder": "danish",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-16",
@@ -573,7 +659,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Sergey Mayorov",
       "rightsHolder": "Sergey Mayorov",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 374,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-17",
@@ -586,7 +674,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Maren",
       "rightsHolder": "Maren",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-caodian-18",
@@ -599,7 +689,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "castlebrinkk",
       "rightsHolder": "castlebrinkk",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-01",
@@ -612,7 +704,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Bill Apostle Stefanidis",
       "rightsHolder": "Bill Apostle Stefanidis",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-huaye-02",
@@ -625,7 +719,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "林继伟",
       "rightsHolder": "林继伟",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 332
     },
     {
       "herbId": "herb-huaye-03",
@@ -638,7 +734,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Qianmingzhishan",
       "rightsHolder": "Qianmingzhishan",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-04",
@@ -651,7 +749,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "mmn_noriko",
       "rightsHolder": "mmn_noriko",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-05",
@@ -664,7 +764,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Cecile from Earth",
       "rightsHolder": "Cecile from Earth",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-06",
@@ -677,7 +779,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Charles Davis",
       "rightsHolder": "Charles Davis",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-huaye-07",
@@ -690,7 +794,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Joke Colijn",
       "rightsHolder": "Joke Colijn",
-      "license": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc-nd/4.0/",
+      "width": 480,
+      "height": 640
     },
     {
       "herbId": "herb-huaye-08",
@@ -703,7 +809,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Sophia Bruce",
       "rightsHolder": "Sophia Bruce",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-09",
@@ -716,7 +824,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Sam Kieschnick",
       "rightsHolder": "Sam Kieschnick",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-10",
@@ -729,7 +839,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "piplis",
       "rightsHolder": "piplis",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-11",
@@ -742,7 +854,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "王冠小桂",
       "rightsHolder": "王冠小桂",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-12",
@@ -755,7 +869,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "alexpimm",
       "rightsHolder": "alexpimm",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-13",
@@ -768,7 +884,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Uditha Sandaruwan",
       "rightsHolder": "Uditha Sandaruwan",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-14",
@@ -781,7 +899,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Tonyia Johnson Stump",
       "rightsHolder": "Tonyia Johnson Stump",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-huaye-15",
@@ -794,7 +914,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "zcguoxia",
       "rightsHolder": "zcguoxia",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-16",
@@ -807,7 +929,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Anastasiia Merkulova",
       "rightsHolder": "Anastasiia Merkulova",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-huaye-17",
@@ -820,7 +944,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "quinnial",
       "rightsHolder": "quinnial",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-huaye-18",
@@ -833,7 +959,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Tonyia Johnson Stump",
       "rightsHolder": "Tonyia Johnson Stump",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-guoshi-01",
@@ -846,7 +974,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "红梅",
       "rightsHolder": "红梅",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 333,
+      "height": 500
     },
     {
       "herbId": "herb-guoshi-02",
@@ -859,7 +989,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Alexander Ganse",
       "rightsHolder": "Alexander Ganse",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-guoshi-03",
@@ -872,7 +1004,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "piplis",
       "rightsHolder": "piplis",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-guoshi-04",
@@ -885,7 +1019,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "piplis",
       "rightsHolder": "piplis",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-guoshi-05",
@@ -898,7 +1034,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Zixuan Li",
       "rightsHolder": "Zixuan Li",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-guoshi-06",
@@ -911,7 +1049,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "glasscat",
       "rightsHolder": "glasscat",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-guoshi-07",
@@ -924,7 +1064,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "通通",
       "rightsHolder": "通通",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-guoshi-08",
@@ -937,7 +1079,9 @@
       "dataset": "iNaturalist taxon photo",
       "creator": "(c) Jan Vršovský, some rights reserved (CC BY-SA), uploaded by Jan Vršovský",
       "rightsHolder": "",
-      "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-guoshi-09",
@@ -950,7 +1094,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "smfang",
       "rightsHolder": "smfang",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-guoshi-10",
@@ -963,7 +1109,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Ari Boehm",
       "rightsHolder": "Ari Boehm",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-guoshi-11",
@@ -976,7 +1124,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "zcguoxia",
       "rightsHolder": "zcguoxia",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-guoshi-12",
@@ -989,7 +1139,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Richard Johnstone",
       "rightsHolder": "Richard Johnstone",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-guoshi-13",
@@ -1002,7 +1154,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "marsblast",
       "rightsHolder": "marsblast",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-guoshi-14",
@@ -1015,7 +1169,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "莲子",
       "rightsHolder": "莲子",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 333,
+      "height": 500
     },
     {
       "herbId": "herb-guoshi-15",
@@ -1028,7 +1184,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Leon, C.J.; Lin, Y-L.",
       "rightsHolder": "Royal Botanic Gardens, Kew",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 480,
+      "height": 640
     },
     {
       "herbId": "herb-guoshi-16",
@@ -1041,7 +1199,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Yasmin Kirby",
       "rightsHolder": "Yasmin Kirby",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-guoshi-17",
@@ -1054,7 +1214,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "tusarkanti samal",
       "rightsHolder": "tusarkanti samal",
-      "license": "tusarkanti samal (cc-by-sa)"
+      "license": "tusarkanti samal (cc-by-sa)",
+      "width": 480,
+      "height": 640
     },
     {
       "herbId": "herb-guoshi-18",
@@ -1067,7 +1229,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Apichart Songsangchun",
       "rightsHolder": "Apichart Songsangchun",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-01",
@@ -1080,7 +1244,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "ken_pa77",
       "rightsHolder": "ken_pa77",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-02",
@@ -1093,7 +1259,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Yasmin Kirby",
       "rightsHolder": "Yasmin Kirby",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-03",
@@ -1106,7 +1274,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "-963270031",
       "rightsHolder": "",
-      "license": "Copyright by the creator. For license and creator details, see https://nabu-naturgucker-beobachtungen.de/?sprache=en&bild=1955062191."
+      "license": "Copyright by the creator. For license and creator details, see https://nabu-naturgucker-beobachtungen.de/?sprache=en&bild=1955062191.",
+      "width": 640,
+      "height": 480
     },
     {
       "herbId": "herb-shuize-04",
@@ -1119,7 +1289,9 @@
       "dataset": "Tropicos",
       "creator": "MBG",
       "rightsHolder": "MBG",
-      "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/"
+      "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "width": 427,
+      "height": 640
     },
     {
       "herbId": "herb-shuize-05",
@@ -1132,7 +1304,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "lq-yang",
       "rightsHolder": "lq-yang",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 332
     },
     {
       "herbId": "herb-shuize-06",
@@ -1145,7 +1319,9 @@
       "dataset": "iNaturalist taxon photo",
       "creator": "(c) Nikita Tiunov, some rights reserved (CC BY-NC-SA), uploaded by Nikita Tiunov",
       "rightsHolder": "",
-      "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+      "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-shuize-07",
@@ -1158,7 +1334,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Vyacheslav Luzanov",
       "rightsHolder": "Vyacheslav Luzanov",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-08",
@@ -1171,7 +1349,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Kim",
       "rightsHolder": "Kim",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-shuize-09",
@@ -1184,7 +1364,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Werner Rose",
       "rightsHolder": "Werner Rose",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-10",
@@ -1197,7 +1379,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "janalbitz",
       "rightsHolder": "janalbitz",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-shuize-11",
@@ -1210,7 +1394,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "William Yim",
       "rightsHolder": "William Yim",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-12",
@@ -1223,7 +1409,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Julie Thi Underhill",
       "rightsHolder": "Julie Thi Underhill",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 496,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-13",
@@ -1236,7 +1424,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Amasa Seking",
       "rightsHolder": "Amasa Seking",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-14",
@@ -1249,7 +1439,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Kalin Antonio Ocaña",
       "rightsHolder": "Kalin Antonio Ocaña",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-15",
@@ -1262,7 +1454,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Yasmin Kirby",
       "rightsHolder": "Yasmin Kirby",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-16",
@@ -1275,7 +1469,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Yasmin Kirby",
       "rightsHolder": "Yasmin Kirby",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-17",
@@ -1288,7 +1484,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "jordecology",
       "rightsHolder": "jordecology",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-18",
@@ -1301,7 +1499,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Steve Wu",
       "rightsHolder": "Steve Wu",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-shuize-19",
@@ -1314,7 +1514,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Eric Keith",
       "rightsHolder": "Eric Keith",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-01",
@@ -1327,7 +1529,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "yah_japan",
       "rightsHolder": "yah_japan",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 375
     },
     {
       "herbId": "herb-junmu-02",
@@ -1340,7 +1544,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Benjamin Hoffman",
       "rightsHolder": "Benjamin Hoffman",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-03",
@@ -1353,7 +1559,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "M.C.C.",
       "rightsHolder": "Royal Botanic Gardens, Kew",
-      "license": "http://creativecommons.org/licenses/by/4.0/"
+      "license": "http://creativecommons.org/licenses/by/4.0/",
+      "width": 480,
+      "height": 640
     },
     {
       "herbId": "herb-junmu-04",
@@ -1366,7 +1574,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Basu Dev Poudel",
       "rightsHolder": "Basu Dev Poudel",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 281
     },
     {
       "herbId": "herb-junmu-05",
@@ -1379,7 +1589,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Faisal Jama",
       "rightsHolder": "Faisal Jama",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-06",
@@ -1392,7 +1604,9 @@
       "dataset": "iNaturalist taxon photo",
       "creator": "(c) scott.zona, some rights reserved (CC BY)",
       "rightsHolder": "",
-      "license": "https://creativecommons.org/licenses/by/4.0/"
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-07",
@@ -1405,7 +1619,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Casper",
       "rightsHolder": "Casper",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 333
     },
     {
       "herbId": "herb-junmu-08",
@@ -1418,7 +1634,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "leenamehta",
       "rightsHolder": "leenamehta",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-09",
@@ -1431,7 +1649,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Sarah",
       "rightsHolder": "Sarah",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 376,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-10",
@@ -1444,7 +1664,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "王冠小桂",
       "rightsHolder": "王冠小桂",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-11",
@@ -1457,7 +1679,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "老山敬德",
       "rightsHolder": "老山敬德",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-12",
@@ -1470,7 +1694,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "R.Lecuona",
       "rightsHolder": "R.Lecuona",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-13",
@@ -1483,7 +1709,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Lau, A.",
       "rightsHolder": "Bernice Puahi Bishop Museum",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 481,
+      "height": 640
     },
     {
       "herbId": "herb-junmu-14",
@@ -1496,7 +1724,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Lau, A.",
       "rightsHolder": "Bernice Puahi Bishop Museum",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 481,
+      "height": 640
     },
     {
       "herbId": "herb-junmu-15",
@@ -1509,7 +1739,9 @@
       "dataset": "GBIF occurrence media",
       "creator": "Maxwell JF",
       "rightsHolder": "Naturalis Biodiversity Center",
-      "license": "http://creativecommons.org/publicdomain/zero/1.0/"
+      "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+      "width": 374,
+      "height": 640
     },
     {
       "herbId": "herb-junmu-16",
@@ -1522,7 +1754,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "Phakawat Kittikhunodom",
       "rightsHolder": "Phakawat Kittikhunodom",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 375,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-17",
@@ -1535,7 +1769,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "HP Lim",
       "rightsHolder": "HP Lim",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 500,
+      "height": 429
     },
     {
       "herbId": "herb-junmu-18",
@@ -1548,7 +1784,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "R.Lecuona",
       "rightsHolder": "R.Lecuona",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 281,
+      "height": 500
     },
     {
       "herbId": "herb-junmu-19",
@@ -1561,7 +1799,9 @@
       "dataset": "iNaturalist research-grade observations",
       "creator": "莲子",
       "rightsHolder": "莲子",
-      "license": "http://creativecommons.org/licenses/by-nc/4.0/"
+      "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+      "width": 333,
+      "height": 500
     }
   ],
   "summary": {
