@@ -163,7 +163,7 @@ git -c http.proxy= -c https.proxy= -c 'http.https://github.com.proxy=' push orig
 
 ## 9. 当前版本记录
 
-- 当前提交：`fdf4bb8 docs: add team handoff guide`（本文件本次修改尚未提交）
+- 当前提交：`04c8af7 feat: harden evidence chain, sharing and site closeout`
 - 当前资源版本：`redesign-v1-20261018-3`
 - 当前 Pages 分支：`gh-pages`
 - 当前在线入口：<https://runner-cpu.github.io/Herbal-Cosmos/>
