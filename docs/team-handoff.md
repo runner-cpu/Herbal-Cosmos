@@ -53,7 +53,7 @@
 
 - `herbs.json`：120 味本草；16 味 `deep/featured`，104 味 `overview/catalog`。
 - `herb-images.json`：120 条本草图片，当前全部 `ready`，路径指向 `src/assets/herbs/`，每条都带 `width`/`height` 以免图片加载时抖动。
-- `sources.json`：14 个公开来源，实体和关系均通过 ID 引用。
+- `sources.json`：13 个公开来源，实体和关系均通过 ID 引用。
 - `formulas.json`：3 首方剂。
 - `cultural-anchors.json`：3 个文化/研究史锚点。
 - `relations.json`：20 条可视化关系。
@@ -164,7 +164,7 @@ git -c http.proxy= -c https.proxy= -c 'http.https://github.com.proxy=' push orig
 ## 9. 当前版本记录
 
 - 当前提交：`04c8af7 feat: harden evidence chain, sharing and site closeout`
-- 当前资源版本：`redesign-v1-20261020-1`
+- 当前资源版本：`redesign-v1-20261020-3`（赛道适配版）
 - 当前 Pages 分支：`gh-pages`
 - 当前在线入口：<https://runner-cpu.github.io/Herbal-Cosmos/>
 - 现有设计背景：`docs/rebuild-plan.md`
@@ -174,7 +174,7 @@ git -c http.proxy= -c https.proxy= -c 'http.https://github.com.proxy=' push orig
 ### 2026-10-18 变更摘要（本轮）
 
 - 证据链改为只渲染真实登记的节点，并新增 `.chain-gap-note` 说明缺口；海报同步只画真实节点。
-- 新增 `#curation` 项目说明页：定位、三层数据精度、构建方式、无障碍、三分钟路径、已知不足、14 个来源。
+- 新增 `#curation` 项目说明页：定位、三层数据精度、构建方式、无障碍、三分钟路径、已知不足、13 个来源。
 - 首页新增“后来走到了哪里”中国故事带：1596《本草纲目》刊行、2015 青蒿素诺奖、WHO ICD-11 传统医学章节，均只陈述可核实事实。
 - 16 味精品的 72 条 `sourceRefs` 定位按来源重写，不再在药典、植物志、POWE、NCBI 之间复制同一段药典描述。
 - 新增 1200×630 分享卡 `src/assets/share/og-cover.jpg`，OG/Twitter 元数据与 JSON-LD 同步更新。
@@ -188,5 +188,13 @@ git -c http.proxy= -c https.proxy= -c 'http.https://github.com.proxy=' push orig
 - 百子柜生境标签的“被按下”观感修正为内嵌朱砂导轨 + 平坦深色底，抬升只在 hover/focus 出现；抽屉改为用户真正抽出后才打开，页面加载时右侧显示 `CABINET CLOSED 还没有抽出抽屉。` 引导面板。
 - 错误页与 404 的品牌标记改为 SVG 印章；分享卡 `og-cover.jpg` 的印章由文字“本”改为同一套矢量草药路径重绘。
 - 清理已无引用的 `.drawer-glyph`、`.glyph-*` 旧字符图标 CSS，避免后续误用。
+
+### 2026-10-20 变更摘要（赛道适配）
+
+- 首页“后来走到了哪里”由三张等宽卡片改为一条时间轴：1596、2015、ICD-11 三点共用一条基线，叙事连成一条线。
+- 首页“四个入口”由四张边框卡片改为一条带编号的路线，细线分隔，减少与上文重复的卡片容器。
+- `#curation` 新增 01 定位、02 赛道对应、06 使用场景、07 与既有做法差异、11 AI 工具使用说明，以及英文摘要；10 核验清单列出可执行的验证命令与版本串。
+- 删除无法核实的 UNESCO Memory of the World 来源（S007）及其在 3 个文化锚点、6 条关系中的引用；公开来源从 14 个修正为 13 个，相关文案同步。
+- 星球页占位符与底部边界说明提高不透明度（0.43→0.62、0.45→0.58），小字号从 10px 提到 11px。
 
 接手时先从 P0 开始；如果发现现状与本文档不一致，以仓库实际代码和通过的测试为准，并在本文件的“当前版本记录”中补一条变更说明。

@@ -6,7 +6,7 @@
  * changing the visual layer. Each rendered particle keeps the source `id`.
  */
 
-import { icon } from './icons.js?v=redesign-v1-20261020-1';
+import { icon } from './icons.js?v=redesign-v1-20261020-3';
 
 const HABITAT_COLORS = {
   mountain: '#d86a4f',

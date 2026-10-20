@@ -11,8 +11,7 @@
       "label": "早期本草名录记录",
       "evidenceStatus": "contextual",
       "sourceIds": [
-        "S010",
-        "S007"
+        "S010"
       ],
       "boundary": "文化史关系，不等同疗效证据。"
     },
@@ -24,8 +23,7 @@
       "label": "早期本草名录记录",
       "evidenceStatus": "contextual",
       "sourceIds": [
-        "S010",
-        "S007"
+        "S010"
       ],
       "boundary": "古籍分类仅作历史语境。"
     },
@@ -37,8 +35,7 @@
       "label": "本草名称与性状线索",
       "evidenceStatus": "contextual",
       "sourceIds": [
-        "S010",
-        "S007"
+        "S010"
       ],
       "boundary": "不将古籍描述解释为现代用药建议。"
     },
@@ -50,8 +47,7 @@
       "label": "形态、来源与名称汇编",
       "evidenceStatus": "contextual",
       "sourceIds": [
-        "S011",
-        "S007"
+        "S011"
       ],
       "boundary": "版本和产地描述需回到原书核对。"
     },
@@ -63,8 +59,7 @@
       "label": "花卉与本草双重语境",
       "evidenceStatus": "contextual",
       "sourceIds": [
-        "S011",
-        "S007"
+        "S011"
       ],
       "boundary": "观赏和药材身份分开。"
     },
@@ -76,8 +71,7 @@
       "label": "果实与产地记录",
       "evidenceStatus": "contextual",
       "sourceIds": [
-        "S011",
-        "S007"
+        "S011"
       ],
       "boundary": "地方物产记录不等同保健结论。"
     },

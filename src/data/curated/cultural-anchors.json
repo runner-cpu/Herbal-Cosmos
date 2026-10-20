@@ -16,18 +16,13 @@
       ],
       "evidenceStatus": "historical-text",
       "sourceIds": [
-        "S010",
-        "S007"
+        "S010"
       ],
       "boundary": "成书年代和具体篇章存在版本学讨论；项目展示的是文化史锚点，不把古代分类当作现代医学证据。",
       "sourceRefs": [
         {
           "sourceId": "S010",
-          "locator": "Chinese Text Project：检索《神农本草经》书名和章节；UNESCO Memory of the World 传统医学文献遗产索引"
-        },
-        {
-          "sourceId": "S007",
-          "locator": "Chinese Text Project：检索《神农本草经》书名和章节；UNESCO Memory of the World 传统医学文献遗产索引"
+          "locator": "Chinese Text Project：检索《神农本草经》书名和章节；核对早期本草条目与版本说明"
         }
       ]
     },
@@ -42,20 +37,15 @@
         "herb-chrysanthemum-morifolium",
         "herb-lycium-barbarum"
       ],
-      "evidenceStatus": "historical-text + heritage-register",
+      "evidenceStatus": "historical-text",
       "sourceIds": [
-        "S011",
-        "S007"
+        "S011"
       ],
       "boundary": "古籍中的药物记载受时代知识和版本影响；项目不把古籍描述直接转换成现代功效。",
       "sourceRefs": [
         {
           "sourceId": "S011",
-          "locator": "Chinese Text Project：检索《本草纲目》书名和卷次；UNESCO Memory of the World 文献遗产索引"
-        },
-        {
-          "sourceId": "S007",
-          "locator": "Chinese Text Project：检索《本草纲目》书名和卷次；UNESCO Memory of the World 文献遗产索引"
+          "locator": "Chinese Text Project：检索《本草纲目》书名和卷次；核对药材条目与引文位置"
         }
       ]
     },

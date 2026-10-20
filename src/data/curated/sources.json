@@ -124,17 +124,6 @@
       "boundary": "电子化文本的版本和断句需与馆藏或影印本交叉核对；项目只作文化史展示。"
     },
     {
-      "id": "S007",
-      "title": "Memory of the World",
-      "publisher": "UNESCO",
-      "url": "https://www.unesco.org/en/memory-world",
-      "accessedAt": "2026-10-11",
-      "locator": "Memory of the World 项目索引中关于传统医学文献遗产的条目",
-      "evidenceType": "heritage-register",
-      "scope": "本草文献作为文献遗产的公共文化背景",
-      "boundary": "文化遗产登记不证明任何医疗效果。"
-    },
-    {
       "id": "S008",
       "title": "WHO Traditional Medicine Strategy: 2014–2023",
       "publisher": "World Health Organization",
