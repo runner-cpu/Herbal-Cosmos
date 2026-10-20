@@ -138,6 +138,53 @@ def build_planet(size, center, radius, rng):
     return layer.filter(ImageFilter.GaussianBlur(0.4))
 
 
+def cubic_bezier(points, steps=24):
+    """Sample a cubic bezier so PIL can draw the same curves as the SVG mark."""
+    (x0, y0), (x1, y1), (x2, y2), (x3, y3) = points
+    out = []
+    for index in range(steps + 1):
+        t = index / steps
+        u = 1 - t
+        out.append((
+            u**3 * x0 + 3 * u * u * t * x1 + 3 * u * t * t * x2 + t**3 * x3,
+            u**3 * y0 + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t**3 * y3,
+        ))
+    return out
+
+
+def draw_seal() -> Image.Image:
+    """The brand chop: a herb sprig pressed inside a square, drawn as vectors.
+
+    The site renders this mark as an inline SVG; drawing the same paths here
+    keeps the share card from falling back to a lone glyph as the icon.
+    """
+    scale = 4  # 24-unit viewBox rendered at 96px before downsampling
+    size = round(24 * scale)
+    seal = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    paint = ImageDraw.Draw(seal)
+    paint.rectangle((0, 0, size - 1, size - 1), fill=CINNABAR + (255,))
+    ink = PAPER + (255,)
+    stroke = round(1.5 * scale)
+
+    paint.rounded_rectangle(
+        (round(3.2 * scale), round(3.2 * scale), round(20.8 * scale), round(20.8 * scale)),
+        radius=round(2.2 * scale),
+        outline=ink,
+        width=stroke,
+    )
+    paint.line([(12 * scale, 18.4 * scale), (12 * scale, 11.8 * scale)], fill=ink, width=stroke)
+    for curve in (
+        ((12, 13.6), (12, 10.5), (13.9, 8.5), (16.5, 8.1)),
+        ((16.5, 8.1), (16.8, 11.1), (14.8, 13.3), (12, 13.6)),
+        ((12, 15.4), (12, 12.9), (10.4, 11.3), (8.1, 10.9)),
+        ((8.1, 10.9), (7.9, 13.4), (9.5, 15.1), (12, 15.4)),
+    ):
+        paint.line([(x * scale, y * scale) for x, y in cubic_bezier(curve)], fill=ink, width=stroke, joint="curve")
+
+    seal = seal.resize((64, 64), Image.LANCZOS)
+    return seal.rotate(-4, expand=True, resample=Image.BICUBIC)
+
+
 def main() -> None:
     sketch = Sketch(20261018)
     herbs, sources = count_herbs(), count_sources()
@@ -167,11 +214,7 @@ def main() -> None:
     tracked_18 = load_font(FONT_CJK, 18)
     latin_20 = load_font(FONT_LATIN, 20)
 
-    seal = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
-    seal_paint = ImageDraw.Draw(seal)
-    seal_paint.rectangle((0, 0, 63, 63), fill=CINNABAR + (255,))
-    seal_paint.text((32, 34), "本", font=load_font(FONT_CJK_BOLD, 40), fill=PAPER, anchor="mm")
-    seal = seal.rotate(-4, expand=True, resample=Image.BICUBIC)
+    seal = draw_seal()
     card.paste(seal, (88, 62), seal)
     draw = ImageDraw.Draw(card)
 

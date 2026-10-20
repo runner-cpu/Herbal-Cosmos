@@ -164,7 +164,7 @@ git -c http.proxy= -c https.proxy= -c 'http.https://github.com.proxy=' push orig
 ## 9. 当前版本记录
 
 - 当前提交：`04c8af7 feat: harden evidence chain, sharing and site closeout`
-- 当前资源版本：`redesign-v1-20261018-3`
+- 当前资源版本：`redesign-v1-20261020-1`
 - 当前 Pages 分支：`gh-pages`
 - 当前在线入口：<https://runner-cpu.github.io/Herbal-Cosmos/>
 - 现有设计背景：`docs/rebuild-plan.md`
@@ -180,5 +180,13 @@ git -c http.proxy= -c https.proxy= -c 'http.https://github.com.proxy=' push orig
 - 新增 1200×630 分享卡 `src/assets/share/og-cover.jpg`，OG/Twitter 元数据与 JSON-LD 同步更新。
 - 所有 120 条图片补 `width`/`height`；灯箱披露同物种不同药用部位共用同一观测照片的 7 组情况。
 - `color-scheme` 修正为 `light`，新增打印样式、带品牌与五条返回路径的 `404.html`，未知哈希回到首页并提示。
+
+### 2026-10-20 变更摘要（图标与排版）
+
+- 新增 `src/icons.js`：17 枚 24×24、1.5 描边、同一家族的 SVG 图标，替换全部“用文字当图标”的位置（品牌印章、六类生境、柜子索引、搜索、关闭、证据链节点、星球详情、图片缺失占位）。
+- 首页路由标题改为整幅堆叠标题并启用 `text-wrap:balance`，“四个入口，四种读法。”不再把“法。”挤到第二行；`h1–h3` 与正文分别启用 balance/pretty。
+- 百子柜生境标签的“被按下”观感修正为内嵌朱砂导轨 + 平坦深色底，抬升只在 hover/focus 出现；抽屉改为用户真正抽出后才打开，页面加载时右侧显示 `CABINET CLOSED 还没有抽出抽屉。` 引导面板。
+- 错误页与 404 的品牌标记改为 SVG 印章；分享卡 `og-cover.jpg` 的印章由文字“本”改为同一套矢量草药路径重绘。
+- 清理已无引用的 `.drawer-glyph`、`.glyph-*` 旧字符图标 CSS，避免后续误用。
 
 接手时先从 P0 开始；如果发现现状与本文档不一致，以仓库实际代码和通过的测试为准，并在本文件的“当前版本记录”中补一条变更说明。
