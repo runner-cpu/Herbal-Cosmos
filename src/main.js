@@ -1,12 +1,11 @@
-import { relationExplorer } from './relations.js';
-import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, habitatFor } from './ui-layout.js?v=redesign-v1-20261020-3';
-import { particlePlanetMarkup, mountParticlePlanet } from './planet.js?v=redesign-v1-20261020-3';
-import { icon } from './icons.js?v=redesign-v1-20261020-3';
+import { relationExplorer } from './relations.js?v=planet-layout-v5-20261022-1';
+import { renderCosmosHeader, renderCosmosHome, renderHabitatCabinet, cabinetReadingMarkup, cabinetMorphologyMarkup, habitatFor } from './ui-layout.js?v=planet-layout-v5-20261022-1';
+import { icon } from './icons.js?v=planet-layout-v5-20261022-1';
 
 const ROOT = './src/data/curated/';
 // Keep the catalog cache key independent from the application shell. GitHub Pages
 // can retain a previously fetched JSON response even after the JS bundle updates.
-const DATA_VERSION = 'redesign-v1-20261020-3';
+const DATA_VERSION = 'planet-layout-v5-20261022-1';
 const state = {
   view: 'home',
   routeMiss: '',
@@ -17,6 +16,7 @@ const state = {
   libraryType: 'all',
   libraryHabitat: 'all',
   libraryDepth: 'all',
+  libraryLimit: 24,
   compareId: '',
   compareOpen: false,
   relationFocus: '',
@@ -25,6 +25,10 @@ const state = {
   cabinetPicked: false,
   planetHabitat: 'all',
   planetHerbId: '',
+  planetQuery: '',
+  atlasHerbId: 'herb-artemisia-annua',
+  atlasHabitat: 'all',
+  atlasQuery: '',
   imageQuizOpen: false,
   imageQuizId: '',
   imageQuizOptions: [],
@@ -34,13 +38,45 @@ const state = {
 };
 let data = null;
 let disposePlanet = null;
+let disposePlanetEngine = null;
+let disposeAtlas = null;
+let viewGeneration = 0;
+let atlasGeneration = 0;
+let searchTimer = 0;
+let planetModule = null;
+let atlasModule = null;
+let planetModulePromise = null;
+let atlasModulePromise = null;
+let disposeApothecary = null;
+let hallEngine = null;
 
-const VIEW_IDS = ['home', 'cabinet', 'planet', 'trace', 'library', 'curation'];
+async function loadPlanetModule() {
+  if (planetModule) return planetModule;
+  planetModulePromise ??= import(new URL('./planet.js?v=planet-layout-v5-20261022-1', import.meta.url).href)
+    .then((module) => { planetModule = module; return module; })
+    .catch((error) => { planetModulePromise = null; throw error; });
+  return planetModulePromise;
+}
+
+async function loadAtlasModule() {
+  if (atlasModule) return atlasModule;
+  atlasModulePromise ??= import(new URL('./atlas.js?v=planet-layout-v5-20261022-1', import.meta.url).href)
+    .then((module) => { atlasModule = module; return module; })
+    .catch((error) => { atlasModulePromise = null; throw error; });
+  return atlasModulePromise;
+}
+const VIEW_IDS = ['home', 'cabinet', 'planet', 'atlas', 'trace', 'library', 'curation'];
 
 function applyHash() {
   const value = window.location.hash.replace(/^#/, '');
-  if (!value || VIEW_IDS.includes(value)) {
-    state.view = value || 'home';
+  const [route, search = ''] = value.split('?');
+  const params = new URLSearchParams(search);
+  if (!value || VIEW_IDS.includes(route)) {
+    state.view = route || 'home';
+    if (state.view === 'atlas') {
+      const requested = params.get('herb');
+      if (requested && data) state.atlasHerbId = find(herbs(), requested)?.id || state.atlasHerbId;
+    }
     state.routeMiss = '';
     return;
   }
@@ -51,6 +87,11 @@ function applyHash() {
   state.view = 'home';
   // Normalise the address bar so a reload does not replay the same dead link.
   history.replaceState({ view: 'home' }, '', '#home');
+}
+
+function atlasHash(id = state.atlasHerbId) {
+  const herb = find(herbs(), id)?.id;
+  return herb ? `#atlas?herb=${encodeURIComponent(herb)}` : '#atlas';
 }
 
 const esc = (value = '') => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -233,11 +274,14 @@ function library() {  const query = state.query.trim().toLowerCase();
   const featured = items.filter((item) => item.type === '本草' && item.depth === 'deep');
   const featuredCatalog = herbItems.filter((item) => item.depth === 'deep');
   const expanded = items.filter((item) => !(item.type === '本草' && item.depth === 'deep'));
+  const expandedAllowance = Math.max(0, state.libraryLimit - featured.length);
+  const visibleExpanded = expanded.slice(0, expandedAllowance);
+  const hasMore = visibleExpanded.length < expanded.length;
   const habitatOptions = `<option value="all">全部生境</option>${habitatLabels.map((label) => `<option value="${esc(label)}" ${state.libraryHabitat === label ? 'selected' : ''}>${esc(label)}</option>`).join('')}`;
   const depthOptions = `<option value="all">全部深度</option><option value="deep" ${state.libraryDepth === 'deep' ? 'selected' : ''}>深度条目 · 16</option><option value="overview" ${state.libraryDepth === 'overview' ? 'selected' : ''}>拓展条目 · 104</option>`;
   const quickHabitats = habitatLabels.map((label) => { const count = featuredCatalog.filter((item) => item.habitat === label).length; return `<button class="library-habitat-chip ${state.libraryHabitat === label ? 'is-active' : ''}" data-library-quick-habitat="${esc(label)}" aria-pressed="${state.libraryHabitat === label}"><span>${esc(label)}</span><b>${count}</b></button>`; }).join('');
   const noResults = !featured.length && !expanded.length ? '<div class="empty-state"><strong>没有匹配项</strong><p>换一个关键词，或清除筛选重新浏览。</p></div>' : '';
-  return `<main class="library-view" aria-labelledby="library-title"><div class="page-intro library-intro"><div><p class="kicker">OPEN LIBRARY · 16 FEATURED / 104 EXPANDED</p><h1 id="library-title">先读精品，再查全量。</h1><p>先从 16 味深度档案进入本草的形态、生境和证据，再把筛选器打开到 104 味拓展目录。资料库保留全量数据，但让第一次进入的人先看到最有解释力的部分。</p></div><div class="intro-actions"><button class="quiet-button" data-view="trace">← 回到一味档案</button><button class="primary-button compact" data-image-quiz-open>${state.imageQuizOpen ? '收起看图识本草' : '看图识本草 ↗'}</button></div></div><div class="library-proof"><div><b>16</b><span>味深度档案</span></div><div><b>104</b><span>味拓展目录</span></div><div><b>6</b><span>类主生境</span></div><div class="library-proof-note">每一张卡片都保留照片、来源和阅读边界。</div></div><div class="library-featured-index"><div><span class="panel-label">FEATURED HABITATS</span><h2>先按生境找到一组精品。</h2></div><div class="library-habitat-chips"><button class="library-habitat-chip ${state.libraryHabitat === 'all' ? 'is-active' : ''}" data-library-quick-habitat="all" aria-pressed="${state.libraryHabitat === 'all'}"><span>全部精品</span><b>${featured.length}</b></button>${quickHabitats}</div></div><div class="library-toolbar"><label class="search-box wide"><span aria-hidden="true">${icon('search')}</span><input data-library-search value="${esc(state.query)}" placeholder="搜索本草、方剂、学名、形态或来源关键词" aria-label="搜索资料库全部条目" /></label><div class="filter-tabs" role="group" aria-label="按条目类型筛选">${['all', '本草', '方剂', '文化锚点'].map((value) => `<button class="filter-tab ${state.libraryType === value ? 'active' : ''}" data-library-type="${value}" aria-pressed="${state.libraryType === value}">${value === 'all' ? '全部' : value}</button>`).join('')}</div><div class="library-selects"><label>生境<select data-library-habitat>${habitatOptions}</select></label><label>深度<select data-library-depth>${depthOptions}</select></label></div></div><div class="library-summary"><span>当前结果 <b>${items.length}</b></span><span>精品结果 <b>${featured.length}</b></span><span>拓展及关联 <b>${expanded.length}</b></span><span>重新检索于 ${esc(data.herbs.researchedAt)}</span></div>${state.imageQuizOpen ? imageQuiz() : ''}${featured.length ? `<section class="library-section library-featured-section" aria-labelledby="library-featured-title"><div class="library-section-heading"><div><span class="section-index">01 / DEEP ARCHIVE</span><h2 id="library-featured-title">16 味精品图谱</h2><p>从形态与生境进入，再回到一味档案读完整证据链。</p></div><span class="library-section-count">${featured.length} / 16</span></div><div class="library-grid library-featured-grid">${featured.map((item) => libraryCard(item, true)).join('')}</div></section>` : ''}${expanded.length ? `<section class="library-section library-expanded-section" aria-labelledby="library-expanded-title"><div class="library-section-heading"><div><span class="section-index">02 / OPEN CATALOG</span><h2 id="library-expanded-title">拓展目录与关联资料</h2><p>104 味本草和方剂、文化锚点在这里展开，筛选器会同步作用于全量结果。</p></div><span class="library-section-count">${expanded.length} 条结果</span></div><div class="library-grid library-expanded-grid">${expanded.map((item) => libraryCard(item)).join('')}</div></section>` : ''}${noResults}</main>`;
+  return `<main class="library-view" aria-labelledby="library-title"><div class="page-intro library-intro"><div><p class="kicker">OPEN LIBRARY · 16 FEATURED / 104 EXPANDED</p><h1 id="library-title">先读精品，再查全量。</h1><p>先从 16 味深度档案进入本草的形态、生境和证据，再把筛选器打开到 104 味拓展目录。资料库保留全量数据，但让第一次进入的人先看到最有解释力的部分。</p></div><div class="intro-actions"><button class="quiet-button" data-view="trace">← 回到一味档案</button><button class="primary-button compact" data-image-quiz-open>${state.imageQuizOpen ? '收起看图识本草' : '看图识本草 ↗'}</button></div></div><div class="library-proof"><div><b>16</b><span>味深度档案</span></div><div><b>104</b><span>味拓展目录</span></div><div><b>6</b><span>类主生境</span></div><div class="library-proof-note">每一张卡片都保留照片、来源和阅读边界。</div></div><div class="library-featured-index"><div><span class="panel-label">FEATURED HABITATS</span><h2>先按生境找到一组精品。</h2></div><div class="library-habitat-chips"><button class="library-habitat-chip ${state.libraryHabitat === 'all' ? 'is-active' : ''}" data-library-quick-habitat="all" aria-pressed="${state.libraryHabitat === 'all'}"><span>全部精品</span><b>${featured.length}</b></button>${quickHabitats}</div></div><div class="library-toolbar"><label class="search-box wide"><span aria-hidden="true">${icon('search')}</span><input data-library-search value="${esc(state.query)}" placeholder="搜索本草、方剂、学名、形态或来源关键词" aria-label="搜索资料库全部条目" /></label><div class="filter-tabs" role="group" aria-label="按条目类型筛选">${['all', '本草', '方剂', '文化锚点'].map((value) => `<button class="filter-tab ${state.libraryType === value ? 'active' : ''}" data-library-type="${value}" aria-pressed="${state.libraryType === value}">${value === 'all' ? '全部' : value}</button>`).join('')}</div><div class="library-selects"><label>生境<select data-library-habitat>${habitatOptions}</select></label><label>深度<select data-library-depth>${depthOptions}</select></label></div></div><div class="library-summary"><span>当前结果 <b>${items.length}</b></span><span>精品结果 <b>${featured.length}</b></span><span>拓展及关联 <b>${expanded.length}</b></span><span>重新检索于 ${esc(data.herbs.researchedAt)}</span></div>${state.imageQuizOpen ? imageQuiz() : ''}${featured.length ? `<section class="library-section library-featured-section" aria-labelledby="library-featured-title"><div class="library-section-heading"><div><span class="section-index">01 / DEEP ARCHIVE</span><h2 id="library-featured-title">16 味精品图谱</h2><p>从形态与生境进入，再回到一味档案读完整证据链。</p></div><span class="library-section-count">${featured.length} / 16</span></div><div class="library-grid library-featured-grid">${featured.map((item) => libraryCard(item, true)).join('')}</div></section>` : ''}${expanded.length ? `<section class="library-section library-expanded-section" aria-labelledby="library-expanded-title"><div class="library-section-heading"><div><span class="section-index">02 / OPEN CATALOG</span><h2 id="library-expanded-title">拓展目录与关联资料</h2><p>拓展本草与关联资料按 16 条分批展开，搜索和生境筛选始终作用于全量结果。</p></div><span class="library-section-count">已展示 ${visibleExpanded.length} / ${expanded.length}</span></div><div class="library-grid library-expanded-grid">${visibleExpanded.map((item) => libraryCard(item)).join('')}</div>${hasMore ? `<div class="library-more"><button type="button" class="quiet-button" data-library-more>再加载 16 条 <span>${expanded.length - visibleExpanded.length} 条待显示</span></button></div>` : ''}</section>` : ''}${noResults}</main>`;
 }
 
 /**
@@ -252,19 +296,19 @@ function library() {  const query = state.query.trim().toLowerCase();
  * from existing work, and materials a judge can actually verify.
  */
 function curationTrack(meta) {
-  return `<section class="curation-block curation-block-wide"><span class="section-index">01 / POSITION</span><h2>为什么用“宇宙”讲本草</h2><p>本草是一套被连续书写了约两千年的知识系统：同一株草被不同朝代命名、校补、入方，又被现代的植物学与药典重新定位。单篇图文很难让人看见这种“层层叠加”的结构。</p><p>所以这里不按时间轴排布，而把 ${meta.herbCount} 味本草放进两个空间：白天的百子柜按生境归位，夜里的粒子星球按关系聚拢。同一味本草在两个空间里位置不同，读者可以对照着理解“它长在哪里”和“它被谁引用”。</p></section><section class="curation-block curation-block-wide"><span class="section-index">02 / TRACK</span><h2>与赛道要求怎么对应</h2><p>本作品报名 2026 年第十四届全国大学生数字媒体科技作品及创意竞赛「科技+创意，讲好中国故事」作品赛项，对应两个参赛方向：</p><ul class="curation-track"><li><b>01 中华优秀传统文化数字化表达</b><span>把本草典籍、生境知识与药用部位组织成可探索的空间和可核对的证据链，而不是把古籍原文平铺成网页。</span></li><li><b>04 面向国际传播的数字内容</b><span>界面保留英文标注与英文摘要，植物名称使用拉丁学名，事实陈述直接链接公开来源，减少文化符号的简单翻译。</span></li></ul><p>选题落点：一部被连续书写约两千年的本草知识系统，今天仍然可以被查找、被核对、被继续书写。</p></section>`;
+  return `<section class="curation-block curation-block-wide"><span class="section-index">01 / POSITION</span><h2>为什么用“宇宙”讲本草</h2><p>本草是一套被连续书写了约两千年的知识系统：同一株草被不同朝代命名、校补、入方，又被现代的植物学与药典重新定位。单篇图文很难让人看见这种“层层叠加”的结构。</p><p>所以这里不按时间轴排布，而把 ${meta.herbCount} 味本草放进三种可切换的读法：百子药堂按生境归位，粒子星球把目录与关系聚成一颗可旋转的 3D 地球，生境地图再把 GBIF 开放观测落回中国底图。同一味本草在不同读法里位置不同，读者可以对照着理解“它长在哪里”“它被谁记录”和“它被谁引用”。</p></section><section class="curation-block curation-block-wide"><span class="section-index">02 / TRACK</span><h2>与赛道要求怎么对应</h2><p>本作品报名 2026 年第十四届全国大学生数字媒体科技作品及创意竞赛「科技+创意，讲好中国故事」作品赛项，对应两个参赛方向：</p><ul class="curation-track"><li><b>01 中华优秀传统文化数字化表达</b><span>把本草典籍、生境知识与药用部位组织成可探索的空间和可核对的证据链，而不是把古籍原文平铺成网页。</span></li><li><b>04 面向国际传播的数字内容</b><span>界面保留英文标注与英文摘要，植物名称使用拉丁学名，事实陈述直接链接公开来源，减少文化符号的简单翻译。</span></li></ul><p>选题落点：一部被连续书写约两千年的本草知识系统，今天仍然可以被查找、被核对、被继续书写。</p></section>`;
 }
 
 function curationAudience() {
-  return `<section class="curation-block curation-block-wide"><span class="section-index">06 / AUDIENCE</span><h2>谁在什么场景里使用</h2><p>四类场景都不需要账号，也不依赖后端：</p><ol class="curation-scenes"><li><b>高校通识与中医药文化课程</b><span>教师用「一味档案」做 15 分钟案例课，学生沿证据链逐条点开来源，练习区分植物身份、历史语境与现代研究。</span></li><li><b>中学生物、语文、历史跨学科项目</b><span>「看图识本草」做课堂导入，「百子柜」练习按生境分类；图片自带来源卡，可以直接讲版权与证据。</span></li><li><b>博物馆、图书馆与校园展陈</b><span>作为触屏导览或展后延伸阅读：静态站点可离线部署，无账号、无遥测、无自动播放音频。</span></li><li><b>国际传播与文化交流</b><span>海外读者可以从拉丁学名和英文摘要进入，再沿公开来源核对，不要求先接受一套文化叙事。</span></li></ol></section>`;
+  return `<section class="curation-block curation-block-wide"><span class="section-index">06 / AUDIENCE</span><h2>谁在什么场景里使用</h2><p>四类场景都不需要账号，也不依赖后端：</p><ol class="curation-scenes"><li><b>高校通识与中医药文化课程</b><span>教师用「一味档案」做 15 分钟案例课，学生沿证据链逐条点开来源，练习区分植物身份、历史语境与现代研究。</span></li><li><b>中学生物、语文、历史跨学科项目</b><span>「看图识本草」做课堂导入，「百子药堂」练习按生境分类；图片自带来源卡，可以直接讲版权与证据。</span></li><li><b>博物馆、图书馆与校园展陈</b><span>作为触屏导览或展后延伸阅读：静态站点可离线部署，无账号、无遥测、无自动播放音频。</span></li><li><b>国际传播与文化交流</b><span>海外读者可以从拉丁学名和英文摘要进入，再沿公开来源核对，不要求先接受一套文化叙事。</span></li></ol></section>`;
 }
 
 function curationDifference() {
-  return `<section class="curation-block curation-block-wide"><span class="section-index">07 / DIFFERENCE</span><h2>和既有做法差在哪里</h2><p>同类作品常见四种做法，本项目逐一给出不同的处理：</p><dl class="curation-diff"><div><dt>条目式图鉴，以功效描述为主</dt><dd>改为空间化探索加证据链：先按生境找到它，再逐段核对它被谁记录、被谁引用。</dd></div><div><dt>知识图谱追求「全连接」</dt><dd>只画已登记的关系，缺口用文字说明，不用占位节点补足；节点大小和距离不代表药效或重要性。</dd></div><div><dt>文化展示停留在符号拼贴</dt><dd>生境分类、植物学身份、历史语境三层分开标注，传统分类与现代研究不互相替代。</dd></div><div><dt>交互以卡片列表为主</dt><dd>抽屉向左前方抽出的 Z 轴动作、可旋转的粒子星球、完整的键盘目录，三种读法共用一份数据。</dd></div></dl></section>`;
+  return `<section class="curation-block curation-block-wide"><span class="section-index">07 / DIFFERENCE</span><h2>和既有做法差在哪里</h2><p>同类作品常见四种做法，本项目逐一给出不同的处理：</p><dl class="curation-diff"><div><dt>条目式图鉴，以功效描述为主</dt><dd>改为空间化探索加证据链：先按生境找到它，再逐段核对它被谁记录、被谁引用。</dd></div><div><dt>知识图谱追求「全连接」</dt><dd>只画已登记的关系，缺口用文字说明，不用占位节点补足；节点大小和距离不代表药效或重要性。</dd></div><div><dt>文化展示停留在符号拼贴</dt><dd>生境分类、植物学身份、历史语境三层分开标注，传统分类与现代研究不互相替代。</dd></div><div><dt>交互以卡片列表为主</dt><dd>抽屉向左前方抽出的 Z 轴动作、带大气层的 3D 地球、开放观测地图与完整键盘目录共用一份数据，并各自保留降级路径。</dd></div></dl></section>`;
 }
 
 function curationVerify(meta) {
-  return `<section class="curation-block curation-block-wide"><span class="section-index">10 / VERIFY</span><h2>评委可以怎么核验</h2><ul class="curation-check"><li><code>npm run build</code><span>校验入口文件与 8 个 JSON 数据文件可解析，输出 4 个应用文件与 8 个 curated 文件。</span></li><li><code>npm test</code><span>3 组测试：${meta.herbCount} 味目录与 ${meta.deepCount} 味深度档案完整性、来源引用与 locator、图片文件存在、关系图来源可见。</span></li><li><code>npm run serve 4173</code><span>任意静态服务器都能打开同一份产物；线上地址与仓库 gh-pages 分支指向同一提交。</span></li><li><code>${meta.version}</code><span>同一个版本串同时出现在 HTML 的 CSS/JS 引用、模块 import 和数据请求中，便于确认看到的是同一版。</span></li><li><b>材料</b><span>README 记录体验重点与数据边界，三分钟脚本与问答在 docs/competition-presentation.md，交接与提交检查清单在 docs/team-handoff.md。代码、数据与文档都在同一仓库里，可按提交记录追溯。</span></li></ul></section>`;
+  return `<section class="curation-block curation-block-wide"><span class="section-index">10 / VERIFY</span><h2>评委可以怎么核验</h2><ul class="curation-check"><li><code>npm run build</code><span>校验入口文件、8 份策展 JSON、${meta.herbCount} 味 GBIF 快照、许可与网格字段、Natural Earth 与星球纹理；再用 esbuild 生成本地 3D 引擎与动效运行时，并复制 MapLibre 资产。</span></li><li><code>npm test</code><span>自动检查 ${meta.herbCount} 味目录与 ${meta.deepCount} 味深度档案的完整性、来源引用与 locator、图片文件、关系图来源、GBIF 许可白名单与聚合字段、前端降级路径与减少动态效果规则。</span></li><li><code>npm run serve</code><span>用任意静态服务器打开同一份产物；在线地图不可用时自动切到本地 Natural Earth 或 Canvas 网格，不依赖应用后端。</span></li><li><code>${meta.version}</code><span>同一个版本串同时出现在 HTML 的 CSS/JS 引用、模块 import、GBIF 与地图请求中，便于确认看到的是同一版。</span></li><li><b>材料</b><span>README 记录体验重点、依赖、许可与数据边界；四分钟演示脚本在 docs/competition-presentation.md，交接与提交检查清单在 docs/team-handoff.md。代码、数据与文档都在同一仓库里，可按提交记录追溯。</span></li></ul></section>`;
 }
 
 function curationAiUse() {
@@ -289,36 +333,383 @@ function curation() {
   const withFormula = herbs().filter((item) => firstFormula(item.id)).length;
   const withResearch = herbs().filter((item) => firstAnchor(item.id, 'modern-research-history')).length;
   const licences = [...new Set(data.images.images.map((entry) => entry.license).filter(Boolean))];
-  const version = 'redesign-v1-20261020-3';
-  return `<main class="curation-view" aria-labelledby="curation-title"><div class="page-intro"><div><p class="kicker">PROJECT NOTES · 项目说明</p><h1 id="curation-title">把一部草木志，<br />做成可以漫游的空间。</h1><p>这一页写给第一次打开网站的人：它是什么、面向谁、和同类作品差在哪里、怎么被做出来、哪些话有来源、哪些地方还不足。所有数字都从当前数据集实时计算。</p></div><div class="intro-actions"><button class="quiet-button" data-view="home">← 回到首页</button><button class="primary-button compact" data-view="trace">直接读一味档案 ↗</button></div></div><div class="curation-grid">${curationTrack({ herbCount })}<section class="curation-block"><span class="section-index">03 / DATA</span><h2>三层数据，三种精度</h2><p>站点不做“全部同等可信”的暗示，而是把精度分层写出来：</p><dl class="curation-facts"><div><dt>深度档案</dt><dd>${deepCount} 味：逐条来源定位到药典条目或植物志物种处理页，配识形台与相似药材对照。</dd></div><div><dt>目录条目</dt><dd>${overviewCount} 味：保留学名、科属、部位、生境和来源入口，用于检索与全量浏览。</dd></div><div><dt>关系与方剂</dt><dd>${relationCount} 条关系、${formulaCount} 个方剂、${anchorCount} 个文化锚点、${comparisonCount} 组相似药材、${specimenCount} 个结构化标本，全部登记来源。</dd></div><div><dt>公开来源</dt><dd>${sourceCount} 个：药典、Flora of China、NCBI Taxonomy、POWO、Chinese Text Project、WHO、Nobel Prize 等公开入口。</dd></div></dl><p class="curation-note">图片来自公开植物观测记录（iNaturalist / GBIF 等），逐张保留作者、数据集、许可与观测页链接，可在灯箱内点开核对。</p></section><section class="curation-block"><span class="section-index">04 / BUILD</span><h2>零框架，一条命令验证</h2><p>没有打包器、没有前端框架、没有运行时依赖：原生 ES Modules 加一份样式表，数据是静态 JSON。粒子星球、百子柜抽屉、识形台都是手写的 CSS 3D 与 Canvas 2D，不加载任何图表或 3D 库。</p><p>构建脚本只做一件事：校验入口文件存在、八个 JSON 可解析；测试脚本检查数据连通性、来源引用和关系图的可达性。任何人都可以用任意静态服务器打开同一份产物。</p><p class="curation-note">制作工具：手写 HTML/CSS/JavaScript（无 UI 框架）、Node.js 构建与测试脚本、Python + Pillow 生成分享封面、Playwright 做双端截图回归。第三方资源只有公开植物观测图片与系统字体，逐张登记作者与许可。</p></section><section class="curation-block"><span class="section-index">05 / ACCESS</span><h2>没有鼠标也能读完</h2><p>键盘可达的焦点环覆盖全站；粒子星球提供可展开的文本目录，读屏会播报选择与筛选结果；抽屉、灯箱、海报弹窗都能用 Esc 关闭；对比度按 WCAG AA 校核过；系统开启“减少动态效果”后，漂浮粒子、连线动画和惯性旋转都会停止。</p><p>当 Canvas 不可用时，星球页直接降级为 ${herbCount} 味的可滚动目录，而不是留一块空白。</p></section>${curationAudience()}${curationDifference()}<section class="curation-block curation-block-wide"><span class="section-index">08 / WALKTHROUGH</span><h2>三分钟能看完什么</h2><ol class="curation-steps"><li><b>首页 30 秒</b><span>看两个入口的分工，再读“后来走到了哪里”三条公开记录。</span></li><li><b>百子柜 60 秒</b><span>按生境抽一格，看抽屉抽出、右侧档案同步更新；再用形态标签收拢视线。</span></li><li><b>一味档案 60 秒</b><span>拖动识形台，看证据链只剩已登记节点，点开右侧来源逐条核对。</span></li><li><b>粒子星球 30 秒</b><span>拖动旋转、滚轮缩放、点击一粒星光，或展开键盘目录。</span></li></ol></section><section class="curation-block curation-block-wide"><span class="section-index">09 / LIMITS</span><h2>我们还没有做到的部分</h2><p>把不足写在这里，比让读者自己发现更诚实：</p><ul class="curation-limits"><li><b>证据链长度不均</b>：${herbCount} 味中，只有 ${withClassic} 味登记了古典文本锚点、${withFormula} 味登记了方剂组成、${withResearch} 味登记了现代研究史节点。缺口用一段说明写清楚，不用占位节点补足。</li><li><b>图片是物种级而非药材级</b>：照片来自对应的植物学名观测，展示的是原植物，不是饮片或炮制品；同一物种的不同药用部位会共用同一张观测照片，灯箱里保留了原始观测链接。</li><li><b>古籍定位仍是入口级</b>：Chinese Text Project 的条目目前定位到书名与检索方式，尚未逐卷逐页校对。</li><li><b>没有医疗建议</b>：全站不提供剂量、处方、替代治疗或个体化建议；传统分类与现代研究分层标注，不互相替代。</li></ul></section>${curationVerify({ herbCount, deepCount, version })}${curationAiUse()}</div>${curationAbstract()}<section class="curation-sources"><div><span class="panel-label">PUBLIC SOURCES</span><h2>来源清单</h2></div>${renderSources(sources().map((source) => source.id))}<p class="curation-note">数据集 ${esc(data.herbs.datasetId)} · 最近检索 ${esc(data.herbs.researchedAt)} · 图片许可覆盖 ${licences.length} 种公开许可（含 CC BY、CC BY-NC、CC BY-SA、CC0 与公共领域）。</p></section></main>`;
+  const version = 'planet-layout-v5-20261022-1';
+  return `<main class="curation-view" aria-labelledby="curation-title"><div class="page-intro"><div><p class="kicker">PROJECT NOTES · 项目说明</p><h1 id="curation-title">把一部草木志，<br />做成可以漫游的空间。</h1><p>这一页写给第一次打开网站的人：它是什么、面向谁、和同类作品差在哪里、怎么被做出来、哪些话有来源、哪些地方还不足。所有数字都从当前数据集实时计算。</p></div><div class="intro-actions"><button class="quiet-button" data-view="home">← 回到首页</button><button class="primary-button compact" data-view="trace">直接读一味档案 ↗</button></div></div><div class="curation-grid">${curationTrack({ herbCount })}<section class="curation-block"><span class="section-index">03 / DATA</span><h2>三层数据，三种精度</h2><p>站点不做“全部同等可信”的暗示，而是把精度分层写出来：</p><dl class="curation-facts"><div><dt>深度档案</dt><dd>${deepCount} 味：逐条来源定位到药典条目或植物志物种处理页，配识形台与相似药材对照。</dd></div><div><dt>目录条目</dt><dd>${overviewCount} 味：保留学名、科属、部位、生境和来源入口，用于检索与全量浏览。</dd></div><div><dt>关系与方剂</dt><dd>${relationCount} 条关系、${formulaCount} 个方剂、${anchorCount} 个文化锚点、${comparisonCount} 组相似药材、${specimenCount} 个结构化标本，全部登记来源。</dd></div><div><dt>公开来源</dt><dd>${sourceCount} 个：药典、Flora of China、NCBI Taxonomy、POWO、Chinese Text Project、WHO、Nobel Prize 等公开入口。</dd></div></dl><p class="curation-note">图片来自公开植物观测记录（iNaturalist / GBIF 等），逐张保留作者、数据集、许可与观测页链接，可在灯箱内点开核对。</p></section><section class="curation-block"><span class="section-index">04 / BUILD</span><h2>分级渲染，一条命令验证</h2><p>页面仍是原生 ES Modules 与静态 JSON，没有 React、Vue 这类前端框架；但视觉层按需加载真正使用的库：Three.js 与 @takram/three-atmosphere 只在粒子星球进入 3D 阶段后加载，MapLibre 只在生境地图接入地图时加载，AutoAnimate 只绑定列表重排与详情切换。</p><p>地图依次尝试 OpenFreeMap 在线底图、本地 Natural Earth 和 Canvas 聚合点；星球依次尝试 WebGPU 大气散射、WebGL2 地球纹理和 Canvas 2D 粒子。任一高阶能力不可用时保留完整目录与交互，不留下空白舞台。</p><p>构建脚本校验八份策展 JSON、120 味 GBIF 快照、许可与网格字段、Natural Earth 和星球纹理，再用 esbuild 生成本地 vendor 产物。运行时不依赖第三方 CDN；任何人都可以用任意静态服务器打开同一份产物。</p><p class="curation-note">制作工具：手写 HTML/CSS/JavaScript、Three.js、@takram/three-atmosphere、MapLibre GL、AutoAnimate、esbuild、Node.js、Playwright 与 Lighthouse。第三方图片、地图数据与观测记录分别保留作者、许可和数据边界。</p></section><section class="curation-block"><span class="section-index">05 / ACCESS</span><h2>没有鼠标也能读完</h2><p>键盘可达的焦点环覆盖全站；粒子星球提供可展开的文本目录，读屏会播报选择与筛选结果；抽屉、灯箱、海报弹窗都能用 Esc 关闭；对比度按 WCAG AA 校核过；系统开启“减少动态效果”后，漂浮粒子、连线动画和惯性旋转都会停止。</p><p>当 WebGPU 与 WebGL2 不可用时，星球保留 Canvas 2D 粒子引擎；连 Canvas 也不可用时，再降级为 ${herbCount} 味的可滚动文本目录。生境地图同样保留本地底图与离线网格，读屏会播报图层状态和筛选结果。</p></section>${curationAudience()}${curationDifference()}<section class="curation-block curation-block-wide"><span class="section-index">08 / WALKTHROUGH</span><h2>四分钟能看完什么</h2><ol class="curation-steps"><li><b>首页 30 秒</b><span>看三种入口的分工：百子药堂、3D 星球、开放观测地图，再读“后来走到了哪里”三条公开记录。</span></li><li><b>百子药堂 60 秒</b><span>按生境抽一格，看抽屉抽出、右侧档案同步更新；再用形态标签收拢视线。</span></li><li><b>一味档案 60 秒</b><span>拖动识形台，看证据链只剩已登记节点，点开右侧来源逐条核对。</span></li><li><b>粒子星球 40 秒</b><span>拖动真实地球、缩放云层与大气，点击粒子查看本草，或展开键盘目录与生境筛选。</span></li><li><b>生境地图 50 秒</b><span>切换生境与物种，看 GBIF 网格聚类、记录统计和许可入口，再读读图边界。</span></li></ol></section><section class="curation-block curation-block-wide"><span class="section-index">09 / LIMITS</span><h2>我们还没有做到的部分</h2><p>把不足写在这里，比让读者自己发现更诚实：</p><ul class="curation-limits"><li><b>证据链长度不均</b>：${herbCount} 味中，只有 ${withClassic} 味登记了古典文本锚点、${withFormula} 味登记了方剂组成、${withResearch} 味登记了现代研究史节点。缺口用一段说明写清楚，不用占位节点补足。</li><li><b>图片是物种级而非药材级</b>：照片来自对应的植物学名观测，展示的是原植物，不是饮片或炮制品；同一物种的不同药用部位会共用同一张观测照片，灯箱里保留了原始观测链接。</li><li><b>古籍定位仍是入口级</b>：Chinese Text Project 的条目目前定位到书名与检索方式，尚未逐卷逐页校对。</li><li><b>没有医疗建议</b>：全站不提供剂量、处方、替代治疗或个体化建议；传统分类与现代研究分层标注，不互相替代。</li><li><b>GIS 只表达开放观测</b>：GBIF 点位经过许可、地理质量和国家范围筛选后聚合为 0.5° 或 1° 网格，只保留网格中心；记录密度受公众观测活动影响，不代表药用分布、资源储量或推荐采集地。</li></ul></section>${curationVerify({ herbCount, deepCount, version })}${curationAiUse()}</div>${curationAbstract()}<section class="curation-sources"><div><span class="panel-label">PUBLIC SOURCES</span><h2>来源清单</h2></div>${renderSources(sources().map((source) => source.id))}<p class="curation-note">数据集 ${esc(data.herbs.datasetId)} · 最近检索 ${esc(data.herbs.researchedAt)} · 图片许可覆盖 ${licences.length} 种公开许可（含 CC BY、CC BY-NC、CC BY-SA、CC0 与公共领域）。</p></section></main>`;
 }
 
-function render() {
-  if (!data) return;
+function atlasPage() {
+  return atlasModule.atlasMarkup({
+    items: herbs(),
+    selectedId: state.atlasHerbId,
+    activeHabitat: state.atlasHabitat || 'all',
+    query: state.atlasQuery || '',
+  });
+}
+
+function navigateView(view, { herbId = '', atlasId = '', append = false } = {}) {
+  clearTimeout(searchTimer);
+  state.view = view;
+  if (view === 'trace') {
+    if (herbId) state.herbId = herbId;
+    state.nodeId = state.herbId;
+    state.stage = 'specimen';
+    state.compareOpen = false;
+  }
+  if (view === 'cabinet' && herbId) {
+    state.herbId = herbId;
+    state.nodeId = herbId;
+    state.stage = 'specimen';
+  }
+  if (view === 'atlas') {
+    if (atlasId) state.atlasHerbId = atlasId;
+    state.atlasHabitat = 'all';
+    state.atlasQuery = '';
+  }
+  if (view === 'library') state.libraryLimit = 24;
+  const hash = view === 'atlas' ? atlasHash(atlasId || state.atlasHerbId) : `#${view}`;
+  if (window.location.hash !== hash) {
+    const method = append ? 'pushState' : 'replaceState';
+    history[method]({ view }, '', hash);
+  }
+  render();
+}
+
+const FOCUS_SELECTORS = [
+  '[data-herb-search]',
+  '[data-library-search]',
+  '[data-atlas-search]',
+  '[data-planet-search]',
+  '[data-compare-select]',
+  '[data-library-habitat]',
+  '[data-library-depth]',
+];
+
+function focusSelectorFor(element) {
+  if (!element || !document.querySelector('#app')?.contains(element)) return '';
+  const exact = FOCUS_SELECTORS.find((selector) => element.matches?.(selector));
+  if (exact) return exact;
+  const attributes = [
+    'data-cabinet-drawer', 'data-atlas-herb', 'data-planet-fallback-id', 'data-herb',
+    'data-library-type', 'data-library-quick-habitat', 'data-image-open', 'data-image-quiz-answer',
+    'data-stage', 'data-node', 'data-relation-node', 'data-relation-id', 'data-view',
+  ];
+  for (const attribute of attributes) {
+    const value = element.getAttribute?.(attribute);
+    if (value !== null) return `[${attribute}="${CSS.escape(value)}"]`;
+  }
+  return '';
+}
+
+function captureFocus() {
+  const element = document.activeElement;
+  const selector = focusSelectorFor(element);
+  if (!selector) return null;
+  return {
+    selector,
+    start: Number.isInteger(element.selectionStart) ? element.selectionStart : null,
+    end: Number.isInteger(element.selectionEnd) ? element.selectionEnd : null,
+    direction: element.selectionDirection || 'none',
+  };
+}
+
+function restoreFocus(snapshot) {
+  if (!snapshot?.selector) return false;
+  const target = document.querySelector(snapshot.selector);
+  if (!target) return false;
+  target.focus({ preventScroll: true });
+  if (snapshot.start !== null && typeof target.setSelectionRange === 'function') {
+    try { target.setSelectionRange(snapshot.start, snapshot.end ?? snapshot.start, snapshot.direction); } catch {}
+  }
+  return true;
+}
+
+function cleanupMountedViews() {
+  viewGeneration += 1;
+  atlasGeneration += 1;
+  disposePlanetEngine?.();
+  disposePlanetEngine = null;
   disposePlanet?.();
   disposePlanet = null;
-  const content = state.view === 'trace' ? trace() : state.view === 'library' ? library() : state.view === 'cabinet' ? cabinetPage() : state.view === 'planet' ? planet() : state.view === 'curation' ? curation() : home();
+  disposeAtlas?.();
+  disposeAtlas = null;
+  disposeApothecary?.();
+  disposeApothecary = null;
+  hallEngine = null;
+}
+
+function setPlanetFallbackState(root, label, note) {
+  if (!root) return;
+  root.classList.remove('is-3d-ready', 'is-engine-connecting');
+  root.dataset.planetMode = 'canvas';
+  const mode = root.querySelector('[data-planet-mode]');
+  const modeNote = root.querySelector('[data-planet-engine-note]');
+  if (mode) mode.textContent = label;
+  if (modeNote) modeNote.textContent = note;
+  const engineCanvas = root.querySelector('[data-planet-engine]');
+  if (engineCanvas) engineCanvas.hidden = true;
+}
+
+function mountPlanetExperience() {
+  const root = document.querySelector('[data-planet-root]');
+  if (!root) return;
+  const sceneCanvas = root.querySelector('[data-planet-canvas]');
+  const engineCanvas = root.querySelector('[data-planet-engine]');
+  const generation = viewGeneration;
+  let engine = null;
+  const runtime = planetModule.mountParticlePlanet(root, herbs(), {
+    activeHabitat: state.planetHabitat || 'all',
+    selectedId: state.planetHerbId || '',
+    onSelect: (item) => {
+      state.planetHerbId = item.id;
+      engine?.update({ habitat: state.planetHabitat, query: state.planetQuery, selectedId: item.id });
+    },
+    onTrace: (item) => navigateView('trace', { herbId: item.id, append: true }),
+    onAtlas: (item) => navigateView('atlas', { atlasId: item.id, append: true }),
+    onFilter: (value) => {
+      state.planetHabitat = value;
+      engine?.update({ habitat: value, query: state.planetQuery, selectedId: state.planetHerbId });
+    },
+    onSearch: (value) => {
+      state.planetQuery = value;
+      engine?.update({ habitat: state.planetHabitat, query: value, selectedId: state.planetHerbId });
+    },
+    onReset: () => engine?.resetView(),
+  });
+  disposePlanet = runtime;
+  state.planetHerbId = root.dataset.planetSelected || state.planetHerbId || '';
+
+  const loadEngine = async () => {
+    if (generation !== viewGeneration || state.view !== 'planet' || document.hidden) return;
+    root.classList.add('is-engine-connecting');
+    if (engineCanvas) engineCanvas.hidden = false;
+    try {
+      const module = await import(new URL('../vendor/planet-engine.js?v=planet-layout-v5-20261022-1', import.meta.url).href);
+      if (generation !== viewGeneration || state.view !== 'planet') return;
+      engine = await module.mountPlanetEngine({
+        root,
+        canvas: engineCanvas,
+        items: herbs(),
+        habitat: state.planetHabitat || 'all',
+        query: state.planetQuery || '',
+        selectedId: state.planetHerbId || '',
+        onSelect: (item) => {
+          state.planetHerbId = item.id;
+          runtime.reflectSelection?.(item);
+          engine?.update({ habitat: state.planetHabitat, query: state.planetQuery, selectedId: item.id });
+        },
+      });
+      if (generation !== viewGeneration || state.view !== 'planet') {
+        engine.dispose();
+        engine = null;
+        return;
+      }
+      disposePlanetEngine = () => engine.dispose();
+      disposePlanet = runtime;
+      runtime.pause?.();
+      if (sceneCanvas) sceneCanvas.hidden = true;
+      root.classList.remove('is-engine-connecting');
+      root.classList.add('is-3d-ready');
+    } catch (error) {
+      engineCanvas.hidden = true;
+      setPlanetFallbackState(root, 'CANVAS 2D · SAFE FALLBACK', '此设备未启用 3D，交互与目录保持完整');
+      console.info('[Herbal-Cosmos] 3D renderer unavailable; Canvas 2D retained.', error);
+    }
+  };
+
+  if ('requestIdleCallback' in window) window.requestIdleCallback(loadEngine, { timeout: 1800 });
+  else window.setTimeout(loadEngine, 260);
+}
+
+function syncCabinetSelection(item = null) {
+  if (item) {
+    state.herbId = item.id;
+    state.nodeId = item.id;
+    state.stage = 'specimen';
+    state.compareId = '';
+    state.cabinetPicked = true;
+  } else {
+    state.cabinetPicked = false;
+  }
+  const activeHabitat = state.cabinetHabitat || 'forest';
+  document.querySelectorAll('[data-cabinet-habitat]').forEach((button) => {
+    const active = button.dataset.cabinetHabitat === activeHabitat;
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+  document.querySelectorAll('[data-cabinet-morphology]').forEach((button) => {
+    const active = button.dataset.cabinetMorphology === (state.cabinetMorphology || 'all');
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+  document.querySelectorAll('[data-cabinet-drawer]').forEach((button) => {
+    const selected = Boolean(state.cabinetPicked && button.dataset.herb === state.herbId);
+    button.classList.toggle('is-selected', selected);
+    button.setAttribute('aria-pressed', String(selected));
+    const pull = button.querySelector('.drawer-pull small');
+    if (pull) pull.textContent = selected ? '已抽出' : '抽出';
+  });
+  const selected = state.cabinetPicked ? find(herbs(), state.herbId) : null;
+  const readingHabitat = selected ? null : habitatFor(find(herbs(), state.herbId) || herbs()[0]);
+  const reading = document.querySelector('.cabinet-reading');
+  if (reading) {
+    reading.classList.toggle('cabinet-reading-idle', !selected);
+    reading.innerHTML = cabinetReadingMarkup(data, selected, readingHabitat);
+  }
+  if (item) announce(`已抽出${item.nameZh}，右侧档案已同步`);
+  const picker = document.querySelector('[data-apothecary-picker]');
+  if (picker?.tomselect) picker.tomselect.setValue(item?.id || '', true);
+  else if (picker) picker.value = item?.id || '';
+}
+
+function setApothecaryFallbackState(root, canvas, error) {
+  root.classList.add('is-hall-fallback');
+  root.dataset.hallMode = 'canvas';
+  document.body.classList.remove('is-hall-ready');
+  if (canvas) canvas.hidden = true;
+  const mode = root.querySelector('[data-apothecary-mode]');
+  const note = root.querySelector('[data-apothecary-note]');
+  if (mode) mode.textContent = '平面百子药堂 · 安全降级';
+  if (note) note.textContent = '当前浏览器未启用 WebGL2，下方完整柜格仍可继续探索';
+  console.info('[Herbal-Cosmos] Apothecary WebGL2 unavailable; 2D cabinet retained.', error);
+}
+
+async function mountApothecaryExperience() {
+  const root = document.querySelector('[data-apothecary-root]');
+  if (!root) return;
+  const canvas = root.querySelector('[data-apothecary-canvas]');
+  const generation = viewGeneration;
+  let disposePicker = () => {};
+  try {
+    const module = await import(new URL('../vendor/apothecary-engine.js?v=planet-layout-v5-20261022-1', import.meta.url).href);
+    if (generation !== viewGeneration || state.view !== 'cabinet') return;
+    const engine = await module.mountApothecaryEngine({
+      root,
+      canvas,
+      items: herbs(),
+      activeHabitat: state.cabinetHabitat || 'forest',
+      morphology: state.cabinetMorphology || 'all',
+      selectedId: state.cabinetPicked ? state.herbId : '',
+      onSelect: (item) => syncCabinetSelection(item),
+      onError: (error) => {
+        if (generation !== viewGeneration || state.view !== 'cabinet') return;
+        hallEngine = null;
+        disposePicker();
+        setApothecaryFallbackState(root, canvas, error);
+      },
+    });
+    if (generation !== viewGeneration || state.view !== 'cabinet') {
+      engine.dispose();
+      return;
+    }
+    hallEngine = engine;
+    disposeApothecary = () => {
+      disposePicker();
+      engine.dispose();
+      if (hallEngine === engine) hallEngine = null;
+    };
+    root.addEventListener('click', (event) => {
+      if (event.target.closest('[data-apothecary-close]')) {
+        hallEngine?.closeDrawer();
+        return;
+      }
+      const target = event.target.closest('[data-apothecary-view]');
+      if (!target || !hallEngine) return;
+      const viewName = target.dataset.apothecaryView;
+      hallEngine.setView(viewName === 'reset' ? 'outside' : viewName);
+    });
+    const pickerSelect = root.querySelector('[data-apothecary-picker]');
+    const selectHerb = (value) => {
+      const item = find(herbs(), value);
+      if (!item) { engine.closeDrawer(); return; }
+      syncCabinetSelection(item);
+      engine.update({ selectedId: item.id });
+    };
+    try {
+      const pickerModule = await import(new URL('../vendor/herb-picker.js?v=picker-v3-20261022', import.meta.url).href);
+      if (generation !== viewGeneration || hallEngine !== engine) return;
+      disposePicker = pickerModule.mountHerbPicker(pickerSelect, herbs(), selectHerb);
+    } catch (error) {
+      // A missing optional UI bundle must not tear down a working 3D scene.
+      if (generation !== viewGeneration || hallEngine !== engine) return;
+      console.info('[Herbal-Cosmos] Enhanced herb picker unavailable; native select retained.', error);
+      const change = event => selectHerb(event.target.value);
+      pickerSelect?.addEventListener('change', change);
+      disposePicker = () => pickerSelect?.removeEventListener('change', change);
+    }
+  } catch (error) {
+    disposePicker();
+    if (generation === viewGeneration && state.view === 'cabinet') setApothecaryFallbackState(root, canvas, error);
+  }
+}
+function mountAtlasExperience() {
+  const root = document.querySelector('[data-atlas-root]');
+  if (!root) return;
+  const generation = ++atlasGeneration;
+  atlasModule.mountAtlas({
+    root,
+    items: herbs(),
+    selectedId: state.atlasHerbId,
+    activeHabitat: state.atlasHabitat || 'all',
+    query: state.atlasQuery || '',
+    onSelect: (item) => {
+      state.atlasHerbId = item.id;
+      history.replaceState({ view: 'atlas' }, '', atlasHash(item.id));
+    },
+    onTrace: (item) => navigateView('trace', { herbId: item.id, append: true }),
+    onStateChange: (next) => {
+      state.atlasHabitat = next.habitat || 'all';
+      state.atlasQuery = next.query || '';
+    },
+  }).then((cleanup) => {
+    if (generation !== atlasGeneration || state.view !== 'atlas') cleanup();
+    else disposeAtlas = cleanup;
+  }).catch((error) => {
+    console.warn('[Herbal-Cosmos] Atlas mount failed.', error);
+  });
+}
+
+async function render() {
+  if (!data) return;
+  const requestedView = state.view;
+  try {
+    if (requestedView === 'planet') await loadPlanetModule();
+    else if (requestedView === 'atlas') await loadAtlasModule();
+  } catch (error) {
+    if (state.view !== requestedView) return;
+    console.warn('[Herbal-Cosmos] Route module failed to load.', error);
+    document.querySelector('#app').innerHTML = `<main class="error-screen"><span class="loading-mark" aria-hidden="true">${icon('seal')}</span><h1>舞台暂时无法载入</h1><p>${esc(error.message)}。可以返回首页，或重新加载后再试。</p><button class="primary-button" data-view="home">返回首页</button></main>`;
+    return;
+  }
+  if (state.view !== requestedView) return;
+  const app = document.querySelector('#app');
+  const previousView = app.dataset.cosmosView || '';
+  const preservePosition = previousView === state.view;
+  const scrollY = preservePosition ? window.scrollY : 0;
+  const focusSnapshot = preservePosition ? captureFocus() : null;
+  clearTimeout(searchTimer);
+  cleanupMountedViews();
+
+  const content = state.view === 'trace' ? trace() : state.view === 'library' ? library() : state.view === 'cabinet' ? cabinetPage() : state.view === 'planet' ? planet() : state.view === 'atlas' ? atlasPage() : state.view === 'curation' ? curation() : home();
   const routeNotice = state.routeMiss
     ? `<p class="route-miss" role="alert">没有找到 <code>#${esc(state.routeMiss)}</code> 这个页面，已回到宇宙首页。<button class="quiet-button" data-view="library">去资料库搜索</button></p>`
     : '';
   const posterChain = chainFor(selectedHerb()).map((node) => node.label).join(' → ');
-  document.querySelector('#app').innerHTML = `${header()}${routeNotice}${content}<footer class="site-footer"><span>本草宇宙 · 百子万象</span><span>无需账号 · 无遥测 · 资料用于文化与植物学阅读，不构成医疗建议</span><span>${esc(data.herbs.catalogStats?.total || herbs().length)} 味目录 · ${esc(data.herbs.datasetId)}</span></footer><dialog class="share-dialog" id="shareDialog"><button class="dialog-close" data-close-dialog aria-label="关闭">${icon('close')}</button><p class="kicker">RELATION POSTER</p><h2>${esc(selectedHerb().nameZh)}的证据链</h2><p>把这次阅读中已登记的证据节点导出为一张可分享的 SVG 海报；没有档案的节点不会出现在海报上。</p><div class="poster-preview"><span>${esc(selectedHerb().nameZh)}</span><b>${esc(posterChain)}</b><small>本草宇宙 · ${esc(data.herbs.researchedAt)}</small></div><button class="primary-button" data-download-poster>下载 SVG 海报</button></dialog><dialog class="image-lightbox" id="imageLightbox" aria-label="本草照片来源"><div class="image-lightbox-card"><button class="dialog-close" data-image-close aria-label="关闭图片">${icon('close')}</button><div class="image-lightbox-empty">${icon('sparkle')}<p>点击任意本草照片查看大图与来源。</p></div></div></dialog>`;
+  app.innerHTML = `${header()}${routeNotice}${content}<footer class="site-footer"><span>本草宇宙 · 百子万象</span><span>无需账号 · 无遥测 · 资料用于文化与植物学阅读，不构成医疗建议</span><span>${esc(data.herbs.catalogStats?.total || herbs().length)} 味目录 · ${esc(data.herbs.datasetId)}</span></footer><dialog class="share-dialog" id="shareDialog"><button class="dialog-close" data-close-dialog aria-label="关闭">${icon('close')}</button><p class="kicker">RELATION POSTER</p><h2>${esc(selectedHerb().nameZh)}的证据链</h2><p>把这次阅读中已登记的证据节点导出为一张可分享的 SVG 海报；没有档案的节点不会出现在海报上。</p><div class="poster-preview"><span>${esc(selectedHerb().nameZh)}</span><b>${esc(posterChain)}</b><small>本草宇宙 · ${esc(data.herbs.researchedAt)}</small></div><button class="primary-button" data-download-poster>下载 SVG 海报</button></dialog><dialog class="image-lightbox" id="imageLightbox" aria-label="本草照片来源"><div class="image-lightbox-card"><button class="dialog-close" data-image-close aria-label="关闭图片">${icon('close')}</button><div class="image-lightbox-empty">${icon('sparkle')}<p>点击任意本草照片查看大图与来源。</p></div></div></dialog>`;
   document.body.dataset.cosmosView = state.view;
-  document.querySelector('#app').dataset.cosmosView = state.view;
+  app.dataset.cosmosView = state.view;
+  document.title = `${VIEW_NAMES[state.view] || '本草宇宙'} · 本草宇宙 · 百子万象`;
+  if (preservePosition) window.scrollTo(0, scrollY);
+  else window.scrollTo(0, 0);
+  const restored = restoreFocus(focusSnapshot);
+  if (!preservePosition) app.focus({ preventScroll: true });
+  else if (!restored && document.activeElement === document.body) app.focus({ preventScroll: true });
   announceView();
-  if (state.view === 'planet') {
-    disposePlanet = mountParticlePlanet(document.querySelector('[data-planet-root]'), herbs(), {
-      activeHabitat: state.planetHabitat || 'all',
-      selectedId: state.planetHerbId || '',
-      onSelect: (item) => { state.planetHerbId = item.id; },
-      onTrace: (item) => { state.herbId = item.id; state.view = 'trace'; state.nodeId = item.id; state.stage = 'specimen'; render(); },
-      onFilter: (value) => { state.planetHabitat = value; },
-      onSearch: (value) => { state.query = value; },
-    });
-  }
+  if (state.view === 'planet') mountPlanetExperience();
+  if (state.view === 'atlas') mountAtlasExperience();
+  if (state.view === 'cabinet') mountApothecaryExperience();
 }
 
-const VIEW_NAMES = { home: '宇宙首页', cabinet: '百子柜', planet: '粒子星球', trace: '一味档案', library: '资料库', curation: '项目说明' };
+const VIEW_NAMES = { home: '宇宙首页', cabinet: '百子药堂', planet: '粒子星球', atlas: '生境地图', trace: '一味档案', library: '资料库', curation: '项目说明' };
 let announcedView = '';
 
 // The app re-renders the whole #app subtree on every interaction, so a live
@@ -345,7 +736,7 @@ function announceLibraryCount() {
 }
 
 function planet() {
-  return particlePlanetMarkup({ items: herbs(), activeHabitat: state.planetHabitat || 'all', query: state.query || '', selectedId: state.planetHerbId || '' });
+  return planetModule.particlePlanetMarkup({ items: herbs(), activeHabitat: state.planetHabitat || 'all', query: state.planetQuery || '', selectedId: state.planetHerbId || '' });
 }
 
 function posterSvg(item) {
@@ -361,6 +752,7 @@ function posterSvg(item) {
 function bind() {
   const app = document.querySelector('#app');
   app.addEventListener('click', (event) => {
+    clearTimeout(searchTimer);
     const imageOpen = event.target.closest('[data-image-open]');
     if (imageOpen) {
       const target = imageTarget(imageOpen.dataset.imageOpen);
@@ -406,19 +798,41 @@ function bind() {
     const stage = event.target.closest('[data-stage]');
     const filter = event.target.closest('[data-library-type]');
     const quickHabitat = event.target.closest('[data-library-quick-habitat]');
-    if (cabinetDrawer) { state.herbId = cabinetDrawer.dataset.herb; state.nodeId = state.herbId; state.stage = 'specimen'; state.compareId = ''; state.cabinetPicked = true; render(); return; }
+    if (event.target.closest('[data-library-more]')) { state.libraryLimit += 16; render(); return; }
+    if (cabinetDrawer) {
+      const item = find(herbs(), cabinetDrawer.dataset.herb);
+      if (!item) return;
+      const close = state.cabinetPicked && state.herbId === item.id;
+      syncCabinetSelection(close ? null : item);
+      if (hallEngine) hallEngine.update({ habitat: state.cabinetHabitat, morphology: state.cabinetMorphology, selectedId: close ? '' : item.id });
+      else render();
+      return;
+    }
+    if (event.target.closest('[data-cabinet-map]')) {
+      state.atlasHerbId = state.herbId;
+      state.atlasHabitat = 'all';
+      state.view = 'atlas';
+      history.pushState({ view: 'atlas' }, '', atlasHash(state.herbId));
+      render();
+      return;
+    }
     if (compareHerb) { state.herbId = compareHerb.dataset.compareHerb; state.nodeId = state.herbId; state.stage = 'specimen'; state.view = 'trace'; state.compareOpen = true; state.compareId = ''; if (window.location.hash !== '#trace') history.pushState({ view: 'trace' }, '', '#trace'); render(); document.querySelector('.compare-lab')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     if (habitatZone) {
       state.cabinetHabitat = habitatZone.dataset.cabinetHabitat;
       state.cabinetMorphology = 'all';
       state.cabinetPicked = false;
+      state.libraryLimit = 24;
       const first = herbs().find((entry) => habitatFor(entry).id === state.cabinetHabitat);
       if (first) { state.herbId = first.id; state.nodeId = first.id; state.stage = 'specimen'; }
-      render();
+      if (hallEngine) {
+        syncCabinetSelection(null);
+        document.querySelectorAll('.apothecary-filters.morphology-filters').forEach((node) => { node.innerHTML = cabinetMorphologyMarkup(data, state.cabinetHabitat, state.cabinetMorphology); });
+        hallEngine.update({ habitat: state.cabinetHabitat, morphology: state.cabinetMorphology, selectedId: '' });
+      } else render();
       return;
     }
-    if (morphologyTab) { state.cabinetMorphology = morphologyTab.dataset.cabinetMorphology; state.cabinetPicked = false; render(); return; }
-    if (event.target.closest('[data-cabinet-reset]')) { state.herbId = herbs()[0].id; state.nodeId = state.herbId; state.stage = 'specimen'; state.cabinetHabitat = habitatFor(herbs()[0]).id; state.cabinetMorphology = 'all'; state.cabinetPicked = false; render(); return; }
+    if (morphologyTab) { state.cabinetMorphology = morphologyTab.dataset.cabinetMorphology; state.cabinetPicked = false; state.libraryLimit = 24; if (hallEngine) { syncCabinetSelection(null); hallEngine.update({ habitat: state.cabinetHabitat, morphology: state.cabinetMorphology, selectedId: '' }); } else render(); return; }
+    if (event.target.closest('[data-cabinet-reset]')) { state.herbId = herbs()[0].id; state.nodeId = state.herbId; state.stage = 'specimen'; state.cabinetHabitat = habitatFor(herbs()[0]).id; state.cabinetMorphology = 'all'; state.cabinetPicked = false; if (hallEngine) { syncCabinetSelection(null); hallEngine.update({ habitat: state.cabinetHabitat, morphology: state.cabinetMorphology, selectedId: '' }); hallEngine.setView('outside'); } else render(); return; }
     if (relationNode) {
       const id = relationNode.dataset.relationNode;
       const herb = find(herbs(), id);
@@ -452,26 +866,77 @@ function bind() {
       document.querySelector('[data-relation-explorer]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-    if (view) { const previousView = state.view; state.view = view.dataset.view; if (herbButton) { state.herbId = herbButton.dataset.herb; state.compareId = ''; } if (state.view === 'trace') { state.nodeId = state.herbId; state.stage = 'specimen'; } if (state.view === 'cabinet' && previousView !== 'cabinet') { state.cabinetHabitat = habitatFor(selectedHerb()).id; state.cabinetMorphology = 'all'; state.cabinetPicked = false; } state.query = ''; if (window.location.hash !== `#${state.view}`) history.pushState({ view: state.view }, '', `#${state.view}`); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (view) {
+      const target = view.dataset.view;
+      const previousView = state.view;
+      clearTimeout(searchTimer);
+      state.view = target;
+      if (herbButton) { state.herbId = herbButton.dataset.herb; state.compareId = ''; }
+      if (target === 'trace' || target === 'cabinet') { state.nodeId = state.herbId; state.stage = 'specimen'; }
+      if (target === 'cabinet' && previousView !== 'cabinet') { state.cabinetHabitat = habitatFor(selectedHerb()).id; state.cabinetMorphology = 'all'; state.cabinetPicked = false; }
+      if (target === 'library') state.libraryLimit = 24;
+      if (target === 'planet') state.planetQuery = '';
+      if (target === 'atlas') { state.atlasHabitat = 'all'; state.atlasQuery = ''; }
+      state.query = '';
+      const hash = target === 'atlas' ? atlasHash() : `#${target}`;
+      if (window.location.hash !== hash) history.pushState({ view: target }, '', hash);
+      render();
+      return;
+    }
     if (herbButton) { state.herbId = herbButton.dataset.herb; state.compareId = ''; state.view = 'trace'; state.nodeId = state.herbId; state.stage = 'specimen'; render(); return; }
     if (stage) { state.stage = stage.dataset.stage; state.nodeId = stage.dataset.node; render(); return; }
     if (node) { state.nodeId = node.dataset.node; state.stage = node.dataset.stage; render(); return; }
-    if (filter) { state.libraryType = filter.dataset.libraryType; render(); announceLibraryCount(); return; }
-    if (quickHabitat) { state.libraryHabitat = quickHabitat.dataset.libraryQuickHabitat; render(); announceLibraryCount(); document.querySelector('.library-featured-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    if (filter) { state.libraryType = filter.dataset.libraryType; state.libraryLimit = 24; render(); announceLibraryCount(); return; }
+    if (quickHabitat) { state.libraryHabitat = quickHabitat.dataset.libraryQuickHabitat; state.libraryLimit = 24; render(); announceLibraryCount(); document.querySelector('.library-featured-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     if (event.target.closest('[data-compare]')) { state.compareOpen = true; render(); document.querySelector('.compare-lab')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     if (event.target.closest('[data-share]')) { document.querySelector('#shareDialog')?.showModal(); return; }
     if (event.target.closest('[data-close-dialog]')) { document.querySelector('#shareDialog')?.close(); return; }
     if (event.target.closest('[data-download-poster]')) { const blob = new Blob([posterSvg(selectedHerb())], { type: 'image/svg+xml' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = `本草关系海报-${selectedHerb().nameZh}.svg`; link.click(); URL.revokeObjectURL(url); return; }
   });
-  window.addEventListener('popstate', () => { applyHash(); state.query = ''; state.compareOpen = false; render(); });
+  window.addEventListener('popstate', () => { clearTimeout(searchTimer); applyHash(); state.query = ''; state.compareOpen = false; render(); });
   app.addEventListener('change', (event) => {
     if (event.target.matches('[data-compare-select]')) { state.compareId = event.target.value; state.compareOpen = true; render(); document.querySelector('.compare-lab')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-    if (event.target.matches('[data-library-habitat]')) { state.libraryHabitat = event.target.value; render(); announceLibraryCount(); return; }
-    if (event.target.matches('[data-library-depth]')) { state.libraryDepth = event.target.value; render(); announceLibraryCount(); }
+    if (event.target.matches('[data-library-habitat]')) { state.libraryHabitat = event.target.value; state.libraryLimit = 24; render(); announceLibraryCount(); return; }
+    if (event.target.matches('[data-library-depth]')) { state.libraryDepth = event.target.value; state.libraryLimit = 24; render(); announceLibraryCount(); }
   });
-  app.addEventListener('input', (event) => { if (event.target.matches('[data-herb-search], [data-library-search]')) { state.query = event.target.value; render(); const input = document.querySelector(`[data-${state.view === 'library' ? 'library' : 'herb'}-search]`); input?.focus(); input?.setSelectionRange(state.query.length, state.query.length); } });
+  app.addEventListener('input', (event) => {
+    if (!event.target.matches('[data-herb-search], [data-library-search]')) return;
+    state.query = event.target.value;
+    clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => {
+      render();
+      if (state.view === 'library') announceLibraryCount();
+    }, 150);
+  });
   app.addEventListener('pointerdown', (event) => { const stage = event.target.closest('[data-specimen-stage]'); const model = stage?.querySelector('[data-specimen-model]'); if (!stage || !model) return; stage.setPointerCapture?.(event.pointerId); const startX = event.clientX; const startY = event.clientY; const baseX = Number(model.dataset.rx || 0); const baseY = Number(model.dataset.ry || 0); const move = (moveEvent) => { model.dataset.rx = baseX + (moveEvent.clientY - startY) * -0.35; model.dataset.ry = baseY + (moveEvent.clientX - startX) * 0.45; model.style.setProperty('--rx', `${model.dataset.rx}deg`); model.style.setProperty('--ry', `${model.dataset.ry}deg`); }; const up = () => { stage.removeEventListener('pointermove', move); stage.removeEventListener('pointerup', up); }; stage.addEventListener('pointermove', move); stage.addEventListener('pointerup', up, { once: true }); });
   app.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      document.querySelector('#imageLightbox')?.close();
+      document.querySelector('#shareDialog')?.close();
+      return;
+    }
+    const drawerTarget = event.target.closest('[data-cabinet-drawer]');
+    const fallbackTarget = event.target.closest('[data-planet-fallback-id]');
+    const rovingTarget = event.target.closest('[data-library-type], [data-library-quick-habitat], [data-planet-habitat], [data-atlas-habitat]');
+    const horizontal = ['ArrowRight', 'ArrowDown'].includes(event.key);
+    const vertical = ['ArrowLeft', 'ArrowUp'].includes(event.key);
+    if ((drawerTarget || fallbackTarget || rovingTarget) && (horizontal || vertical)) {
+      let selector = '';
+      if (drawerTarget) selector = '[data-cabinet-drawer]:not([hidden])';
+      else if (fallbackTarget) selector = '[data-planet-fallback-id]:not([hidden])';
+      else if (event.target.matches('[data-library-type]')) selector = '[data-library-type]';
+      else if (event.target.matches('[data-library-quick-habitat]')) selector = '[data-library-quick-habitat]';
+      else if (event.target.matches('[data-planet-habitat]')) selector = '[data-planet-habitat]';
+      else selector = '[data-atlas-habitat]';
+      const scope = event.target.closest('[role="toolbar"], [role="group"], .drawer-shelf, [data-planet-fallback]') || document.querySelector('#app');
+      const items = [...scope.querySelectorAll(selector)];
+      const index = items.indexOf(event.target.closest(selector));
+      if (index >= 0 && items.length > 1) {
+        event.preventDefault();
+        items[(index + (horizontal ? 1 : -1) + items.length) % items.length].focus();
+        return;
+      }
+    }
     const imageOpen = event.target.closest('[data-image-open]');
     if (imageOpen && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
@@ -506,7 +971,7 @@ async function boot() {
   data = { sources: values[0], herbs: values[1], formulas: values[2], anchors: values[3], relations: values[4], specimens: values[5], comparisons: values[6], images: values[7] };
   const imageMap = new Map(data.images.images.map((entry) => [entry.herbId, entry]));
   data.herbs.herbs.forEach((herb) => { herb.image = imageMap.get(herb.id) || null; });
-  render();
+  await render();
   bind();
 }
 

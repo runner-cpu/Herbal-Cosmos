@@ -48,7 +48,10 @@ test('new entry has no legacy runtime dependency', async () => {
   const planet = await readFile(new URL('src/planet.js', root), 'utf8');
   const css = await readFile(new URL('src/styles.css', root), 'utf8');
   assert.match(html, /src\/main\.js/);
-  assert.doesNotMatch(html, /assets\/js|sw\.js|Three\.js|ECharts/i);
+  assert.match(html, /experience\.css/);
+  assert.match(html, /ui-runtime\.js/);
+  assert.match(html, /Three\.js|GBIF|生境地图/);
+  assert.doesNotMatch(html, /assets\/js|sw\.js|ECharts/i);
   assert.match(js, /3D SPECIMEN LAB/);
   assert.match(js, /LOOK-ALIKE CHECK/);
   assert.match(js, /renderCosmosHome/);
@@ -59,6 +62,8 @@ test('new entry has no legacy runtime dependency', async () => {
   assert.match(layout, /cabinet-console/);
   assert.match(layout, /data-cabinet-habitat/);
   assert.match(layout, /data-cabinet-morphology/);
+  assert.match(layout, /百子药堂/);
+  assert.doesNotMatch(layout, /百子柜|百子药柜/);
   assert.match(layout, /data-compare-herb/);
   assert.match(layout, /drawer-cavity/);
   assert.match(layout, /向左抽出一格/);
@@ -85,7 +90,9 @@ test('new entry has no legacy runtime dependency', async () => {
   assert.match(css, /\.image-quiz/);
   assert.match(css, /translate3d\(-46px,-10px,112px\)/);
   assert.match(css, /\.library-featured-grid/);
-  assert.doesNotMatch(js, /cosmos-engine|apothecary|runtime\.js|expanded\.generated/i);
+  assert.doesNotMatch(js, /cosmos-engine|legacy-runtime|expanded.generated/i);
+  assert.match(js, /mountApothecaryExperience/);
+  assert.match(js, /data-apothecary-root/);
 });
 
 test('relation explorer keeps public sources visible in the evidence lane', async () => {

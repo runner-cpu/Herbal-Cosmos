@@ -6,7 +6,20 @@
   "description": "本草宇宙·百子万象：生境百子柜与粒子星球本草图谱",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node --test tests/new-app.test.mjs",
+    "test": "node --test tests/*.test.mjs",
     "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "@formkit/auto-animate": "0.10.0",
+    "@takram/three-atmosphere": "0.19.1",
+    "maplibre-gl": "5.15.0",
+    "three": "0.183.2",
+    "tom-select": "2.6.2"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "esbuild": "0.28.2",
+    "lighthouse": "13.5.0"
   }
 }

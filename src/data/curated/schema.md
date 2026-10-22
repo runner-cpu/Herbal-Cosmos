@@ -39,6 +39,6 @@
 - `tags`：形态、药用部位、文化或研究状态标签；不用于再次分柜。
 - `morphology`：植物或药材识形线索，保持与疗效叙述分离。
 - `depthLevel`：`deep`（首批深度档案）或 `overview`（目录索引条目）。
-- `catalogStatus`：`featured`（百子柜精品）或 `catalog`（资料库与粒子星球拓展条目）。
+- `catalogStatus`：`featured`（百子药堂精品）或 `catalog`（资料库与粒子星球拓展条目）。
 
 首批目录目标为约 120 味：16 味 `deep/featured` 与 104 味 `overview/catalog`。所有条目仍需有 `sourceIds`、逐条 `sourceRefs` 和 `boundary`；新增条目可直接挂入既有六类生境。

@@ -7,24 +7,24 @@
     <meta name="color-scheme" content="light" />
     <meta name="robots" content="index,follow" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta name="description" content="本草宇宙 · 百子万象：从六类生境百子柜到一颗可旋转的粒子星球，探索 120 味本草及其公开证据。" />
+    <meta name="description" content="本草宇宙 · 百子万象：从六类生境百子药堂、可旋转的 3D 地球粒子星球到 GBIF 开放观测生境地图，探索 120 味本草及其公开证据。" />
     <link rel="canonical" href="https://runner-cpu.github.io/Herbal-Cosmos/" />
     <meta property="og:site_name" content="本草宇宙 · 百子万象" />
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="本草宇宙 · 百子万象" />
-    <meta property="og:description" content="六类生境百子柜与可旋转粒子星球，探索 120 味本草及其公开证据。" />
+    <meta property="og:description" content="六类生境百子药堂、Three.js 3D 地球粒子星球与开放观测生境地图，探索 120 味本草及其公开证据。" />
     <meta property="og:url" content="https://runner-cpu.github.io/Herbal-Cosmos/" />
     <meta property="og:image" content="https://runner-cpu.github.io/Herbal-Cosmos/src/assets/share/og-cover.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="本草宇宙分享卡：深蓝夜空中的粒子星球与「本草宇宙 · 百子万象」标题" />
+    <meta property="og:image:alt" content="本草宇宙分享卡：深蓝夜空中的真实地球粒子层与「本草宇宙 · 百子万象」标题" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="本草宇宙 · 百子万象" />
-    <meta name="twitter:description" content="六类生境百子柜与可旋转粒子星球，探索 120 味本草及其公开证据。" />
+    <meta name="twitter:description" content="六类生境百子药堂、3D 地球粒子星球与 GBIF 开放观测生境地图，探索 120 味本草及其公开证据。" />
     <meta name="twitter:image" content="https://runner-cpu.github.io/Herbal-Cosmos/src/assets/share/og-cover.jpg" />
-    <meta name="twitter:image:alt" content="本草宇宙分享卡：粒子星球与百子万象标题" />
+    <meta name="twitter:image:alt" content="本草宇宙分享卡：3D 地球粒子星球与百子万象标题" />
     <title>本草宇宙 · 百子万象</title>
     <script type="application/ld+json">
       {
@@ -33,7 +33,7 @@
         "name": "本草宇宙 · 百子万象",
         "alternateName": "Herbal Cosmos",
         "url": "https://runner-cpu.github.io/Herbal-Cosmos/",
-        "description": "以百子柜与粒子星球两种空间，呈现 120 味本草的形态、生境、典籍与公开来源。",
+        "description": "以百子药堂、3D 地球粒子星球与开放观测生境地图三种空间，呈现 120 味本草的形态、生境、典籍与公开来源。",
         "inLanguage": "zh-CN",
         "publisher": {
           "@type": "Organization",
@@ -43,7 +43,9 @@
       }
     </script>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23b54a3a'/%3E%3Cg fill='none' stroke='%23f5f0e8' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='12' y='12' width='40' height='40' rx='5'/%3E%3Cpath d='M32 48V30'/%3E%3Cpath d='M32 35c0-8 5-13 12-14 1 8-4 13-12 14Z'/%3E%3Cpath d='M32 40c0-6.5-4-10.5-10-11.5-.5 6.5 3.5 10.5 10 11.5Z'/%3E%3C/g%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="./src/styles.css?v=redesign-v1-20261020-3" />
+    <link rel="stylesheet" href="./src/styles.css?v=planet-layout-v5-20261022-1" />
+    <link rel="stylesheet" href="./vendor/herb-picker.css?v=picker-v3-20261022" />
+    <link rel="stylesheet" href="./src/experience.css?v=planet-layout-v5-20261022-1" />
   </head>
   <body>
     <a class="skip-link" href="#app">跳到主要内容</a>
@@ -52,6 +54,7 @@
     </div>
     <noscript><p style="padding:12vh 8vw;font-family:system-ui,'PingFang SC',sans-serif">本草宇宙需要启用 JavaScript 才能加载 120 味本草档案。</p></noscript>
     <p id="announcer" class="sr-only" role="status"></p>
-    <script type="module" src="./src/main.js?v=redesign-v1-20261020-3"></script>
+    <script defer src="./vendor/ui-runtime.js?v=planet-layout-v5-20261022-1"></script>
+    <script type="module" src="./src/main.js?v=planet-layout-v5-20261022-1"></script>
   </body>
 </html>

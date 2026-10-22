@@ -22,8 +22,10 @@ jobs:
           for attempt in $(seq 1 24); do
             html=$(curl --fail --silent --show-error --location --max-time 20 "${site}?sha=${GITHUB_SHA}" || true)
             main=$(curl --fail --silent --show-error --location --max-time 20 "${site}src/main.js?sha=${GITHUB_SHA}" || true)
-            data=$(curl --fail --silent --show-error --location --max-time 20 "${site}src/data/curated/comparisons.json?sha=${GITHUB_SHA}" || true)
-            if grep -q '本草宇宙' <<<"$html" && grep -q '3D SPECIMEN LAB' <<<"$main" && grep -q '相似药材' <<<"$main" && grep -q 'cmp-renshen-dangshen' <<<"$data"; then
+            planet=$(curl --fail --silent --show-error --location --max-time 20 "${site}vendor/planet-engine.js?sha=${GITHUB_SHA}" || true)
+            atlas=$(curl --fail --silent --show-error --location --max-time 20 "${site}src/atlas.js?sha=${GITHUB_SHA}" || true)
+            gis=$(curl --fail --silent --show-error --location --max-time 20 "${site}src/data/generated/gbif-snapshot.json?sha=${GITHUB_SHA}" || true)
+            if grep -q '本草宇宙' <<<"$html" && grep -q 'loadAtlasModule' <<<"$main" && grep -q 'AtmosphereContext' <<<"$planet" && grep -q 'OPENFREEMAP' <<<"$atlas" && grep -q '"totalHerbs": 120' <<<"$gis"; then
               echo "Trace Pages smoke passed on attempt ${attempt}."
               exit 0
             fi

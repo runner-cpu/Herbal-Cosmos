@@ -1,0 +1,140 @@
+{
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "source": "Poly Haven",
+  "assets": [
+    {
+      "id": "dark_wooden_planks",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "page": "https://polyhaven.com/a/dark_wooden_planks",
+      "files": [
+        {
+          "role": "color",
+          "path": "dark_wooden_planks_color.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dark_wooden_planks/dark_wooden_planks_diff_1k.jpg",
+          "sourceMd5": "7ec8fe3e0b84289a4add3b10a54090bb",
+          "sha256": "b60df54b3947022a798a58e4c5e2f1c8f4528dcbb0ec1f8fc2d8e138836abc91",
+          "bytes": 116428
+        },
+        {
+          "role": "normal",
+          "path": "dark_wooden_planks_normal.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dark_wooden_planks/dark_wooden_planks_nor_gl_1k.jpg",
+          "sourceMd5": "4093b4023a4270b3a06b762076106d58",
+          "sha256": "a409d3957fb433d8dbb883e40cba80bef4e5429c0651d30498c39db68a8d3a25",
+          "bytes": 90610
+        },
+        {
+          "role": "roughness",
+          "path": "dark_wooden_planks_roughness.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dark_wooden_planks/dark_wooden_planks_rough_1k.jpg",
+          "sourceMd5": "6eaec29bb24d157dde74d38bc5a63018",
+          "sha256": "af193be59f77d91392cc4b0f9619e47dc6925e3327ad306bb7db2e3f6ad01624",
+          "bytes": 160870
+        }
+      ]
+    },
+    {
+      "id": "rough_plaster_03",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "page": "https://polyhaven.com/a/rough_plaster_03",
+      "files": [
+        {
+          "role": "color",
+          "path": "rough_plaster_03_color.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_plaster_03/rough_plaster_03_diff_1k.jpg",
+          "sourceMd5": "4c711d88787062d59a0d9a5243a0392f",
+          "sha256": "aa8d5b46479ff3295842d249ff58facbdfd3692fd2b4c529f4d1b50482f26b8c",
+          "bytes": 250052
+        },
+        {
+          "role": "normal",
+          "path": "rough_plaster_03_normal.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_plaster_03/rough_plaster_03_nor_gl_1k.jpg",
+          "sourceMd5": "f476fad1fc322803c2cfe87de8e0046c",
+          "sha256": "1f2e344435467989719cc2df2747426d609a0dcdbf6333cc17fd03126ec37457",
+          "bytes": 285904
+        },
+        {
+          "role": "roughness",
+          "path": "rough_plaster_03_roughness.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_plaster_03/rough_plaster_03_rough_1k.jpg",
+          "sourceMd5": "a89c646ed4d583cd9cc18854007394d7",
+          "sha256": "110bf62d5c682c2f47e399d5c67de0957a65c845e426563fc5939f6f0617ba79",
+          "bytes": 114256
+        }
+      ]
+    },
+    {
+      "id": "monastery_stone_floor",
+      "authors": {
+        "Amal Kumar": "All"
+      },
+      "page": "https://polyhaven.com/a/monastery_stone_floor",
+      "files": [
+        {
+          "role": "color",
+          "path": "monastery_stone_floor_color.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/monastery_stone_floor/monastery_stone_floor_diff_1k.jpg",
+          "sourceMd5": "8e748f767d8e478438ef748833365754",
+          "sha256": "3029aa5aced49a8a3c15748033bd0bafbe04bb53d13574af1a846a8f0c8af650",
+          "bytes": 128126
+        },
+        {
+          "role": "normal",
+          "path": "monastery_stone_floor_normal.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/monastery_stone_floor/monastery_stone_floor_nor_gl_1k.jpg",
+          "sourceMd5": "257ccdbbe1c2a23f74cece55b81861ac",
+          "sha256": "3527b8e3e519501a1934ffe6d2daf2121485f870cf5fdfa65a293ccb39c7c1ea",
+          "bytes": 337874
+        },
+        {
+          "role": "roughness",
+          "path": "monastery_stone_floor_roughness.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/monastery_stone_floor/monastery_stone_floor_rough_1k.jpg",
+          "sourceMd5": "ea3793f350c70ebd6216ae5b4565d4eb",
+          "sha256": "689547a4d1555549f2a59607e19b3c80976eeac5f455b7355f0fe4ce9b7492e7",
+          "bytes": 52380
+        }
+      ]
+    },
+    {
+      "id": "forest_ground_04",
+      "authors": {
+        "Rob Tuytel": "Photography, Processing",
+        "Rico Cilliers": "Minor adjustment"
+      },
+      "page": "https://polyhaven.com/a/forest_ground_04",
+      "files": [
+        {
+          "role": "color",
+          "path": "forest_ground_04_color.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_04/forest_ground_04_diff_1k.jpg",
+          "sourceMd5": "6ad9df4d731a238299806f739a26af83",
+          "sha256": "db60c325a54f10374af7182f0563d994f11c290aaf652d5b61bcedb7728ad0df",
+          "bytes": 336690
+        },
+        {
+          "role": "normal",
+          "path": "forest_ground_04_normal.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_04/forest_ground_04_nor_gl_1k.jpg",
+          "sourceMd5": "a010a0802c2d9a930c6f00d3b1f196d2",
+          "sha256": "70552782f14d9f25eb83c86ed65013fc9c84d767167237db719ed4966854cdc4",
+          "bytes": 487486
+        },
+        {
+          "role": "roughness",
+          "path": "forest_ground_04_roughness.webp",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_ground_04/forest_ground_04_rough_1k.jpg",
+          "sourceMd5": "b5c7ba5c16f00261e9a765d52cf7e0ac",
+          "sha256": "1a17efe17327ace3ba3f6e3604ab542275422a1eea6ea3b366f8a6c93de32b92",
+          "bytes": 124560
+        }
+      ]
+    }
+  ]
+}

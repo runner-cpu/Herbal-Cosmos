@@ -19,3 +19,5 @@ output/mobile-review/
 output/context-dismiss-review/
 output/mobile-polish-tests/
 output/mobile-polish-crossbrowser/
+vendor/*.debug.js
+vendor/*.debug.js.map
